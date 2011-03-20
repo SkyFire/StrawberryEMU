@@ -168,12 +168,12 @@ enum ServerOpcodes
     /***********************************************************/
     /********************** DUEL OPCODES ***********************/
     /***********************************************************/
-    SMSG_DUEL_REQUESTED                                  = 0x167,
-    SMSG_DUEL_OUTOFBOUNDS                                = 0x168,
-    SMSG_DUEL_INBOUNDS                                   = 0x169,
-    SMSG_DUEL_COMPLETE                                   = 0x16A,
-    SMSG_DUEL_WINNER                                     = 0x16B,
-    SMSG_DUEL_COUNTDOWN                                  = 0x2B7,
+    SMSG_DUEL_REQUESTED                                  = 0x3FC8,    // 16328 - 4.0.6a 13623
+    SMSG_DUEL_OUTOFBOUNDS                                = 0x68C0,    // 26816 - 4.0.6a 13623
+    SMSG_DUEL_INBOUNDS                                   = 0xECA4,    // 60580 - 4.0.6a 13623
+    SMSG_DUEL_COMPLETE                                   = 0xFCE8,    // 64744 - 4.0.6a 13623
+    SMSG_DUEL_WINNER                                     = 0x79E4,    // 31204 - 4.0.6a 13623
+    SMSG_DUEL_COUNTDOWN                                  = 0xE8E0,    // 59616 - 4.0.6a 13623
 
     /***********************************************************/
     /******************** FACTION OPCODES **********************/
