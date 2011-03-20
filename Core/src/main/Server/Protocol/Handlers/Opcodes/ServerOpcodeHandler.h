@@ -820,16 +820,16 @@ enum ServerOpcodes
     /***********************************************************/
     /********************** WORLD OPCODES **********************/
     /***********************************************************/
-    SMSG_NEW_WORLD                                       = 0x03E,
-    SMSG_UPDATE_OBJECT                                   = 0x0A9,
-    SMSG_DESTROY_OBJECT                                  = 0x0AA,
-    SMSG_COMPRESSED_UPDATE_OBJECT                        = 0x1F6,
-    SMSG_LOGIN_VERIFY_WORLD                              = 0x236,
-    SMSG_INIT_WORLD_STATES                               = 0x2C2,
-    SMSG_UPDATE_WORLD_STATE                              = 0x2C3,
-    SMSG_WEATHER                                         = 0x2F4,
-    SMSG_SET_PHASE_SHIFT                                 = 0x47C,
-    SMSG_WORLD_STATE_UI_TIMER_UPDATE                     = 0x4F7,
+    SMSG_NEW_WORLD                                       = 0x451E,    // 17694 - 4.0.6a 13623
+    SMSG_UPDATE_OBJECT                                   = 0x3780,    // 14208 - 4.0.6a 13623
+    SMSG_DESTROY_OBJECT                                  = 0x2AA0,    // 10912 - 4.0.6a 13623
+    SMSG_COMPRESSED_UPDATE_OBJECT                        = 0xEAC0,    // 60096 - 4.0.6a 13623
+    SMSG_LOGIN_VERIFY_WORLD                              = 0x28C0,    // 10432 - 4.0.6a 13623
+    SMSG_INIT_WORLD_STATES                               = 0xF6E8,    // 63208 - 4.0.6a 13623
+    SMSG_UPDATE_WORLD_STATE                              = 0xF784,    // 63364 - 4.0.6a 13623
+    SMSG_WEATHER                                         = 0x7BEC,    // 31724 - 4.0.6a 13623
+    SMSG_SET_PHASE_SHIFT                                 = 0x22ED,    // 8941 -  4.0.6a 13623
+    SMSG_WORLD_STATE_UI_TIMER_UPDATE                     = 0x698C,    // 27020 - 4.0.6a 13623
 };
 
 extern void ServerOpcodeTable();
