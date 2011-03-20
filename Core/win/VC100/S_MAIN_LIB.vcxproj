@@ -1,0 +1,1202 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{1DC6C4DA-A028-41F3-877D-D5400C594F88}</ProjectGuid>
+    <RootNamespace>main</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.40219.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\main_$(Platform)_$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\main_$(Platform)_$(Configuration)\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\main_$(Platform)_$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\main_$(Platform)_$(Configuration)\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\main_$(Platform)_$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\main_$(Platform)_$(Configuration)\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\main_$(Platform)_$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\main_$(Platform)_$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <AdditionalOptions>/MP /Zm200 %(AdditionalOptions)</AdditionalOptions>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>..\..\src;..\..\src\main\Achievements;..\..\src\main\Battlegrounds\Zones;..\..\src\main\AI\SmartScripts;..\..\src\main\AI\ScriptedAI;..\..\src\main\AI\EventAI;..\..\src\main\AI\CoreAI;..\..\src\main\World;..\..\src\main\Weather;..\..\src\main\Tools;..\..\src\main\Tickets;..\..\src\main\Texts;..\..\src\main\Spells;..\..\src\main\Skills;..\..\src\main\Server;..\..\src\main\Scripting;..\..\src\main\Reputation;..\..\src\main\Quests;..\..\src\main\Pools;..\..\src\main\PCH;..\..\src\main\OutdoorPvP;..\..\src\main\Movement;..\..\src\main\Miscellaneous;..\..\src\main\Maps;..\..\src\main\Mails;..\..\src\main\Loot;..\..\src\main\Instances;..\..\src\main\Guilds;..\..\src\main\Groups;..\..\src\main\Grids;..\..\src\main\Globals;..\..\src\main\Spells\Auras;..\..\src\main\Server\Protocol\Handlers;..\..\src\main\Server\Protocol;..\..\src\main\Movement\Waypoints;..\..\src\main\Movement\MovementGenerators;..\..\src\main\Grids\Notifiers;..\..\src\main\Grids\Cells;..\..\src\main\Entities\Object\Updates;..\..\src\main\Entities\Item\Container;..\..\src\main\Entities\Vehicle;..\..\src\main\Entities\Unit;..\..\src\main\Entities\Transport;..\..\src\main\Entities\Totem;..\..\src\main\Entities\Player;..\..\src\main\Entities\Pet;..\..\src\main\Entities\Object;..\..\src\main\Entities\Item;..\..\src\main\Entities\GameObject;..\..\src\main\Entities\DynamicObject;..\..\src\main\Entities\Creature;..\..\src\main\Entities\Corpse;..\..\src\main\Events;..\..\src\main\Entities;..\..\src\main\DungeonFinding;..\..\src\main\DataStores;..\..\src\main\Conditions;..\..\src\main\Combat;..\..\src\main\Chat\Commands;..\..\src\main\Chat\Channels;..\..\src\main\Chat;..\..\src\main\Calendar;..\..\src\main\Battlegrounds;..\..\src\main\AuctionHouse\AuctionHouseBot;..\..\src\main\AuctionHouse;..\..\src\main\AI;..\..\src\main\Addons;..\..\src\main\Accounts;..\..\dep;..\..\dep\mysql;..\..\dep\mysql\include;..\..\dep\zlib;..\..\dep\mysql\extra\yassl\include;..\..\src\shared;..\..\src\shared\Collision;..\..\src\shared\Collision\Management;..\..\src\shared\Collision\Maps;..\..\src\shared\Collision\Models;..\..\src\shared\Collision\PCH;..\..\src\shared\Configuration;..\..\src\shared\Cryptography;..\..\src\shared\Cryptography\Authentication;..\..\src\shared\DataStores;..\..\src\shared\Database;..\..\src\shared\Dynamic;..\..\src\shared\Dynamic\LinkedReference;..\..\src\shared\Logging;..\..\src\shared\Packets;..\..\src\shared\Threading;..\..\src\shared\Utilities;..\..\src\scripts;..\..\src\scripts\PCH;..\..\src\server;..\..\dep\acelite;..\..\dep\mysqllite\include;..\..\dep\mysqllite\extra\yassl\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;DIAMOND_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>false</StringPooling>
+      <MinimalRebuild>false</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>PCH.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>.\main_$(Platform)_$(Configuration)\main.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>.\main_$(Platform)_$(Configuration)\</AssemblerListingLocation>
+      <ObjectFileName>.\main_$(Platform)_$(Configuration)\</ObjectFileName>
+      <ProgramDataBaseFileName>.\main_$(Platform)_$(Configuration)\</ProgramDataBaseFileName>
+      <WarningLevel>Level3</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <CallingConvention>Cdecl</CallingConvention>
+      <CompileAs>Default</CompileAs>
+      <ForcedIncludeFiles>..\..\src\main\PCH\PCH.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+    </ResourceCompile>
+    <Lib>
+      <OutputFile>.\main_$(Platform)_$(Configuration)\main.lib</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Midl>
+      <TargetEnvironment>X64</TargetEnvironment>
+    </Midl>
+    <ClCompile>
+      <AdditionalOptions>/MP /bigobj /Zm200 %(AdditionalOptions)</AdditionalOptions>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>..\..\src;..\..\src\main\Achievements;..\..\src\main\Battlegrounds\Zones;..\..\src\main\AI\SmartScripts;..\..\src\main\AI\ScriptedAI;..\..\src\main\AI\EventAI;..\..\src\main\AI\CoreAI;..\..\src\main\World;..\..\src\main\Weather;..\..\src\main\Tools;..\..\src\main\Tickets;..\..\src\main\Texts;..\..\src\main\Spells;..\..\src\main\Skills;..\..\src\main\Server;..\..\src\main\Scripting;..\..\src\main\Reputation;..\..\src\main\Quests;..\..\src\main\Pools;..\..\src\main\PCH;..\..\src\main\OutdoorPvP;..\..\src\main\Movement;..\..\src\main\Miscellaneous;..\..\src\main\Maps;..\..\src\main\Mails;..\..\src\main\Loot;..\..\src\main\Instances;..\..\src\main\Guilds;..\..\src\main\Groups;..\..\src\main\Grids;..\..\src\main\Globals;..\..\src\main\Spells\Auras;..\..\src\main\Server\Protocol\Handlers;..\..\src\main\Server\Protocol;..\..\src\main\Movement\Waypoints;..\..\src\main\Movement\MovementGenerators;..\..\src\main\Grids\Notifiers;..\..\src\main\Grids\Cells;..\..\src\main\Entities\Object\Updates;..\..\src\main\Entities\Item\Container;..\..\src\main\Entities\Vehicle;..\..\src\main\Entities\Unit;..\..\src\main\Entities\Transport;..\..\src\main\Entities\Totem;..\..\src\main\Entities\Player;..\..\src\main\Entities\Pet;..\..\src\main\Entities\Object;..\..\src\main\Entities\Item;..\..\src\main\Entities\GameObject;..\..\src\main\Entities\DynamicObject;..\..\src\main\Entities\Creature;..\..\src\main\Entities\Corpse;..\..\src\main\Events;..\..\src\main\Entities;..\..\src\main\DungeonFinding;..\..\src\main\DataStores;..\..\src\main\Conditions;..\..\src\main\Combat;..\..\src\main\Chat\Commands;..\..\src\main\Chat\Channels;..\..\src\main\Chat;..\..\src\main\Calendar;..\..\src\main\Battlegrounds;..\..\src\main\AuctionHouse\AuctionHouseBot;..\..\src\main\AuctionHouse;..\..\src\main\AI;..\..\src\main\Addons;..\..\src\main\Accounts;..\..\dep;..\..\dep\mysql;..\..\dep\mysql\include;..\..\dep\zlib;..\..\dep\mysql\extra\yassl\include;..\..\src\shared;..\..\src\shared\Collision;..\..\src\shared\Collision\Management;..\..\src\shared\Collision\Maps;..\..\src\shared\Collision\Models;..\..\src\shared\Collision\PCH;..\..\src\shared\Configuration;..\..\src\shared\Cryptography;..\..\src\shared\Cryptography\Authentication;..\..\src\shared\DataStores;..\..\src\shared\Database;..\..\src\shared\Dynamic;..\..\src\shared\Dynamic\LinkedReference;..\..\src\shared\Logging;..\..\src\shared\Packets;..\..\src\shared\Threading;..\..\src\shared\Utilities;..\..\src\scripts;..\..\src\scripts\PCH;..\..\src\server;..\..\dep\acelite;..\..\dep\mysqllite\include;..\..\dep\mysqllite\extra\yassl\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;DIAMOND_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>false</StringPooling>
+      <MinimalRebuild>false</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>..\..\src\main\PCH\PCH.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>.\main_$(Platform)_$(Configuration)\main.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>.\main_$(Platform)_$(Configuration)\</AssemblerListingLocation>
+      <ObjectFileName>.\main_$(Platform)_$(Configuration)\</ObjectFileName>
+      <ProgramDataBaseFileName>.\main_$(Platform)_$(Configuration)\</ProgramDataBaseFileName>
+      <WarningLevel>Level3</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <CallingConvention>Cdecl</CallingConvention>
+      <CompileAs>Default</CompileAs>
+      <ForcedIncludeFiles>..\..\src\main\PCH\PCH.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+    </ResourceCompile>
+    <Lib>
+      <AdditionalDependencies>.\shared__$(Platform)_$(Configuration)\shared.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>.\main_$(Platform)_$(Configuration)\main.lib</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <AdditionalOptions>/MP /Zm200 %(AdditionalOptions)</AdditionalOptions>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <AdditionalIncludeDirectories>..\..\src;..\..\src\main\Achievements;..\..\src\main\Battlegrounds\Zones;..\..\src\main\AI\SmartScripts;..\..\src\main\AI\ScriptedAI;..\..\src\main\AI\EventAI;..\..\src\main\AI\CoreAI;..\..\src\main\World;..\..\src\main\Weather;..\..\src\main\Tools;..\..\src\main\Tickets;..\..\src\main\Texts;..\..\src\main\Spells;..\..\src\main\Skills;..\..\src\main\Server;..\..\src\main\Scripting;..\..\src\main\Reputation;..\..\src\main\Quests;..\..\src\main\Pools;..\..\src\main\PCH;..\..\src\main\OutdoorPvP;..\..\src\main\Movement;..\..\src\main\Miscellaneous;..\..\src\main\Maps;..\..\src\main\Mails;..\..\src\main\Loot;..\..\src\main\Instances;..\..\src\main\Guilds;..\..\src\main\Groups;..\..\src\main\Grids;..\..\src\main\Globals;..\..\src\main\Spells\Auras;..\..\src\main\Server\Protocol\Handlers;..\..\src\main\Server\Protocol;..\..\src\main\Movement\Waypoints;..\..\src\main\Movement\MovementGenerators;..\..\src\main\Grids\Notifiers;..\..\src\main\Grids\Cells;..\..\src\main\Entities\Object\Updates;..\..\src\main\Entities\Item\Container;..\..\src\main\Entities\Vehicle;..\..\src\main\Entities\Unit;..\..\src\main\Entities\Transport;..\..\src\main\Entities\Totem;..\..\src\main\Entities\Player;..\..\src\main\Entities\Pet;..\..\src\main\Entities\Object;..\..\src\main\Entities\Item;..\..\src\main\Entities\GameObject;..\..\src\main\Entities\DynamicObject;..\..\src\main\Entities\Creature;..\..\src\main\Entities\Corpse;..\..\src\main\Events;..\..\src\main\Entities;..\..\src\main\DungeonFinding;..\..\src\main\DataStores;..\..\src\main\Conditions;..\..\src\main\Combat;..\..\src\main\Chat\Commands;..\..\src\main\Chat\Channels;..\..\src\main\Chat;..\..\src\main\Calendar;..\..\src\main\Battlegrounds;..\..\src\main\AuctionHouse\AuctionHouseBot;..\..\src\main\AuctionHouse;..\..\src\main\AI;..\..\src\main\Addons;..\..\src\main\Accounts;..\..\dep;..\..\dep\mysql;..\..\dep\mysql\include;..\..\dep\zlib;..\..\dep\mysql\extra\yassl\include;..\..\src\shared;..\..\src\shared\Collision;..\..\src\shared\Collision\Management;..\..\src\shared\Collision\Maps;..\..\src\shared\Collision\Models;..\..\src\shared\Collision\PCH;..\..\src\shared\Configuration;..\..\src\shared\Cryptography;..\..\src\shared\Cryptography\Authentication;..\..\src\shared\DataStores;..\..\src\shared\Database;..\..\src\shared\Dynamic;..\..\src\shared\Dynamic\LinkedReference;..\..\src\shared\Logging;..\..\src\shared\Packets;..\..\src\shared\Threading;..\..\src\shared\Utilities;..\..\src\scripts;..\..\src\scripts\PCH;..\..\src\server;..\..\dep\acelite;..\..\dep\mysqllite\include;..\..\dep\mysqllite\extra\yassl\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;_CRT_NONSTDC_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_SECURE_SCL=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <EnableEnhancedInstructionSet>StreamingSIMDExtensions</EnableEnhancedInstructionSet>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>..\..\src\main\PCH\PCH.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>.\main_$(Platform)_$(Configuration)\main.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>.\main_$(Platform)_$(Configuration)\</AssemblerListingLocation>
+      <ObjectFileName>.\main_$(Platform)_$(Configuration)\</ObjectFileName>
+      <ProgramDataBaseFileName>.\main_$(Platform)_$(Configuration)\</ProgramDataBaseFileName>
+      <WarningLevel>Level3</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <CallingConvention>Cdecl</CallingConvention>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <ForcedIncludeFiles>..\..\src\main\PCH\PCH.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+    </ResourceCompile>
+    <Lib>
+      <OutputFile>.\main_$(Platform)_$(Configuration)\main.lib</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Midl>
+      <TargetEnvironment>X64</TargetEnvironment>
+    </Midl>
+    <ClCompile>
+      <AdditionalOptions>/MP /bigobj /Zm200 %(AdditionalOptions)</AdditionalOptions>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <AdditionalIncludeDirectories>..\..\src;..\..\src\main\Achievements;..\..\src\main\Battlegrounds\Zones;..\..\src\main\AI\SmartScripts;..\..\src\main\AI\ScriptedAI;..\..\src\main\AI\EventAI;..\..\src\main\AI\CoreAI;..\..\src\main\World;..\..\src\main\Weather;..\..\src\main\Tools;..\..\src\main\Tickets;..\..\src\main\Texts;..\..\src\main\Spells;..\..\src\main\Skills;..\..\src\main\Server;..\..\src\main\Scripting;..\..\src\main\Reputation;..\..\src\main\Quests;..\..\src\main\Pools;..\..\src\main\PCH;..\..\src\main\OutdoorPvP;..\..\src\main\Movement;..\..\src\main\Miscellaneous;..\..\src\main\Maps;..\..\src\main\Mails;..\..\src\main\Loot;..\..\src\main\Instances;..\..\src\main\Guilds;..\..\src\main\Groups;..\..\src\main\Grids;..\..\src\main\Globals;..\..\src\main\Spells\Auras;..\..\src\main\Server\Protocol\Handlers;..\..\src\main\Server\Protocol;..\..\src\main\Movement\Waypoints;..\..\src\main\Movement\MovementGenerators;..\..\src\main\Grids\Notifiers;..\..\src\main\Grids\Cells;..\..\src\main\Entities\Object\Updates;..\..\src\main\Entities\Item\Container;..\..\src\main\Entities\Vehicle;..\..\src\main\Entities\Unit;..\..\src\main\Entities\Transport;..\..\src\main\Entities\Totem;..\..\src\main\Entities\Player;..\..\src\main\Entities\Pet;..\..\src\main\Entities\Object;..\..\src\main\Entities\Item;..\..\src\main\Entities\GameObject;..\..\src\main\Entities\DynamicObject;..\..\src\main\Entities\Creature;..\..\src\main\Entities\Corpse;..\..\src\main\Events;..\..\src\main\Entities;..\..\src\main\DungeonFinding;..\..\src\main\DataStores;..\..\src\main\Conditions;..\..\src\main\Combat;..\..\src\main\Chat\Commands;..\..\src\main\Chat\Channels;..\..\src\main\Chat;..\..\src\main\Calendar;..\..\src\main\Battlegrounds;..\..\src\main\AuctionHouse\AuctionHouseBot;..\..\src\main\AuctionHouse;..\..\src\main\AI;..\..\src\main\Addons;..\..\src\main\Accounts;..\..\dep;..\..\dep\mysql;..\..\dep\mysql\include;..\..\dep\zlib;..\..\dep\mysql\extra\yassl\include;..\..\src\shared;..\..\src\shared\Collision;..\..\src\shared\Collision\Management;..\..\src\shared\Collision\Maps;..\..\src\shared\Collision\Models;..\..\src\shared\Collision\PCH;..\..\src\shared\Configuration;..\..\src\shared\Cryptography;..\..\src\shared\Cryptography\Authentication;..\..\src\shared\DataStores;..\..\src\shared\Database;..\..\src\shared\Dynamic;..\..\src\shared\Dynamic\LinkedReference;..\..\src\shared\Logging;..\..\src\shared\Packets;..\..\src\shared\Threading;..\..\src\shared\Utilities;..\..\src\scripts;..\..\src\scripts\PCH;..\..\src\server;..\..\dep\acelite;..\..\dep\mysqllite\include;..\..\dep\mysqllite\extra\yassl\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;_SECURE_SCL=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>..\..\src\main\PCH\PCH.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>.\main_$(Platform)_$(Configuration)\main.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>.\main_$(Platform)_$(Configuration)\</AssemblerListingLocation>
+      <ObjectFileName>.\main_$(Platform)_$(Configuration)\</ObjectFileName>
+      <ProgramDataBaseFileName>.\main_$(Platform)_$(Configuration)\</ProgramDataBaseFileName>
+      <WarningLevel>Level3</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <CallingConvention>Cdecl</CallingConvention>
+      <CompileAs>Default</CompileAs>
+      <ForcedIncludeFiles>..\..\src\main\PCH\PCH.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+    </ResourceCompile>
+    <Lib>
+      <AdditionalDependencies>.\shared__$(Platform)_$(Configuration)\shared.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>.\main_$(Platform)_$(Configuration)\main.lib</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\main\Accounts\AccountMgr.cpp" />
+    <ClCompile Include="..\..\src\main\Achievements\AchievementMgr.cpp" />
+    <ClCompile Include="..\..\src\main\Addons\AddonMgr.cpp" />
+    <ClCompile Include="..\..\src\main\AI\CreatureAI.cpp" />
+    <ClCompile Include="..\..\src\main\AI\CreatureAIRegistry.cpp" />
+    <ClCompile Include="..\..\src\main\AI\CreatureAISelector.cpp" />
+    <ClCompile Include="..\..\src\main\AI\CoreAI\CombatAI.cpp" />
+    <ClCompile Include="..\..\src\main\AI\CoreAI\GameObjectAI.cpp" />
+    <ClCompile Include="..\..\src\main\AI\CoreAI\GuardAI.cpp" />
+    <ClCompile Include="..\..\src\main\AI\CoreAI\PassiveAI.cpp" />
+    <ClCompile Include="..\..\src\main\AI\CoreAI\PetAI.cpp" />
+    <ClCompile Include="..\..\src\main\AI\CoreAI\ReactorAI.cpp" />
+    <ClCompile Include="..\..\src\main\AI\CoreAI\TotemAI.cpp" />
+    <ClCompile Include="..\..\src\main\AI\CoreAI\UnitAI.cpp" />
+    <ClCompile Include="..\..\src\main\AI\EventAI\CreatureEventAI.cpp" />
+    <ClCompile Include="..\..\src\main\AI\EventAI\CreatureEventAIMgr.cpp" />
+    <ClCompile Include="..\..\src\main\AI\ScriptedAI\ScriptedCreature.cpp" />
+    <ClCompile Include="..\..\src\main\AI\ScriptedAI\ScriptedEscortAI.cpp" />
+    <ClCompile Include="..\..\src\main\AI\ScriptedAI\ScriptedFollowerAI.cpp" />
+    <ClCompile Include="..\..\src\main\AI\ScriptedAI\ScriptedSimpleAI.cpp" />
+    <ClCompile Include="..\..\src\main\AI\SmartScripts\SmartAI.cpp" />
+    <ClCompile Include="..\..\src\main\AI\SmartScripts\SmartScript.cpp" />
+    <ClCompile Include="..\..\src\main\AI\SmartScripts\SmartScriptMgr.cpp" />
+    <ClCompile Include="..\..\src\main\AuctionHouse\AuctionHouseMgr.cpp" />
+    <ClCompile Include="..\..\src\main\Battlegrounds\ArenaTeam.cpp" />
+    <ClCompile Include="..\..\src\main\Battlegrounds\Battleground.cpp" />
+    <ClCompile Include="..\..\src\main\Battlegrounds\BattlegroundMgr.cpp" />
+    <ClCompile Include="..\..\src\main\Battlegrounds\BattlegroundQueue.cpp" />
+    <ClCompile Include="..\..\src\main\Battlegrounds\Zones\BattlegroundAA.cpp" />
+    <ClCompile Include="..\..\src\main\Battlegrounds\Zones\BattlegroundAB.cpp" />
+    <ClCompile Include="..\..\src\main\Battlegrounds\Zones\BattlegroundAV.cpp" />
+    <ClCompile Include="..\..\src\main\Battlegrounds\Zones\BattlegroundBE.cpp" />
+    <ClCompile Include="..\..\src\main\Battlegrounds\Zones\BattlegroundDS.cpp" />
+    <ClCompile Include="..\..\src\main\Battlegrounds\Zones\BattlegroundEY.cpp" />
+    <ClCompile Include="..\..\src\main\Battlegrounds\Zones\BattlegroundIC.cpp" />
+    <ClCompile Include="..\..\src\main\Battlegrounds\Zones\BattlegroundNA.cpp" />
+    <ClCompile Include="..\..\src\main\Battlegrounds\Zones\BattlegroundRB.cpp" />
+    <ClCompile Include="..\..\src\main\Battlegrounds\Zones\BattlegroundRL.cpp" />
+    <ClCompile Include="..\..\src\main\Battlegrounds\Zones\BattlegroundRV.cpp" />
+    <ClCompile Include="..\..\src\main\Battlegrounds\Zones\BattlegroundSA.cpp" />
+    <ClCompile Include="..\..\src\main\Battlegrounds\Zones\BattlegroundWS.cpp" />
+    <ClCompile Include="..\..\src\main\Calendar\Calendar.cpp" />
+    <ClCompile Include="..\..\src\main\Chat\Chat.cpp" />
+    <ClCompile Include="..\..\src\main\Chat\Channels\Channel.cpp" />
+    <ClCompile Include="..\..\src\main\Chat\Channels\ChannelMgr.cpp" />
+    <ClCompile Include="..\..\src\main\Chat\Commands\Debugcmds.cpp" />
+    <ClCompile Include="..\..\src\main\Chat\Commands\Level0.cpp" />
+    <ClCompile Include="..\..\src\main\Chat\Commands\Level1.cpp" />
+    <ClCompile Include="..\..\src\main\Chat\Commands\Level2.cpp" />
+    <ClCompile Include="..\..\src\main\Chat\Commands\Level3.cpp" />
+    <ClCompile Include="..\..\src\main\Chat\Commands\TicketCommands.cpp" />
+    <ClCompile Include="..\..\src\main\Combat\HostileRefManager.cpp" />
+    <ClCompile Include="..\..\src\main\Combat\ThreatManager.cpp" />
+    <ClCompile Include="..\..\src\main\Conditions\ConditionMgr.cpp" />
+    <ClCompile Include="..\..\src\main\Conditions\DisableMgr.cpp" />
+    <ClCompile Include="..\..\src\main\DataStores\DB2Stores.cpp" />
+    <ClCompile Include="..\..\src\main\DataStores\DBCStores.cpp" />
+    <ClCompile Include="..\..\src\main\DataStores\DBCStructure.cpp" />
+    <ClCompile Include="..\..\src\main\DungeonFinding\LFGGroupData.cpp" />
+    <ClCompile Include="..\..\src\main\DungeonFinding\LFGMgr.cpp" />
+    <ClCompile Include="..\..\src\main\DungeonFinding\LFGPlayerData.cpp" />
+    <ClCompile Include="..\..\src\main\DungeonFinding\LFGScripts.cpp" />
+    <ClCompile Include="..\..\src\main\Entities\Corpse\Corpse.cpp" />
+    <ClCompile Include="..\..\src\main\Entities\Creature\Creature.cpp" />
+    <ClCompile Include="..\..\src\main\Entities\Creature\CreatureGroups.cpp" />
+    <ClCompile Include="..\..\src\main\Entities\Creature\GossipDef.cpp" />
+    <ClCompile Include="..\..\src\main\Entities\Creature\TemporarySummon.cpp" />
+    <ClCompile Include="..\..\src\main\Entities\DynamicObject\DynamicObject.cpp" />
+    <ClCompile Include="..\..\src\main\Entities\GameObject\GameObject.cpp" />
+    <ClCompile Include="..\..\src\main\Entities\Item\Item.cpp" />
+    <ClCompile Include="..\..\src\main\Entities\Item\ItemEnchantmentMgr.cpp" />
+    <ClCompile Include="..\..\src\main\Entities\Item\Container\Bag.cpp" />
+    <ClCompile Include="..\..\src\main\Entities\Object\Object.cpp" />
+    <ClCompile Include="..\..\src\main\Entities\Object\ObjectPosSelector.cpp" />
+    <ClCompile Include="..\..\src\main\Entities\Object\Updates\UpdateData.cpp" />
+    <ClCompile Include="..\..\src\main\Entities\Pet\Pet.cpp" />
+    <ClCompile Include="..\..\src\main\Entities\Player\Player.cpp" />
+    <ClCompile Include="..\..\src\main\Entities\Player\SocialMgr.cpp" />
+    <ClCompile Include="..\..\src\main\Entities\Totem\Totem.cpp" />
+    <ClCompile Include="..\..\src\main\Entities\Transport\Transport.cpp" />
+    <ClCompile Include="..\..\src\main\Entities\Unit\StatSystem.cpp" />
+    <ClCompile Include="..\..\src\main\Entities\Unit\Unit.cpp" />
+    <ClCompile Include="..\..\src\main\Entities\Vehicle\Vehicle.cpp" />
+    <ClCompile Include="..\..\src\main\Events\GameEventMgr.cpp" />
+    <ClCompile Include="..\..\src\main\Globals\ObjectAccessor.cpp" />
+    <ClCompile Include="..\..\src\main\Globals\ObjectMgr.cpp" />
+    <ClCompile Include="..\..\src\main\Grids\GridStates.cpp" />
+    <ClCompile Include="..\..\src\main\Grids\ObjectGridLoader.cpp" />
+    <ClCompile Include="..\..\src\main\Grids\Notifiers\GridNotifiers.cpp" />
+    <ClCompile Include="..\..\src\main\Groups\Group.cpp" />
+    <ClCompile Include="..\..\src\main\Groups\GroupReference.cpp" />
+    <ClCompile Include="..\..\src\main\Guilds\Guild.cpp" />
+    <ClCompile Include="..\..\src\main\Instances\InstanceSaveMgr.cpp" />
+    <ClCompile Include="..\..\src\main\Instances\InstanceScript.cpp" />
+    <ClCompile Include="..\..\src\main\Loot\LootMgr.cpp" />
+    <ClCompile Include="..\..\src\main\Mails\Mail.cpp" />
+    <ClCompile Include="..\..\src\main\Maps\Map.cpp" />
+    <ClCompile Include="..\..\src\main\Maps\MapInstanced.cpp" />
+    <ClCompile Include="..\..\src\main\Maps\MapManager.cpp" />
+    <ClCompile Include="..\..\src\main\Maps\MapUpdater.cpp" />
+    <ClCompile Include="..\..\src\main\Movement\DestinationHolder.cpp" />
+    <ClCompile Include="..\..\src\main\Movement\FollowerReference.cpp" />
+    <ClCompile Include="..\..\src\main\Movement\MotionMaster.cpp" />
+    <ClCompile Include="..\..\src\main\Movement\MovementGenerator.cpp" />
+    <ClCompile Include="..\..\src\main\Movement\MovementGenerators\ConfusedMovementGenerator.cpp" />
+    <ClCompile Include="..\..\src\main\Movement\MovementGenerators\FleeingMovementGenerator.cpp" />
+    <ClCompile Include="..\..\src\main\Movement\MovementGenerators\HomeMovementGenerator.cpp" />
+    <ClCompile Include="..\..\src\main\Movement\MovementGenerators\IdleMovementGenerator.cpp" />
+    <ClCompile Include="..\..\src\main\Movement\MovementGenerators\PointMovementGenerator.cpp" />
+    <ClCompile Include="..\..\src\main\Movement\MovementGenerators\RandomMovementGenerator.cpp" />
+    <ClCompile Include="..\..\src\main\Movement\MovementGenerators\TargetedMovementGenerator.cpp" />
+    <ClCompile Include="..\..\src\main\Movement\MovementGenerators\WaypointMovementGenerator.cpp" />
+    <ClCompile Include="..\..\src\main\Movement\Waypoints\WaypointManager.cpp" />
+    <ClCompile Include="..\..\src\main\OutdoorPvP\OutdoorPvP.cpp" />
+    <ClCompile Include="..\..\src\main\OutdoorPvP\OutdoorPvPMgr.cpp" />
+    <ClCompile Include="..\..\src\main\Pools\PoolMgr.cpp" />
+    <ClCompile Include="..\..\src\main\Quests\QuestDef.cpp" />
+    <ClCompile Include="..\..\src\main\Reputation\ReputationMgr.cpp" />
+    <ClCompile Include="..\..\src\main\Scripting\MapScripts.cpp" />
+    <ClCompile Include="..\..\src\main\Scripting\ScriptLoader.cpp" />
+    <ClCompile Include="..\..\src\main\Scripting\ScriptMgr.cpp" />
+    <ClCompile Include="..\..\src\main\Scripting\ScriptSystem.cpp" />
+    <ClCompile Include="..\..\src\main\Server\WorldSession.cpp" />
+    <ClCompile Include="..\..\src\main\Server\WorldSocket.cpp" />
+    <ClCompile Include="..\..\src\main\Server\WorldSocketMgr.cpp" />
+    <ClCompile Include="..\..\src\main\Server\Protocol\Opcodes.cpp" />
+    <ClCompile Include="..\..\src\main\Server\Protocol\WorldLog.cpp" />
+    <ClCompile Include="..\..\src\main\Server\Protocol\Handlers\AddonHandler.cpp" />
+    <ClCompile Include="..\..\src\main\Server\Protocol\Handlers\ArenaTeamHandler.cpp" />
+    <ClCompile Include="..\..\src\main\Server\Protocol\Handlers\AuctionHouseHandler.cpp" />
+    <ClCompile Include="..\..\src\main\Server\Protocol\Handlers\AuthHandler.cpp" />
+    <ClCompile Include="..\..\src\main\Server\Protocol\Handlers\BattleGroundHandler.cpp" />
+    <ClCompile Include="..\..\src\main\Server\Protocol\Handlers\CalendarHandler.cpp" />
+    <ClCompile Include="..\..\src\main\Server\Protocol\Handlers\ChannelHandler.cpp" />
+    <ClCompile Include="..\..\src\main\Server\Protocol\Handlers\CharacterHandler.cpp" />
+    <ClCompile Include="..\..\src\main\Server\Protocol\Handlers\ChatHandler.cpp" />
+    <ClCompile Include="..\..\src\main\Server\Protocol\Handlers\CombatHandler.cpp" />
+    <ClCompile Include="..\..\src\main\Server\Protocol\Handlers\DuelHandler.cpp" />
+    <ClCompile Include="..\..\src\main\Server\Protocol\Handlers\GroupHandler.cpp" />
+    <ClCompile Include="..\..\src\main\Server\Protocol\Handlers\GuildHandler.cpp" />
+    <ClCompile Include="..\..\src\main\Server\Protocol\Handlers\ItemHandler.cpp" />
+    <ClCompile Include="..\..\src\main\Server\Protocol\Handlers\LFGHandler.cpp" />
+    <ClCompile Include="..\..\src\main\Server\Protocol\Handlers\LootHandler.cpp" />
+    <ClCompile Include="..\..\src\main\Server\Protocol\Handlers\MailHandler.cpp" />
+    <ClCompile Include="..\..\src\main\Server\Protocol\Handlers\MiscHandler.cpp" />
+    <ClCompile Include="..\..\src\main\Server\Protocol\Handlers\MovementHandler.cpp" />
+    <ClCompile Include="..\..\src\main\Server\Protocol\Handlers\NPCHandler.cpp" />
+    <ClCompile Include="..\..\src\main\Server\Protocol\Handlers\PetHandler.cpp" />
+    <ClCompile Include="..\..\src\main\Server\Protocol\Handlers\PetitionsHandler.cpp" />
+    <ClCompile Include="..\..\src\main\Server\Protocol\Handlers\QueryHandler.cpp" />
+    <ClCompile Include="..\..\src\main\Server\Protocol\Handlers\QuestHandler.cpp" />
+    <ClCompile Include="..\..\src\main\Server\Protocol\Handlers\SkillHandler.cpp" />
+    <ClCompile Include="..\..\src\main\Server\Protocol\Handlers\SpellHandler.cpp" />
+    <ClCompile Include="..\..\src\main\Server\Protocol\Handlers\TaxiHandler.cpp" />
+    <ClCompile Include="..\..\src\main\Server\Protocol\Handlers\TicketHandler.cpp" />
+    <ClCompile Include="..\..\src\main\Server\Protocol\Handlers\TradeHandler.cpp" />
+    <ClCompile Include="..\..\src\main\Server\Protocol\Handlers\VehicleHandler.cpp" />
+    <ClCompile Include="..\..\src\main\Server\Protocol\Handlers\VoiceChatHandler.cpp" />
+    <ClCompile Include="..\..\src\main\Skills\SkillDiscovery.cpp" />
+    <ClCompile Include="..\..\src\main\Skills\SkillExtraItems.cpp" />
+    <ClCompile Include="..\..\src\main\Spells\Spell.cpp" />
+    <ClCompile Include="..\..\src\main\Spells\SpellEffects.cpp" />
+    <ClCompile Include="..\..\src\main\Spells\SpellMgr.cpp" />
+    <ClCompile Include="..\..\src\main\Spells\SpellScript.cpp" />
+    <ClCompile Include="..\..\src\main\Spells\Auras\SpellAuraEffects.cpp" />
+    <ClCompile Include="..\..\src\main\Spells\Auras\SpellAuras.cpp" />
+    <ClCompile Include="..\..\src\main\Texts\CreatureTextMgr.cpp" />
+    <ClCompile Include="..\..\src\main\Tickets\TicketMgr.cpp" />
+    <ClCompile Include="..\..\src\main\Tools\CharacterDatabaseCleaner.cpp" />
+    <ClCompile Include="..\..\src\main\Tools\PlayerDump.cpp" />
+    <ClCompile Include="..\..\src\main\Weather\Weather.cpp" />
+    <ClCompile Include="..\..\src\main\Weather\WeatherMgr.cpp" />
+    <ClCompile Include="..\..\src\main\World\World.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\alterac_mountains.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\arathi_highlands.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\blasted_lands.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\boss_kruul.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\burning_steppes.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\dun_morogh.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\duskwood.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\eastern_plaguelands.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\elwynn_forest.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\eversong_woods.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\ghostlands.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\hinterlands.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\ironforge.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\isle_of_queldanas.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\loch_modan.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\redridge_mountains.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\searing_gorge.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\silvermoon_city.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\silverpine_forest.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\stormwind_city.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\stranglethorn_vale.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\swamp_of_sorrows.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\tirisfal_glades.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\undercity.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\western_plaguelands.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\westfall.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\wetlands.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\AlteracValley\alterac_valley.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\AlteracValley\boss_balinda.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\AlteracValley\boss_drekthar.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\AlteracValley\boss_galvangar.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\AlteracValley\boss_vanndar.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\BlackrockDepths\blackrock_depths.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\BlackrockDepths\boss_ambassador_flamelash.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\BlackrockDepths\boss_anubshiah.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\BlackrockDepths\boss_emperor_dagran_thaurissan.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\BlackrockDepths\boss_general_angerforge.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\BlackrockDepths\boss_gorosh_the_dervish.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\BlackrockDepths\boss_grizzle.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\BlackrockDepths\boss_high_interrogator_gerstahn.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\BlackrockDepths\boss_magmus.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\BlackrockDepths\boss_moira_bronzebeard.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\BlackrockDepths\boss_tomb_of_seven.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\BlackrockDepths\instance_blackrock_depths.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\BlackrockSpire\boss_drakkisath.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\BlackrockSpire\boss_gyth.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\BlackrockSpire\boss_halycon.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\BlackrockSpire\boss_highlord_omokk.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\BlackrockSpire\boss_mother_smolderweb.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\BlackrockSpire\boss_overlord_wyrmthalak.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\BlackrockSpire\boss_pyroguard_emberseer.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\BlackrockSpire\boss_quartermaster_zigris.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\BlackrockSpire\boss_rend_blackhand.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\BlackrockSpire\boss_shadow_hunter_voshgajin.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\BlackrockSpire\boss_the_beast.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\BlackrockSpire\boss_warmaster_voone.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\BlackwingLair\boss_broodlord_lashlayer.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\BlackwingLair\boss_chromaggus.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\BlackwingLair\boss_ebonroc.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\BlackwingLair\boss_firemaw.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\BlackwingLair\boss_flamegor.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\BlackwingLair\boss_nefarian.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\BlackwingLair\boss_razorgore.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\BlackwingLair\boss_vaelastrasz.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\BlackwingLair\boss_victor_nefarius.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\BlackwingLair\instance_blackwing_lair.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\Deadmines\boss_mr_smite.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\Deadmines\deadmines.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\Deadmines\instance_deadmines.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\Gnomeregan\gnomeregan.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\Gnomeregan\instance_gnomeregan.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\Karazhan\boss_curator.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\Karazhan\boss_maiden_of_virtue.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\Karazhan\boss_midnight.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\Karazhan\boss_moroes.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\Karazhan\boss_netherspite.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\Karazhan\boss_nightbane.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\Karazhan\boss_prince_malchezaar.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\Karazhan\boss_shade_of_aran.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\Karazhan\boss_terestian_illhoof.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\Karazhan\bosses_opera.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\Karazhan\instance_karazhan.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\Karazhan\karazhan.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\MagistersTerrace\boss_felblood_kaelthas.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\MagistersTerrace\boss_priestess_delrissa.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\MagistersTerrace\boss_selin_fireheart.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\MagistersTerrace\boss_vexallus.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\MagistersTerrace\instance_magisters_terrace.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\MagistersTerrace\magisters_terrace.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\MoltenCore\boss_baron_geddon.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\MoltenCore\boss_garr.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\MoltenCore\boss_gehennas.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\MoltenCore\boss_golemagg.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\MoltenCore\boss_lucifron.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\MoltenCore\boss_magmadar.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\MoltenCore\boss_majordomo_executus.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\MoltenCore\boss_ragnaros.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\MoltenCore\boss_shazzrah.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\MoltenCore\boss_sulfuron_harbinger.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\MoltenCore\instance_molten_core.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\MoltenCore\molten_core.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\ScarletEnclave\chapter1.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\ScarletEnclave\chapter2.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\ScarletEnclave\chapter5.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\ScarletEnclave\the_scarlet_enclave.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\ScarletMonastery\boss_arcanist_doan.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\ScarletMonastery\boss_azshir_the_sleepless.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\ScarletMonastery\boss_bloodmage_thalnos.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\ScarletMonastery\boss_headless_horseman.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\ScarletMonastery\boss_herod.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\ScarletMonastery\boss_high_inquisitor_fairbanks.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\ScarletMonastery\boss_houndmaster_loksey.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\ScarletMonastery\boss_interrogator_vishas.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\ScarletMonastery\boss_mograine_and_whitemane.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\ScarletMonastery\boss_scorn.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\ScarletMonastery\instance_scarlet_monastery.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\Scholomance\boss_darkmaster_gandling.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\Scholomance\boss_death_knight_darkreaver.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\Scholomance\boss_doctor_theolen_krastinov.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\Scholomance\boss_illucia_barov.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\Scholomance\boss_instructor_malicia.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\Scholomance\boss_jandice_barov.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\Scholomance\boss_kormok.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\Scholomance\boss_lord_alexei_barov.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\Scholomance\boss_lorekeeper_polkelt.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\Scholomance\boss_ras_frostwhisper.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\Scholomance\boss_the_ravenian.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\Scholomance\boss_vectus.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\Scholomance\instance_scholomance.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\ShadowfangKeep\instance_shadowfang_keep.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\ShadowfangKeep\shadowfang_keep.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\Stratholme\boss_baron_rivendare.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\Stratholme\boss_baroness_anastari.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\Stratholme\boss_cannon_master_willey.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\Stratholme\boss_dathrohan_balnazzar.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\Stratholme\boss_magistrate_barthilas.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\Stratholme\boss_maleki_the_pallid.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\Stratholme\boss_nerubenkan.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\Stratholme\boss_order_of_silver_hand.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\Stratholme\boss_postmaster_malown.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\Stratholme\boss_ramstein_the_gorger.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\Stratholme\boss_timmy_the_cruel.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\Stratholme\instance_stratholme.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\Stratholme\stratholme.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\SunkenTemple\instance_sunken_temple.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\SunkenTemple\sunken_temple.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\SunwellPlateau\boss_brutallus.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\SunwellPlateau\boss_eredar_twins.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\SunwellPlateau\boss_felmyst.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\SunwellPlateau\boss_kalecgos.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\SunwellPlateau\boss_kiljaeden.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\SunwellPlateau\boss_muru.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\SunwellPlateau\instance_sunwell_plateau.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\SunwellPlateau\sunwell_plateau.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\Uldaman\boss_archaedas.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\Uldaman\boss_ironaya.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\Uldaman\instance_uldaman.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\Uldaman\uldaman.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\ZulAman\boss_akilzon.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\ZulAman\boss_halazzi.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\ZulAman\boss_hexlord.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\ZulAman\boss_janalai.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\ZulAman\boss_nalorakk.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\ZulAman\boss_zuljin.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\ZulAman\instance_zulaman.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\ZulAman\zulaman.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\ZulGurub\boss_arlokk.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\ZulGurub\boss_gahzranka.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\ZulGurub\boss_grilek.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\ZulGurub\boss_hakkar.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\ZulGurub\boss_hazzarah.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\ZulGurub\boss_jeklik.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\ZulGurub\boss_jindo.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\ZulGurub\boss_mandokir.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\ZulGurub\boss_marli.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\ZulGurub\boss_renataki.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\ZulGurub\boss_thekal.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\ZulGurub\boss_venoxis.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\ZulGurub\boss_wushoolay.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\ZulGurub\instance_zulgurub.cpp" />
+    <ClCompile Include="..\..\src\scripts\Kalimdor\ashenvale.cpp" />
+    <ClCompile Include="..\..\src\scripts\Kalimdor\azshara.cpp" />
+    <ClCompile Include="..\..\src\scripts\Kalimdor\azuremyst_isle.cpp" />
+    <ClCompile Include="..\..\src\scripts\Kalimdor\bloodmyst_isle.cpp" />
+    <ClCompile Include="..\..\src\scripts\Kalimdor\boss_azuregos.cpp" />
+    <ClCompile Include="..\..\src\scripts\Kalimdor\darkshore.cpp" />
+    <ClCompile Include="..\..\src\scripts\Kalimdor\desolace.cpp" />
+    <ClCompile Include="..\..\src\scripts\Kalimdor\durotar.cpp" />
+    <ClCompile Include="..\..\src\scripts\Kalimdor\dustwallow_marsh.cpp" />
+    <ClCompile Include="..\..\src\scripts\Kalimdor\felwood.cpp" />
+    <ClCompile Include="..\..\src\scripts\Kalimdor\feralas.cpp" />
+    <ClCompile Include="..\..\src\scripts\Kalimdor\moonglade.cpp" />
+    <ClCompile Include="..\..\src\scripts\Kalimdor\mulgore.cpp" />
+    <ClCompile Include="..\..\src\scripts\Kalimdor\orgrimmar.cpp" />
+    <ClCompile Include="..\..\src\scripts\Kalimdor\silithus.cpp" />
+    <ClCompile Include="..\..\src\scripts\Kalimdor\stonetalon_mountains.cpp" />
+    <ClCompile Include="..\..\src\scripts\Kalimdor\tanaris.cpp" />
+    <ClCompile Include="..\..\src\scripts\Kalimdor\teldrassil.cpp" />
+    <ClCompile Include="..\..\src\scripts\Kalimdor\the_barrens.cpp" />
+    <ClCompile Include="..\..\src\scripts\Kalimdor\thousand_needles.cpp" />
+    <ClCompile Include="..\..\src\scripts\Kalimdor\thunder_bluff.cpp" />
+    <ClCompile Include="..\..\src\scripts\Kalimdor\ungoro_crater.cpp" />
+    <ClCompile Include="..\..\src\scripts\Kalimdor\winterspring.cpp" />
+    <ClCompile Include="..\..\src\scripts\Kalimdor\BlackfathomDeeps\blackfathom_deeps.cpp" />
+    <ClCompile Include="..\..\src\scripts\Kalimdor\BlackfathomDeeps\boss_aku_mai.cpp" />
+    <ClCompile Include="..\..\src\scripts\Kalimdor\BlackfathomDeeps\boss_gelihast.cpp" />
+    <ClCompile Include="..\..\src\scripts\Kalimdor\BlackfathomDeeps\boss_kelris.cpp" />
+    <ClCompile Include="..\..\src\scripts\Kalimdor\BlackfathomDeeps\instance_blackfathom_deeps.cpp" />
+    <ClCompile Include="..\..\src\scripts\Kalimdor\CavernsOfTime\BattleForMountHyjal\boss_anetheron.cpp" />
+    <ClCompile Include="..\..\src\scripts\Kalimdor\CavernsOfTime\BattleForMountHyjal\boss_archimonde.cpp" />
+    <ClCompile Include="..\..\src\scripts\Kalimdor\CavernsOfTime\BattleForMountHyjal\boss_azgalor.cpp" />
+    <ClCompile Include="..\..\src\scripts\Kalimdor\CavernsOfTime\BattleForMountHyjal\boss_kazrogal.cpp" />
+    <ClCompile Include="..\..\src\scripts\Kalimdor\CavernsOfTime\BattleForMountHyjal\boss_rage_winterchill.cpp" />
+    <ClCompile Include="..\..\src\scripts\Kalimdor\CavernsOfTime\BattleForMountHyjal\hyjal.cpp" />
+    <ClCompile Include="..\..\src\scripts\Kalimdor\CavernsOfTime\BattleForMountHyjal\hyjal_trash.cpp" />
+    <ClCompile Include="..\..\src\scripts\Kalimdor\CavernsOfTime\BattleForMountHyjal\hyjalAI.cpp" />
+    <ClCompile Include="..\..\src\scripts\Kalimdor\CavernsOfTime\BattleForMountHyjal\instance_hyjal.cpp" />
+    <ClCompile Include="..\..\src\scripts\Kalimdor\CavernsOfTime\CullingOfStratholme\boss_epoch.cpp" />
+    <ClCompile Include="..\..\src\scripts\Kalimdor\CavernsOfTime\CullingOfStratholme\boss_infinite.cpp" />
+    <ClCompile Include="..\..\src\scripts\Kalimdor\CavernsOfTime\CullingOfStratholme\boss_mal_ganis.cpp" />
+    <ClCompile Include="..\..\src\scripts\Kalimdor\CavernsOfTime\CullingOfStratholme\boss_meathook.cpp" />
+    <ClCompile Include="..\..\src\scripts\Kalimdor\CavernsOfTime\CullingOfStratholme\boss_salramm.cpp" />
+    <ClCompile Include="..\..\src\scripts\Kalimdor\CavernsOfTime\CullingOfStratholme\culling_of_stratholme.cpp" />
+    <ClCompile Include="..\..\src\scripts\Kalimdor\CavernsOfTime\CullingOfStratholme\instance_culling_of_stratholme.cpp" />
+    <ClCompile Include="..\..\src\scripts\Kalimdor\CavernsOfTime\DarkPortal\boss_aeonus.cpp" />
+    <ClCompile Include="..\..\src\scripts\Kalimdor\CavernsOfTime\DarkPortal\boss_chrono_lord_deja.cpp" />
+    <ClCompile Include="..\..\src\scripts\Kalimdor\CavernsOfTime\DarkPortal\boss_temporus.cpp" />
+    <ClCompile Include="..\..\src\scripts\Kalimdor\CavernsOfTime\DarkPortal\dark_portal.cpp" />
+    <ClCompile Include="..\..\src\scripts\Kalimdor\CavernsOfTime\DarkPortal\instance_dark_portal.cpp" />
+    <ClCompile Include="..\..\src\scripts\Kalimdor\CavernsOfTime\EscapeFromDurnholdeKeep\boss_captain_skarloc.cpp" />
+    <ClCompile Include="..\..\src\scripts\Kalimdor\CavernsOfTime\EscapeFromDurnholdeKeep\boss_epoch_hunter.cpp" />
+    <ClCompile Include="..\..\src\scripts\Kalimdor\CavernsOfTime\EscapeFromDurnholdeKeep\boss_leutenant_drake.cpp" />
+    <ClCompile Include="..\..\src\scripts\Kalimdor\CavernsOfTime\EscapeFromDurnholdeKeep\instance_old_hillsbrad.cpp" />
+    <ClCompile Include="..\..\src\scripts\Kalimdor\CavernsOfTime\EscapeFromDurnholdeKeep\old_hillsbrad.cpp" />
+    <ClCompile Include="..\..\src\scripts\Kalimdor\Maraudon\boss_celebras_the_cursed.cpp" />
+    <ClCompile Include="..\..\src\scripts\Kalimdor\Maraudon\boss_landslide.cpp" />
+    <ClCompile Include="..\..\src\scripts\Kalimdor\Maraudon\boss_noxxion.cpp" />
+    <ClCompile Include="..\..\src\scripts\Kalimdor\Maraudon\boss_princess_theradras.cpp" />
+    <ClCompile Include="..\..\src\scripts\Kalimdor\OnyxiasLair\boss_onyxia.cpp" />
+    <ClCompile Include="..\..\src\scripts\Kalimdor\OnyxiasLair\instance_onyxias_lair.cpp" />
+    <ClCompile Include="..\..\src\scripts\Kalimdor\RazorfenDowns\boss_amnennar_the_coldbringer.cpp" />
+    <ClCompile Include="..\..\src\scripts\Kalimdor\RazorfenDowns\instance_razorfen_downs.cpp" />
+    <ClCompile Include="..\..\src\scripts\Kalimdor\RazorfenDowns\razorfen_downs.cpp" />
+    <ClCompile Include="..\..\src\scripts\Kalimdor\RazorfenKraul\instance_razorfen_kraul.cpp" />
+    <ClCompile Include="..\..\src\scripts\Kalimdor\RazorfenKraul\razorfen_kraul.cpp" />
+    <ClCompile Include="..\..\src\scripts\Kalimdor\RuinsOfAhnQiraj\boss_ayamiss.cpp" />
+    <ClCompile Include="..\..\src\scripts\Kalimdor\RuinsOfAhnQiraj\boss_buru.cpp" />
+    <ClCompile Include="..\..\src\scripts\Kalimdor\RuinsOfAhnQiraj\boss_kurinnaxx.cpp" />
+    <ClCompile Include="..\..\src\scripts\Kalimdor\RuinsOfAhnQiraj\boss_moam.cpp" />
+    <ClCompile Include="..\..\src\scripts\Kalimdor\RuinsOfAhnQiraj\boss_ossirian.cpp" />
+    <ClCompile Include="..\..\src\scripts\Kalimdor\RuinsOfAhnQiraj\boss_rajaxx.cpp" />
+    <ClCompile Include="..\..\src\scripts\Kalimdor\RuinsOfAhnQiraj\instance_ruins_of_ahnqiraj.cpp" />
+    <ClCompile Include="..\..\src\scripts\Kalimdor\TempleOfAhnQiraj\boss_bug_trio.cpp" />
+    <ClCompile Include="..\..\src\scripts\Kalimdor\TempleOfAhnQiraj\boss_cthun.cpp" />
+    <ClCompile Include="..\..\src\scripts\Kalimdor\TempleOfAhnQiraj\boss_fankriss.cpp" />
+    <ClCompile Include="..\..\src\scripts\Kalimdor\TempleOfAhnQiraj\boss_huhuran.cpp" />
+    <ClCompile Include="..\..\src\scripts\Kalimdor\TempleOfAhnQiraj\boss_ouro.cpp" />
+    <ClCompile Include="..\..\src\scripts\Kalimdor\TempleOfAhnQiraj\boss_sartura.cpp" />
+    <ClCompile Include="..\..\src\scripts\Kalimdor\TempleOfAhnQiraj\boss_skeram.cpp" />
+    <ClCompile Include="..\..\src\scripts\Kalimdor\TempleOfAhnQiraj\boss_twinemperors.cpp" />
+    <ClCompile Include="..\..\src\scripts\Kalimdor\TempleOfAhnQiraj\boss_viscidus.cpp" />
+    <ClCompile Include="..\..\src\scripts\Kalimdor\TempleOfAhnQiraj\instance_temple_of_ahnqiraj.cpp" />
+    <ClCompile Include="..\..\src\scripts\Kalimdor\TempleOfAhnQiraj\mob_anubisath_sentinel.cpp" />
+    <ClCompile Include="..\..\src\scripts\Kalimdor\WailingCaverns\instance_wailing_caverns.cpp" />
+    <ClCompile Include="..\..\src\scripts\Kalimdor\WailingCaverns\wailing_caverns.cpp" />
+    <ClCompile Include="..\..\src\scripts\Kalimdor\ZulFarrak\instance_zulfarrak.cpp" />
+    <ClCompile Include="..\..\src\scripts\Kalimdor\ZulFarrak\zulfarrak.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\borean_tundra.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\crystalsong_forest.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\dalaran.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\dragonblight.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\grizzly_hills.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\howling_fjord.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\icecrown.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\isle_of_conquest.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\sholazar_basin.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\storm_peaks.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\zuldrak.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\AzjolNerub\ahnkahet\boss_amanitar.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\AzjolNerub\ahnkahet\boss_elder_nadox.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\AzjolNerub\ahnkahet\boss_herald_volazj.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\AzjolNerub\ahnkahet\boss_jedoga_shadowseeker.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\AzjolNerub\ahnkahet\boss_prince_taldaram.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\AzjolNerub\ahnkahet\instance_ahnkahet.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\AzjolNerub\AzjolNerub\boss_anubarak.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\AzjolNerub\AzjolNerub\boss_hadronox.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\AzjolNerub\AzjolNerub\boss_krikthir_the_gatewatcher.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\AzjolNerub\AzjolNerub\instance_azjol_nerub.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\CrusadersColiseum\TrialOfTheChampion\boss_argent_challenge.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\CrusadersColiseum\TrialOfTheChampion\boss_black_knight.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\CrusadersColiseum\TrialOfTheChampion\boss_grand_champions.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\CrusadersColiseum\TrialOfTheChampion\instance_trial_of_the_champion.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\CrusadersColiseum\TrialOfTheChampion\trial_of_the_champion.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\CrusadersColiseum\TrialOfTheCrusader\boss_anubarak_trial.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\CrusadersColiseum\TrialOfTheCrusader\boss_faction_champions.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\CrusadersColiseum\TrialOfTheCrusader\boss_lord_jaraxxus.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\CrusadersColiseum\TrialOfTheCrusader\boss_northrend_beasts.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\CrusadersColiseum\TrialOfTheCrusader\boss_twin_valkyr.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\CrusadersColiseum\TrialOfTheCrusader\instance_trial_of_the_crusader.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\CrusadersColiseum\TrialOfTheCrusader\trial_of_the_crusader.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\DraktharonKeep\boss_dred.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\DraktharonKeep\boss_novos.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\DraktharonKeep\boss_tharon_ja.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\DraktharonKeep\boss_trollgore.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\DraktharonKeep\instance_drak_tharon_keep.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\FrozenHalls\ForgeOfSouls\boss_bronjahm.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\FrozenHalls\ForgeOfSouls\boss_devourer_of_souls.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\FrozenHalls\ForgeOfSouls\forge_of_souls.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\FrozenHalls\ForgeOfSouls\instance_forge_of_souls.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\FrozenHalls\HallsOfReflection\boss_falric.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\FrozenHalls\HallsOfReflection\boss_marwyn.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\FrozenHalls\HallsOfReflection\halls_of_reflection.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\FrozenHalls\HallsOfReflection\instance_halls_of_reflection.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\FrozenHalls\PitOfSaron\boss_forgemaster_garfrost.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\FrozenHalls\PitOfSaron\boss_krickandick.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\FrozenHalls\PitOfSaron\boss_scourgelord_tyrannus.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\FrozenHalls\PitOfSaron\instance_pit_of_saron.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\FrozenHalls\PitOfSaron\pit_of_saron.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\Gundrak\boss_drakkari_colossus.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\Gundrak\boss_eck.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\Gundrak\boss_gal_darah.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\Gundrak\boss_moorabi.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\Gundrak\boss_slad_ran.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\Gundrak\instance_gundrak.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\IcecrownCitadel\boss_blood_prince_council.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\IcecrownCitadel\boss_blood_queen_lana_thel.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\IcecrownCitadel\boss_deathbringer_saurfang.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\IcecrownCitadel\boss_festergut.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\IcecrownCitadel\boss_lady_deathwhisper.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\IcecrownCitadel\boss_lord_marrowgar.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\IcecrownCitadel\boss_professor_putricide.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\IcecrownCitadel\boss_rotface.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\IcecrownCitadel\boss_sindragosa.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\IcecrownCitadel\icecrown_citadel.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\IcecrownCitadel\icecrown_citadel_teleport.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\IcecrownCitadel\instance_icecrown_citadel.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\Naxxramas\boss_anubrekhan.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\Naxxramas\boss_faerlina.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\Naxxramas\boss_four_horsemen.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\Naxxramas\boss_gluth.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\Naxxramas\boss_gothik.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\Naxxramas\boss_grobbulus.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\Naxxramas\boss_heigan.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\Naxxramas\boss_kelthuzad.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\Naxxramas\boss_loatheb.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\Naxxramas\boss_maexxna.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\Naxxramas\boss_noth.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\Naxxramas\boss_patchwerk.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\Naxxramas\boss_razuvious.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\Naxxramas\boss_sapphiron.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\Naxxramas\boss_thaddius.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\Naxxramas\instance_naxxramas.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\Nexus\EyeOfEternity\boss_malygos.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\Nexus\EyeOfEternity\instance_eye_of_eternity.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\Nexus\Nexus\boss_anomalus.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\Nexus\Nexus\boss_keristrasza.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\Nexus\Nexus\boss_magus_telestra.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\Nexus\Nexus\boss_ormorok.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\Nexus\Nexus\commander_kolurg.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\Nexus\Nexus\commander_stoutbeard.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\Nexus\Nexus\instance_nexus.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\Nexus\Oculus\boss_drakos.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\Nexus\Oculus\boss_eregos.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\Nexus\Oculus\boss_urom.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\Nexus\Oculus\boss_varos.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\Nexus\Oculus\instance_oculus.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\Nexus\Oculus\oculus.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\ObsidianSanctum\boss_sartharion.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\ObsidianSanctum\instance_obsidian_sanctum.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\Ulduar\HallsOfLightning\boss_bjarngrim.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\Ulduar\HallsOfLightning\boss_ionar.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\Ulduar\HallsOfLightning\boss_loken.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\Ulduar\HallsOfLightning\boss_volkhan.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\Ulduar\HallsOfLightning\instance_halls_of_lightning.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\Ulduar\HallsOfStone\boss_krystallus.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\Ulduar\HallsOfStone\boss_maiden_of_grief.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\Ulduar\HallsOfStone\boss_sjonnir.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\Ulduar\HallsOfStone\halls_of_stone.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\Ulduar\HallsOfStone\instance_halls_of_stone.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\Ulduar\ulduar\boss_algalon.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\Ulduar\ulduar\boss_assembly_of_iron.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\Ulduar\ulduar\boss_auriaya.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\Ulduar\ulduar\boss_flame_leviathan.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\Ulduar\ulduar\boss_freya.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\Ulduar\ulduar\boss_general_vezax.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\Ulduar\ulduar\boss_hodir.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\Ulduar\ulduar\boss_ignis.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\Ulduar\ulduar\boss_kologarn.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\Ulduar\ulduar\boss_mimiron.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\Ulduar\ulduar\boss_razorscale.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\Ulduar\ulduar\boss_thorim.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\Ulduar\ulduar\boss_xt002.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\Ulduar\ulduar\boss_yoggsaron.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\Ulduar\ulduar\instance_ulduar.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\Ulduar\ulduar\ulduar_teleporter.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\UtgardeKeep\UtgardeKeep\boss_ingvar_the_plunderer.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\UtgardeKeep\UtgardeKeep\boss_keleseth.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\UtgardeKeep\UtgardeKeep\boss_skarvald_dalronn.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\UtgardeKeep\UtgardeKeep\instance_utgarde_keep.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\UtgardeKeep\UtgardeKeep\utgarde_keep.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\UtgardeKeep\UtgardePinnacle\boss_palehoof.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\UtgardeKeep\UtgardePinnacle\boss_skadi.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\UtgardeKeep\UtgardePinnacle\boss_svala.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\UtgardeKeep\UtgardePinnacle\boss_ymiron.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\UtgardeKeep\UtgardePinnacle\instance_pinnacle.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\VaultOfArchavon\boss_archavon.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\VaultOfArchavon\boss_emalon.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\VaultOfArchavon\boss_koralon.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\VaultOfArchavon\boss_toravon.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\VaultOfArchavon\instance_vault_of_archavon.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\VioletHold\boss_cyanigosa.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\VioletHold\boss_erekem.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\VioletHold\boss_ichoron.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\VioletHold\boss_lavanthor.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\VioletHold\boss_moragg.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\VioletHold\boss_xevozz.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\VioletHold\boss_zuramat.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\VioletHold\instance_violet_hold.cpp" />
+    <ClCompile Include="..\..\src\scripts\Northrend\VioletHold\violet_hold.cpp" />
+    <ClCompile Include="..\..\src\scripts\OutdoorPvP\OutdoorPvPEP.cpp" />
+    <ClCompile Include="..\..\src\scripts\OutdoorPvP\OutdoorPvPHP.cpp" />
+    <ClCompile Include="..\..\src\scripts\OutdoorPvP\OutdoorPvPNA.cpp" />
+    <ClCompile Include="..\..\src\scripts\OutdoorPvP\OutdoorPvPSI.cpp" />
+    <ClCompile Include="..\..\src\scripts\OutdoorPvP\OutdoorPvPTF.cpp" />
+    <ClCompile Include="..\..\src\scripts\OutdoorPvP\OutdoorPvPZM.cpp" />
+    <ClCompile Include="..\..\src\scripts\Outland\blades_edge_mountains.cpp" />
+    <ClCompile Include="..\..\src\scripts\Outland\boss_doomlord_kazzak.cpp" />
+    <ClCompile Include="..\..\src\scripts\Outland\boss_doomwalker.cpp" />
+    <ClCompile Include="..\..\src\scripts\Outland\hellfire_peninsula.cpp" />
+    <ClCompile Include="..\..\src\scripts\Outland\nagrand.cpp" />
+    <ClCompile Include="..\..\src\scripts\Outland\netherstorm.cpp" />
+    <ClCompile Include="..\..\src\scripts\Outland\shadowmoon_valley.cpp" />
+    <ClCompile Include="..\..\src\scripts\Outland\shattrath_city.cpp" />
+    <ClCompile Include="..\..\src\scripts\Outland\terokkar_forest.cpp" />
+    <ClCompile Include="..\..\src\scripts\Outland\zangarmarsh.cpp" />
+    <ClCompile Include="..\..\src\scripts\Outland\Auchindoun\AuchenaiCrypts\boss_exarch_maladaar.cpp" />
+    <ClCompile Include="..\..\src\scripts\Outland\Auchindoun\AuchenaiCrypts\boss_shirrak_the_dead_watcher.cpp" />
+    <ClCompile Include="..\..\src\scripts\Outland\Auchindoun\ManaTombs\boss_nexusprince_shaffar.cpp" />
+    <ClCompile Include="..\..\src\scripts\Outland\Auchindoun\ManaTombs\boss_pandemonius.cpp" />
+    <ClCompile Include="..\..\src\scripts\Outland\Auchindoun\SethekkHalls\boss_darkweaver_syth.cpp" />
+    <ClCompile Include="..\..\src\scripts\Outland\Auchindoun\SethekkHalls\boss_tailonking_ikiss.cpp" />
+    <ClCompile Include="..\..\src\scripts\Outland\Auchindoun\SethekkHalls\instance_sethekk_halls.cpp" />
+    <ClCompile Include="..\..\src\scripts\Outland\Auchindoun\ShadowLabyrinth\boss_ambassador_hellmaw.cpp" />
+    <ClCompile Include="..\..\src\scripts\Outland\Auchindoun\ShadowLabyrinth\boss_blackheart_the_inciter.cpp" />
+    <ClCompile Include="..\..\src\scripts\Outland\Auchindoun\ShadowLabyrinth\boss_grandmaster_vorpil.cpp" />
+    <ClCompile Include="..\..\src\scripts\Outland\Auchindoun\ShadowLabyrinth\boss_murmur.cpp" />
+    <ClCompile Include="..\..\src\scripts\Outland\Auchindoun\ShadowLabyrinth\instance_shadow_labyrinth.cpp" />
+    <ClCompile Include="..\..\src\scripts\Outland\BlackTemple\black_temple.cpp" />
+    <ClCompile Include="..\..\src\scripts\Outland\BlackTemple\boss_bloodboil.cpp" />
+    <ClCompile Include="..\..\src\scripts\Outland\BlackTemple\boss_illidan.cpp" />
+    <ClCompile Include="..\..\src\scripts\Outland\BlackTemple\boss_mother_shahraz.cpp" />
+    <ClCompile Include="..\..\src\scripts\Outland\BlackTemple\boss_reliquary_of_souls.cpp" />
+    <ClCompile Include="..\..\src\scripts\Outland\BlackTemple\boss_shade_of_akama.cpp" />
+    <ClCompile Include="..\..\src\scripts\Outland\BlackTemple\boss_supremus.cpp" />
+    <ClCompile Include="..\..\src\scripts\Outland\BlackTemple\boss_teron_gorefiend.cpp" />
+    <ClCompile Include="..\..\src\scripts\Outland\BlackTemple\boss_warlord_najentus.cpp" />
+    <ClCompile Include="..\..\src\scripts\Outland\BlackTemple\illidari_council.cpp" />
+    <ClCompile Include="..\..\src\scripts\Outland\BlackTemple\instance_black_temple.cpp" />
+    <ClCompile Include="..\..\src\scripts\Outland\CoilfangReservoir\SerpentShrine\boss_fathomlord_karathress.cpp" />
+    <ClCompile Include="..\..\src\scripts\Outland\CoilfangReservoir\SerpentShrine\boss_hydross_the_unstable.cpp" />
+    <ClCompile Include="..\..\src\scripts\Outland\CoilfangReservoir\SerpentShrine\boss_lady_vashj.cpp" />
+    <ClCompile Include="..\..\src\scripts\Outland\CoilfangReservoir\SerpentShrine\boss_leotheras_the_blind.cpp" />
+    <ClCompile Include="..\..\src\scripts\Outland\CoilfangReservoir\SerpentShrine\boss_lurker_below.cpp" />
+    <ClCompile Include="..\..\src\scripts\Outland\CoilfangReservoir\SerpentShrine\boss_morogrim_tidewalker.cpp" />
+    <ClCompile Include="..\..\src\scripts\Outland\CoilfangReservoir\SerpentShrine\instance_serpent_shrine.cpp" />
+    <ClCompile Include="..\..\src\scripts\Outland\CoilfangReservoir\SteamVault\boss_hydromancer_thespia.cpp" />
+    <ClCompile Include="..\..\src\scripts\Outland\CoilfangReservoir\SteamVault\boss_mekgineer_steamrigger.cpp" />
+    <ClCompile Include="..\..\src\scripts\Outland\CoilfangReservoir\SteamVault\boss_warlord_kalithresh.cpp" />
+    <ClCompile Include="..\..\src\scripts\Outland\CoilfangReservoir\SteamVault\instance_steam_vault.cpp" />
+    <ClCompile Include="..\..\src\scripts\Outland\CoilfangReservoir\underbog\boss_hungarfen.cpp" />
+    <ClCompile Include="..\..\src\scripts\Outland\CoilfangReservoir\underbog\boss_the_black_stalker.cpp" />
+    <ClCompile Include="..\..\src\scripts\Outland\GruulsLair\boss_gruul.cpp" />
+    <ClCompile Include="..\..\src\scripts\Outland\GruulsLair\boss_high_king_maulgar.cpp" />
+    <ClCompile Include="..\..\src\scripts\Outland\GruulsLair\instance_gruuls_lair.cpp" />
+    <ClCompile Include="..\..\src\scripts\Outland\HellfireCitadel\BloodFurnace\boss_broggok.cpp" />
+    <ClCompile Include="..\..\src\scripts\Outland\HellfireCitadel\BloodFurnace\boss_kelidan_the_breaker.cpp" />
+    <ClCompile Include="..\..\src\scripts\Outland\HellfireCitadel\BloodFurnace\boss_the_maker.cpp" />
+    <ClCompile Include="..\..\src\scripts\Outland\HellfireCitadel\BloodFurnace\instance_blood_furnace.cpp" />
+    <ClCompile Include="..\..\src\scripts\Outland\HellfireCitadel\HellfireRamparts\boss_omor_the_unscarred.cpp" />
+    <ClCompile Include="..\..\src\scripts\Outland\HellfireCitadel\HellfireRamparts\boss_vazruden_the_herald.cpp" />
+    <ClCompile Include="..\..\src\scripts\Outland\HellfireCitadel\HellfireRamparts\boss_watchkeeper_gargolmar.cpp" />
+    <ClCompile Include="..\..\src\scripts\Outland\HellfireCitadel\HellfireRamparts\instance_hellfire_ramparts.cpp" />
+    <ClCompile Include="..\..\src\scripts\Outland\HellfireCitadel\MagtheridonsLair\boss_magtheridon.cpp" />
+    <ClCompile Include="..\..\src\scripts\Outland\HellfireCitadel\MagtheridonsLair\instance_magtheridons_lair.cpp" />
+    <ClCompile Include="..\..\src\scripts\Outland\HellfireCitadel\ShatteredHalls\boss_nethekurse.cpp" />
+    <ClCompile Include="..\..\src\scripts\Outland\HellfireCitadel\ShatteredHalls\boss_warbringer_omrogg.cpp" />
+    <ClCompile Include="..\..\src\scripts\Outland\HellfireCitadel\ShatteredHalls\boss_warchief_kargath_bladefist.cpp" />
+    <ClCompile Include="..\..\src\scripts\Outland\HellfireCitadel\ShatteredHalls\instance_shattered_halls.cpp" />
+    <ClCompile Include="..\..\src\scripts\Outland\TempestKeep\arcatraz\arcatraz.cpp" />
+    <ClCompile Include="..\..\src\scripts\Outland\TempestKeep\arcatraz\boss_harbinger_skyriss.cpp" />
+    <ClCompile Include="..\..\src\scripts\Outland\TempestKeep\arcatraz\instance_arcatraz.cpp" />
+    <ClCompile Include="..\..\src\scripts\Outland\TempestKeep\botanica\boss_high_botanist_freywinn.cpp" />
+    <ClCompile Include="..\..\src\scripts\Outland\TempestKeep\botanica\boss_laj.cpp" />
+    <ClCompile Include="..\..\src\scripts\Outland\TempestKeep\botanica\boss_warp_splinter.cpp" />
+    <ClCompile Include="..\..\src\scripts\Outland\TempestKeep\Eye\boss_alar.cpp" />
+    <ClCompile Include="..\..\src\scripts\Outland\TempestKeep\Eye\boss_astromancer.cpp" />
+    <ClCompile Include="..\..\src\scripts\Outland\TempestKeep\Eye\boss_kaelthas.cpp" />
+    <ClCompile Include="..\..\src\scripts\Outland\TempestKeep\Eye\boss_void_reaver.cpp" />
+    <ClCompile Include="..\..\src\scripts\Outland\TempestKeep\Eye\instance_the_eye.cpp" />
+    <ClCompile Include="..\..\src\scripts\Outland\TempestKeep\Eye\the_eye.cpp" />
+    <ClCompile Include="..\..\src\scripts\Outland\TempestKeep\Mechanar\boss_gatewatcher_gyrokill.cpp" />
+    <ClCompile Include="..\..\src\scripts\Outland\TempestKeep\Mechanar\boss_gatewatcher_ironhand.cpp" />
+    <ClCompile Include="..\..\src\scripts\Outland\TempestKeep\Mechanar\boss_nethermancer_sepethrea.cpp" />
+    <ClCompile Include="..\..\src\scripts\Outland\TempestKeep\Mechanar\boss_pathaleon_the_calculator.cpp" />
+    <ClCompile Include="..\..\src\scripts\Outland\TempestKeep\Mechanar\instance_mechanar.cpp" />
+    <ClCompile Include="..\..\src\scripts\Spells\spell_dk.cpp" />
+    <ClCompile Include="..\..\src\scripts\Spells\spell_druid.cpp" />
+    <ClCompile Include="..\..\src\scripts\Spells\spell_generic.cpp" />
+    <ClCompile Include="..\..\src\scripts\Spells\spell_hunter.cpp" />
+    <ClCompile Include="..\..\src\scripts\Spells\spell_item.cpp" />
+    <ClCompile Include="..\..\src\scripts\Spells\spell_mage.cpp" />
+    <ClCompile Include="..\..\src\scripts\Spells\spell_paladin.cpp" />
+    <ClCompile Include="..\..\src\scripts\Spells\spell_priest.cpp" />
+    <ClCompile Include="..\..\src\scripts\Spells\spell_quest.cpp" />
+    <ClCompile Include="..\..\src\scripts\Spells\spell_rogue.cpp" />
+    <ClCompile Include="..\..\src\scripts\Spells\spell_shaman.cpp" />
+    <ClCompile Include="..\..\src\scripts\Spells\spell_warlock.cpp" />
+    <ClCompile Include="..\..\src\scripts\Spells\spell_warrior.cpp" />
+    <ClCompile Include="..\..\src\scripts\World\achievement_scripts.cpp" />
+    <ClCompile Include="..\..\src\scripts\World\areatrigger_scripts.cpp" />
+    <ClCompile Include="..\..\src\scripts\World\boss_emeriss.cpp" />
+    <ClCompile Include="..\..\src\scripts\World\boss_lethon.cpp" />
+    <ClCompile Include="..\..\src\scripts\World\boss_taerar.cpp" />
+    <ClCompile Include="..\..\src\scripts\World\boss_ysondre.cpp" />
+    <ClCompile Include="..\..\src\scripts\World\chat_log.cpp" />
+    <ClCompile Include="..\..\src\scripts\World\go_scripts.cpp" />
+    <ClCompile Include="..\..\src\scripts\World\guards.cpp" />
+    <ClCompile Include="..\..\src\scripts\World\item_scripts.cpp" />
+    <ClCompile Include="..\..\src\scripts\World\mob_generic_creature.cpp" />
+    <ClCompile Include="..\..\src\scripts\World\npc_innkeeper.cpp" />
+    <ClCompile Include="..\..\src\scripts\World\npc_professions.cpp" />
+    <ClCompile Include="..\..\src\scripts\World\npc_taxi.cpp" />
+    <ClCompile Include="..\..\src\scripts\World\npcs_special.cpp" />
+    <ClCompile Include="..\..\src\scripts\Commands\cs_account.cpp" />
+    <ClCompile Include="..\..\src\scripts\Commands\cs_achievement.cpp" />
+    <ClCompile Include="..\..\src\scripts\Commands\cs_debug.cpp" />
+    <ClCompile Include="..\..\src\scripts\Commands\cs_event.cpp" />
+    <ClCompile Include="..\..\src\scripts\Commands\cs_gm.cpp" />
+    <ClCompile Include="..\..\src\scripts\Commands\cs_go.cpp" />
+    <ClCompile Include="..\..\src\scripts\Commands\cs_gobject.cpp" />
+    <ClCompile Include="..\..\src\scripts\Commands\cs_honor.cpp" />
+    <ClCompile Include="..\..\src\scripts\Commands\cs_learn.cpp" />
+    <ClCompile Include="..\..\src\scripts\Commands\cs_modify.cpp" />
+    <ClCompile Include="..\..\src\scripts\Commands\cs_npc.cpp" />
+    <ClCompile Include="..\..\src\scripts\Commands\cs_quest.cpp" />
+    <ClCompile Include="..\..\src\scripts\Commands\cs_reload.cpp" />
+    <ClCompile Include="..\..\src\scripts\Commands\cs_tele.cpp" />
+    <ClCompile Include="..\..\src\scripts\Commands\cs_titles.cpp" />
+    <ClCompile Include="..\..\src\scripts\Commands\cs_wp.cpp" />
+    <ClCompile Include="..\..\src\main\PCH\PCH.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">..\..\src\main\PCH\PCH.h</PrecompiledHeaderFile>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">..\..\src\main\PCH\PCH.h</PrecompiledHeaderFile>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\..\src\main\PCH\PCH.h</PrecompiledHeaderFile>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">..\..\src\main\PCH\PCH.h</PrecompiledHeaderFile>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\main\Accounts\AccountMgr.h" />
+    <ClInclude Include="..\..\src\main\Achievements\AchievementMgr.h" />
+    <ClInclude Include="..\..\src\main\Addons\AddonMgr.h" />
+    <ClInclude Include="..\..\src\main\AI\CreatureAI.h" />
+    <ClInclude Include="..\..\src\main\AI\CreatureAIFactory.h" />
+    <ClInclude Include="..\..\src\main\AI\CreatureAIImpl.h" />
+    <ClInclude Include="..\..\src\main\AI\CreatureAIRegistry.h" />
+    <ClInclude Include="..\..\src\main\AI\CreatureAISelector.h" />
+    <ClInclude Include="..\..\src\main\AI\CoreAI\CombatAI.h" />
+    <ClInclude Include="..\..\src\main\AI\CoreAI\GameObjectAI.h" />
+    <ClInclude Include="..\..\src\main\AI\CoreAI\GuardAI.h" />
+    <ClInclude Include="..\..\src\main\AI\CoreAI\PassiveAI.h" />
+    <ClInclude Include="..\..\src\main\AI\CoreAI\PetAI.h" />
+    <ClInclude Include="..\..\src\main\AI\CoreAI\ReactorAI.h" />
+    <ClInclude Include="..\..\src\main\AI\CoreAI\TotemAI.h" />
+    <ClInclude Include="..\..\src\main\AI\CoreAI\UnitAI.h" />
+    <ClInclude Include="..\..\src\main\AI\EventAI\CreatureEventAI.h" />
+    <ClInclude Include="..\..\src\main\AI\EventAI\CreatureEventAIMgr.h" />
+    <ClInclude Include="..\..\src\main\AI\ScriptedAI\ScriptedCreature.h" />
+    <ClInclude Include="..\..\src\main\AI\ScriptedAI\ScriptedEscortAI.h" />
+    <ClInclude Include="..\..\src\main\AI\ScriptedAI\ScriptedFollowerAI.h" />
+    <ClInclude Include="..\..\src\main\AI\ScriptedAI\ScriptedGossip.h" />
+    <ClInclude Include="..\..\src\main\AI\ScriptedAI\ScriptedSimpleAI.h" />
+    <ClInclude Include="..\..\src\main\AI\SmartScripts\SmartAI.h" />
+    <ClInclude Include="..\..\src\main\AI\SmartScripts\SmartScript.h" />
+    <ClInclude Include="..\..\src\main\AI\SmartScripts\SmartScriptMgr.h" />
+    <ClInclude Include="..\..\src\main\AuctionHouse\AuctionHouseMgr.h" />
+    <ClInclude Include="..\..\src\main\Battlegrounds\ArenaTeam.h" />
+    <ClInclude Include="..\..\src\main\Battlegrounds\Battleground.h" />
+    <ClInclude Include="..\..\src\main\Battlegrounds\BattlegroundMgr.h" />
+    <ClInclude Include="..\..\src\main\Battlegrounds\BattlegroundQueue.h" />
+    <ClInclude Include="..\..\src\main\Battlegrounds\Zones\BattlegroundAA.h" />
+    <ClInclude Include="..\..\src\main\Battlegrounds\Zones\BattlegroundAB.h" />
+    <ClInclude Include="..\..\src\main\Battlegrounds\Zones\BattlegroundAV.h" />
+    <ClInclude Include="..\..\src\main\Battlegrounds\Zones\BattlegroundBE.h" />
+    <ClInclude Include="..\..\src\main\Battlegrounds\Zones\BattlegroundDS.h" />
+    <ClInclude Include="..\..\src\main\Battlegrounds\Zones\BattlegroundEY.h" />
+    <ClInclude Include="..\..\src\main\Battlegrounds\Zones\BattlegroundIC.h" />
+    <ClInclude Include="..\..\src\main\Battlegrounds\Zones\BattlegroundNA.h" />
+    <ClInclude Include="..\..\src\main\Battlegrounds\Zones\BattlegroundRB.h" />
+    <ClInclude Include="..\..\src\main\Battlegrounds\Zones\BattlegroundRL.h" />
+    <ClInclude Include="..\..\src\main\Battlegrounds\Zones\BattlegroundRV.h" />
+    <ClInclude Include="..\..\src\main\Battlegrounds\Zones\BattlegroundSA.h" />
+    <ClInclude Include="..\..\src\main\Battlegrounds\Zones\BattlegroundWS.h" />
+    <ClInclude Include="..\..\src\main\Calendar\Calendar.h" />
+    <ClInclude Include="..\..\src\main\Chat\Chat.h" />
+    <ClInclude Include="..\..\src\main\Chat\Channels\Channel.h" />
+    <ClInclude Include="..\..\src\main\Chat\Channels\ChannelMgr.h" />
+    <ClInclude Include="..\..\src\main\Combat\HostileRefManager.h" />
+    <ClInclude Include="..\..\src\main\Combat\ThreatManager.h" />
+    <ClInclude Include="..\..\src\main\Combat\UnitEvents.h" />
+    <ClInclude Include="..\..\src\main\Conditions\ConditionMgr.h" />
+    <ClInclude Include="..\..\src\main\Conditions\DisableMgr.h" />
+    <ClInclude Include="..\..\src\main\DataStores\DB2fmt.h" />
+    <ClInclude Include="..\..\src\main\DataStores\DB2Stores.h" />
+    <ClInclude Include="..\..\src\main\DataStores\DB2Structure.h" />
+    <ClInclude Include="..\..\src\main\DataStores\DBCEnums.h" />
+    <ClInclude Include="..\..\src\main\DataStores\DBCfmt.h" />
+    <ClInclude Include="..\..\src\main\DataStores\DBCStores.h" />
+    <ClInclude Include="..\..\src\main\DataStores\DBCStructure.h" />
+    <ClInclude Include="..\..\src\main\DungeonFinding\LFG.h" />
+    <ClInclude Include="..\..\src\main\DungeonFinding\LFGGroupData.h" />
+    <ClInclude Include="..\..\src\main\DungeonFinding\LFGMgr.h" />
+    <ClInclude Include="..\..\src\main\DungeonFinding\LFGPlayerData.h" />
+    <ClInclude Include="..\..\src\main\DungeonFinding\LFGScripts.h" />
+    <ClInclude Include="..\..\src\main\Entities\Corpse\Corpse.h" />
+    <ClInclude Include="..\..\src\main\Entities\Creature\Creature.h" />
+    <ClInclude Include="..\..\src\main\Entities\Creature\CreatureGroups.h" />
+    <ClInclude Include="..\..\src\main\Entities\Creature\GossipDef.h" />
+    <ClInclude Include="..\..\src\main\Entities\Creature\TemporarySummon.h" />
+    <ClInclude Include="..\..\src\main\Entities\DynamicObject\DynamicObject.h" />
+    <ClInclude Include="..\..\src\main\Entities\GameObject\GameObject.h" />
+    <ClInclude Include="..\..\src\main\Entities\Item\Item.h" />
+    <ClInclude Include="..\..\src\main\Entities\Item\ItemEnchantmentMgr.h" />
+    <ClInclude Include="..\..\src\main\Entities\Item\ItemPrototype.h" />
+    <ClInclude Include="..\..\src\main\Entities\Item\Container\Bag.h" />
+    <ClInclude Include="..\..\src\main\Entities\Object\Object.h" />
+    <ClInclude Include="..\..\src\main\Entities\Object\ObjectDefines.h" />
+    <ClInclude Include="..\..\src\main\Entities\Object\ObjectPosSelector.h" />
+    <ClInclude Include="..\..\src\main\Entities\Object\Updates\UpdateData.h" />
+    <ClInclude Include="..\..\src\main\Entities\Object\Updates\UpdateFields.h" />
+    <ClInclude Include="..\..\src\main\Entities\Object\Updates\UpdateMask.h" />
+    <ClInclude Include="..\..\src\main\Entities\Pet\Pet.h" />
+    <ClInclude Include="..\..\src\main\Entities\Player\Player.h" />
+    <ClInclude Include="..\..\src\main\Entities\Player\PLevel.h" />
+    <ClInclude Include="..\..\src\main\Entities\Player\SocialMgr.h" />
+    <ClInclude Include="..\..\src\main\Entities\Totem\Totem.h" />
+    <ClInclude Include="..\..\src\main\Entities\Transport\Transport.h" />
+    <ClInclude Include="..\..\src\main\Entities\Unit\Unit.h" />
+    <ClInclude Include="..\..\src\main\Entities\Vehicle\Vehicle.h" />
+    <ClInclude Include="..\..\src\main\Events\GameEventMgr.h" />
+    <ClInclude Include="..\..\src\main\Globals\ObjectAccessor.h" />
+    <ClInclude Include="..\..\src\main\Globals\ObjectMgr.h" />
+    <ClInclude Include="..\..\src\main\Grids\Grid.h" />
+    <ClInclude Include="..\..\src\main\Grids\GridDefines.h" />
+    <ClInclude Include="..\..\src\main\Grids\GridLoader.h" />
+    <ClInclude Include="..\..\src\main\Grids\GridReference.h" />
+    <ClInclude Include="..\..\src\main\Grids\GridRefManager.h" />
+    <ClInclude Include="..\..\src\main\Grids\GridStates.h" />
+    <ClInclude Include="..\..\src\main\Grids\NGrid.h" />
+    <ClInclude Include="..\..\src\main\Grids\ObjectGridLoader.h" />
+    <ClInclude Include="..\..\src\main\Grids\Cells\Cell.h" />
+    <ClInclude Include="..\..\src\main\Grids\Cells\CellImpl.h" />
+    <ClInclude Include="..\..\src\main\Grids\Notifiers\GridNotifiers.h" />
+    <ClInclude Include="..\..\src\main\Grids\Notifiers\GridNotifiersImpl.h" />
+    <ClInclude Include="..\..\src\main\Groups\Group.h" />
+    <ClInclude Include="..\..\src\main\Groups\GroupReference.h" />
+    <ClInclude Include="..\..\src\main\Groups\GroupRefManager.h" />
+    <ClInclude Include="..\..\src\main\Guilds\Guild.h" />
+    <ClInclude Include="..\..\src\main\Instances\InstanceSaveMgr.h" />
+    <ClInclude Include="..\..\src\main\Instances\InstanceScript.h" />
+    <ClInclude Include="..\..\src\main\Loot\LootMgr.h" />
+    <ClInclude Include="..\..\src\main\Mails\Mail.h" />
+    <ClInclude Include="..\..\src\main\Maps\Map.h" />
+    <ClInclude Include="..\..\src\main\Maps\MapInstanced.h" />
+    <ClInclude Include="..\..\src\main\Maps\MapManager.h" />
+    <ClInclude Include="..\..\src\main\Maps\MapReference.h" />
+    <ClInclude Include="..\..\src\main\Maps\MapRefManager.h" />
+    <ClInclude Include="..\..\src\main\Maps\MapUpdater.h" />
+    <ClInclude Include="..\..\src\main\Maps\ZoneScript.h" />
+    <ClInclude Include="..\..\src\main\Miscellaneous\Formulas.h" />
+    <ClInclude Include="..\..\src\main\Miscellaneous\Language.h" />
+    <ClInclude Include="..\..\src\main\Miscellaneous\SharedDefines.h" />
+    <ClInclude Include="..\..\src\main\Movement\DestinationHolder.h" />
+    <ClInclude Include="..\..\src\main\Movement\DestinationHolderImp.h" />
+    <ClInclude Include="..\..\src\main\Movement\FollowerReference.h" />
+    <ClInclude Include="..\..\src\main\Movement\FollowerRefManager.h" />
+    <ClInclude Include="..\..\src\main\Movement\MotionMaster.h" />
+    <ClInclude Include="..\..\src\main\Movement\MovementGenerator.h" />
+    <ClInclude Include="..\..\src\main\Movement\MovementGeneratorImpl.h" />
+    <ClInclude Include="..\..\src\main\Movement\Traveller.h" />
+    <ClInclude Include="..\..\src\main\Movement\MovementGenerators\ConfusedMovementGenerator.h" />
+    <ClInclude Include="..\..\src\main\Movement\MovementGenerators\FleeingMovementGenerator.h" />
+    <ClInclude Include="..\..\src\main\Movement\MovementGenerators\HomeMovementGenerator.h" />
+    <ClInclude Include="..\..\src\main\Movement\MovementGenerators\IdleMovementGenerator.h" />
+    <ClInclude Include="..\..\src\main\Movement\MovementGenerators\PointMovementGenerator.h" />
+    <ClInclude Include="..\..\src\main\Movement\MovementGenerators\RandomMovementGenerator.h" />
+    <ClInclude Include="..\..\src\main\Movement\MovementGenerators\TargetedMovementGenerator.h" />
+    <ClInclude Include="..\..\src\main\Movement\MovementGenerators\WaypointMovementGenerator.h" />
+    <ClInclude Include="..\..\src\main\Movement\Waypoints\Path.h" />
+    <ClInclude Include="..\..\src\main\Movement\Waypoints\WaypointManager.h" />
+    <ClInclude Include="..\..\src\main\OutdoorPvP\OutdoorPvP.h" />
+    <ClInclude Include="..\..\src\main\OutdoorPvP\OutdoorPvPMgr.h" />
+    <ClInclude Include="..\..\src\main\Pools\PoolMgr.h" />
+    <ClInclude Include="..\..\src\main\Quests\QuestDef.h" />
+    <ClInclude Include="..\..\src\main\Reputation\ReputationMgr.h" />
+    <ClInclude Include="..\..\src\main\Scripting\ScriptLoader.h" />
+    <ClInclude Include="..\..\src\main\Scripting\ScriptMgr.h" />
+    <ClInclude Include="..\..\src\main\Scripting\ScriptSystem.h" />
+    <ClInclude Include="..\..\src\main\Server\WorldSession.h" />
+    <ClInclude Include="..\..\src\main\Server\WorldSocket.h" />
+    <ClInclude Include="..\..\src\main\Server\WorldSocketMgr.h" />
+    <ClInclude Include="..\..\src\main\Server\Protocol\Opcodes.h" />
+    <ClInclude Include="..\..\src\main\Server\Protocol\WorldLog.h" />
+    <ClInclude Include="..\..\src\main\Server\Protocol\Handlers\AddonHandler.h" />
+    <ClInclude Include="..\..\src\main\Server\Protocol\Handlers\NPCHandler.h" />
+    <ClInclude Include="..\..\src\main\Skills\SkillDiscovery.h" />
+    <ClInclude Include="..\..\src\main\Skills\SkillExtraItems.h" />
+    <ClInclude Include="..\..\src\main\Spells\Spell.h" />
+    <ClInclude Include="..\..\src\main\Spells\SpellMgr.h" />
+    <ClInclude Include="..\..\src\main\Spells\SpellScript.h" />
+    <ClInclude Include="..\..\src\main\Spells\Auras\SpellAuraDefines.h" />
+    <ClInclude Include="..\..\src\main\Spells\Auras\SpellAuraEffects.h" />
+    <ClInclude Include="..\..\src\main\Spells\Auras\SpellAuras.h" />
+    <ClInclude Include="..\..\src\main\Texts\CreatureTextMgr.h" />
+    <ClInclude Include="..\..\src\main\Tickets\TicketMgr.h" />
+    <ClInclude Include="..\..\src\main\Tools\CharacterDatabaseCleaner.h" />
+    <ClInclude Include="..\..\src\main\Tools\PlayerDump.h" />
+    <ClInclude Include="..\..\src\main\Weather\Weather.h" />
+    <ClInclude Include="..\..\src\main\Weather\WeatherMgr.h" />
+    <ClInclude Include="..\..\src\main\World\World.h" />
+    <ClInclude Include="..\..\src\scripts\EasternKingdoms\BlackrockDepths\blackrock_depths.h" />
+    <ClInclude Include="..\..\src\scripts\EasternKingdoms\Deadmines\deadmines.h" />
+    <ClInclude Include="..\..\src\scripts\EasternKingdoms\Gnomeregan\gnomeregan.h" />
+    <ClInclude Include="..\..\src\scripts\EasternKingdoms\Karazhan\karazhan.h" />
+    <ClInclude Include="..\..\src\scripts\EasternKingdoms\MagistersTerrace\magisters_terrace.h" />
+    <ClInclude Include="..\..\src\scripts\EasternKingdoms\MoltenCore\molten_core.h" />
+    <ClInclude Include="..\..\src\scripts\EasternKingdoms\ScarletMonastery\scarlet_monastery.h" />
+    <ClInclude Include="..\..\src\scripts\EasternKingdoms\Scholomance\scholomance.h" />
+    <ClInclude Include="..\..\src\scripts\EasternKingdoms\ShadowfangKeep\shadowfang_keep.h" />
+    <ClInclude Include="..\..\src\scripts\EasternKingdoms\Stratholme\stratholme.h" />
+    <ClInclude Include="..\..\src\scripts\EasternKingdoms\SunkenTemple\sunken_temple.h" />
+    <ClInclude Include="..\..\src\scripts\EasternKingdoms\SunwellPlateau\sunwell_plateau.h" />
+    <ClInclude Include="..\..\src\scripts\EasternKingdoms\Uldaman\uldaman.h" />
+    <ClInclude Include="..\..\src\scripts\EasternKingdoms\ZulAman\zulaman.h" />
+    <ClInclude Include="..\..\src\scripts\EasternKingdoms\ZulGurub\zulgurub.h" />
+    <ClInclude Include="..\..\src\scripts\Kalimdor\BlackfathomDeeps\blackfathom_deeps.h" />
+    <ClInclude Include="..\..\src\scripts\Kalimdor\CavernsOfTime\BattleForMountHyjal\hyjal.h" />
+    <ClInclude Include="..\..\src\scripts\Kalimdor\CavernsOfTime\BattleForMountHyjal\hyjal_trash.h" />
+    <ClInclude Include="..\..\src\scripts\Kalimdor\CavernsOfTime\BattleForMountHyjal\hyjalAI.h" />
+    <ClInclude Include="..\..\src\scripts\Kalimdor\CavernsOfTime\CullingOfStratholme\culling_of_stratholme.h" />
+    <ClInclude Include="..\..\src\scripts\Kalimdor\CavernsOfTime\DarkPortal\dark_portal.h" />
+    <ClInclude Include="..\..\src\scripts\Kalimdor\CavernsOfTime\EscapeFromDurnholdeKeep\old_hillsbrad.h" />
+    <ClInclude Include="..\..\src\scripts\Kalimdor\OnyxiasLair\onyxias_lair.h" />
+    <ClInclude Include="..\..\src\scripts\Kalimdor\RazorfenDowns\razorfen_downs.h" />
+    <ClInclude Include="..\..\src\scripts\Kalimdor\RazorfenKraul\razorfen_kraul.h" />
+    <ClInclude Include="..\..\src\scripts\Kalimdor\RuinsOfAhnQiraj\ruins_of_ahnqiraj.h" />
+    <ClInclude Include="..\..\src\scripts\Kalimdor\TempleOfAhnQiraj\temple_of_ahnqiraj.h" />
+    <ClInclude Include="..\..\src\scripts\Kalimdor\WailingCaverns\wailing_caverns.h" />
+    <ClInclude Include="..\..\src\scripts\Kalimdor\ZulFarrak\zulfarrak.h" />
+    <ClInclude Include="..\..\src\scripts\Northrend\AzjolNerub\ahnkahet\ahnkahet.h" />
+    <ClInclude Include="..\..\src\scripts\Northrend\AzjolNerub\AzjolNerub\azjol_nerub.h" />
+    <ClInclude Include="..\..\src\scripts\Northrend\CrusadersColiseum\TrialOfTheChampion\trial_of_the_champion.h" />
+    <ClInclude Include="..\..\src\scripts\Northrend\CrusadersColiseum\TrialOfTheCrusader\trial_of_the_crusader.h" />
+    <ClInclude Include="..\..\src\scripts\Northrend\DraktharonKeep\drak_tharon_keep.h" />
+    <ClInclude Include="..\..\src\scripts\Northrend\FrozenHalls\ForgeOfSouls\forge_of_souls.h" />
+    <ClInclude Include="..\..\src\scripts\Northrend\FrozenHalls\HallsOfReflection\halls_of_reflection.h" />
+    <ClInclude Include="..\..\src\scripts\Northrend\FrozenHalls\PitOfSaron\pit_of_saron.h" />
+    <ClInclude Include="..\..\src\scripts\Northrend\Gundrak\gundrak.h" />
+    <ClInclude Include="..\..\src\scripts\Northrend\IcecrownCitadel\icecrown_citadel.h" />
+    <ClInclude Include="..\..\src\scripts\Northrend\Naxxramas\naxxramas.h" />
+    <ClInclude Include="..\..\src\scripts\Northrend\Nexus\EyeOfEternity\eye_of_eternity.h" />
+    <ClInclude Include="..\..\src\scripts\Northrend\Nexus\Nexus\nexus.h" />
+    <ClInclude Include="..\..\src\scripts\Northrend\Nexus\Oculus\oculus.h" />
+    <ClInclude Include="..\..\src\scripts\Northrend\ObsidianSanctum\obsidian_sanctum.h" />
+    <ClInclude Include="..\..\src\scripts\Northrend\Ulduar\HallsOfLightning\halls_of_lightning.h" />
+    <ClInclude Include="..\..\src\scripts\Northrend\Ulduar\HallsOfStone\halls_of_stone.h" />
+    <ClInclude Include="..\..\src\scripts\Northrend\Ulduar\ulduar\ulduar.h" />
+    <ClInclude Include="..\..\src\scripts\Northrend\UtgardeKeep\UtgardeKeep\utgarde_keep.h" />
+    <ClInclude Include="..\..\src\scripts\Northrend\UtgardeKeep\UtgardePinnacle\utgarde_pinnacle.h" />
+    <ClInclude Include="..\..\src\scripts\Northrend\VaultOfArchavon\vault_of_archavon.h" />
+    <ClInclude Include="..\..\src\scripts\Northrend\VioletHold\violet_hold.h" />
+    <ClInclude Include="..\..\src\scripts\OutdoorPvP\OutdoorPvPEP.h" />
+    <ClInclude Include="..\..\src\scripts\OutdoorPvP\OutdoorPvPHP.h" />
+    <ClInclude Include="..\..\src\scripts\OutdoorPvP\OutdoorPvPNA.h" />
+    <ClInclude Include="..\..\src\scripts\OutdoorPvP\OutdoorPvPSI.h" />
+    <ClInclude Include="..\..\src\scripts\OutdoorPvP\OutdoorPvPTF.h" />
+    <ClInclude Include="..\..\src\scripts\OutdoorPvP\OutdoorPvPZM.h" />
+    <ClInclude Include="..\..\src\scripts\Outland\Auchindoun\SethekkHalls\sethekk_halls.h" />
+    <ClInclude Include="..\..\src\scripts\Outland\Auchindoun\ShadowLabyrinth\shadow_labyrinth.h" />
+    <ClInclude Include="..\..\src\scripts\Outland\BlackTemple\black_temple.h" />
+    <ClInclude Include="..\..\src\scripts\Outland\CoilfangReservoir\SerpentShrine\serpent_shrine.h" />
+    <ClInclude Include="..\..\src\scripts\Outland\CoilfangReservoir\SteamVault\steam_vault.h" />
+    <ClInclude Include="..\..\src\scripts\Outland\GruulsLair\gruuls_lair.h" />
+    <ClInclude Include="..\..\src\scripts\Outland\HellfireCitadel\BloodFurnace\blood_furnace.h" />
+    <ClInclude Include="..\..\src\scripts\Outland\HellfireCitadel\HellfireRamparts\hellfire_ramparts.h" />
+    <ClInclude Include="..\..\src\scripts\Outland\HellfireCitadel\MagtheridonsLair\magtheridons_lair.h" />
+    <ClInclude Include="..\..\src\scripts\Outland\HellfireCitadel\ShatteredHalls\shattered_halls.h" />
+    <ClInclude Include="..\..\src\scripts\Outland\TempestKeep\arcatraz\arcatraz.h" />
+    <ClInclude Include="..\..\src\scripts\Outland\TempestKeep\Eye\the_eye.h" />
+    <ClInclude Include="..\..\src\scripts\Outland\TempestKeep\Mechanar\mechanar.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="E_ZLIB.vcxproj">
+      <Project>{8f1dea42-6a5b-4b62-839d-c141a7bfacf2}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

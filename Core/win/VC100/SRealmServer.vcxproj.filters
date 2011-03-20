@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Auth">
+      <UniqueIdentifier>{b2ea6726-fed5-4fbf-bfd5-6e14bfbab52c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Realms">
+      <UniqueIdentifier>{f08330bb-c030-4833-90d5-568a05295a2f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Server">
+      <UniqueIdentifier>{4d5a59ae-4a8d-47f5-9f1f-848930430a23}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\server\realm\Auth\AuthCodes.cpp">
+      <Filter>Auth</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\server\realm\Realms\RealmList.cpp">
+      <Filter>Realms</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\server\realm\Server\AuthSocket.cpp">
+      <Filter>Server</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\server\realm\Server\RealmSocket.cpp">
+      <Filter>Server</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\server\realm\Main.cpp" />
+    <ClCompile Include="..\..\src\server\realm\PCH\realmPCH.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\server\realm\Auth\AuthCodes.h">
+      <Filter>Auth</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\server\realm\Realms\RealmList.h">
+      <Filter>Realms</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\server\realm\Server\AuthSocket.h">
+      <Filter>Server</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\server\realm\Server\RealmAcceptor.h">
+      <Filter>Server</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\server\realm\Server\RealmSocket.h">
+      <Filter>Server</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="..\..\src\server\realm\realm.rc" />
+  </ItemGroup>
+</Project>

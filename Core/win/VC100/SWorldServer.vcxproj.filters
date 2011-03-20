@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="CommandLine">
+      <UniqueIdentifier>{22f34dc8-f3c7-4174-a599-ac8701f7c9a5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RA">
+      <UniqueIdentifier>{1b3d634f-dc2d-42fc-9fef-019e2cee6b81}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SCSoap">
+      <UniqueIdentifier>{3290be61-451a-42f9-8a61-2a80ce28dc60}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="WorldThread">
+      <UniqueIdentifier>{8c181a28-bdd5-441f-8a0b-7ffedd5b52b2}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\server\world\CommandLine\CliRunnable.cpp">
+      <Filter>CommandLine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\server\world\PCH\worldPCH.cpp">
+      <Filter>CommandLine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\server\world\RA\RARunnable.cpp">
+      <Filter>RA</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\server\world\RA\RASocket.cpp">
+      <Filter>RA</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\server\world\SCSoap\SCSoap.cpp">
+      <Filter>SCSoap</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dep\gsoap\soapC.cpp">
+      <Filter>SCSoap</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dep\gsoap\soapServer.cpp">
+      <Filter>SCSoap</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dep\gsoap\stdsoap2.cpp">
+      <Filter>SCSoap</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\server\world\WorldThread\WorldRunnable.cpp">
+      <Filter>WorldThread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\server\world\Main.cpp" />
+    <ClCompile Include="..\..\src\server\world\Master.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\server\world\CommandLine\CliRunnable.h">
+      <Filter>CommandLine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\server\world\RA\RARunnable.h">
+      <Filter>RA</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\server\world\RA\RASocket.h">
+      <Filter>RA</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\server\world\RA\SocketDefines.h">
+      <Filter>RA</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\server\world\SCSoap\SCSoap.h">
+      <Filter>SCSoap</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dep\gsoap\soapH.h">
+      <Filter>SCSoap</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dep\gsoap\soapStub.h">
+      <Filter>SCSoap</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dep\gsoap\stdsoap2.h">
+      <Filter>SCSoap</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\server\world\WorldThread\WorldRunnable.h">
+      <Filter>WorldThread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\server\world\Master.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="..\..\src\server\world\world.rc" />
+  </ItemGroup>
+</Project>
