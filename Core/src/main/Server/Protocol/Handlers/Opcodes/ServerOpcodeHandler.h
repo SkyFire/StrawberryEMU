@@ -588,35 +588,35 @@ enum ServerOpcodes
     /***********************************************************/
     /********************* QUERY OPCODES ***********************/
     /***********************************************************/
-    SMSG_NAME_QUERY_RESPONSE                             = 0x051,
-    SMSG_PET_NAME_QUERY_RESPONSE                         = 0x053,
-    SMSG_GUILD_QUERY_RESPONSE                            = 0x055,
-    SMSG_ITEM_QUERY_SINGLE_RESPONSE                      = 0x058,
+    SMSG_NAME_QUERY_RESPONSE                             = 0x7BC8,    // 31688 - 4.0.6a 13623
+    SMSG_PET_NAME_QUERY_RESPONSE                         = 0x68AC,    // 26796 - 4.0.6a 13623
+    SMSG_GUILD_QUERY_RESPONSE                            = 0x3F80,    // 16256 - 4.0.6a 13623
+    SMSG_ITEM_QUERY_SINGLE_RESPONSE                      = 0x0C4E,    // 3150  - 4.0.6a 13623
     SMSG_ITEM_QUERY_MULTIPLE_RESPONSE                    = 0x059,
-    SMSG_PAGE_TEXT_QUERY_RESPONSE                        = 0x05B,
-    SMSG_QUEST_QUERY_RESPONSE                            = 0x05D,
-    SMSG_GAMEOBJECT_QUERY_RESPONSE                       = 0x05F,
-    SMSG_CREATURE_QUERY_RESPONSE                         = 0x061,
-    SMSG_ITEM_TEXT_QUERY_RESPONSE                        = 0x244,
-    SMSG_ITEM_NAME_QUERY_RESPONSE                        = 0x2C5,
-    SMSG_QUEST_POI_QUERY_RESPONSE                        = 0x1E4,
+    SMSG_PAGE_TEXT_QUERY_RESPONSE                        = 0xB084,    // 45188 - 4.0.6a 13623
+    SMSG_QUEST_QUERY_RESPONSE                            = 0x7BA0,    // 31648 - 4.0.6a 13623
+    SMSG_GAMEOBJECT_QUERY_RESPONSE                       = 0xF4E8,    // 62696 - 4.0.6a 13623
+    SMSG_CREATURE_QUERY_RESPONSE                         = 0xE6AC,    // 59052 - 4.0.6a 13623
+    SMSG_ITEM_TEXT_QUERY_RESPONSE                        = 0x77C8,    // 30664 - 4.0.6a 13623
+    SMSG_ITEM_NAME_QUERY_RESPONSE                        = 0x7BC8,    // 31688 - 4.0.6a 13623
+    SMSG_QUEST_POI_QUERY_RESPONSE                        = 0x6AEC,    // 27372 - 4.0.6a 13623
     SMSG_CORPSE_MAP_POSITION_QUERY_RESPONSE              = 0x4B7,
-    SMSG_QUERY_QUESTS_COMPLETED_RESPONSE                 = 0x501,
+    SMSG_QUERY_QUESTS_COMPLETED_RESPONSE                 = 0xF1E8,    // 61928 - 4.0.6a 13623
 
     /***********************************************************/
     /********************* QUEST OPCODES ***********************/
     /***********************************************************/
-    SMSG_QUESTLOG_FULL                                   = 0x195,
-    SMSG_QUEST_FORCE_REMOVE                              = 0x21E,
-    SMSG_QUEST_CONFIRM_ACCEPT                            = 0x19C,
+    SMSG_QUESTLOG_FULL                                   = 0x618C,    // 24972 - 4.0.6a 13623
+    SMSG_QUEST_FORCE_REMOVE                              = 0x34E8,    // 13544 - 4.0.6a 13623
+    SMSG_QUEST_CONFIRM_ACCEPT                            = 0x7C8C,    // 31884 - 4.0.6a 13623
 
     // Quest Update
-    SMSG_QUESTUPDATE_FAILED                              = 0x196,
-    SMSG_QUESTUPDATE_FAILEDTIMER                         = 0x197,
-    SMSG_QUESTUPDATE_COMPLETE                            = 0x198,
-    SMSG_QUESTUPDATE_ADD_KILL                            = 0x199,
+    SMSG_QUESTUPDATE_FAILED                              = 0xE588,    // 58760 - 4.0.6a 13623
+    SMSG_QUESTUPDATE_FAILEDTIMER                         = 0xF7CC,    // 63436 - 4.0.6a 13623
+    SMSG_QUESTUPDATE_COMPLETE                            = 0xEDA0,    // 60832 - 4.0.6a 13623
+    SMSG_QUESTUPDATE_ADD_KILL                            = 0xADA0,    // 44448 - 4.0.6a 13623
     SMSG_QUESTUPDATE_ADD_ITEM                            = 0x19A,
-    SMSG_QUESTUPDATE_ADD_PVP_KILL                        = 0x46F,
+    SMSG_QUESTUPDATE_ADD_PVP_KILL                        = 0x78E0,    // 30944 - 4.0.6a 13623
 
     /***********************************************************/
     /********************* SPELL OPCODES ***********************/
