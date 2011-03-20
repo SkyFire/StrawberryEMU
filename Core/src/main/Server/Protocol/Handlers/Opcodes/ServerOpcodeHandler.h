@@ -233,40 +233,40 @@ enum ServerOpcodes
     /***********************************************************/
     /********************** GROUP OPCODES **********************/
     /***********************************************************/
-    SMSG_GROUP_INVITE                                    = 0x06F,
-    SMSG_GROUP_CANCEL                                    = 0x071,
-    SMSG_GROUP_DECLINE                                   = 0x074,
-    SMSG_GROUP_UNINVITE                                  = 0x077,
-    SMSG_GROUP_SET_LEADER                                = 0x079,
-    SMSG_GROUP_DESTROYED                                 = 0x07C,
-    SMSG_GROUP_LIST                                      = 0x07D,
-    SMSG_REAL_GROUP_UPDATE                               = 0x397,
+    SMSG_GROUP_INVITE                                    = 0xA8A8,    // 43176 - 4.0.6a 13623
+    SMSG_GROUP_CANCEL                                    = 0x6AAC,    // 27308 - 4.0.6a 13623
+    SMSG_GROUP_DECLINE                                   = 0xABAC,    // 43948 - 4.0.6a 13623
+    SMSG_GROUP_UNINVITE                                  = 0x3ACC,    // 15052 - 4.0.6a 13623
+    SMSG_GROUP_SET_LEADER                                = 0xE88C,    // 59532 - 4.0.6a 13623
+    SMSG_GROUP_DESTROYED                                 = 0x22CC,    // 8908  - 4.0.6a 13623
+    SMSG_GROUP_LIST                                      = 0x6D8C,    // 28044 - 4.0.6a 13623
+    SMSG_REAL_GROUP_UPDATE                               = 0x31C0,    // 12736 - 4.0.6a 13623
     SMSG_GROUPACTION_THROTTLED                           = 0x411,
 
     /***********************************************************/
     /********************** GUILD OPCODES **********************/
     /***********************************************************/
-    SMSG_GUILD_INVITE                                    = 0x083,
-    SMSG_GUILD_DECLINE                                   = 0x086,
-    SMSG_GUILD_INFO                                      = 0x088,
+    SMSG_GUILD_INVITE                                    = 0xB78C,    // 46988 - 4.0.6a 13623
+    SMSG_GUILD_DECLINE                                   = 0x7DEC,    // 32236 - 4.0.6a 13623
+    SMSG_GUILD_INFO                                      = 0x20A8,    // 8360  - 4.0.6a 13623
     SMSG_GUILD_ROSTER                                    = 0x08A,
-    SMSG_GUILD_EVENT                                     = 0x092,
-    SMSG_GUILD_COMMAND_RESULT                            = 0x093,
+    SMSG_GUILD_EVENT                                     = 0xB7C4,    // 47044 - 4.0.6a 13623
+    SMSG_GUILD_COMMAND_RESULT                            = 0x23C0,    // 9152  - 4.0.6a 13623
     SMSG_GUILD_BANK_LIST                                 = 0x3E8,
 
     // Party
     SMSG_PARTY_MEMBER_STATS                              = 0x07E,
-    SMSG_PARTY_COMMAND_RESULT                            = 0x07F,
+    SMSG_PARTY_COMMAND_RESULT                            = 0x26E0,    // 9952  - 4.0.6a 13623
     SMSG_PARTY_MEMBER_STATS_FULL                         = 0x2F2,
-    SMSG_ECHO_PARTY_SQUELCH                              = 0x3F6,
+    SMSG_ECHO_PARTY_SQUELCH                              = 0x2AC4,    // 10948 - 4.0.6a 13623
 
     // Petition
     SMSG_BUY_BANK_SLOT_RESULT                            = 0x1BA,
     SMSG_PETITION_SHOWLIST                               = 0x1BC,
-    SMSG_PETITION_SHOW_SIGNATURES                        = 0x1BF,
-    SMSG_PETITION_SIGN_RESULTS                           = 0x1C1,
+    SMSG_PETITION_SHOW_SIGNATURES                        = 0xE2E0,    // 58080 - 4.0.6a 13623
+    SMSG_PETITION_SIGN_RESULTS                           = 0xA1A4,    // 41380 - 4.0.6a 13623
     SMSG_TURN_IN_PETITION_RESULTS                        = 0x1C5,
-    SMSG_PETITION_QUERY_RESPONSE                         = 0x1C7,
+    SMSG_PETITION_QUERY_RESPONSE                         = 0xFB80,    // 64384 - 4.0.6a 13623
     SMSG_OFFER_PETITION_ERROR                            = 0x38F,
 
     /***********************************************************/
