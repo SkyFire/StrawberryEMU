@@ -677,11 +677,11 @@ enum ServerOpcodes
     /******************* TRANSPORT OPCODES *********************/
     /***********************************************************/
     // Transport Taxi
-    SMSG_SHOWTAXINODES                                   = 0x1A9,
-    SMSG_TAXINODE_STATUS                                 = 0x1AB,
-    SMSG_ACTIVATETAXIREPLY                               = 0x1AE,
-    SMSG_NEW_TAXI_PATH                                   = 0x1AF,
-    SMSG_MONSTER_MOVE_TRANSPORT                          = 0x2AE,
+    SMSG_SHOWTAXINODES                                   = 0xEA80,    // 54868 - 4.0.6a 13623
+    SMSG_TAXINODE_STATUS                                 = 0x77C8,    // 28534 - 4.0.6a 13623
+    SMSG_ACTIVATETAXIREPLY                               = 0x77E0,    // 30688 - 4.0.6a 13623
+    SMSG_NEW_TAXI_PATH                                   = 0xB6A8,    // 44638 - 4.0.6a 13623
+    SMSG_MONSTER_MOVE_TRANSPORT                          = 0x248C,    // 9356  - 4.0.6a 13623
 
     /***********************************************************/
     /****************** TIME / SPEED OPCODES *******************/
