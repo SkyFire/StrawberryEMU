@@ -91,7 +91,7 @@ enum ServerOpcodes
     SMSG_CALENDAR_EVENT_INVITE                           = 0x43A,
     SMSG_CALENDAR_EVENT_INVITE_REMOVED                   = 0x43B,
     SMSG_CALENDAR_EVENT_STATUS                           = 0x43C,
-    SMSG_CALENDAR_COMMAND_RESULT                         = 0x43D,
+    SMSG_CALENDAR_COMMAND_RESULT                         = 0xAD80,    // 44416 - 4.0.6a 13623
     SMSG_CALENDAR_RAID_LOCKOUT_ADDED                     = 0x43E,
     SMSG_CALENDAR_RAID_LOCKOUT_REMOVED                   = 0x43F,
     SMSG_CALENDAR_EVENT_INVITE_ALERT                     = 0x440,
@@ -109,13 +109,13 @@ enum ServerOpcodes
     /***********************************************************/
     /******************** CHARACTER OPCODES ********************/
     /***********************************************************/
-    SMSG_CHAR_CREATE                                     = 0x03A,
-    SMSG_CHAR_ENUM                                       = 0x03B,
-    SMSG_CHAR_DELETE                                     = 0x03C,
-    SMSG_CHARACTER_LOGIN_FAILED                          = 0x041,
-    SMSG_CHAR_RENAME                                     = 0x2C8,
-    SMSG_CHAR_CUSTOMIZE                                  = 0x474,
-    SMSG_CHAR_FACTION_CHANGE                             = 0x4DA,
+    SMSG_CHAR_CREATE                                     = 0xF7EC,    // 63468 - 4.0.6a 13623
+    SMSG_CHAR_ENUM                                       = 0xECCC,    // 60620 - 4.0.6a 13623
+    SMSG_CHAR_DELETE                                     = 0xBC80,    // 48256 - 4.0.6a 13623
+    SMSG_CHARACTER_LOGIN_FAILED                          = 0x7ACC,    // 31436 - 4.0.6a 13623
+    SMSG_CHAR_RENAME                                     = 0xE0EC,    // 57580 - 4.0.6a 13623
+    SMSG_CHAR_CUSTOMIZE                                  = 0x2DA4,    // 11684 - 4.0.6a 13623
+    SMSG_CHAR_FACTION_CHANGE                             = 0x23AC,    // 9132  - 4.0.6a 13623
     SMSG_CHARACTER_PROFILE                               = 0x338,
     SMSG_CHARACTER_PROFILE_REALM_CONNECTED               = 0x339,
 
