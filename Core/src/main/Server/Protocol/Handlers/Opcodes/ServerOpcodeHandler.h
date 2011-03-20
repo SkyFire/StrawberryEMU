@@ -141,29 +141,29 @@ enum ServerOpcodes
     /***********************************************************/
     /********************* COMBAT OPCODES **********************/
     /***********************************************************/
-    SMSG_CANCEL_COMBAT                                   = 0x14E,
+    SMSG_CANCEL_COMBAT                                   = 0xBAE4,   // 47844 - 4.0.6a 13623
 
     // Combat Log
-    SMSG_SPELLBREAKLOG                                   = 0x14F,
-    SMSG_SPELLHEALLOG                                    = 0x150,
-    SMSG_SPELLENERGIZELOG                                = 0x151,
+    SMSG_SPELLBREAKLOG                                   = 0xBDAC,    // 48556 - 4.0.6a 13623
+    SMSG_SPELLHEALLOG                                    = 0x6E84,    // 28292 - 4.0.6a 13623
+    SMSG_SPELLENERGIZELOG                                = 0xF0EC,    // 61676 - 4.0.6a 13623
     SMSG_BREAK_TARGET                                    = 0x152,
     SMSG_SPELLLOGMISS                                    = 0x24B,
     SMSG_SPELLLOGEXECUTE                                 = 0x24C,
     SMSG_DEBUGAURAPROC                                   = 0x24D,
-    SMSG_PERIODICAURALOG                                 = 0x24E,
-    SMSG_SPELLDAMAGESHIELD                               = 0x24F,
-    SMSG_SPELLNONMELEEDAMAGELOG                          = 0x250,
+    SMSG_PERIODICAURALOG                                 = 0x3388,    // 13192 - 4.0.6a 13623
+    SMSG_SPELLDAMAGESHIELD                               = 0x73A0,    // 29600 - 4.0.6a 13623
+    SMSG_SPELLNONMELEEDAMAGELOG                          = 0x74AC,    // 29868 - 4.0.6a 13623
     SMSG_SPELLDISPELLOG                                  = 0x27B,
-    SMSG_DAMAGE_CALC_LOG                                 = 0x27C,
-    SMSG_SPELLINSTAKILLLOG                               = 0x32F,
+    SMSG_DAMAGE_CALC_LOG                                 = 0xFD84,    // 64900 - 4.0.6a 13623
+    SMSG_SPELLINSTAKILLLOG                               = 0x61C8,    // 25032 - 4.0.6a 13623
     SMSG_SPELLSTEALLOG                                   = 0x333,
     SMSG_SPELL_CHANCE_PROC_LOG                           = 0x3AA,
     SMSG_AURACASTLOG                                     = 0x1D1,
     SMSG_RESISTLOG                                       = 0x1D6,
-    SMSG_ENCHANTMENTLOG                                  = 0x1D7,
-    SMSG_PARTYKILLLOG                                    = 0x1F5,
-    SMSG_ENVIRONMENTALDAMAGELOG                          = 0x1FC,
+    SMSG_ENCHANTMENTLOG                                  = 0xF5AC,    // 62892 - 4.0.6a 13623
+    SMSG_PARTYKILLLOG                                    = 0xAB84,    // 43908 - 4.0.6a 13623
+    SMSG_ENVIRONMENTALDAMAGELOG                          = 0xE1C8,    // 57800 - 4.0.6a 13623
 
     /***********************************************************/
     /********************** DUEL OPCODES ***********************/
