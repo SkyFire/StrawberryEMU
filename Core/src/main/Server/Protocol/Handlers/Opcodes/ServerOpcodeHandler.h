@@ -320,31 +320,31 @@ enum ServerOpcodes
     /***********************************************************/
     /********************** ITEM OPCODES ***********************/
     /***********************************************************/
-    SMSG_READ_ITEM_OK                                    = 0x0AE,
-    SMSG_READ_ITEM_FAILED                                = 0x0AF,
-    SMSG_ITEM_COOLDOWN                                   = 0x0B0,
-    SMSG_ITEM_PUSH_RESULT                                = 0x166,
+    SMSG_READ_ITEM_OK                                    = 0xA988,    // 43400 - 4.0.6a 13623
+    SMSG_READ_ITEM_FAILED                                = 0xA4EC,    // 42220 - 4.0.6a 13623
+    SMSG_ITEM_COOLDOWN                                   = 0x6CC8,    // 27848 - 4.0.6a 13623
+    SMSG_ITEM_PUSH_RESULT                                = 0xFBE8,    // 64488 - 4.0.6a 13623
     SMSG_ITEM_REFUND_INFO_RESPONSE                       = 0x4B2,
     SMSG_ITEM_REFUND_RESULT                              = 0x4B5,
     SMSG_UPDATE_ITEM_ENCHANTMENTS                        = 0x50B,
 
     // Inventory / Trade
-    SMSG_INVENTORY_CHANGE_FAILURE                        = 0x112,
+    SMSG_INVENTORY_CHANGE_FAILURE                        = 0xAFCC,    // 45004 - 4.0.6a 13623
     SMSG_OPEN_CONTAINER                                  = 0x113,
-    SMSG_INSPECT                                         = 0x115,
+    SMSG_INSPECT                                         = 0x7AC8,    // 31432 - 4.0.6a 13623
     SMSG_TRADE_STATUS                                    = 0x120,
     SMSG_TRADE_STATUS_EXTENDED                           = 0x121,
-    SMSG_LIST_INVENTORY                                  = 0x19F,
-    SMSG_EQUIPMENT_SET_LIST                              = 0x4BC,
+    SMSG_LIST_INVENTORY                                  = 0xF8AC,    // 63660 - 4.0.6a 13623
+    SMSG_EQUIPMENT_SET_LIST                              = 0xF1A8,    // 61864 - 4.0.6a 13623
 
     // Equipment
-    SMSG_EQUIPMENT_SET_SAVED                             = 0x137,
-    SMSG_EQUIPMENT_SET_USE_RESULT                        = 0x4D6,
+    SMSG_EQUIPMENT_SET_SAVED                             = 0xB0C0,    // 45248 - 4.0.6a 13623
+    SMSG_EQUIPMENT_SET_USE_RESULT                        = 0x76AC,    // 30380 - 4.0.6a 13623
 
     // Item Buy / Sell
-    SMSG_SELL_ITEM                                       = 0x1A1,
-    SMSG_BUY_ITEM                                        = 0x1A4,
-    SMSG_BUY_FAILED                                      = 0x1A5,
+    SMSG_SELL_ITEM                                       = 0x6CE8,    // 14252 - 4.0.6a 13623
+    SMSG_BUY_ITEM                                        = 0x69CC,    // 27084 - 4.0.6.13623
+    SMSG_BUY_FAILED                                      = 0x6CE8,    // 27880 - 4.0.6.13623
 
     /***********************************************************/
     /******************* LOGIN / OUT OPCODES *******************/
