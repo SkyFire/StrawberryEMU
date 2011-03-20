@@ -122,21 +122,21 @@ enum ServerOpcodes
     /***********************************************************/
     /********************** CHAT OPCODES ***********************/
     /***********************************************************/
-    SMSG_MESSAGECHAT                                     = 0x096,
+    SMSG_MESSAGECHAT                                     = 0x61E4,    // 25060 - 4.0.6a 13623
     SMSG_CHAT_WRONG_FACTION                              = 0x219,
     SMSG_CHAT_PLAYER_NOT_FOUND                           = 0x2A9,
     SMSG_CHAT_RESTRICTED                                 = 0x2FD,
     SMSG_CHAT_PLAYER_AMBIGUOUS                           = 0x32D,
-    SMSG_EXPECTED_SPAM_RECORDS                           = 0x332,
-    SMSG_DEFENSE_MESSAGE                                 = 0x33A,
+    SMSG_EXPECTED_SPAM_RECORDS                           = 0x6084,    // 24708 - 4.0.6a 13623
+    SMSG_DEFENSE_MESSAGE                                 = 0x65EC,    // 26092 - 4.0.6a 13623
     SMSG_MOTD                                            = 0x33D,
     SMSG_SERVER_INFO_RESPONSE                            = 0x4A1,
 
     // Channel
-    SMSG_CHANNEL_NOTIFY                                  = 0x099,
-    SMSG_CHANNEL_LIST                                    = 0x09B,
-    SMSG_CHANNEL_MEMBER_COUNT                            = 0x3D5,
-    SMSG_AVAILABLE_VOICE_CHANNEL                         = 0x3DA,
+    SMSG_CHANNEL_NOTIFY                                  = 0x7CAC,    // 31916 - 4.0.6a 13623
+    SMSG_CHANNEL_LIST                                    = 0x69E0,    // 27104 - 4.0.6a 13623
+    SMSG_CHANNEL_MEMBER_COUNT                            = 0x2CEC,    // 11500 - 4.0.6a 13623
+    SMSG_AVAILABLE_VOICE_CHANNEL                         = 0xF8C8,    // 63688 - 4.0.6a 13623
 
     /***********************************************************/
     /********************* COMBAT OPCODES **********************/
