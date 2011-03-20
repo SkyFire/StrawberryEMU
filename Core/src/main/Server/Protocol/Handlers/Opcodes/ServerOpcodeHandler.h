@@ -621,57 +621,57 @@ enum ServerOpcodes
     /***********************************************************/
     /********************* SPELL OPCODES ***********************/
     /***********************************************************/
-    SMSG_INITIAL_SPELLS                                  = 0x12A,
-    SMSG_LEARNED_SPELL                                   = 0x12B,
-    SMSG_SUPERCEDED_SPELL                                = 0x12C,
-    SMSG_CAST_FAILED                                     = 0x130,
-    SMSG_SPELL_START                                     = 0x131,
-    SMSG_SPELL_GO                                        = 0x132,
-    SMSG_SPELL_FAILURE                                   = 0x133,
+    SMSG_INITIAL_SPELLS                                  = 0x6584,    // 25988 - 4.0.6a 13623
+    SMSG_LEARNED_SPELL                                   = 0x76E8,    // 30440 - 4.0.6a 13623
+    SMSG_SUPERCEDED_SPELL                                = 0xE8E4,    // 59620 - 4.0.6a 13623
+    SMSG_CAST_FAILED                                     = 0x2A8C,    // 10892 - 4.0.6a 13623
+    SMSG_SPELL_START                                     = 0x6BA8,    // 27560 - 4.0.6a 13623
+    SMSG_SPELL_GO                                        = 0x30C0,    // 12480 - 4.0.6a 13623
+    SMSG_SPELL_FAILURE                                   = 0xF9CC,    // 63948 - 4.0.6a 13623
     SMSG_DAMAGE_DONE_OBSOLETE                            = 0x14C,
-    SMSG_UNIT_SPELLCAST_START                            = 0x14D,
-    SMSG_SPELL_DELAYED                                   = 0x1E2,
-    SMSG_PLAY_SPELL_VISUAL                               = 0x1F3,
-    SMSG_PLAY_SPELL_IMPACT                               = 0x1F7,
-    SMSG_REMOVED_SPELL                                   = 0x203,
-    SMSG_DISPEL_FAILED                                   = 0x262,
-    SMSG_SPELLORDAMAGE_IMMUNE                            = 0x263,
-    SMSG_SET_FLAT_SPELL_MODIFIER                         = 0x266,
-    SMSG_SET_PCT_SPELL_MODIFIER                          = 0x267,
-    SMSG_CANCEL_AUTO_REPEAT                              = 0x29C,
-    SMSG_SPELL_FAILED_OTHER                              = 0x2A6,
-    SMSG_SPELL_UPDATE_CHAIN_TARGETS                      = 0x330,
+    SMSG_UNIT_SPELLCAST_START                            = 0xBDE0,    // 48608 - 4.0.6a 13623
+    SMSG_SPELL_DELAYED                                   = 0xA3E8,    // 41960 - 4.0.6a 13623
+    SMSG_PLAY_SPELL_VISUAL                               = 0xFF8C,    // 65420 - 4.0.6a 13623
+    SMSG_PLAY_SPELL_IMPACT                               = 0xA3E4,    // 41956 - 4.0.6a 13623
+    SMSG_REMOVED_SPELL                                   = 0x7CA0,    // 31904 - 4.0.6a 13623
+    SMSG_DISPEL_FAILED                                   = 0xAAE8,    // 43752 - 4.0.6a 13623
+    SMSG_SPELLORDAMAGE_IMMUNE                            = 0x73C8,    // 29640 - 4.0.6a 13623
+    SMSG_SET_FLAT_SPELL_MODIFIER                         = 0x2BC8,    // 11208 - 4.0.6a 13623
+    SMSG_SET_PCT_SPELL_MODIFIER                          = 0xA6E8,    // 42728 - 4.0.6a 13623
+    SMSG_CANCEL_AUTO_REPEAT                              = 0x3DE0,    // 15840 - 4.0.6a 13623
+    SMSG_SPELL_FAILED_OTHER                              = 0xE7A4,    // 59300 - 4.0.6a 13623
+    SMSG_SPELL_UPDATE_CHAIN_TARGETS                      = 0x36A4,    // 13988 - 4.0.6a 13623
     SMSG_SPELL_CHANCE_RESIST_PUSHBACK                    = 0x404,
-    SMSG_SUMMON_CANCEL                                   = 0x424,
-    SMSG_NOTIFY_DEST_LOC_SPELL_CAST                      = 0x48E,
+    SMSG_SUMMON_CANCEL                                   = 0x70A8,    // 28840 - 4.0.6a 13623
+    SMSG_NOTIFY_DEST_LOC_SPELL_CAST                      = 0x3588,    // 13704 - 4.0.6a 13623
     SMSG_CAMERA_SHAKE                                    = 0x50A,
 
     // Cooldown
-    SMSG_SPELL_COOLDOWN                                  = 0x134,
-    SMSG_COOLDOWN_EVENT                                  = 0x135,
-    SMSG_CLEAR_COOLDOWN                                  = 0x1DE,
-    SMSG_COOLDOWN_CHEAT                                  = 0x1E1,
-    SMSG_MODIFY_COOLDOWN                                 = 0x491,
+    SMSG_SPELL_COOLDOWN                                  = 0xF3E8,    // 62440 - 4.0.6a 13623
+    SMSG_COOLDOWN_EVENT                                  = 0xEAEC,    // 60140 - 4.0.6a 13623
+    SMSG_CLEAR_COOLDOWN                                  = 0x36CC,    // 14028 - 4.0.6a 13623
+    SMSG_COOLDOWN_CHEAT                                  = 0xAAA4,    // 43684 - 4.0.6a 13623
+    SMSG_MODIFY_COOLDOWN                                 = 0x30CC,    // 12492 - 4.0.6a 13623
 
     // Pet
-    SMSG_PET_CAST_FAILED                                 = 0x138,
-    SMSG_PET_LEARNED_SPELL                               = 0x499,
-    SMSG_PET_REMOVED_SPELL                               = 0x49A,
+    SMSG_PET_CAST_FAILED                                 = 0xA9CC,    // 43468 - 4.0.6a 13623
+    SMSG_PET_LEARNED_SPELL                               = 0xB3C4,    // 46020 - 4.0.6a 13623
+    SMSG_PET_REMOVED_SPELL                               = 0xF28C,    // 62092 - 4.0.6a 13623
 
     // Trainer
-    SMSG_TRAINER_LIST                                    = 0x1B1,
+    SMSG_TRAINER_LIST                                    = 0xBBE0,    // 48096 - 4.0.6a 13623
     SMSG_TRAINER_BUY_SUCCEEDED                           = 0x1B3,
-    SMSG_TRAINER_BUY_FAILED                              = 0x1B4,
-    SMSG_SEND_UNLEARN_SPELLS                             = 0x41E,
+    SMSG_TRAINER_BUY_FAILED                              = 0x6DEC,    // 28140 - 4.0.6a 13623
+    SMSG_SEND_UNLEARN_SPELLS                             = 0xBDE8,    // 48616 - 4.0.6a 13623
 
     // Auras
     SMSG_INIT_EXTRA_AURA_INFO_OBSOLETE                   = 0x3A3,
     SMSG_SET_EXTRA_AURA_INFO_OBSOLETE                    = 0x3A4,
     SMSG_SET_EXTRA_AURA_INFO_NEED_UPDATE_OBSOLETE        = 0x3A5,
     SMSG_CLEAR_EXTRA_AURA_INFO_OBSOLETE                  = 0x3A6,
-    SMSG_AURA_UPDATE_ALL                                 = 0x495,
-    SMSG_AURA_UPDATE                                     = 0x496,
-    SMSG_ON_CANCEL_EXPECTED_RIDE_VEHICLE_AURA            = 0x49D,
+    SMSG_AURA_UPDATE_ALL                                 = 0x37E0,    // 14304 - 4.0.6a 13623
+    SMSG_AURA_UPDATE                                     = 0x65C0,    // 26048 - 4.0.6a 13623
+    SMSG_ON_CANCEL_EXPECTED_RIDE_VEHICLE_AURA            = 0x3380,    // 13184 - 4.0.6a 13623
 
     /***********************************************************/
     /******************* TRANSPORT OPCODES *********************/
