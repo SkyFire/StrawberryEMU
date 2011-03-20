@@ -1,0 +1,13 @@
+#!/bin/bash
+# autorestart Script
+
+while :
+do
+	echo "Strawberry Core World Server restarted"
+	echo `date` >> crash.log &
+	./worldserver | tail -n 20 >> crash.log
+	echo " " >> crash.log &
+	pid=`ps ax | awk '($5 ~ /SCWS/) { print $1 }'`
+	wait $pid
+        echo `date` ", Strawberry Core World Server crashed and restarted." >> wServerLog
+done

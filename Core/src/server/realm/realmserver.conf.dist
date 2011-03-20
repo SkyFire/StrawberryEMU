@@ -1,0 +1,192 @@
+###############################################
+# DiamondCore Logon Server Configuration File #
+###############################################
+[LogonServer]
+
+###############################################################################
+# MYSQL SETTINGS
+#
+#    LoginDatabaseInfo
+#        Database connection settings for the Logon Server.
+#
+#    LoginDatabase.WorkerThreads
+#        The amount of worker threads spawned to handle
+#        asynchroneous MySQL statements
+#        Each worker thread is mirrored with its own
+#        connection to the MySQL server and their own
+#        thread on the MySQL server.
+#        Default: 1
+#
+###############################################################################
+
+LogonDB.Connection          = "127.0.0.1;3306;strawberry;strawberry;LogonDB"
+LoginDatabase.ASynchThreads = 1
+
+###############################################################################
+# CONNECTION SETTINGS
+#
+#    RealmServerPort
+#         Default RealmServerPort
+#
+#    BindIP
+#         Bind Realm Server to IP/hostname
+#
+###############################################################################
+
+RealmServerPort = 3724
+BindIP          = "0.0.0.0"
+
+###############################################################################
+# PERFORMANCE SETTINGS
+#
+#    UseProcessors
+#        Processors mask for multi-processor system (Used only in Windows)
+#        Default: 0 (selected by OS)
+#                 number (bitmask value of selected processors)
+#
+#    ProcessPriority
+#        Process proirity setting (Used only at Windows)
+#        Default: 1 (HIGH)
+#                 0 (Normal)
+#
+#    MaxPingTime
+#        Settings for maximum database-ping interval (minutes between pings)
+#
+#    RealmsStateUpdateDelay
+#        Realm list Update up delay
+#        (updated at realm list request if delay expired).
+#        Default: 20
+#                 0  (Disabled)
+#
+###############################################################################
+
+UseProcessors          = 0
+ProcessPriority        = 1
+MaxPingTime            = 30
+RealmsStateUpdateDelay = 20
+
+###############################################################################
+# LOG SETTINGS
+#
+#    LogsDir
+#        Logs directory setting.
+#        Important: Logs dir must exists, or all logs need to be disabled
+#        Default: "" - no log directory prefix, if used log names isn't
+#        absolute path then logs will be stored in current directory.
+#
+#    LogFile
+#        Logfile name
+#        Default: "DC_LogonServer.log"
+#                 "" - Empty name disable creating log file
+#
+#    LogFileLevel
+#        Server file level of logging
+#        Default: 0 = Minimum
+#                 1 = Basic
+#                 2 = Detail
+#                 3 = Full/Debug
+#
+#    LogLevel
+#        Server console level of logging
+#        Default: 0 = Minimum
+#                 1 = Basic
+#                 2 = Detail
+#                 3 = Full/Debug
+#
+#    LogTimestamp
+#        Logfile with timestamp of server start in name
+#        in form Logname_YYYY-MM-DD_HH-MM-SS.Ext for Logname.Ext
+#        Default: 0 - no timestamp in name
+#                 1 - add timestamp in name
+#
+#    LogColors
+#        Color for messages (format "normal basic detail debug")
+#        Default: "10 2 1 9"
+#        Colors: 0  - BLACK
+#                1  - RED
+#                2  - GREEN
+#                3  - BROWN
+#                4  - BLUE
+#                5  - MAGENTA
+#                6  - CYAN
+#                7  - GREY
+#                8  - YELLOW
+#                9  - LRED
+#                10 - LGREEN
+#                11 - LBLUE
+#                12 - LMAGENTA
+#                13 - LCYAN
+#                14 - WHITE
+#        Example: "10 2 1 9"
+#
+#    EnableLogDB
+#        Enable/disable logging to database (LogDatabaseInfo).
+#        Default: 0 - disabled
+#                 1 - enabled
+#
+#    DBLogLevel
+#        Log level of DB logging.
+#                 0 = Minimum
+#        Default: 1 = Basic
+#                 2 = Detail
+#                 3 = Full/Debug
+#
+#    Debug Log Mask
+#        Description: Bitmask that determines which debug log output (level 3)
+#                     will be logged.
+#        Possible flags:
+#
+#                  64 - Anything related to network input/output,
+#                        such as packet handlers and netcode logs
+#
+#                       Simply add the values together to create a bitmask.
+#                       For more info see enum DebugLogFilters in Log.h
+#
+#             Default: 0 (nothing)
+#
+#    SQLDriverLogFile
+#        Log file of SQL driver events.
+#        For effective query logging you need to build in debug configuration.
+#        Default: "" - Empty name for disable
+#
+#    PidFile
+#        Realmd daemon PID file
+#        Default: "./logonserver.pid" - create PID file (recommended name)
+#                 ""             - do not create PID file
+#
+###############################################################################
+
+LogsDir          = "Logs"
+LogFile          = "DC_LogonServer.log"
+LogFileLevel     = 3
+LogLevel         = 3
+LogTimestamp     = 1
+LogColors        = "10 2 9 1"
+EnableLogDB      = 0
+DBLogLevel       = 3
+DebugLogMask     = 64
+SQLDriverLogFile = ""
+PidFile          = "logonserver.pid"
+
+###############################################################################
+# SECURITY SETTINGS
+#
+#    WrongPass.MaxCount
+#        Number of login attemps with wrong password
+#        before the account or IP is banned
+#        Default: 0  (Never ban)
+#
+#    WrongPass.BanTime
+#        Duration of the ban in seconds (0 means permanent ban)
+#        Default: 600
+#
+#    WrongPass.BanType
+#        Ban the IP or account on which login is attempted
+#        Default: 0 (Ban IP)
+#                 1 (Ban Account)
+#
+###############################################################################
+
+WrongPass.MaxCount = 0
+WrongPass.BanTime  = 600
+WrongPass.BanType  = 0
