@@ -677,10 +677,10 @@ enum ServerOpcodes
     /******************* TRANSPORT OPCODES *********************/
     /***********************************************************/
     // Transport Taxi
-    SMSG_SHOWTAXINODES                                   = 0xEA80,    // 54868 - 4.0.6a 13623
-    SMSG_TAXINODE_STATUS                                 = 0x77C8,    // 28534 - 4.0.6a 13623
-    SMSG_ACTIVATETAXIREPLY                               = 0x77E0,    // 30688 - 4.0.6a 13623
-    SMSG_NEW_TAXI_PATH                                   = 0xB6A8,    // 44638 - 4.0.6a 13623
+    SMSG_SHOWTAXINODES                                   = 0x1A9,
+    SMSG_TAXINODE_STATUS                                 = 0x1AB,
+    SMSG_ACTIVATETAXIREPLY                               = 0x1AE,
+    SMSG_NEW_TAXI_PATH                                   = 0x1AF,
     SMSG_MONSTER_MOVE_TRANSPORT                          = 0x248C,    // 9356  - 4.0.6a 13623
 
     /***********************************************************/
@@ -745,12 +745,12 @@ enum ServerOpcodes
     SMSG_UPDATE_ACCOUNT_DATA                             = 0xF7A0,    // 63392 - 4.0.6a 13623
     SMSG_CLEAR_FAR_SIGHT_IMMEDIATE                       = 0xBEE4,    // 48868 - 4.0.6a 13623
     SMSG_SPIRIT_HEALER_CONFIRM                           = 0x7C8C,    // 31884 - 4.0.6a 13623
-    SMSG_ZONE_UNDER_ATTACK                               = 0x254,
-    SMSG_PROCRESIST                                      = 0x260,
-    SMSG_STANDSTATE_CHANGE_FAILURE_OBSOLETE              = 0x261,
+    SMSG_ZONE_UNDER_ATTACK                               = 0xBD80,    // 48512 - 4.0.6a 13623
+    SMSG_PROCRESIST                                      = 0x7E80,    // 32384 - 4.0.6a 13623
+    SMSG_STANDSTATE_CHANGE_FAILURE_OBSOLETE              = 0x6DCC,    // 28108 - 4.0.6a 13623
     SMSG_PLAY_MUSIC                                      = 0xACEC,    // 44628 - 4.0.6a 13623
-    SMSG_PLAY_OBJECT_SOUND                               = 0x278,
-    SMSG_SERVER_MESSAGE                                  = 0x291,
+    SMSG_PLAY_OBJECT_SOUND                               = 0x7DA0,    // 32160 - 4.0.6a 13623
+    SMSG_SERVER_MESSAGE                                  = 0x78C0,    // 30912 - 4.0.6a 13623
     SMSG_STANDSTATE_UPDATE                               = 0x29D,
     SMSG_SET_FORCED_REACTIONS                            = 0x2A5,
     SMSG_SCRIPT_MESSAGE                                  = 0x2B6,
@@ -791,8 +791,8 @@ enum ServerOpcodes
     SMSG_UNKNOWN_1310                                    = 0xA2A8,    // 41640 - 4.0.6a 13623
 
     // Fishing
-    SMSG_FISH_NOT_HOOKED                                 = 0x3FC8,    // 16388 - 4.0.6a 13623
-    SMSG_FISH_ESCAPED                                    = 0x2FCC,    // 12236 - 4.0.6a 13623
+    SMSG_FISH_NOT_HOOKED                                 = 0x516,
+    SMSG_FISH_ESCAPED                                    = 0x517,
 
     // Voice
     SMSG_VOICE_SESSION_ROSTER_UPDATE                     = 0xACC0,    // 44224 - 4.0.6a 13623
@@ -813,9 +813,9 @@ enum ServerOpcodes
     SMSG_UNKNOWN_1309                                    = 0x51D,
 
     // Comsat
-    SMSG_COMSAT_RECONNECT_TRY                            = 0x7EE8,    // 32488 - 4.0.6a 13623
-    SMSG_COMSAT_DISCONNECT                               = 0x368C,    // 13964 - 4.0.6a 13623
-    SMSG_COMSAT_CONNECT_FAIL                             = 0x70E8,    // 28904 - 4.0.6a 13623
+    SMSG_COMSAT_RECONNECT_TRY                            = 0x51F,
+    SMSG_COMSAT_DISCONNECT                               = 0x52D,
+    SMSG_COMSAT_CONNECT_FAIL                             = 0x53D,
 
     /***********************************************************/
     /********************** WORLD OPCODES **********************/
@@ -827,7 +827,7 @@ enum ServerOpcodes
     SMSG_LOGIN_VERIFY_WORLD                              = 0x28C0,    // 10432 - 4.0.6a 13623
     SMSG_INIT_WORLD_STATES                               = 0xF6E8,    // 63208 - 4.0.6a 13623
     SMSG_UPDATE_WORLD_STATE                              = 0xF784,    // 63364 - 4.0.6a 13623
-    SMSG_WEATHER                                         = 0x7BEC,    // 31724 - 4.0.6a 13623
+    SMSG_WEATHER                                         = 0x00,
     SMSG_SET_PHASE_SHIFT                                 = 0x22ED,    // 8941 -  4.0.6a 13623
     SMSG_WORLD_STATE_UI_TIMER_UPDATE                     = 0x698C,    // 27020 - 4.0.6a 13623
 };
