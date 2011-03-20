@@ -2,16 +2,16 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="CommandLine">
-      <UniqueIdentifier>{22f34dc8-f3c7-4174-a599-ac8701f7c9a5}</UniqueIdentifier>
+      <UniqueIdentifier>{70115b35-cdcc-49c9-86ec-7ace90b647d0}</UniqueIdentifier>
     </Filter>
     <Filter Include="RA">
-      <UniqueIdentifier>{1b3d634f-dc2d-42fc-9fef-019e2cee6b81}</UniqueIdentifier>
+      <UniqueIdentifier>{1c148fc5-586f-4330-beba-032522761e97}</UniqueIdentifier>
     </Filter>
     <Filter Include="SCSoap">
-      <UniqueIdentifier>{3290be61-451a-42f9-8a61-2a80ce28dc60}</UniqueIdentifier>
+      <UniqueIdentifier>{bf92e926-1c5d-456b-a92c-a71108886386}</UniqueIdentifier>
     </Filter>
     <Filter Include="WorldThread">
-      <UniqueIdentifier>{8c181a28-bdd5-441f-8a0b-7ffedd5b52b2}</UniqueIdentifier>
+      <UniqueIdentifier>{82eceda5-452b-4838-b167-19c6b0271047}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

@@ -338,16 +338,6 @@ copy ..\..\src\server\world\worldserver.conf.dist ..\..\bin\$(Platform)_$(Config
   <ItemGroup>
     <ResourceCompile Include="..\..\src\server\world\world.rc" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="SRealmServer.vcxproj">
-      <Project>{563e9905-3657-460c-ae63-0ac39d162e23}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
-    <ProjectReference Include="S_SHARED_LIB.vcxproj">
-      <Project>{90297c34-f231-4df4-848e-a74bcc0e40ed}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

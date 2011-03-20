@@ -47,8 +47,8 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/MP /Zm200"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\src;..\..\src\main\Achievements;..\..\src\main\Battlegrounds\Zones;..\..\src\main\AI\SmartScripts;..\..\src\main\AI\ScriptedAI;..\..\src\main\AI\EventAI;..\..\src\main\AI\CoreAI;..\..\src\main\World;..\..\src\main\Weather;..\..\src\main\Tools;..\..\src\main\Tickets;..\..\src\main\Texts;..\..\src\main\Spells;..\..\src\main\Skills;..\..\src\main\Server;..\..\src\main\Scripting;..\..\src\main\Reputation;..\..\src\main\Quests;..\..\src\main\Pools;..\..\src\main\PCH;..\..\src\main\OutdoorPvP;..\..\src\main\Movement;..\..\src\main\Miscellaneous;..\..\src\main\Maps;..\..\src\main\Mails;..\..\src\main\Loot;..\..\src\main\Instances;..\..\src\main\Guilds;..\..\src\main\Groups;..\..\src\main\Grids;..\..\src\main\Globals;..\..\src\main\Spells\Auras;..\..\src\main\Server\Protocol\Handlers;..\..\src\main\Server\Protocol;..\..\src\main\Movement\Waypoints;..\..\src\main\Movement\MovementGenerators;..\..\src\main\Grids\Notifiers;..\..\src\main\Grids\Cells;..\..\src\main\Entities\Object\Updates;..\..\src\main\Entities\Item\Container;..\..\src\main\Entities\Vehicle;..\..\src\main\Entities\Unit;..\..\src\main\Entities\Transport;..\..\src\main\Entities\Totem;..\..\src\main\Entities\Player;..\..\src\main\Entities\Pet;..\..\src\main\Entities\Object;..\..\src\main\Entities\Item;..\..\src\main\Entities\GameObject;..\..\src\main\Entities\DynamicObject;..\..\src\main\Entities\Creature;..\..\src\main\Entities\Corpse;..\..\src\main\Events;..\..\src\main\Entities;..\..\src\main\DungeonFinding;..\..\src\main\DataStores;..\..\src\main\Conditions;..\..\src\main\Combat;..\..\src\main\Chat\Commands;..\..\src\main\Chat\Channels;..\..\src\main\Chat;..\..\src\main\Calendar;..\..\src\main\Battlegrounds;..\..\src\main\AuctionHouse\AuctionHouseBot;..\..\src\main\AuctionHouse;..\..\src\main\AI;..\..\src\main\Addons;..\..\src\main\Accounts;..\..\dep;..\..\dep\mysql;..\..\dep\mysql\include;..\..\dep\zlib;..\..\dep\mysql\extra\yassl\include;..\..\src\shared;..\..\src\shared\Collision;..\..\src\shared\Collision\Management;..\..\src\shared\Collision\Maps;..\..\src\shared\Collision\Models;..\..\src\shared\Collision\PCH;..\..\src\shared\Configuration;..\..\src\shared\Cryptography;..\..\src\shared\Cryptography\Authentication;..\..\src\shared\DataStores;..\..\src\shared\Database;..\..\src\shared\Dynamic;..\..\src\shared\Dynamic\LinkedReference;..\..\src\shared\Logging;..\..\src\shared\Packets;..\..\src\shared\Threading;..\..\src\shared\Utilities;..\..\src\scripts;..\..\src\scripts\PCH;..\..\src\server;..\..\dep\acelite;..\..\dep\mysqllite\include;..\..\dep\mysqllite\extra\yassl\include"
-				PreprocessorDefinitions="WIN32;_DEBUG;DIAMOND_DEBUG;_LIB;"
+				AdditionalIncludeDirectories="..\..\src;..\..\src\main\Achievements;..\..\src\main\Battlegrounds\Zones;..\..\src\main\AI\SmartScripts;..\..\src\main\AI\ScriptedAI;..\..\src\main\AI\EventAI;..\..\src\main\AI\CoreAI;..\..\src\main\World;..\..\src\main\Weather;..\..\src\main\Tools;..\..\src\main\Tickets;..\..\src\main\Texts;..\..\src\main\Spells;..\..\src\main\Skills;..\..\src\main\Server;..\..\src\main\Scripting;..\..\src\main\Reputation;..\..\src\main\Quests;..\..\src\main\Pools;..\..\src\main\PCH;..\..\src\main\OutdoorPvP;..\..\src\main\Movement;..\..\src\main\Miscellaneous;..\..\src\main\Maps;..\..\src\main\Mails;..\..\src\main\Loot;..\..\src\main\Instances;..\..\src\main\Guilds;..\..\src\main\Groups;..\..\src\main\Grids;..\..\src\main\Globals;..\..\src\main\Spells\Auras;..\..\src\main\Server\Protocol\Handlers\Packets;..\..\src\main\Server\Protocol\Handlers\Opcodes;..\..\src\main\Server\Protocol\Handlers;..\..\src\main\Server\Sockets;..\..\src\main\Server\Sessions;..\..\src\main\Server\Logs;..\..\src\main\Server\Protocol;..\..\src\main\Movement\Waypoints;..\..\src\main\Movement\MovementGenerators;..\..\src\main\Grids\Notifiers;..\..\src\main\Grids\Cells;..\..\src\main\Entities\Object\Updates;..\..\src\main\Entities\Item\Container;..\..\src\main\Entities\Vehicle;..\..\src\main\Entities\Unit;..\..\src\main\Entities\Transport;..\..\src\main\Entities\Totem;..\..\src\main\Entities\Player;..\..\src\main\Entities\Pet;..\..\src\main\Entities\Object;..\..\src\main\Entities\Item;..\..\src\main\Entities\GameObject;..\..\src\main\Entities\DynamicObject;..\..\src\main\Entities\Creature;..\..\src\main\Entities\Corpse;..\..\src\main\Events;..\..\src\main\Entities;..\..\src\main\DungeonFinding;..\..\src\main\DataStores;..\..\src\main\Conditions;..\..\src\main\Combat;..\..\src\main\Chat\Commands;..\..\src\main\Chat\Channels;..\..\src\main\Chat;..\..\src\main\Calendar;..\..\src\main\Battlegrounds;..\..\src\main\AuctionHouse\AuctionHouseBot;..\..\src\main\AuctionHouse;..\..\src\main\AI;..\..\src\main\Addons;..\..\src\main\Accounts;..\..\dep;..\..\dep\mysql;..\..\dep\mysql\include;..\..\dep\zlib;..\..\dep\mysql\extra\yassl\include;..\..\src\shared;..\..\src\shared\Collision;..\..\src\shared\Collision\Management;..\..\src\shared\Collision\Maps;..\..\src\shared\Collision\Models;..\..\src\shared\Collision\PCH;..\..\src\shared\Configuration;..\..\src\shared\Cryptography;..\..\src\shared\Cryptography\Authentication;..\..\src\shared\DataStores;..\..\src\shared\Database;..\..\src\shared\Dynamic;..\..\src\shared\Dynamic\LinkedReference;..\..\src\shared\Logging;..\..\src\shared\Packets;..\..\src\shared\Threading;..\..\src\shared\Utilities;..\..\src\scripts;..\..\src\scripts\PCH;..\..\src\server;..\..\dep\acelite;..\..\dep\mysqllite\include;..\..\dep\mysqllite\extra\yassl\include"
+				PreprocessorDefinitions="WIN32;_DEBUG;STRAWBERRY_DEBUG;_LIB"
 				StringPooling="false"
 				MinimalRebuild="false"
 				BasicRuntimeChecks="3"
@@ -130,7 +130,7 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/MP /bigobj /Zm200"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\src;..\..\src\main\Achievements;..\..\src\main\Battlegrounds\Zones;..\..\src\main\AI\SmartScripts;..\..\src\main\AI\ScriptedAI;..\..\src\main\AI\EventAI;..\..\src\main\AI\CoreAI;..\..\src\main\World;..\..\src\main\Weather;..\..\src\main\Tools;..\..\src\main\Tickets;..\..\src\main\Texts;..\..\src\main\Spells;..\..\src\main\Skills;..\..\src\main\Server;..\..\src\main\Scripting;..\..\src\main\Reputation;..\..\src\main\Quests;..\..\src\main\Pools;..\..\src\main\PCH;..\..\src\main\OutdoorPvP;..\..\src\main\Movement;..\..\src\main\Miscellaneous;..\..\src\main\Maps;..\..\src\main\Mails;..\..\src\main\Loot;..\..\src\main\Instances;..\..\src\main\Guilds;..\..\src\main\Groups;..\..\src\main\Grids;..\..\src\main\Globals;..\..\src\main\Spells\Auras;..\..\src\main\Server\Protocol\Handlers;..\..\src\main\Server\Protocol;..\..\src\main\Movement\Waypoints;..\..\src\main\Movement\MovementGenerators;..\..\src\main\Grids\Notifiers;..\..\src\main\Grids\Cells;..\..\src\main\Entities\Object\Updates;..\..\src\main\Entities\Item\Container;..\..\src\main\Entities\Vehicle;..\..\src\main\Entities\Unit;..\..\src\main\Entities\Transport;..\..\src\main\Entities\Totem;..\..\src\main\Entities\Player;..\..\src\main\Entities\Pet;..\..\src\main\Entities\Object;..\..\src\main\Entities\Item;..\..\src\main\Entities\GameObject;..\..\src\main\Entities\DynamicObject;..\..\src\main\Entities\Creature;..\..\src\main\Entities\Corpse;..\..\src\main\Events;..\..\src\main\Entities;..\..\src\main\DungeonFinding;..\..\src\main\DataStores;..\..\src\main\Conditions;..\..\src\main\Combat;..\..\src\main\Chat\Commands;..\..\src\main\Chat\Channels;..\..\src\main\Chat;..\..\src\main\Calendar;..\..\src\main\Battlegrounds;..\..\src\main\AuctionHouse\AuctionHouseBot;..\..\src\main\AuctionHouse;..\..\src\main\AI;..\..\src\main\Addons;..\..\src\main\Accounts;..\..\dep;..\..\dep\mysql;..\..\dep\mysql\include;..\..\dep\zlib;..\..\dep\mysql\extra\yassl\include;..\..\src\shared;..\..\src\shared\Collision;..\..\src\shared\Collision\Management;..\..\src\shared\Collision\Maps;..\..\src\shared\Collision\Models;..\..\src\shared\Collision\PCH;..\..\src\shared\Configuration;..\..\src\shared\Cryptography;..\..\src\shared\Cryptography\Authentication;..\..\src\shared\DataStores;..\..\src\shared\Database;..\..\src\shared\Dynamic;..\..\src\shared\Dynamic\LinkedReference;..\..\src\shared\Logging;..\..\src\shared\Packets;..\..\src\shared\Threading;..\..\src\shared\Utilities;..\..\src\scripts;..\..\src\scripts\PCH;..\..\src\server;..\..\dep\acelite;..\..\dep\mysqllite\include;..\..\dep\mysqllite\extra\yassl\include"
+				AdditionalIncludeDirectories="..\..\src;..\..\src\main\Achievements;..\..\src\main\Battlegrounds\Zones;..\..\src\main\AI\SmartScripts;..\..\src\main\AI\ScriptedAI;..\..\src\main\AI\EventAI;..\..\src\main\AI\CoreAI;..\..\src\main\World;..\..\src\main\Weather;..\..\src\main\Tools;..\..\src\main\Tickets;..\..\src\main\Texts;..\..\src\main\Spells;..\..\src\main\Skills;..\..\src\main\Server;..\..\src\main\Scripting;..\..\src\main\Reputation;..\..\src\main\Quests;..\..\src\main\Pools;..\..\src\main\PCH;..\..\src\main\OutdoorPvP;..\..\src\main\Movement;..\..\src\main\Miscellaneous;..\..\src\main\Maps;..\..\src\main\Mails;..\..\src\main\Loot;..\..\src\main\Instances;..\..\src\main\Guilds;..\..\src\main\Groups;..\..\src\main\Grids;..\..\src\main\Globals;..\..\src\main\Spells\Auras;..\..\src\main\Server\Protocol\Handlers\Packets;..\..\src\main\Server\Protocol\Handlers\Opcodes;..\..\src\main\Server\Protocol\Handlers;..\..\src\main\Server\Sockets;..\..\src\main\Server\Sessions;..\..\src\main\Server\Logs;..\..\src\main\Server\Protocol;..\..\src\main\Movement\Waypoints;..\..\src\main\Movement\MovementGenerators;..\..\src\main\Grids\Notifiers;..\..\src\main\Grids\Cells;..\..\src\main\Entities\Object\Updates;..\..\src\main\Entities\Item\Container;..\..\src\main\Entities\Vehicle;..\..\src\main\Entities\Unit;..\..\src\main\Entities\Transport;..\..\src\main\Entities\Totem;..\..\src\main\Entities\Player;..\..\src\main\Entities\Pet;..\..\src\main\Entities\Object;..\..\src\main\Entities\Item;..\..\src\main\Entities\GameObject;..\..\src\main\Entities\DynamicObject;..\..\src\main\Entities\Creature;..\..\src\main\Entities\Corpse;..\..\src\main\Events;..\..\src\main\Entities;..\..\src\main\DungeonFinding;..\..\src\main\DataStores;..\..\src\main\Conditions;..\..\src\main\Combat;..\..\src\main\Chat\Commands;..\..\src\main\Chat\Channels;..\..\src\main\Chat;..\..\src\main\Calendar;..\..\src\main\Battlegrounds;..\..\src\main\AuctionHouse\AuctionHouseBot;..\..\src\main\AuctionHouse;..\..\src\main\AI;..\..\src\main\Addons;..\..\src\main\Accounts;..\..\dep;..\..\dep\mysql;..\..\dep\mysql\include;..\..\dep\zlib;..\..\dep\mysql\extra\yassl\include;..\..\src\shared;..\..\src\shared\Collision;..\..\src\shared\Collision\Management;..\..\src\shared\Collision\Maps;..\..\src\shared\Collision\Models;..\..\src\shared\Collision\PCH;..\..\src\shared\Configuration;..\..\src\shared\Cryptography;..\..\src\shared\Cryptography\Authentication;..\..\src\shared\DataStores;..\..\src\shared\Database;..\..\src\shared\Dynamic;..\..\src\shared\Dynamic\LinkedReference;..\..\src\shared\Logging;..\..\src\shared\Packets;..\..\src\shared\Threading;..\..\src\shared\Utilities;..\..\src\scripts;..\..\src\scripts\PCH;..\..\src\server;..\..\dep\acelite;..\..\dep\mysqllite\include;..\..\dep\mysqllite\extra\yassl\include"
 				PreprocessorDefinitions="WIN32;_DEBUG;DIAMOND_DEBUG;_LIB;"
 				StringPooling="false"
 				MinimalRebuild="false"
@@ -213,7 +213,7 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/MP /Zm200"
 				InlineFunctionExpansion="1"
-				AdditionalIncludeDirectories="..\..\src;..\..\src\main\Achievements;..\..\src\main\Battlegrounds\Zones;..\..\src\main\AI\SmartScripts;..\..\src\main\AI\ScriptedAI;..\..\src\main\AI\EventAI;..\..\src\main\AI\CoreAI;..\..\src\main\World;..\..\src\main\Weather;..\..\src\main\Tools;..\..\src\main\Tickets;..\..\src\main\Texts;..\..\src\main\Spells;..\..\src\main\Skills;..\..\src\main\Server;..\..\src\main\Scripting;..\..\src\main\Reputation;..\..\src\main\Quests;..\..\src\main\Pools;..\..\src\main\PCH;..\..\src\main\OutdoorPvP;..\..\src\main\Movement;..\..\src\main\Miscellaneous;..\..\src\main\Maps;..\..\src\main\Mails;..\..\src\main\Loot;..\..\src\main\Instances;..\..\src\main\Guilds;..\..\src\main\Groups;..\..\src\main\Grids;..\..\src\main\Globals;..\..\src\main\Spells\Auras;..\..\src\main\Server\Protocol\Handlers;..\..\src\main\Server\Protocol;..\..\src\main\Movement\Waypoints;..\..\src\main\Movement\MovementGenerators;..\..\src\main\Grids\Notifiers;..\..\src\main\Grids\Cells;..\..\src\main\Entities\Object\Updates;..\..\src\main\Entities\Item\Container;..\..\src\main\Entities\Vehicle;..\..\src\main\Entities\Unit;..\..\src\main\Entities\Transport;..\..\src\main\Entities\Totem;..\..\src\main\Entities\Player;..\..\src\main\Entities\Pet;..\..\src\main\Entities\Object;..\..\src\main\Entities\Item;..\..\src\main\Entities\GameObject;..\..\src\main\Entities\DynamicObject;..\..\src\main\Entities\Creature;..\..\src\main\Entities\Corpse;..\..\src\main\Events;..\..\src\main\Entities;..\..\src\main\DungeonFinding;..\..\src\main\DataStores;..\..\src\main\Conditions;..\..\src\main\Combat;..\..\src\main\Chat\Commands;..\..\src\main\Chat\Channels;..\..\src\main\Chat;..\..\src\main\Calendar;..\..\src\main\Battlegrounds;..\..\src\main\AuctionHouse\AuctionHouseBot;..\..\src\main\AuctionHouse;..\..\src\main\AI;..\..\src\main\Addons;..\..\src\main\Accounts;..\..\dep;..\..\dep\mysql;..\..\dep\mysql\include;..\..\dep\zlib;..\..\dep\mysql\extra\yassl\include;..\..\src\shared;..\..\src\shared\Collision;..\..\src\shared\Collision\Management;..\..\src\shared\Collision\Maps;..\..\src\shared\Collision\Models;..\..\src\shared\Collision\PCH;..\..\src\shared\Configuration;..\..\src\shared\Cryptography;..\..\src\shared\Cryptography\Authentication;..\..\src\shared\DataStores;..\..\src\shared\Database;..\..\src\shared\Dynamic;..\..\src\shared\Dynamic\LinkedReference;..\..\src\shared\Logging;..\..\src\shared\Packets;..\..\src\shared\Threading;..\..\src\shared\Utilities;..\..\src\scripts;..\..\src\scripts\PCH;..\..\src\server;..\..\dep\acelite;..\..\dep\mysqllite\include;..\..\dep\mysqllite\extra\yassl\include"
+				AdditionalIncludeDirectories="..\..\src;..\..\src\main\Achievements;..\..\src\main\Battlegrounds\Zones;..\..\src\main\AI\SmartScripts;..\..\src\main\AI\ScriptedAI;..\..\src\main\AI\EventAI;..\..\src\main\AI\CoreAI;..\..\src\main\World;..\..\src\main\Weather;..\..\src\main\Tools;..\..\src\main\Tickets;..\..\src\main\Texts;..\..\src\main\Spells;..\..\src\main\Skills;..\..\src\main\Server;..\..\src\main\Scripting;..\..\src\main\Reputation;..\..\src\main\Quests;..\..\src\main\Pools;..\..\src\main\PCH;..\..\src\main\OutdoorPvP;..\..\src\main\Movement;..\..\src\main\Miscellaneous;..\..\src\main\Maps;..\..\src\main\Mails;..\..\src\main\Loot;..\..\src\main\Instances;..\..\src\main\Guilds;..\..\src\main\Groups;..\..\src\main\Grids;..\..\src\main\Globals;..\..\src\main\Spells\Auras;..\..\src\main\Server\Protocol\Handlers\Packets;..\..\src\main\Server\Protocol\Handlers\Opcodes;..\..\src\main\Server\Protocol\Handlers;..\..\src\main\Server\Sockets;..\..\src\main\Server\Sessions;..\..\src\main\Server\Logs;..\..\src\main\Server\Protocol;..\..\src\main\Movement\Waypoints;..\..\src\main\Movement\MovementGenerators;..\..\src\main\Grids\Notifiers;..\..\src\main\Grids\Cells;..\..\src\main\Entities\Object\Updates;..\..\src\main\Entities\Item\Container;..\..\src\main\Entities\Vehicle;..\..\src\main\Entities\Unit;..\..\src\main\Entities\Transport;..\..\src\main\Entities\Totem;..\..\src\main\Entities\Player;..\..\src\main\Entities\Pet;..\..\src\main\Entities\Object;..\..\src\main\Entities\Item;..\..\src\main\Entities\GameObject;..\..\src\main\Entities\DynamicObject;..\..\src\main\Entities\Creature;..\..\src\main\Entities\Corpse;..\..\src\main\Events;..\..\src\main\Entities;..\..\src\main\DungeonFinding;..\..\src\main\DataStores;..\..\src\main\Conditions;..\..\src\main\Combat;..\..\src\main\Chat\Commands;..\..\src\main\Chat\Channels;..\..\src\main\Chat;..\..\src\main\Calendar;..\..\src\main\Battlegrounds;..\..\src\main\AuctionHouse\AuctionHouseBot;..\..\src\main\AuctionHouse;..\..\src\main\AI;..\..\src\main\Addons;..\..\src\main\Accounts;..\..\dep;..\..\dep\mysql;..\..\dep\mysql\include;..\..\dep\zlib;..\..\dep\mysql\extra\yassl\include;..\..\src\shared;..\..\src\shared\Collision;..\..\src\shared\Collision\Management;..\..\src\shared\Collision\Maps;..\..\src\shared\Collision\Models;..\..\src\shared\Collision\PCH;..\..\src\shared\Configuration;..\..\src\shared\Cryptography;..\..\src\shared\Cryptography\Authentication;..\..\src\shared\DataStores;..\..\src\shared\Database;..\..\src\shared\Dynamic;..\..\src\shared\Dynamic\LinkedReference;..\..\src\shared\Logging;..\..\src\shared\Packets;..\..\src\shared\Threading;..\..\src\shared\Utilities;..\..\src\scripts;..\..\src\scripts\PCH;..\..\src\server;..\..\dep\acelite;..\..\dep\mysqllite\include;..\..\dep\mysqllite\extra\yassl\include"
 				PreprocessorDefinitions="WIN32;NDEBUG;_LIB;_CRT_NONSTDC_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_SECURE_SCL=0"
 				StringPooling="true"
 				RuntimeLibrary="2"
@@ -295,7 +295,7 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/MP /bigobj /Zm200"
 				InlineFunctionExpansion="1"
-				AdditionalIncludeDirectories="..\..\src;..\..\src\main\Achievements;..\..\src\main\Battlegrounds\Zones;..\..\src\main\AI\SmartScripts;..\..\src\main\AI\ScriptedAI;..\..\src\main\AI\EventAI;..\..\src\main\AI\CoreAI;..\..\src\main\World;..\..\src\main\Weather;..\..\src\main\Tools;..\..\src\main\Tickets;..\..\src\main\Texts;..\..\src\main\Spells;..\..\src\main\Skills;..\..\src\main\Server;..\..\src\main\Scripting;..\..\src\main\Reputation;..\..\src\main\Quests;..\..\src\main\Pools;..\..\src\main\PCH;..\..\src\main\OutdoorPvP;..\..\src\main\Movement;..\..\src\main\Miscellaneous;..\..\src\main\Maps;..\..\src\main\Mails;..\..\src\main\Loot;..\..\src\main\Instances;..\..\src\main\Guilds;..\..\src\main\Groups;..\..\src\main\Grids;..\..\src\main\Globals;..\..\src\main\Spells\Auras;..\..\src\main\Server\Protocol\Handlers;..\..\src\main\Server\Protocol;..\..\src\main\Movement\Waypoints;..\..\src\main\Movement\MovementGenerators;..\..\src\main\Grids\Notifiers;..\..\src\main\Grids\Cells;..\..\src\main\Entities\Object\Updates;..\..\src\main\Entities\Item\Container;..\..\src\main\Entities\Vehicle;..\..\src\main\Entities\Unit;..\..\src\main\Entities\Transport;..\..\src\main\Entities\Totem;..\..\src\main\Entities\Player;..\..\src\main\Entities\Pet;..\..\src\main\Entities\Object;..\..\src\main\Entities\Item;..\..\src\main\Entities\GameObject;..\..\src\main\Entities\DynamicObject;..\..\src\main\Entities\Creature;..\..\src\main\Entities\Corpse;..\..\src\main\Events;..\..\src\main\Entities;..\..\src\main\DungeonFinding;..\..\src\main\DataStores;..\..\src\main\Conditions;..\..\src\main\Combat;..\..\src\main\Chat\Commands;..\..\src\main\Chat\Channels;..\..\src\main\Chat;..\..\src\main\Calendar;..\..\src\main\Battlegrounds;..\..\src\main\AuctionHouse\AuctionHouseBot;..\..\src\main\AuctionHouse;..\..\src\main\AI;..\..\src\main\Addons;..\..\src\main\Accounts;..\..\dep;..\..\dep\mysql;..\..\dep\mysql\include;..\..\dep\zlib;..\..\dep\mysql\extra\yassl\include;..\..\src\shared;..\..\src\shared\Collision;..\..\src\shared\Collision\Management;..\..\src\shared\Collision\Maps;..\..\src\shared\Collision\Models;..\..\src\shared\Collision\PCH;..\..\src\shared\Configuration;..\..\src\shared\Cryptography;..\..\src\shared\Cryptography\Authentication;..\..\src\shared\DataStores;..\..\src\shared\Database;..\..\src\shared\Dynamic;..\..\src\shared\Dynamic\LinkedReference;..\..\src\shared\Logging;..\..\src\shared\Packets;..\..\src\shared\Threading;..\..\src\shared\Utilities;..\..\src\scripts;..\..\src\scripts\PCH;..\..\src\server;..\..\dep\acelite;..\..\dep\mysqllite\include;..\..\dep\mysqllite\extra\yassl\include"
+				AdditionalIncludeDirectories="..\..\src;..\..\src\main\Achievements;..\..\src\main\Battlegrounds\Zones;..\..\src\main\AI\SmartScripts;..\..\src\main\AI\ScriptedAI;..\..\src\main\AI\EventAI;..\..\src\main\AI\CoreAI;..\..\src\main\World;..\..\src\main\Weather;..\..\src\main\Tools;..\..\src\main\Tickets;..\..\src\main\Texts;..\..\src\main\Spells;..\..\src\main\Skills;..\..\src\main\Server;..\..\src\main\Scripting;..\..\src\main\Reputation;..\..\src\main\Quests;..\..\src\main\Pools;..\..\src\main\PCH;..\..\src\main\OutdoorPvP;..\..\src\main\Movement;..\..\src\main\Miscellaneous;..\..\src\main\Maps;..\..\src\main\Mails;..\..\src\main\Loot;..\..\src\main\Instances;..\..\src\main\Guilds;..\..\src\main\Groups;..\..\src\main\Grids;..\..\src\main\Globals;..\..\src\main\Spells\Auras;..\..\src\main\Server\Protocol\Handlers\Packets;..\..\src\main\Server\Protocol\Handlers\Opcodes;..\..\src\main\Server\Protocol\Handlers;..\..\src\main\Server\Sockets;..\..\src\main\Server\Sessions;..\..\src\main\Server\Logs;..\..\src\main\Server\Protocol;..\..\src\main\Movement\Waypoints;..\..\src\main\Movement\MovementGenerators;..\..\src\main\Grids\Notifiers;..\..\src\main\Grids\Cells;..\..\src\main\Entities\Object\Updates;..\..\src\main\Entities\Item\Container;..\..\src\main\Entities\Vehicle;..\..\src\main\Entities\Unit;..\..\src\main\Entities\Transport;..\..\src\main\Entities\Totem;..\..\src\main\Entities\Player;..\..\src\main\Entities\Pet;..\..\src\main\Entities\Object;..\..\src\main\Entities\Item;..\..\src\main\Entities\GameObject;..\..\src\main\Entities\DynamicObject;..\..\src\main\Entities\Creature;..\..\src\main\Entities\Corpse;..\..\src\main\Events;..\..\src\main\Entities;..\..\src\main\DungeonFinding;..\..\src\main\DataStores;..\..\src\main\Conditions;..\..\src\main\Combat;..\..\src\main\Chat\Commands;..\..\src\main\Chat\Channels;..\..\src\main\Chat;..\..\src\main\Calendar;..\..\src\main\Battlegrounds;..\..\src\main\AuctionHouse\AuctionHouseBot;..\..\src\main\AuctionHouse;..\..\src\main\AI;..\..\src\main\Addons;..\..\src\main\Accounts;..\..\dep;..\..\dep\mysql;..\..\dep\mysql\include;..\..\dep\zlib;..\..\dep\mysql\extra\yassl\include;..\..\src\shared;..\..\src\shared\Collision;..\..\src\shared\Collision\Management;..\..\src\shared\Collision\Maps;..\..\src\shared\Collision\Models;..\..\src\shared\Collision\PCH;..\..\src\shared\Configuration;..\..\src\shared\Cryptography;..\..\src\shared\Cryptography\Authentication;..\..\src\shared\DataStores;..\..\src\shared\Database;..\..\src\shared\Dynamic;..\..\src\shared\Dynamic\LinkedReference;..\..\src\shared\Logging;..\..\src\shared\Packets;..\..\src\shared\Threading;..\..\src\shared\Utilities;..\..\src\scripts;..\..\src\scripts\PCH;..\..\src\server;..\..\dep\acelite;..\..\dep\mysqllite\include;..\..\dep\mysqllite\extra\yassl\include"
 				PreprocessorDefinitions="WIN32;NDEBUG;_LIB;_SECURE_SCL=0"
 				StringPooling="true"
 				RuntimeLibrary="2"
@@ -752,6 +752,14 @@
 				RelativePath="..\..\src\main\Calendar\Calendar.h"
 				>
 			</File>
+			<File
+				RelativePath="..\..\src\main\Calendar\CalendarMgr.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\main\Calendar\CalendarMgr.h"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Chat"
@@ -861,22 +869,6 @@
 			Name="DataStores"
 			>
 			<File
-				RelativePath="..\..\src\main\DataStores\DB2fmt.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\main\DataStores\DB2Stores.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\main\DataStores\DB2Stores.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\main\DataStores\DB2Structure.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\src\main\DataStores\DBCEnums.h"
 				>
 			</File>
@@ -890,10 +882,6 @@
 			</File>
 			<File
 				RelativePath="..\..\src\main\DataStores\DBCStores.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\main\DataStores\DBCStructure.cpp"
 				>
 			</File>
 			<File
@@ -1660,185 +1648,229 @@
 		<Filter
 			Name="Server"
 			>
-			<File
-				RelativePath="..\..\src\main\Server\WorldSession.cpp"
+			<Filter
+				Name="Logs"
 				>
-			</File>
-			<File
-				RelativePath="..\..\src\main\Server\WorldSession.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\main\Server\WorldSocket.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\main\Server\WorldSocket.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\main\Server\WorldSocketMgr.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\main\Server\WorldSocketMgr.h"
-				>
-			</File>
+				<File
+					RelativePath="..\..\src\main\Server\Logs\WorldLog.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\main\Server\Logs\WorldLog.h"
+					>
+				</File>
+			</Filter>
 			<Filter
 				Name="Protocol"
 				>
-				<File
-					RelativePath="..\..\src\main\Server\Protocol\Opcodes.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\main\Server\Protocol\Opcodes.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\main\Server\Protocol\WorldLog.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\main\Server\Protocol\WorldLog.h"
-					>
-				</File>
 				<Filter
 					Name="Handlers"
 					>
-					<File
-						RelativePath="..\..\src\main\Server\Protocol\Handlers\AddonHandler.cpp"
+					<Filter
+						Name="Opcodes"
 						>
-					</File>
-					<File
-						RelativePath="..\..\src\main\Server\Protocol\Handlers\AddonHandler.h"
+						<File
+							RelativePath="..\..\src\main\Server\Protocol\Handlers\Opcodes\ClientOpcodeHandler.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\..\src\main\Server\Protocol\Handlers\Opcodes\ClientOpcodeHandler.h"
+							>
+						</File>
+						<File
+							RelativePath="..\..\src\main\Server\Protocol\Handlers\Opcodes\ClientServerOpcodeHandler.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\..\src\main\Server\Protocol\Handlers\Opcodes\ClientServerOpcodeHandler.h"
+							>
+						</File>
+						<File
+							RelativePath="..\..\src\main\Server\Protocol\Handlers\Opcodes\OpcodeHandler.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\..\src\main\Server\Protocol\Handlers\Opcodes\OpcodeHandler.h"
+							>
+						</File>
+						<File
+							RelativePath="..\..\src\main\Server\Protocol\Handlers\Opcodes\ServerOpcodeHandler.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\..\src\main\Server\Protocol\Handlers\Opcodes\ServerOpcodeHandler.h"
+							>
+						</File>
+					</Filter>
+					<Filter
+						Name="Packets"
 						>
-					</File>
-					<File
-						RelativePath="..\..\src\main\Server\Protocol\Handlers\ArenaTeamHandler.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\src\main\Server\Protocol\Handlers\AuctionHouseHandler.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\src\main\Server\Protocol\Handlers\AuthHandler.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\src\main\Server\Protocol\Handlers\BattleGroundHandler.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\src\main\Server\Protocol\Handlers\CalendarHandler.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\src\main\Server\Protocol\Handlers\ChannelHandler.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\src\main\Server\Protocol\Handlers\CharacterHandler.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\src\main\Server\Protocol\Handlers\ChatHandler.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\src\main\Server\Protocol\Handlers\CombatHandler.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\src\main\Server\Protocol\Handlers\DuelHandler.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\src\main\Server\Protocol\Handlers\GroupHandler.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\src\main\Server\Protocol\Handlers\GuildHandler.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\src\main\Server\Protocol\Handlers\ItemHandler.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\src\main\Server\Protocol\Handlers\LFGHandler.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\src\main\Server\Protocol\Handlers\LootHandler.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\src\main\Server\Protocol\Handlers\MailHandler.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\src\main\Server\Protocol\Handlers\MiscHandler.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\src\main\Server\Protocol\Handlers\MovementHandler.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\src\main\Server\Protocol\Handlers\NPCHandler.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\src\main\Server\Protocol\Handlers\NPCHandler.h"
-						>
-					</File>
-					<File
-						RelativePath="..\..\src\main\Server\Protocol\Handlers\PetHandler.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\src\main\Server\Protocol\Handlers\PetitionsHandler.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\src\main\Server\Protocol\Handlers\QueryHandler.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\src\main\Server\Protocol\Handlers\QuestHandler.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\src\main\Server\Protocol\Handlers\SkillHandler.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\src\main\Server\Protocol\Handlers\SpellHandler.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\src\main\Server\Protocol\Handlers\TaxiHandler.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\src\main\Server\Protocol\Handlers\TicketHandler.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\src\main\Server\Protocol\Handlers\TradeHandler.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\src\main\Server\Protocol\Handlers\VehicleHandler.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\src\main\Server\Protocol\Handlers\VoiceChatHandler.cpp"
-						>
-					</File>
+						<File
+							RelativePath="..\..\src\main\Server\Protocol\Handlers\Packets\AddonHandler.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\..\src\main\Server\Protocol\Handlers\Packets\AddonHandler.h"
+							>
+						</File>
+						<File
+							RelativePath="..\..\src\main\Server\Protocol\Handlers\Packets\ArenaTeamHandler.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\..\src\main\Server\Protocol\Handlers\Packets\AuctionHouseHandler.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\..\src\main\Server\Protocol\Handlers\Packets\AuthHandler.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\..\src\main\Server\Protocol\Handlers\Packets\BattleGroundHandler.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\..\src\main\Server\Protocol\Handlers\Packets\CalendarHandler.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\..\src\main\Server\Protocol\Handlers\Packets\ChannelHandler.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\..\src\main\Server\Protocol\Handlers\Packets\CharacterHandler.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\..\src\main\Server\Protocol\Handlers\Packets\ChatHandler.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\..\src\main\Server\Protocol\Handlers\Packets\CombatHandler.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\..\src\main\Server\Protocol\Handlers\Packets\DuelHandler.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\..\src\main\Server\Protocol\Handlers\Packets\GroupHandler.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\..\src\main\Server\Protocol\Handlers\Packets\GuildHandler.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\..\src\main\Server\Protocol\Handlers\Packets\ItemHandler.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\..\src\main\Server\Protocol\Handlers\Packets\LFGHandler.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\..\src\main\Server\Protocol\Handlers\Packets\LootHandler.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\..\src\main\Server\Protocol\Handlers\Packets\MailHandler.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\..\src\main\Server\Protocol\Handlers\Packets\MiscHandler.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\..\src\main\Server\Protocol\Handlers\Packets\MovementHandler.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\..\src\main\Server\Protocol\Handlers\Packets\NPCHandler.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\..\src\main\Server\Protocol\Handlers\Packets\NPCHandler.h"
+							>
+						</File>
+						<File
+							RelativePath="..\..\src\main\Server\Protocol\Handlers\Packets\PetHandler.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\..\src\main\Server\Protocol\Handlers\Packets\PetitionsHandler.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\..\src\main\Server\Protocol\Handlers\Packets\QueryHandler.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\..\src\main\Server\Protocol\Handlers\Packets\QuestHandler.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\..\src\main\Server\Protocol\Handlers\Packets\SkillHandler.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\..\src\main\Server\Protocol\Handlers\Packets\SpellHandler.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\..\src\main\Server\Protocol\Handlers\Packets\TaxiHandler.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\..\src\main\Server\Protocol\Handlers\Packets\TicketHandler.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\..\src\main\Server\Protocol\Handlers\Packets\TradeHandler.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\..\src\main\Server\Protocol\Handlers\Packets\VehicleHandler.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\..\src\main\Server\Protocol\Handlers\Packets\VoiceChatHandler.cpp"
+							>
+						</File>
+					</Filter>
 				</Filter>
+			</Filter>
+			<Filter
+				Name="Sessions"
+				>
+				<File
+					RelativePath="..\..\src\main\Server\Sessions\WorldSession.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\main\Server\Sessions\WorldSession.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Sockets"
+				>
+				<File
+					RelativePath="..\..\src\main\Server\Sockets\WorldSocket.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\main\Server\Sockets\WorldSocket.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\main\Server\Sockets\WorldSocketMgr.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\main\Server\Sockets\WorldSocketMgr.h"
+					>
+				</File>
 			</Filter>
 		</Filter>
 		<Filter
