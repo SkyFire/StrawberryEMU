@@ -378,29 +378,29 @@ enum ServerOpcodes
     /***********************************************************/
     /********************** MAIL OPCODES ***********************/
     /***********************************************************/
-    SMSG_SEND_MAIL_RESULT                                = 0x239,
-    SMSG_MAIL_LIST_RESULT                                = 0x23B,
-    SMSG_RECEIVED_MAIL                                   = 0x285,
+    SMSG_SEND_MAIL_RESULT                                = 0xE5C0,    // 58816 - 4.0.6a 13623
+    SMSG_MAIL_LIST_RESULT                                = 0xF1C8,    // 61896 - 4.0.6a 13623
+    SMSG_RECEIVED_MAIL                                   = 0x75E4,    // 30180 - 4.0.6a 13623
 
     /***********************************************************/
     /******************** MOVEMENT OPCODES *********************/
     /***********************************************************/
     SMSG_MOVE_CHARACTER_CHEAT                            = 0x00E,
-    SMSG_MOVE_WATER_WALK                                 = 0x0DE,
-    SMSG_MOVE_LAND_WALK                                  = 0x0DF,
+    SMSG_MOVE_WATER_WALK                                 = 0x2E84,    // 11908 - 4.0.6a 13623
+    SMSG_MOVE_LAND_WALK                                  = 0x2084,    // 8324  - 4.0.6a 13623
     SMSG_FORCE_SWIM_SPEED_CHANGE                         = 0x0E6,
-    SMSG_MOVE_KNOCK_BACK                                 = 0x0EF,
-    SMSG_COMPRESSED_MOVES                                = 0x2FB,
+    SMSG_MOVE_KNOCK_BACK                                 = 0xB0E8,    // 45288 - 4.0.6a 13623
+    SMSG_COMPRESSED_MOVES                                = 0x6FE4,    // 28644 - 4.0.6a 13623
     SMSG_MOVE_ABANDON_TRANSPORT                          = 0x45F,
     SMSG_UNKNOWN_1302                                    = 0x516,
-    SMSG_UNKNOWN_1304                                    = 0x518,
+    SMSG_UNKNOWN_1304                                    = 0x72E0,    // 29408 - 4.0.6a 13623
 
     // Movement Force
-    SMSG_FORCE_RUN_SPEED_CHANGE                          = 0x0E2,
+    SMSG_FORCE_RUN_SPEED_CHANGE                          = 0xF1CC,    // 61900 - 4.0.6a 13623
     SMSG_FORCE_RUN_BACK_SPEED_CHANGE                     = 0x0E4,
-    SMSG_FORCE_MOVE_ROOT                                 = 0x0E8,
-    SMSG_FORCE_MOVE_UNROOT                               = 0x0EA,
-    SMSG_FORCE_WALK_SPEED_CHANGE                         = 0x2DA,
+    SMSG_FORCE_MOVE_ROOT                                 = 0x2F88,    // 12168 - 4.0.6a 13623
+    SMSG_FORCE_MOVE_UNROOT                               = 0x30A0,    // 12448 - 4.0.6a 13623
+    SMSG_FORCE_WALK_SPEED_CHANGE                         = 0x68E8,    // 26856 - 4.0.6a 13623
     SMSG_FORCE_SWIM_BACK_SPEED_CHANGE                    = 0x2DC,
     SMSG_FORCE_TURN_RATE_CHANGE                          = 0x2DE,
     SMSG_FORCE_FLIGHT_SPEED_CHANGE                       = 0x381,
@@ -418,7 +418,7 @@ enum ServerOpcodes
     SMSG_MOVE_UNSET_HOVER                                = 0x0F5,
     SMSG_MOVE_SET_FLIGHT                                 = 0x33E,
     SMSG_MOVE_UNSET_FLIGHT                               = 0x33F,
-    SMSG_MOVE_SET_CAN_FLY                                = 0x343,
+    SMSG_MOVE_SET_CAN_FLY                                = 0x3084,    // 12420 - 4.0.6a 13623
     SMSG_MOVE_UNSET_CAN_FLY                              = 0x344,
 
     // Spline
@@ -427,8 +427,8 @@ enum ServerOpcodes
     SMSG_SPLINE_MOVE_NORMAL_FALL                         = 0x306,
     SMSG_SPLINE_MOVE_SET_HOVER                           = 0x307,
     SMSG_SPLINE_MOVE_UNSET_HOVER                         = 0x308,
-    SMSG_SPLINE_MOVE_WATER_WALK                          = 0x309,
-    SMSG_SPLINE_MOVE_LAND_WALK                           = 0x30A,
+    SMSG_SPLINE_MOVE_WATER_WALK                          = 0x61C0,    // 25024 - 4.0.6a 13623
+    SMSG_SPLINE_MOVE_LAND_WALK                           = 0xA7C8,    // 42952 - 4.0.6a 13623
     SMSG_SPLINE_MOVE_START_SWIM                          = 0x30B,
     SMSG_SPLINE_MOVE_STOP_SWIM                           = 0x30C,
     SMSG_SPLINE_MOVE_SET_RUN_MODE                        = 0x30D,
@@ -436,25 +436,25 @@ enum ServerOpcodes
     SMSG_SPLINE_MOVE_ROOT                                = 0x31A,
     SMSG_SPLINE_MOVE_UNKNOWN_1235                        = 0x4D3,
     SMSG_SPLINE_MOVE_UNKNOWN_1236                        = 0x4D4,
-    SMSG_SPLINE_SET_PITCH_RATE                           = 0x45E,
+    SMSG_SPLINE_SET_PITCH_RATE                           = 0x70C4,    // 28868 - 4.0.6a 13623
 
     // Spline Set / Unset
-    SMSG_SPLINE_SET_RUN_SPEED                            = 0x2FE,
-    SMSG_SPLINE_SET_RUN_BACK_SPEED                       = 0x2FF,
-    SMSG_SPLINE_SET_SWIM_SPEED                           = 0x300,
-    SMSG_SPLINE_SET_WALK_SPEED                           = 0x301,
-    SMSG_SPLINE_SET_SWIM_BACK_SPEED                      = 0x302,
-    SMSG_SPLINE_SET_TURN_RATE                            = 0x303,
-    SMSG_SPLINE_SET_FLIGHT_SPEED                         = 0x385,
-    SMSG_SPLINE_SET_FLIGHT_BACK_SPEED                    = 0x386,
+    SMSG_SPLINE_SET_RUN_SPEED                            = 0xF9E8,    // 63976 - 4.0.6a 13623
+    SMSG_SPLINE_SET_RUN_BACK_SPEED                       = 0xE9C0,    // 59840 - 4.0.6a 13623
+    SMSG_SPLINE_SET_SWIM_SPEED                           = 0xB2C0,    // 45760 - 4.0.6a 13623
+    SMSG_SPLINE_SET_WALK_SPEED                           = 0x3EA8,    // 16040 - 4.0.6a 13623
+    SMSG_SPLINE_SET_SWIM_BACK_SPEED                      = 0x21C8,    // 8648  - 4.0.6a 13623
+    SMSG_SPLINE_SET_TURN_RATE                            = 0x7EAC,    // 32428 - 4.0.6a 13623
+    SMSG_SPLINE_SET_FLIGHT_SPEED                         = 0xE0C0,    // 57536 - 4.0.6a 13623
+    SMSG_SPLINE_SET_FLIGHT_BACK_SPEED                    = 0xF2EC,    // 62188 - 4.0.6a 13623
     SMSG_SPLINE_MOVE_SET_FLYING                          = 0x422,
-    SMSG_SPLINE_MOVE_UNSET_FLYING                        = 0x423,
+    SMSG_SPLINE_MOVE_UNSET_FLYING                        = 0x7688,    // 30344 - 4.0.6a 136223
     
     /***********************************************************/
     /********************* MOVIE OPCODES ***********************/
     /***********************************************************/
     // Cinematic
-    SMSG_TRIGGER_CINEMATIC                               = 0x0FA,
+    SMSG_TRIGGER_CINEMATIC                               = 0x73A4,    // 29604 - 4.0.6a 13623
 
     // Movie
     SMSG_TRIGGER_MOVIE                                   = 0x464,
@@ -465,16 +465,16 @@ enum ServerOpcodes
     // Mount
     SMSG_MOUNTRESULT                                     = 0x16E,
     SMSG_DISMOUNTRESULT                                  = 0x16F,
-    SMSG_PUREMOUNT_CANCELLED_OBSOLETE                    = 0x170,
-    SMSG_MOUNTSPECIAL_ANIM                               = 0x172,
-    SMSG_DISMOUNT                                        = 0x3AC,
+    SMSG_PUREMOUNT_CANCELLED_OBSOLETE                    = 0x054E,    // 1358  - 4.0.6a 13623
+    SMSG_MOUNTSPECIAL_ANIM                               = 0x2388,    // 9096  - 4.0.6a 13623
+    SMSG_DISMOUNT                                        = 0x3CC4,    // 15556 - 4.0.6a 13623
 
     // Pet
-    SMSG_PET_TAME_FAILURE                                = 0x173,
+    SMSG_PET_TAME_FAILURE                                = 0xFDA8,    // 64936 - 4.0.6a 13623
     SMSG_PET_NAME_INVALID                                = 0x178,
-    SMSG_PET_SPELLS                                      = 0x179,
-    SMSG_PET_MODE                                        = 0x17A,
-    SMSG_PET_UPDATE_COMBO_POINTS                         = 0x492,
+    SMSG_PET_SPELLS                                      = 0xB780,    // 46976 - 4.0.6a 13623
+    SMSG_PET_MODE                                        = 0x79C0,    // 31168 - 4.0.6a 13623
+    SMSG_PET_UPDATE_COMBO_POINTS                         = 0x7588,    // 30088 - 4.0.6a 13623
 
     /***********************************************************/
     /********************** MULTI OPCODES **********************/
