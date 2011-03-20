@@ -1922,7 +1922,7 @@ int32 SpellMgr::CalculateSpellEffectAmount(SpellEntry const * spellEntry, uint8 
     }
 
     if(maxPoints != 0.00f)
-        basePoints = irand(basePoints, maxPoints);
+        basePoints = irand(basePoints, int32(maxPoints));
     else
     {
         // not sure for Cataclysm.

@@ -752,14 +752,6 @@
 				RelativePath="..\..\src\main\Calendar\Calendar.h"
 				>
 			</File>
-			<File
-				RelativePath="..\..\src\main\Calendar\CalendarMgr.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\main\Calendar\CalendarMgr.h"
-				>
-			</File>
 		</Filter>
 		<Filter
 			Name="Chat"
@@ -869,6 +861,22 @@
 			Name="DataStores"
 			>
 			<File
+				RelativePath="..\..\src\main\DataStores\DB2fmt.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\main\DataStores\DB2Stores.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\main\DataStores\DB2Stores.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\main\DataStores\DB2Structure.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\main\DataStores\DBCEnums.h"
 				>
 			</File>
@@ -882,6 +890,10 @@
 			</File>
 			<File
 				RelativePath="..\..\src\main\DataStores\DBCStores.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\main\DataStores\DBCStructure.cpp"
 				>
 			</File>
 			<File

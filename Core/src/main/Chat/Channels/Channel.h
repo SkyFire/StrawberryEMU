@@ -27,8 +27,6 @@
 #include <string>
 
 #include "Common.h"
-
-#include "Opcodes.h"
 #include "Player.h"
 #include "WorldPacket.h"
 

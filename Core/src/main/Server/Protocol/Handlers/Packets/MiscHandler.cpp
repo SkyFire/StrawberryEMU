@@ -23,7 +23,6 @@
 #include "Language.h"
 #include "DatabaseEnv.h"
 #include "WorldPacket.h"
-#include "Opcodes.h"
 #include "Log.h"
 #include "Player.h"
 #include "GossipDef.h"

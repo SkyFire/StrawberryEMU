@@ -30,7 +30,6 @@
 #include "GossipDef.h"
 #include "Player.h"
 #include "PoolMgr.h"
-#include "Opcodes.h"
 #include "Log.h"
 #include "LootMgr.h"
 #include "MapManager.h"

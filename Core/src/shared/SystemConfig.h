@@ -36,15 +36,15 @@
 /*-----------------------CONFIGS-----------------------*/
 
 // Set Config directory
-// Default: "Configs/" - Configs are in subfolder "Configs", based on World- and LogonServer directory
+// Default: "Configs/" - Configs are in subfolder "Configs", based on World- and RealmServer directory
 # define SYSCONFDIR "Configs/"
 
 /* Set name of config files */
 // Config for WorldServer
 #define WORLD_CONFIG_FILE SYSCONFDIR "WorldServer.conf"
 
-// Config for LogonServer
-#define LOGON_CONFIG_FILE SYSCONFDIR "LogonServer.conf"
+// Config for RealmServer
+#define REALM_CONFIG_FILE SYSCONFDIR "RealmServer.conf"
 
 #endif
 

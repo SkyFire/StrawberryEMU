@@ -21,7 +21,6 @@
 #include "WorldPacket.h"
 #include "UpdateData.h"
 #include "Log.h"
-#include "Opcodes.h"
 #include "World.h"
 #include "zlib.h"
 

@@ -15,7 +15,6 @@
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "Opcodes.h"
 #include "WorldSession.h"
 #include "WorldPacket.h"
 

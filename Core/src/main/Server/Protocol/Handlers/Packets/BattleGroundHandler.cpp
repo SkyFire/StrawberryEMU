@@ -34,7 +34,6 @@
 #include "Log.h"
 #include "Player.h"
 #include "Object.h"
-#include "Opcodes.h"
 #include "DisableMgr.h"
 #include "Group.h"
 

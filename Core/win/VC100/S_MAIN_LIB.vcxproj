@@ -256,7 +256,6 @@
     <ClCompile Include="..\..\src\main\Battlegrounds\Zones\BattlegroundSA.cpp" />
     <ClCompile Include="..\..\src\main\Battlegrounds\Zones\BattlegroundWS.cpp" />
     <ClCompile Include="..\..\src\main\Calendar\Calendar.cpp" />
-    <ClCompile Include="..\..\src\main\Calendar\CalendarMgr.cpp" />
     <ClCompile Include="..\..\src\main\Chat\Chat.cpp" />
     <ClCompile Include="..\..\src\main\Chat\Channels\Channel.cpp" />
     <ClCompile Include="..\..\src\main\Chat\Channels\ChannelMgr.cpp" />
@@ -270,7 +269,9 @@
     <ClCompile Include="..\..\src\main\Combat\ThreatManager.cpp" />
     <ClCompile Include="..\..\src\main\Conditions\ConditionMgr.cpp" />
     <ClCompile Include="..\..\src\main\Conditions\DisableMgr.cpp" />
+    <ClCompile Include="..\..\src\main\DataStores\DB2Stores.cpp" />
     <ClCompile Include="..\..\src\main\DataStores\DBCStores.cpp" />
+    <ClCompile Include="..\..\src\main\DataStores\DBCStructure.cpp" />
     <ClCompile Include="..\..\src\main\DungeonFinding\LFGGroupData.cpp" />
     <ClCompile Include="..\..\src\main\DungeonFinding\LFGMgr.cpp" />
     <ClCompile Include="..\..\src\main\DungeonFinding\LFGPlayerData.cpp" />
@@ -995,7 +996,6 @@
     <ClInclude Include="..\..\src\main\Battlegrounds\Zones\BattlegroundSA.h" />
     <ClInclude Include="..\..\src\main\Battlegrounds\Zones\BattlegroundWS.h" />
     <ClInclude Include="..\..\src\main\Calendar\Calendar.h" />
-    <ClInclude Include="..\..\src\main\Calendar\CalendarMgr.h" />
     <ClInclude Include="..\..\src\main\Chat\Chat.h" />
     <ClInclude Include="..\..\src\main\Chat\Channels\Channel.h" />
     <ClInclude Include="..\..\src\main\Chat\Channels\ChannelMgr.h" />
@@ -1004,6 +1004,9 @@
     <ClInclude Include="..\..\src\main\Combat\UnitEvents.h" />
     <ClInclude Include="..\..\src\main\Conditions\ConditionMgr.h" />
     <ClInclude Include="..\..\src\main\Conditions\DisableMgr.h" />
+    <ClInclude Include="..\..\src\main\DataStores\DB2fmt.h" />
+    <ClInclude Include="..\..\src\main\DataStores\DB2Stores.h" />
+    <ClInclude Include="..\..\src\main\DataStores\DB2Structure.h" />
     <ClInclude Include="..\..\src\main\DataStores\DBCEnums.h" />
     <ClInclude Include="..\..\src\main\DataStores\DBCfmt.h" />
     <ClInclude Include="..\..\src\main\DataStores\DBCStores.h" />
@@ -1192,6 +1195,12 @@
     <ClInclude Include="..\..\src\scripts\Outland\TempestKeep\arcatraz\arcatraz.h" />
     <ClInclude Include="..\..\src\scripts\Outland\TempestKeep\Eye\the_eye.h" />
     <ClInclude Include="..\..\src\scripts\Outland\TempestKeep\Mechanar\mechanar.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="E_ZLIB.vcxproj">
+      <Project>{8f1dea42-6a5b-4b62-839d-c141a7bfacf2}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

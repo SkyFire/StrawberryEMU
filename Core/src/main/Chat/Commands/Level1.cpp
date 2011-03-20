@@ -28,7 +28,6 @@
 #include "TicketMgr.h"
 #include "Player.h"
 #include "AccountMgr.h"
-#include "Opcodes.h"
 #include "Chat.h"
 #include "Log.h"
 #include "MapManager.h"

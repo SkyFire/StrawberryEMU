@@ -23,7 +23,6 @@
 #include "Language.h"
 #include "DatabaseEnv.h"
 #include "Log.h"
-#include "Opcodes.h"
 #include "SpellMgr.h"
 #include "World.h"
 #include "WorldPacket.h"

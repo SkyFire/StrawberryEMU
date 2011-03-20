@@ -1,26 +1,31 @@
-###############################################
-# DiamondCore Logon Server Configuration File #
-###############################################
-[LogonServer]
+##################################################
+# StrawberryCore Realm Server Configuration File #
+##################################################
+[RealmServer]
 
-###############################################################################
+###################################################################################################
 # MYSQL SETTINGS
 #
-#    LoginDatabaseInfo
-#        Database connection settings for the Logon Server.
+#    GENERAL INFORMATION:
+#    NameDB
+#        *.Connection = "IP / Host;MySQLPort;MySQLUser;MySQLPassword;DataBaseName"
+#        *.ASynchThreads:
+#            Description: Amount of threads for asynchronos MySQL statements.
+#            Default:     1
+#        *.Connections:
+#            Description: Amount of MySQL connections to the MySQL server.
+#            Default:     1
 #
-#    LoginDatabase.WorkerThreads
-#        The amount of worker threads spawned to handle
-#        asynchroneous MySQL statements
-#        Each worker thread is mirrored with its own
-#        connection to the MySQL server and their own
-#        thread on the MySQL server.
-#        Default: 1
+#    LogonDB
+#        *.Connection:
+#            Description: Connection settings for the logon / realm database.
+#            Default:     LogonDB.Connection = "127.0.0.1;3306;strawberry;strawberry;LogonDB"
 #
-###############################################################################
+###################################################################################################
 
-LogonDB.Connection          = "127.0.0.1;3306;strawberry;strawberry;LogonDB"
-LoginDatabase.ASynchThreads = 1
+LogonDB.Connection    = "127.0.0.1;3306;strawberry;strawberry;LogonDB"
+LogonDB.ASynchThreads = 1
+LogonDB.Connections   = 1
 
 ###############################################################################
 # CONNECTION SETTINGS
@@ -135,7 +140,6 @@ RealmsStateUpdateDelay = 20
 #        Description: Bitmask that determines which debug log output (level 3)
 #                     will be logged.
 #        Possible flags:
-#
 #                  64 - Anything related to network input/output,
 #                        such as packet handlers and netcode logs
 #
@@ -157,7 +161,7 @@ RealmsStateUpdateDelay = 20
 ###############################################################################
 
 LogsDir          = "Logs"
-LogFile          = "DC_LogonServer.log"
+LogFile          = "SC_LogonServer.log"
 LogFileLevel     = 3
 LogLevel         = 3
 LogTimestamp     = 1

@@ -2,16 +2,16 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="CommandLine">
-      <UniqueIdentifier>{70115b35-cdcc-49c9-86ec-7ace90b647d0}</UniqueIdentifier>
+      <UniqueIdentifier>{edb2c74c-6c4c-4a34-8a7e-8762bb6a2a30}</UniqueIdentifier>
     </Filter>
     <Filter Include="RA">
-      <UniqueIdentifier>{1c148fc5-586f-4330-beba-032522761e97}</UniqueIdentifier>
+      <UniqueIdentifier>{78f42e23-62fb-415c-ba09-6eebcbb874c0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="SCSoap">
-      <UniqueIdentifier>{bf92e926-1c5d-456b-a92c-a71108886386}</UniqueIdentifier>
+    <Filter Include="Soap">
+      <UniqueIdentifier>{2800c4aa-b4cc-4e98-abb1-661c04f6f51b}</UniqueIdentifier>
     </Filter>
     <Filter Include="WorldThread">
-      <UniqueIdentifier>{82eceda5-452b-4838-b167-19c6b0271047}</UniqueIdentifier>
+      <UniqueIdentifier>{22154fe5-2655-4bce-b292-cf4cce6306de}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -27,17 +27,17 @@
     <ClCompile Include="..\..\src\server\world\RA\RASocket.cpp">
       <Filter>RA</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\server\world\SCSoap\SCSoap.cpp">
-      <Filter>SCSoap</Filter>
+    <ClCompile Include="..\..\src\server\world\Soap\Soap.cpp">
+      <Filter>Soap</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dep\gsoap\soapC.cpp">
-      <Filter>SCSoap</Filter>
+      <Filter>Soap</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dep\gsoap\soapServer.cpp">
-      <Filter>SCSoap</Filter>
+      <Filter>Soap</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dep\gsoap\stdsoap2.cpp">
-      <Filter>SCSoap</Filter>
+      <Filter>Soap</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\server\world\WorldThread\WorldRunnable.cpp">
       <Filter>WorldThread</Filter>
@@ -58,17 +58,17 @@
     <ClInclude Include="..\..\src\server\world\RA\SocketDefines.h">
       <Filter>RA</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\server\world\SCSoap\SCSoap.h">
-      <Filter>SCSoap</Filter>
+    <ClInclude Include="..\..\src\server\world\Soap\Soap.h">
+      <Filter>Soap</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dep\gsoap\soapH.h">
-      <Filter>SCSoap</Filter>
+      <Filter>Soap</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dep\gsoap\soapStub.h">
-      <Filter>SCSoap</Filter>
+      <Filter>Soap</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dep\gsoap\stdsoap2.h">
-      <Filter>SCSoap</Filter>
+      <Filter>Soap</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\server\world\WorldThread\WorldRunnable.h">
       <Filter>WorldThread</Filter>

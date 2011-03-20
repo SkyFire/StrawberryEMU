@@ -44,51 +44,56 @@ WorldDB.ASynchThreads = 1
 WorldDB.Connections   = 1
 
 ###################################################################################################
-# SERVER CONNECTION SETTINGS
-
-
-###################################################################################################
+# DIRECTORIES
+#
 #    RealmID
 #        Description: ID of the Realm using this config.
 #        Important:   RealmID must match the realmlist inside the realmd database.
 #        Default:     1
+
+RealmID = 1
+
 #
 #    DataDir
 #        Description: Data directory setting.
 #        Important:   DataDir needs to be quoted, as the string might contain space characters.
-#        Example:     "@prefix@/share/trinitycore"
-#        Default:     "."
+#        Example:     "@prefix@/share/Strawberrycore"
+#        Default:     "Data"
+
+DataDir = "Data"
+
 #
 #    LogsDir
 #        Description: Logs directory setting.
 #        Important:   LogsDir needs to be quoted, as the string might contain space characters.
 #                     Logs directory must exists, or log file creation will be disabled.
-#        Default:     "" - (Log files will be stored in the current path)
-#
-#
+#        Default:     "Logs" - (Log files will be stored in the current path)
+
+LogsDir = "Logs"
+
 #
 #    MaxPingTime
-#        Description: Time (in seconds) between database pings.
-#        Default:     1800 - (30 minutes)
+#        Description: Time (in minutes) between database pings.
+#        Default:     30
+
+MaxPingTime = 30
+
 #
 #    WorldServerPort
 #        Description: TCP port to reach the world server.
 #        Default:     8085
+
+WorldServerPort = 8085
+
 #
 #    BindIP
 #        Description: Bind world server to IP/hostname
 #        Default:     "0.0.0.0" - (Bind to all IPs on the system)
+
+BindIP = "0.0.0.0"
+
 #
 ###################################################################################################
-
-RealmID = 1
-DataDir = "."
-LogsDir = ""
-
-
-MaxPingTime = 1800
-WorldServerPort = 8085
-BindIP = "0.0.0.0"
 
 ###################################################################################################
 # PERFORMANCE SETTINGS
@@ -126,7 +131,7 @@ Compression = 1
 #                     1+  - (Enabled)
 #                     0   - (Disabled, No limit)
 
-PlayerLimit = 100
+PlayerLimit = 1000
 
 #
 #    SaveRespawnTimeImmediately
@@ -194,9 +199,9 @@ ChangeWeatherInterval = 600000
 #
 #    PlayerSaveInterval
 #        Description: Time (in milliseconds) for player save interval.
-#        Default:     900000 - (15 min)
+#        Default:     90000 - (1.5 min)
 
-PlayerSaveInterval = 900000
+PlayerSaveInterval = 90000
 
 #
 #    PlayerSave.Stats.MinLevel
@@ -224,15 +229,6 @@ PlayerSave.Stats.SaveOnlyOnLogout = 1
 
 vmap.enableLOS    = 1
 vmap.enableHeight = 1
-
-#
-#    vmap.ignoreSpellIds
-#        Description: These spells are ignored for LoS calculation.
-#                     List of ids with delimiter ','.
-#        Example:     "7720,1337"
-#        Default:     "7720"
-
-vmap.ignoreSpellIds = "7720"
 
 #
 #    vmap.petLOS
@@ -342,29 +338,7 @@ PersistentCharacterCleanFlags = 0
 ###################################################################################################
 
 ###################################################################################################
-# CONSOLE LOGGING SETTINGS
-#
-#    ScriptNameError.Show
-#        Description: Show not assigned Scriptname as an error in the console.
-#        Default:     0 - Show as Debug in console.
-#                     1 - Show as Error in console.
-#
-###################################################################################################
-
-ScriptNameError.Show = 0
-
-###################################################################################################
 # SERVER LOGGING
-#
-#    LogSQL
-#        Description: Enable logging of SQL queries triggered by in game commands from in game
-#                     All commands are written to a file: YYYY-MM-DD_logSQL.sql
-#                     A new file will be created every day at 00:00:00.
-#        Default:     1 - (Enabled)
-#                     0 - (Disabled)
-
-LogSQL = 1
-
 #
 #    PidFile
 #        Description: World daemon PID file
@@ -376,12 +350,13 @@ PidFile = ""
 #
 #    LogLevel
 #        Description: Server console level of logging
-#        Default:     1 - (Basic)
+#        Default:     3 - (Full/Debug)
+#                     1 - (Basic)
 #                     0 - (Minimum)
 #                     2 - (Detail)
-#                     3 - (Full/Debug)
+#                     
 
-LogLevel = 1
+LogLevel = 3
 
 #
 #    LogFile
@@ -389,7 +364,7 @@ LogLevel = 1
 #        Default:     "Server.log" - (Enabled)
 #                     ""           - (Disabled)
 
-LogFile = "Server.log"
+LogFile = "SC_Server.log"
 
 #
 #    LogTimestamp
@@ -398,7 +373,7 @@ LogFile = "Server.log"
 #        Default:     0 - (Disabled)
 #                     1 - (Enabled)
 
-LogTimestamp = 0
+LogTimestamp = 1
 
 #
 #    LogFileLevel
@@ -408,7 +383,7 @@ LogTimestamp = 0
 #                     2 - (Detail)
 #                     3 - (Full/Debug)
 
-LogFileLevel = 0
+LogFileLevel = 3
 
 #
 #    Debug Log Mask
@@ -454,10 +429,10 @@ DebugLogMask = 0
 #
 #    WorldLogFile
 #        Description: Packet logging file for the world server.
-#        Example:     "World.log" - (Enabled)
+#        Example:     "SC_World.log" - (Enabled)
 #        Default:     ""          - (Disabled)
 
-WorldLogFile = ""
+WorldLogFile = "SC_World.log"
 
 #
 #    DBErrorLogFile
@@ -465,15 +440,15 @@ WorldLogFile = ""
 #        Default:     "DBErrors.log" - (Enabled)
 #                     ""             - (Disabled)
 
-DBErrorLogFile = "DBErrors.log"
+DBErrorLogFile = "SC_DBErrors.log"
 
 #
 #    CharLogFile
 #        Description: Log file for character operations
-#        Default:     "Char.log" - (Enabled)
+#        Default:     "Chars.log" - (Enabled)
 #                     ""         - (Disabled)
 
-CharLogFile = "Char.log"
+CharLogFile = "Chars.log"
 
 #
 #    CharLogTimestamp
@@ -482,7 +457,7 @@ CharLogFile = "Char.log"
 #        Default:     0 - (Disabled)
 #                     1 - (Enabled)
 
-CharLogTimestamp = 0
+CharLogTimestamp = 1
 
 #
 #    CharLogDump
@@ -493,7 +468,7 @@ CharLogTimestamp = 0
 #        Default:     0 - (Disabled)
 #                     1 - (Enabled)
 
-CharLogDump = 0
+CharLogDump = 1
 
 #
 #    CharLogDump.Separate
@@ -502,7 +477,7 @@ CharLogDump = 0
 #        Default:     0 - (Disabled)
 #                     1 - (Enabled)
 
-CharLogDump.Separate = 0
+CharLogDump.Separate = 1
 
 #
 #    CharLogDump.SeparateDir
@@ -510,7 +485,7 @@ CharLogDump.Separate = 0
 #        Example:     "chardumps" - (Enabled)
 #        Default:     ""         - (Disabled)
 
-CharLogDump.SeparateDir = ""
+CharLogDump.SeparateDir = "CharDumps"
 
 #
 #    GmLogFile
@@ -527,7 +502,7 @@ GmLogFile = "GM.log"
 #        Default:     0 - (Disabled)
 #                     1 - (Enabled)
 
-GmLogTimestamp = 0
+GmLogTimestamp = 1
 
 #
 #    GmLogPerAccount
@@ -536,7 +511,7 @@ GmLogTimestamp = 0
 #        Default:     0 - (Disabled)
 #                     1 - (Enabled)
 
-GmLogPerAccount = 0
+GmLogPerAccount = 1
 
 #
 #    RaLogFile
@@ -549,19 +524,18 @@ RaLogFile = "RA.log"
 #
 #    ArenaLogFile
 #        Description: Log file for arena fights and arena team creations.
-#        Example:     "Arena.log" - (Enabled)
-#        Default:     ""          - (Disabled)
+#        Default:     "Arena.log" - (Enabled)
 
-ArenaLogFile = ""
+ArenaLogFile = "Arena.log"
 
 #
 #    ArenaLog.ExtendedInfo
 #        Description: Include extended info to ArenaLogFile for each player after rated arena
 #                     matches (guid, name, team, IP, healing/damage done, killing blows).
-#        Default:     0 - (Disabled)
-#                     1 - (Enabled)
+#        Default:     1 - (Enabled)
+#                     0 - (Disabled)
 
-ArenaLog.ExtendedInfo = 0
+ArenaLog.ExtendedInfo = 1
 
 #
 #    SQLDriverLogFile
@@ -597,10 +571,10 @@ SQLDriverQueryLogging = 0
 #                     12 - Lmagenta
 #                     13 - Lcyan
 #                     14 - White
-#        Example:     "13 11 9 5" - (Enabled)
+#        Example:     "10 2 9 1" - (Enabled)
 #        Default:     ""          - (Disabled)
 
-LogColors = ""
+LogColors = "10 2 9 1"
 
 #
 #    EnableLogDB
@@ -873,7 +847,8 @@ DeclinedNames = 0
 #    Expansion
 #        Description: Allow server to use content from expansions. Checks for expansion-related
 #                     map files, client compatibility and class/race character creation.
-#        Default:     2 - (Expansion 2)
+#        Default:     3 - (Expansion 3)
+#                     2 - (Expansion 2)
 #                     1 - (Expansion 1)
 #                     0 - (Disabled, Ignore and disable expansion content (maps, races, classes)
 
@@ -1004,16 +979,16 @@ SkipCinematics = 0
 #        Description: Maximum level that can be reached by players.
 #        Important:   Levels beyond 100 are not recommended at all.
 #        Range:       1-255
-#        Default:     80
+#        Default:     85
 
-MaxPlayerLevel = 80
+MaxPlayerLevel = 85
 
 #
 #    MinDualSpecLevel
 #        Description: Level requirement for Dual Talent Specialization
-#        Default:     40
+#        Default:     30
 
-MinDualSpecLevel = 40
+MinDualSpecLevel = 30
 
 #
 #    StartPlayerLevel
@@ -1322,10 +1297,10 @@ BeepAtStart = 1
 #    Motd
 #        Description: Message of the Day, displayed at login.
 #                     Use '@' for a newline and be sure to escape special characters.
-#        Example:     "Welcome to John\'s Server@This server runs on Trinity Core."
-#        Default:     "Welcome to a Trinity Core server."
+#        Example:     "Welcome to John\'s Server@This server runs on Strawberry Core."
+#        Default:     "Welcome to a Strawberry Core server."
 
-Motd = "Welcome to a Trinity Core server."
+Motd = "Welcome to a Strawberry Core server."
 
 #
 #    Server.LoginInfo
@@ -1333,7 +1308,7 @@ Motd = "Welcome to a Trinity Core server."
 #        Default:     0 - (Disabled)
 #                     1 - (Enabled)
 
-Server.LoginInfo = 0
+Server.LoginInfo = 1
 
 #
 #    Command.LookupMaxResults
@@ -1356,7 +1331,7 @@ AllowTickets = 1
 #        Default:     0 - (Disabled)
 #                     1 - (Enabled, Experimental as of still being in development)
 
-DungeonFinder.Enable = 0
+DungeonFinder.Enable = 1
 
 #
 #   AccountInstancesPerHour
@@ -1628,6 +1603,7 @@ ListenRange.TextEmote = 40
 #        Default:     300
 
 ListenRange.Yell = 300
+
 #
 ###################################################################################################
 
@@ -1731,6 +1707,27 @@ ChatLevelReq.Say = 1
 #                     0 - (Disabled)
 
 AllowPlayerCommands = 1
+
+#
+#    PreserveCustomChannels
+#        Description: Store custom chat channel settings like password, automatic ownership handout
+#                     or ban list in the database. Needs to be enabled to save custom
+#                     world/trade/etc. channels that have automatic ownership handout disabled.
+#                     (.channel set ownership $channel off)
+#        Default:     0 - (Disabled, Blizzlike, Channel settings are lost if last person left)
+#                     1 - (Enabled)
+
+PreserveCustomChannels = 1
+
+#
+#    PreserveCustomChannelDuration
+#        Description: Time (in days) that needs to pass before the customs chat channels get
+#                     cleaned up from the database. Only channels with ownership handout enabled
+#                     (default behavior) will be cleaned.
+#        Default:     14 - (Enabled, Clean channels that haven't been used for 14 days)
+#                     0  - (Disabled, Infinite channel storage)
+
+PreserveCustomChannelDuration = 14
 
 #
 ###################################################################################################
@@ -1839,7 +1836,7 @@ GM.LowerSecurity = 0
 #        Default:     1 - (Enabled)
 #                     0 - (Disabled)
 
-GM.AllowAchievementGain = 1
+GM.AllowAchievementGain = 0
 
 #
 #    GM.TicketSystem.ChanceOfGMSurvey
@@ -1893,7 +1890,7 @@ Visibility.Distance.BGArenas = 180
 
 Visibility.Notify.Period.OnContinents = 1000
 Visibility.Notify.Period.InInstances  = 1000
-Visibility.Notify.Period.InBGArenas = 1000
+Visibility.Notify.Period.InBGArenas   = 1000
 
 #
 ###################################################################################################
@@ -2050,7 +2047,7 @@ Rate.Mining.Amount = 1
 #        Description: Mining rates.
 #        Default:     Chance to to mine a deposit again.
 
-Rate.Mining.Next   = 1
+Rate.Mining.Next = 1
 
 #
 #    Rate.Talent
@@ -2528,7 +2525,7 @@ SOAP.Port = 7878
 #                     1 - (Unlink the character from account and free up the name, Appears as
 #                         deleted ingame)
 
-CharDelete.Method = 0
+CharDelete.Method = 1
 
 #
 #    CharDelete.MinLevel

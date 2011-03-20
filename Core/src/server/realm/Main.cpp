@@ -72,7 +72,7 @@ extern int main(int argc, char **argv)
 {
     sLog->SetLogDB(false);
     // Command line parsing to get the configuration file name
-    char const *cfg_file = LOGON_CONFIG_FILE;
+    char const *cfg_file = REALM_CONFIG_FILE;
     int c = 1;
     while(c < argc)
     {

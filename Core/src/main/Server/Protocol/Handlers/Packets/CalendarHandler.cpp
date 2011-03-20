@@ -25,7 +25,6 @@
 
 #include "InstanceSaveMgr.h"
 #include "Log.h"
-#include "Opcodes.h"
 #include "Player.h"
 
 void WorldSession::HandleCalendarGetCalendar(WorldPacket & /*recv_data*/)

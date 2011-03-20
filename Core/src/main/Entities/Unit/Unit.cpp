@@ -22,7 +22,6 @@
 #include "Common.h"
 #include "CreatureAIImpl.h"
 #include "Log.h"
-#include "Opcodes.h"
 #include "WorldPacket.h"
 #include "WorldSession.h"
 #include "World.h"

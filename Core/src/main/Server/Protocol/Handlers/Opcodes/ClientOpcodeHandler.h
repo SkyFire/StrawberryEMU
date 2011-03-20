@@ -112,12 +112,29 @@ enum ClientOpcodes
     /***********************************************************/
     /********************** CHAT OPCODES ***********************/
     /***********************************************************/
-    CMSG_MESSAGECHAT                                     = 0x095,
     CMSG_CHAT_IGNORED                                    = 0x225,
     CMSG_GM_VISION                                       = 0x226,
     CMSG_CHAT_FILTERED                                   = 0x331,
     CMSG_GM_WHISPER                                      = 0x3B2,
     CMSG_FORCE_SAY_CHEAT                                 = 0x47E,
+
+    // Chat Message
+    CMSG_MESSAGECHAT_SAY                            = 0x002A,    // 42    - 4.0.6.13623
+    CMSG_MESSAGECHAT_YELL                           = 0x0802,    // 2050  - 4.0.6.13623
+    CMSG_MESSAGECHAT_CHANNEL                        = 0x3A88,    // 14984 - 4.0.3.13329
+    CMSG_MESSAGECHAT_WHISPER                        = 0x0000,    // 0     - 4.0.6.13623
+    CMSG_MESSAGECHAT_GUILD                          = 0x0823,    // 2083  - 4.0.6.13623
+    CMSG_MESSAGECHAT_OFFICER                        = 0x0861,    // 2145  - 4.0.6.13623
+    CMSG_MESSAGECHAT_AFK                            = 0x086B,    // 2155  - 4.0.6.13623
+    CMSG_MESSAGECHAT_DND                            = 0x0003,    // 3     - 4.0.6.13623
+    CMSG_MESSAGECHAT_EMOTE                          = 0x0042,    // 66    - 4.0.6.13623
+    CMSG_MESSAGECHAT_PARTY                          = 0x2A08,    // 10760 - 4.0.3.13329
+    CMSG_MESSAGECHAT_PARTY_LEADER                   = 0x6A18,    // 52573 - 4.0.3.13329
+    CMSG_MESSAGECHAT_RAID                           = 0x7A90,    // 27160 - 4.0.3.13329
+    CMSG_MESSAGECHAT_RAID_LEADER                    = 0x4A80,    // 19072 - 4.0.3.13329
+    CMSG_MESSAGECHAT_BATTLEGROUND                   = 0x1A10,    // 6672  - 4.0.3.13329
+    CMSG_MESSAGECHAT_BATTLEGROUND_LEADER            = 0x7A80,    // 31360 - 4.0.3.13329
+    CMSG_MESSAGECHAT_RAID_WARNING                   = 0x4A88,    // 19080 - 4.0.3.13329
 
     // Channel
     CMSG_JOIN_CHANNEL                                    = 0x097,

@@ -28,7 +28,6 @@
 #include "Config.h"
 #include "SystemConfig.h"
 #include "Log.h"
-#include "Opcodes.h"
 #include "WorldSession.h"
 #include "WorldPacket.h"
 #include "Player.h"

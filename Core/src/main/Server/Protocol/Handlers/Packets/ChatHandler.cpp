@@ -35,7 +35,6 @@
 #include "Guild.h"
 #include "Language.h"
 #include "Log.h"
-#include "Opcodes.h"
 #include "Player.h"
 #include "SpellAuras.h"
 #include "SpellAuraEffects.h"

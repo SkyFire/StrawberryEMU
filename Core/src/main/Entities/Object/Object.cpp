@@ -22,7 +22,6 @@
 #include "Common.h"
 #include "SharedDefines.h"
 #include "WorldPacket.h"
-#include "Opcodes.h"
 #include "Log.h"
 #include "World.h"
 #include "Object.h"

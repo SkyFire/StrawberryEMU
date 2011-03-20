@@ -21,7 +21,6 @@
 
 #include "Common.h"
 #include "DatabaseEnv.h"
-#include "Opcodes.h"
 #include "Log.h"
 #include "WorldPacket.h"
 #include "WorldSession.h"

@@ -22,7 +22,6 @@
 #include "zlib.h"
 #include "AddonHandler.h"
 #include "DatabaseEnv.h"
-#include "Opcodes.h"
 #include "Log.h"
 
 AddonHandler::AddonHandler()

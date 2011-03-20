@@ -26,7 +26,6 @@
 #include "Player.h"
 #include "Item.h"
 #include "GameObject.h"
-#include "Opcodes.h"
 #include "Chat.h"
 #include "MapManager.h"
 #include "Language.h"
