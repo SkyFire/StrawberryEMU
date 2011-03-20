@@ -448,7 +448,7 @@ enum ServerOpcodes
     SMSG_SPLINE_SET_FLIGHT_SPEED                         = 0xE0C0,    // 57536 - 4.0.6a 13623
     SMSG_SPLINE_SET_FLIGHT_BACK_SPEED                    = 0xF2EC,    // 62188 - 4.0.6a 13623
     SMSG_SPLINE_MOVE_SET_FLYING                          = 0x422,
-    SMSG_SPLINE_MOVE_UNSET_FLYING                        = 0x7688,    // 30344 - 4.0.6a 136223
+    SMSG_SPLINE_MOVE_UNSET_FLYING                        = 0x7688,    // 30344 - 4.0.6a 13623
     
     /***********************************************************/
     /********************* MOVIE OPCODES ***********************/
@@ -479,24 +479,24 @@ enum ServerOpcodes
     /***********************************************************/
     /********************** MULTI OPCODES **********************/
     /***********************************************************/
-    SMSG_MULTIPLE_PACKETS                                = 0x4CD,
+    SMSG_MULTIPLE_PACKETS                                = 0xFEC0,    // 65216 - 4.0.6a 13623
 
     /***********************************************************/
     /********************* PLAYER OPCODES **********************/
     /***********************************************************/
-    SMSG_PLAYER_DIFFICULTY_CHANGE                        = 0x20E,
-    SMSG_PLAYER_SKINNED                                  = 0x2BC,
-    SMSG_ADDON_INFO                                      = 0x2EF,
+    SMSG_PLAYER_DIFFICULTY_CHANGE                        = 0x2A80,    // 10880 - 4.0.6a 13623
+    SMSG_PLAYER_SKINNED                                  = 0xBAA0,    // 47776 - 4.0.6a 13623
+    SMSG_ADDON_INFO                                      = 0xEA80,    // 60032 - 4.0.6a 13623
     SMSG_GHOSTEE_GONE                                    = 0x326,
-    SMSG_TITLE_EARNED                                    = 0x373,
+    SMSG_TITLE_EARNED                                    = 0x6C8C,    // 27788 - 4.0.6a 13623
     SMSG_UPDATE_COMBO_POINTS                             = 0x39D,
     SMSG_CHEAT_PLAYER_LOOKUP                             = 0x3C4,
-    SMSG_KICK_REASON                                     = 0x3C5,
-    SMSG_SET_PLAYER_DECLINED_NAMES_RESULT                = 0x41A,
+    SMSG_KICK_REASON                                     = 0xEAC8,    // 60104 - 4.0.6a 13623
+    SMSG_SET_PLAYER_DECLINED_NAMES_RESULT                = 0xBAAC,    // 47788 - 4.0.6a 13623
     SMSG_HIGHEST_THREAT_UPDATE                           = 0x482,
-    SMSG_THREAT_UPDATE                                   = 0x483,
-    SMSG_THREAT_REMOVE                                   = 0x484,
-    SMSG_THREAT_CLEAR                                    = 0x485,
+    SMSG_THREAT_UPDATE                                   = 0xB480,    // 46208 - 4.0.6a 13623
+    SMSG_THREAT_REMOVE                                   = 0x29E0,    // 10720 - 4.0.6a 13623
+    SMSG_THREAT_CLEAR                                    = 0xFFC8,    // 65480 - 4.0.6a 13623
 
     // Player Dance
     SMSG_NOTIFY_DANCE                                    = 0x44A,
@@ -507,50 +507,50 @@ enum ServerOpcodes
     SMSG_LEARNED_DANCE_MOVES                             = 0x455,
 
     // Player Achievement
-    SMSG_ACHIEVEMENT_EARNED                              = 0x468,
-    SMSG_CRITERIA_UPDATE                                 = 0x46A,
+    SMSG_ACHIEVEMENT_EARNED                              = 0xF5E4,    // 62948 - 4.0.6a 13623
+    SMSG_CRITERIA_UPDATE                                 = 0xAFC8,    // 45000 - 4.0.6a 13623
     SMSG_RESPOND_INSPECT_ACHIEVEMENTS                    = 0x46C,
-    SMSG_ALL_ACHIEVEMENT_DATA                            = 0x47D,
-    SMSG_SERVER_FIRST_ACHIEVEMENT                        = 0x498,
-    SMSG_CRITERIA_DELETED                                = 0x49E,
-    SMSG_ACHIEVEMENT_DELETED                             = 0x49F,
+    SMSG_ALL_ACHIEVEMENT_DATA                            = 0x400E,    // 16398 - 4.0.6a 13623
+    SMSG_SERVER_FIRST_ACHIEVEMENT                        = 0x68CC,    // 26828 - 4.0.6a 13623
+    SMSG_CRITERIA_DELETED                                = 0xAF84,    // 44932 - 4.0.6a 13623
+    SMSG_ACHIEVEMENT_DELETED                             = 0xE6A0,    // 59040 - 4.0.6a 13623
 
     // Player Exploration
-    SMSG_EXPLORATION_EXPERIENCE                          = 0x1F8,
+    SMSG_EXPLORATION_EXPERIENCE                          = 0xA9C4,    // 43460 - 4.0.6a 13623
 
     // Player Corpse / Resurrect / Death
-    SMSG_RESURRECT_REQUEST                               = 0x15B,
+    SMSG_RESURRECT_REQUEST                               = 0xF3A0,    // 62368 - 4.0.6a 13623
     SMSG_RESURRECT_FAILED                                = 0x252,
-    SMSG_CORPSE_RECLAIM_DELAY                            = 0x269,
-    SMSG_FEIGN_DEATH_RESISTED                            = 0x2B4,
-    SMSG_DEATH_RELEASE_LOC                               = 0x378,
-    SMSG_FORCED_DEATH_UPDATE                             = 0x37A,
-    SMSG_PRE_RESURRECT                                   = 0x494,
+    SMSG_CORPSE_RECLAIM_DELAY                            = 0x31C4,    // 12740 - 4.0.6a 13623
+    SMSG_FEIGN_DEATH_RESISTED                            = 0x3BE8,    // 15336 - 4.0.6a 13623
+    SMSG_DEATH_RELEASE_LOC                               = 0x33C8,    // 13256 - 4.0.6a 13623
+    SMSG_FORCED_DEATH_UPDATE                             = 0xFFE8,    // 65512 - 4.0.6a 13623
+    SMSG_PRE_RESURRECT                                   = 0x66C4,    // 26308 - 4.0.6a 13623
     SMSG_CORPSE_NOT_IN_INSTANCE                          = 0x506,
 
     // Player Pet
-    SMSG_STABLE_RESULT                                   = 0x273,
-    SMSG_SUMMON_REQUEST                                  = 0x2AB,
-    SMSG_PET_BROKEN                                      = 0x2AF,
-    SMSG_PET_ACTION_FEEDBACK                             = 0x2C6,
+    SMSG_STABLE_RESULT                                   = 0xEACC,    // 60108 - 4.0.6a 13623
+    SMSG_SUMMON_REQUEST                                  = 0x3AE4,    // 15076 - 4.0.6a 13623
+    SMSG_PET_BROKEN                                      = 0x75E0,    // 30176 - 4.0.6a 13623
+    SMSG_PET_ACTION_FEEDBACK                             = 0x2584,    // 9604  - 4.0.6a 13623
     SMSG_PET_UNLEARN_CONFIRM                             = 0x2F1,
-    SMSG_PET_RENAMEABLE                                  = 0x475,
-    SMSG_PET_GUIDS                                       = 0x4AA,
-    SMSG_PET_ACTION_SOUND                                = 0x324,
-    SMSG_PET_DISMISS_SOUND                               = 0x325,
+    SMSG_PET_RENAMEABLE                                  = 0xB6C8,    // 46792 - 4.0.6a 13623
+    SMSG_PET_GUIDS                                       = 0xE4E8,    // 58600 - 4.0.6a 13623
+    SMSG_PET_ACTION_SOUND                                = 0x30E4,    // 12516 - 4.0.6a 13623
+    SMSG_PET_DISMISS_SOUND                               = 0xB7E0,    // 47072 - 4.0.6a 13623
 
     // Player PVP / Honor / Arena
-    SMSG_PVP_CREDIT                                      = 0x28C,
+    SMSG_PVP_CREDIT                                      = 0xA68C,    // 46636 - 4.0.6a 13623
     SMSG_ARENA_TEAM_COMMAND_RESULT                       = 0x349,
     SMSG_ARENA_TEAM_QUERY_RESPONSE                       = 0x34C,
-    SMSG_ARENA_TEAM_ROSTER                               = 0x34E,
-    SMSG_ARENA_TEAM_INVITE                               = 0x350,
-    SMSG_ARENA_TEAM_EVENT                                = 0x357,
-    SMSG_ARENA_TEAM_STATS                                = 0x35B,
-    SMSG_ARENA_ERROR                                     = 0x376,
-    SMSG_REPORT_PVP_AFK_RESULT                           = 0x3E5,
-    SMSG_ARENA_OPPONENT_UPDATE                           = 0x4C7,
-    SMSG_ARENA_TEAM_CHANGE_FAILED_QUEUED                 = 0x4C8,
+    SMSG_ARENA_TEAM_ROSTER                               = 0xB4A8,    // 46248 - 4.0.6a 13623
+    SMSG_ARENA_TEAM_INVITE                               = 0x63A0,    // 25504 - 4.0.6a 13623
+    SMSG_ARENA_TEAM_EVENT                                = 0x74C4,    // 29892 - 4.0.6a 13623
+    SMSG_ARENA_TEAM_STATS                                = 0xAFAC,    // 44971 - 4.0.6a 13623
+    SMSG_ARENA_ERROR                                     = 0x2FEC,    // 12268 - 4.0.6a 13623
+    SMSG_REPORT_PVP_AFK_RESULT                           = 0x78E8,    // 30952 - 4.0.6a 13623
+    SMSG_ARENA_OPPONENT_UPDATE                           = 0x28CC,    // 10444 - 4.0.6a 13623
+    SMSG_ARENA_TEAM_CHANGE_FAILED_QUEUED                 = 0xBFA0,    // 49056 - 4.0.6a 13623
 
     // Player Minigame
     SMSG_MINIGAME_SETUP                                  = 0x2F6,
@@ -558,32 +558,32 @@ enum ServerOpcodes
     SMSG_MINIGAME_MOVE_FAILED                            = 0x2F9,
 
     // Friends / Contacts / ...
-    SMSG_USERLIST_ADD                                    = 0x3F0,
-    SMSG_USERLIST_REMOVE                                 = 0x3F1,
-    SMSG_USERLIST_UPDATE                                 = 0x3F2,
-    SMSG_REFER_A_FRIEND_FAILURE                          = 0x421,
+    SMSG_USERLIST_ADD                                    = 0xF8CC,    // 63692 - 4.0.6a 13623
+    SMSG_USERLIST_REMOVE                                 = 0xEF80,    // 61312 - 4.0.6a 13623
+    SMSG_USERLIST_UPDATE                                 = 0x2C8C,    // 11404 - 4.0.6a 13623
+    SMSG_REFER_A_FRIEND_FAILURE                          = 0x7FE0,    // 32736 - 4.0.6a 13623
 
     // Talents
-    SMSG_INSPECT_TALENT                                  = 0x3F4,
-    SMSG_TALENTS_INFO                                    = 0x4C0,
-    SMSG_TALENTS_INVOLUNTARILY_RESET                     = 0x4FA,
+    SMSG_INSPECT_TALENT                                  = 0xF8C0,    // 63680 - 4.0.6a 13623
+    SMSG_TALENTS_INFO                                    = 0x75C4,    // 30148 - 4.0.6a 13623
+    SMSG_TALENTS_INVOLUNTARILY_RESET                     = 0x6680,    // 26240 - 4.0.6a 13623
 
     // Totem
-    SMSG_TOTEM_CREATED                                   = 0x413,
+    SMSG_TOTEM_CREATED                                   = 0x2EAC,    // 11948 - 4.0.6a 13623
 
     // Barber
-    SMSG_ENABLE_BARBER_SHOP                              = 0x427,
-    SMSG_BARBER_SHOP_RESULT                              = 0x428,
+    SMSG_ENABLE_BARBER_SHOP                              = 0x37E8,    // 14312 - 4.0.6a 13623
+    SMSG_BARBER_SHOP_RESULT                              = 0x3188,    // 12680 - 4.0.6a 13623
 
     // Player Health / Power / Mana / ...
-    SMSG_HEALTH_UPDATE                                   = 0x47F,
-    SMSG_POWER_UPDATE                                    = 0x480,
+    SMSG_HEALTH_UPDATE                                   = 0x2AA8,    // 10920 - 4.0.6a 13623
+    SMSG_POWER_UPDATE                                    = 0x65E8,    // 26088 - 4.0.6a 13623
     SMSG_CONVERT_RUNE                                    = 0x486,
     SMSG_RESYNC_RUNES                                    = 0x487,
     SMSG_ADD_RUNE_POWER                                  = 0x488,
 
     // Player Vehicle
-    SMSG_PLAYER_VEHICLE_DATA                             = 0x4A7,
+    SMSG_PLAYER_VEHICLE_DATA                             = 0xA5A4,    // 42404 - 4.0.6a 13623
 
     /***********************************************************/
     /********************* QUERY OPCODES ***********************/
