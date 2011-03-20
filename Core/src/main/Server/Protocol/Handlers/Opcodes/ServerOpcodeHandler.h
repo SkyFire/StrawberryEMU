@@ -273,47 +273,47 @@ enum ServerOpcodes
     /******************** INSTANCE OPCODES *********************/
     /***********************************************************/
     SMSG_INSTANCE_LOCK_WARNING_QUERY                     = 0x147,
-    SMSG_UPDATE_INSTANCE_ENCOUNTER_UNIT                  = 0x214,
+    SMSG_UPDATE_INSTANCE_ENCOUNTER_UNIT                  = 0xEDA4,    // 60836 - 4.0.6a 13623
     SMSG_RAID_GROUP_ONLY                                 = 0x286,
-    SMSG_INSTANCE_SAVE_CREATED                           = 0x2CB,
+    SMSG_INSTANCE_SAVE_CREATED                           = 0xBBC4,    // 48068 - 4.0.6a 13623
     SMSG_RAID_INSTANCE_INFO                              = 0x2CC,
-    SMSG_RAID_INSTANCE_MESSAGE                           = 0x2FA,
-    SMSG_UPDATE_INSTANCE_OWNERSHIP                       = 0x32B,
+    SMSG_RAID_INSTANCE_MESSAGE                           = 0x6680,    // 26240 - 4.0.6a 13623
+    SMSG_UPDATE_INSTANCE_OWNERSHIP                       = 0x3B8C,    // 15244 - 4.0.6a 13623
     SMSG_INSTANCE_DIFFICULTY                             = 0x33B,
     SMSG_RESET_FAILED_NOTIFY                             = 0x396,
     SMSG_RAID_READY_CHECK_ERROR                          = 0x408,
 
     // Lfg
-    SMSG_LFG_PLAYER_REWARD                               = 0x1FF,
-    SMSG_LFG_TELEPORT_DENIED                             = 0x200,
-    SMSG_LFG_OFFER_CONTINUE                              = 0x293,
-    SMSG_LFG_ROLE_CHOSEN                                 = 0x2BB,
-    SMSG_UPDATE_LFG_LIST                                 = 0x360,
-    SMSG_LFG_PROPOSAL_UPDATE                             = 0x361,
-    SMSG_LFG_ROLE_CHECK_UPDATE                           = 0x363,
-    SMSG_LFG_JOIN_RESULT                                 = 0x364,
-    SMSG_LFG_QUEUE_STATUS                                = 0x365,
-    SMSG_LFG_UPDATE_PLAYER                               = 0x367,
-    SMSG_LFG_UPDATE_PARTY                                = 0x368,
-    SMSG_LFG_UPDATE_SEARCH                               = 0x369,
-    SMSG_LFG_BOOT_PLAYER                                 = 0x36D,
-    SMSG_LFG_PLAYER_INFO                                 = 0x36F,
-    SMSG_LFG_PARTY_INFO                                  = 0x372,
-    SMSG_LFG_DISABLED                                    = 0x398,
+    SMSG_LFG_PLAYER_REWARD                               = 0x2C88,    // 11400 - 4.0.6a 13623
+    SMSG_LFG_TELEPORT_DENIED                             = 0xEAA0,    // 60064 - 4.0.6a 13623
+    SMSG_LFG_OFFER_CONTINUE                              = 0x63EC,    // 25580 - 4.0.6a 13623
+    SMSG_LFG_ROLE_CHOSEN                                 = 0xA9AC,    // 43436 - 4.0.6a 13623
+    SMSG_UPDATE_LFG_LIST                                 = 0x768C,    // 30348 - 4.0.6a 13623
+    SMSG_LFG_PROPOSAL_UPDATE                             = 0x32AC,    // 12972 - 4.0.6a 13623
+    SMSG_LFG_ROLE_CHECK_UPDATE                           = 0xF2A8,    // 62120 - 4.0.6a 13623
+    SMSG_LFG_JOIN_RESULT                                 = 0x338C,    // 13196 - 4.0.6a 13623
+    SMSG_LFG_QUEUE_STATUS                                = 0xB388,    // 45960 - 4.0.6a 13623
+    SMSG_LFG_UPDATE_PLAYER                               = 0xE284,    // 57988 - 4.0.6a 13623
+    SMSG_LFG_UPDATE_PARTY                                = 0x2CE8,    // 11496 - 4.0.6a 13623
+    SMSG_LFG_UPDATE_SEARCH                               = 0x3880,    // 14464 - 4.0.6a 13623
+    SMSG_LFG_BOOT_PLAYER                                 = 0x79AC,    // 31148 - 4.0.6a 13623
+    SMSG_LFG_PLAYER_INFO                                 = 0xE088,    // 57480 - 4.0.6a 13623
+    SMSG_LFG_PARTY_INFO                                  = 0x60A0,    // 24736 - 4.0.6a 13623
+    SMSG_LFG_DISABLED                                    = 0xF880,    // 63616 - 4.0.6a 13623
 
     // Meetingstone
-    SMSG_MEETINGSTONE_SETQUEUE                           = 0x295,
-    SMSG_MEETINGSTONE_COMPLETE                           = 0x297,
-    SMSG_MEETINGSTONE_IN_PROGRESS                        = 0x298,
+    SMSG_MEETINGSTONE_SETQUEUE                           = 0xED88,    // 60808 - 4.0.6a 13623
+    SMSG_MEETINGSTONE_COMPLETE                           = 0xF680,    // 63104 - 4.0.6a 13623
+    SMSG_MEETINGSTONE_IN_PROGRESS                        = 0xE7C4,    // 59332 - 4.0.6a 13623
     SMSG_MEETINGSTONE_MEMBER_ADDED                       = 0x299,
 
     // Battleground
     SMSG_GROUP_JOINED_BATTLEGROUND                       = 0x2E8,
     SMSG_BATTLEGROUND_PLAYER_JOINED                      = 0x2EC,
     SMSG_BATTLEGROUND_PLAYER_LEFT                        = 0x2ED,
-    SMSG_INSTANCE_RESET                                  = 0x31E,
-    SMSG_INSTANCE_RESET_FAILED                           = 0x31F,
-    SMSG_UPDATE_LAST_INSTANCE                            = 0x320,
+    SMSG_INSTANCE_RESET                                  = 0x30E8,    // 12520 - 4.0.6a 13623
+    SMSG_INSTANCE_RESET_FAILED                           = 0x3BA0,    // 15264 - 4.0.6a 13623
+    SMSG_UPDATE_LAST_INSTANCE                            = 0x33E8,    // 13288 - 4.0.6a 13623
     SMSG_JOINED_BATTLEGROUND_QUEUE                       = 0x38A,
     SMSG_BATTLEGROUND_INFO_THROTTLED                     = 0x4A6,
 
