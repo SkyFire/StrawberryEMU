@@ -178,9 +178,9 @@ enum ServerOpcodes
     /***********************************************************/
     /******************** FACTION OPCODES **********************/
     /***********************************************************/
-    SMSG_INITIALIZE_FACTIONS                             = 0x122,
-    SMSG_SET_FACTION_VISIBLE                             = 0x123,
-    SMSG_SET_FACTION_STANDING                            = 0x124,
+    SMSG_INITIALIZE_FACTIONS                             = 0x25C0,    // 9664  - 4.0.6a 13623
+    SMSG_SET_FACTION_VISIBLE                             = 0x3988,    // 14728 - 4.0.6a 13623
+    SMSG_SET_FACTION_STANDING                            = 0x718C,    // 29068 - 4.0.6a 13623
     SMSG_SET_FACTION_ATWAR                               = 0x313,
 
     /***********************************************************/
