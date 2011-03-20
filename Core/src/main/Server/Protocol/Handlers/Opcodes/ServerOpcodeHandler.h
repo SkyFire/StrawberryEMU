@@ -358,21 +358,21 @@ enum ServerOpcodes
     /***********************************************************/
     /********************** LOOT OPCODES ***********************/
     /***********************************************************/
-    SMSG_LOOT_RESPONSE                                   = 0x160,
-    SMSG_LOOT_RELEASE_RESPONSE                           = 0x161,
-    SMSG_LOOT_REMOVED                                    = 0x162,
-    SMSG_LOOT_MONEY_NOTIFY                               = 0x163,
-    SMSG_LOOT_ITEM_NOTIFY                                = 0x164,
-    SMSG_LOOT_CLEAR_MONEY                                = 0x165,
-    SMSG_LOOT_LIST                                       = 0x3F9,
-    SMSG_LOOT_SLOT_CHANGED                               = 0x4FD,
+    SMSG_LOOT_RESPONSE                                   = 0xF38C,    // 62348 - 4.0.6a 13623
+    SMSG_LOOT_RELEASE_RESPONSE                           = 0x23C8,    // 9160  - 4.0.6a 13623
+    SMSG_LOOT_REMOVED                                    = 0x6F88,    // 28552 - 4.0.6a 13623
+    SMSG_LOOT_MONEY_NOTIFY                               = 0x67C0,    // 26560 - 4.0.6a 13623
+    SMSG_LOOT_ITEM_NOTIFY                                = 0xAECC,    // 44748 - 4.0.6a 13623
+    SMSG_LOOT_CLEAR_MONEY                                = 0x3480,    // 13440 - 4.0.6a 13623
+    SMSG_LOOT_LIST                                       = 0xF684,    // 63108 - 4.0.6a 13623
+    SMSG_LOOT_SLOT_CHANGED                               = 0x31EC,    // 12780 - 4.0.6a 13623
 
     // Loot Group
-    SMSG_LOOT_ALL_PASSED                                 = 0x29E,
-    SMSG_LOOT_ROLL_WON                                   = 0x29F,
-    SMSG_LOOT_START_ROLL                                 = 0x2A1,
-    SMSG_LOOT_ROLL                                       = 0x2A2,
-    SMSG_LOOT_MASTER_LIST                                = 0x2A4,
+    SMSG_LOOT_ALL_PASSED                                 = 0x6AC4,    // 27332 - 4.0.6a 13623
+    SMSG_LOOT_ROLL_WON                                   = 0x6280,    // 25216 - 4.0.6a 13623
+    SMSG_LOOT_START_ROLL                                 = 0xEB84,    // 60292 - 4.0.6a 13623
+    SMSG_LOOT_ROLL                                       = 0x66A8,    // 26280 - 4.0.6a 13623
+    SMSG_LOOT_MASTER_LIST                                = 0xECC4,    // 60612 - 4.0.6a 13623
     SMSG_DYNAMIC_DROP_ROLL_RESULT                        = 0x469,
 
     /***********************************************************/
