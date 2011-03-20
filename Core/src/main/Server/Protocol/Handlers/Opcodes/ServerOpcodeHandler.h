@@ -76,10 +76,10 @@ enum ServerOpcodes
     /********************* BINDING OPCODES *********************/
     /***********************************************************/
     SMSG_BINDPOINTUPDATE                                 = 0x155,
-    SMSG_BINDZONEREPLY                                   = 0x157,
-    SMSG_PLAYERBOUND                                     = 0x158,
+    SMSG_BINDZONEREPLY                                   = 0xACAC,    // 44204 - 4.0.6a 13623
+    SMSG_PLAYERBOUND                                     = 0x6BCC,    // 27596 - 4.0.6a 13623
     SMSG_PLAYERBINDERROR                                 = 0x1B6,
-    SMSG_BINDER_CONFIRM                                  = 0x2EB,
+    SMSG_BINDER_CONFIRM                                  = 0x33C4,    // 13252 - 4.0.6a 13623
 
     /***********************************************************/
     /******************** CALENDAR OPCODES *********************/
