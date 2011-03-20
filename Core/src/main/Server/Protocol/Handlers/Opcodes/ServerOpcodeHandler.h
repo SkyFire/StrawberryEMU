@@ -791,31 +791,31 @@ enum ServerOpcodes
     SMSG_UNKNOWN_1310                                    = 0x51E,
 
     // Fishing
-    SMSG_FISH_NOT_HOOKED                                 = 0x1C8,
-    SMSG_FISH_ESCAPED                                    = 0x1C9,
+    SMSG_FISH_NOT_HOOKED                                 = 0x3FC8,    // 16388 - 4.0.6a 13623
+    SMSG_FISH_ESCAPED                                    = 0x2FCC,    // 12236 - 4.0.6a 13623
 
     // Voice
-    SMSG_VOICE_SESSION_ROSTER_UPDATE                     = 0x39E,
-    SMSG_VOICE_SESSION_LEAVE                             = 0x39F,
+    SMSG_VOICE_SESSION_ROSTER_UPDATE                     = 0xACC0,    // 44224 - 4.0.6a 13623
+    SMSG_VOICE_SESSION_LEAVE                             = 0x78A4,    // 30884 - 4.0.6a 13623
     SMSG_VOICE_SESSION_ADJUST_PRIORITY                   = 0x3A0,
-    SMSG_VOICE_SET_TALKER_MUTED                          = 0x3A2,
+    SMSG_VOICE_SET_TALKER_MUTED                          = 0xE3E4,    // 58340 - 4.0.6a 13623
     SMSG_VOICE_SESSION_ENABLE                            = 0x3B0,
-    SMSG_VOICE_PARENTAL_CONTROLS                         = 0x3B1,
-    SMSG_VOICE_CHAT_STATUS                               = 0x3E3,
-    SMSG_VOICESESSION_FULL                               = 0x3FC,
+    SMSG_VOICE_PARENTAL_CONTROLS                         = 0x71E8,    // 29160 - 4.0.6a 13623
+    SMSG_VOICE_CHAT_STATUS                               = 0x6B88,    // 27528 - 4.0.6a 13623
+    SMSG_VOICESESSION_FULL                               = 0xB088,    // 45192 - 4.0.6a 13329
 
     // Commentator
-    SMSG_COMMENTATOR_STATE_CHANGED                       = 0x3B6,
-    SMSG_COMMENTATOR_MAP_INFO                            = 0x3B8,
-    SMSG_COMMENTATOR_GET_PLAYER_INFO                     = 0x3BA,
+    SMSG_COMMENTATOR_STATE_CHANGED                       = 0xE0E4,    // 57572 - 4.0.6a 13623
+    SMSG_COMMENTATOR_MAP_INFO                            = 0xA4E8,    // 42216 - 4.0.6a 13623
+    SMSG_COMMENTATOR_GET_PLAYER_INFO                     = 0x758C,    // 30092 - 4.0.6a 13623
     SMSG_COMMENTATOR_PLAYER_INFO                         = 0x3BB,
-    SMSG_UNKNOWN_1308                                    = 0x51C,
+    SMSG_UNKNOWN_1308                                    = 0x61CC,    // 25036 - 4.0.6a 13623
     SMSG_UNKNOWN_1309                                    = 0x51D,
 
     // Comsat
-    SMSG_COMSAT_RECONNECT_TRY                            = 0x3E0,
-    SMSG_COMSAT_DISCONNECT                               = 0x3E1,
-    SMSG_COMSAT_CONNECT_FAIL                             = 0x3E2,
+    SMSG_COMSAT_RECONNECT_TRY                            = 0x7EE8,    // 32488 - 4.0.6a 13623
+    SMSG_COMSAT_DISCONNECT                               = 0x368C,    // 13964 - 4.0.6a 13623
+    SMSG_COMSAT_CONNECT_FAIL                             = 0x70E8,    // 28904 - 4.0.6a 13623
 
     /***********************************************************/
     /********************** WORLD OPCODES **********************/
