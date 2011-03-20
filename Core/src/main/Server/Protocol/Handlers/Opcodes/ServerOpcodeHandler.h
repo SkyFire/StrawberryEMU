@@ -186,9 +186,8 @@ enum ServerOpcodes
     /***********************************************************/
     /******************* GAMEMASTER OPCODES ********************/
     /***********************************************************/
-    SMSG_GM_REQUEST_PLAYER_INFO                          = 0x22F,
     SMSG_GM_PLAYER_INFO                                  = 0x230,
-    SMSG_GM_MESSAGECHAT                                  = 0x3B3,
+    SMSG_GM_MESSAGECHAT                                  = 0x3AEC,    // 15084 - 4.0.6a 13623
     SMSG_GMRESPONSE_DB_ERROR                             = 0x4EE,
     SMSG_GMRESPONSE_RECEIVED                             = 0x4EF,
     SMSG_GMRESPONSE_STATUS_UPDATE                        = 0x4F1,
@@ -196,7 +195,7 @@ enum ServerOpcodes
     // Ticket
     SMSG_GMTICKET_CREATE                                 = 0x206,
     SMSG_GMTICKET_UPDATETEXT                             = 0x208,
-    SMSG_GMTICKET_GETTICKET                              = 0x212,
+    SMSG_GMTICKET_GETTICKET                              = 0x2284,    // 8836  - 4.0.6a 13623
     SMSG_GMTICKET_SYSTEMSTATUS                           = 0x21B,
     SMSG_GM_TICKET_STATUS_UPDATE                         = 0x328,
     SMSG_GMTICKET_DELETETICKET                           = 0x218,
@@ -204,10 +203,10 @@ enum ServerOpcodes
     /***********************************************************/
     /****************** (GAME)OBJECT OPCODES *******************/
     /***********************************************************/
-    SMSG_GAMEOBJECT_CUSTOM_ANIM                          = 0x0B3,
-    SMSG_GAMEOBJECT_PAGETEXT                             = 0x1DF,
-    SMSG_GAMEOBJECT_DESPAWN_ANIM                         = 0x215,
-    SMSG_GAMEOBJECT_RESET_STATE                          = 0x2A7,
+    SMSG_GAMEOBJECT_CUSTOM_ANIM                          = 0x2E8C,    // 11916 - 4.0.6a 13623
+    SMSG_GAMEOBJECT_PAGETEXT                             = 0xE5C8,    // 58824 - 4.0.6a 13623
+    SMSG_GAMEOBJECT_DESPAWN_ANIM                         = 0xBFA8,    // 49064 - 4.0.6a 13623
+    SMSG_GAMEOBJECT_RESET_STATE                          = 0x22E0,    // 8928  - 4.0.6a 13623
     SMSG_DUMP_OBJECTS_DATA                               = 0x48C,
 
     /***********************************************************/
