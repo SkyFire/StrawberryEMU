@@ -213,21 +213,21 @@ enum ServerOpcodes
     /********************** GOSSIP OPCODES *********************/
     /***********************************************************/
     // Gossip General
-    SMSG_GOSSIP_MESSAGE                                  = 0x17D,
-    SMSG_GOSSIP_COMPLETE                                 = 0x17E,
-    SMSG_NPC_TEXT_UPDATE                                 = 0x180,
+    SMSG_GOSSIP_MESSAGE                                  = 0xBBC8,    // 48072 - 4.0.6a 13623
+    SMSG_GOSSIP_COMPLETE                                 = 0xF0AC,    // 61612 - 4.0.6a 13623
+    SMSG_NPC_TEXT_UPDATE                                 = 0xB2AC,    // 45740 - 4.0.6a 13623
     SMSG_NPC_WONT_TALK                                   = 0x181,
-    SMSG_GOSSIP_POI                                      = 0x224,
+    SMSG_GOSSIP_POI                                      = 0xB9AC,    // 47532 - 4.0.6a 13623
 
     // Gossip Questgiver
-    SMSG_QUESTGIVER_STATUS                               = 0x183,
-    SMSG_QUESTGIVER_QUEST_LIST                           = 0x185,
-    SMSG_QUESTGIVER_QUEST_DETAILS                        = 0x188,
-    SMSG_QUESTGIVER_REQUEST_ITEMS                        = 0x18B,
-    SMSG_QUESTGIVER_OFFER_REWARD                         = 0x18D,
+    SMSG_QUESTGIVER_STATUS                               = 0x7988,    // 31112 - 4.0.6a 13623
+    SMSG_QUESTGIVER_QUEST_LIST                           = 0x2B88,    // 11144 - 4.0.6a 13623
+    SMSG_QUESTGIVER_QUEST_DETAILS                        = 0x68A0,    // 26784 - 4.0.6a 13623
+    SMSG_QUESTGIVER_REQUEST_ITEMS                        = 0x23A8,    // 9128  - 4.0.6a 13623
+    SMSG_QUESTGIVER_OFFER_REWARD                         = 0x3FCC,    // 16332 - 4.0.6a 13623
     SMSG_QUESTGIVER_QUEST_INVALID                        = 0x18F,
-    SMSG_QUESTGIVER_QUEST_COMPLETE                       = 0x191,
-    SMSG_QUESTGIVER_QUEST_FAILED                         = 0x192,
+    SMSG_QUESTGIVER_QUEST_COMPLETE                       = 0xF5C0,    // 62912 - 4.0.6a 13623
+    SMSG_QUESTGIVER_QUEST_FAILED                         = 0xA084,    // 41092 - 4.0.6a 13623
     SMSG_QUESTGIVER_STATUS_MULTIPLE                      = 0x418,
 
     /***********************************************************/
