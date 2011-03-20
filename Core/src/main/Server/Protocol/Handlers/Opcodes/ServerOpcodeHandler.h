@@ -343,17 +343,17 @@ enum ServerOpcodes
 
     // Item Buy / Sell
     SMSG_SELL_ITEM                                       = 0x6CE8,    // 14252 - 4.0.6a 13623
-    SMSG_BUY_ITEM                                        = 0x69CC,    // 27084 - 4.0.6.13623
-    SMSG_BUY_FAILED                                      = 0x6CE8,    // 27880 - 4.0.6.13623
+    SMSG_BUY_ITEM                                        = 0x69CC,    // 27084 - 4.0.6a 13623
+    SMSG_BUY_FAILED                                      = 0x6CE8,    // 27880 - 4.0.6a 13623 wtf? duplicated opcode?
 
     /***********************************************************/
     /******************* LOGIN / OUT OPCODES *******************/
     /***********************************************************/
     // Login
     // Logout
-    SMSG_LOGOUT_RESPONSE                                 = 0x04C,
-    SMSG_LOGOUT_COMPLETE                                 = 0x04D,
-    SMSG_LOGOUT_CANCEL_ACK                               = 0x04F,
+    SMSG_LOGOUT_RESPONSE                                 = 0xF788,    // 63368 - 4.0.6a 13623
+    SMSG_LOGOUT_COMPLETE                                 = 0xA0A4,    // 41124 - 4.0.6a 13623
+    SMSG_LOGOUT_CANCEL_ACK                               = 0xEE88,    // 61064 - 4.0.6a 13623
 
     /***********************************************************/
     /********************** LOOT OPCODES ***********************/
