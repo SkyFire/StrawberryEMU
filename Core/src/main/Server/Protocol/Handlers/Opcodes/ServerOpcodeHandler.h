@@ -781,14 +781,14 @@ enum ServerOpcodes
     SMSG_SERVER_BUCK_DATA_START                          = 0x4A3,
     SMSG_CLIENTCACHE_VERSION                             = 0x4AB,
     SMSG_SET_PROJECTILE_POSITION                         = 0x4BF,
-    SMSG_UNKNOWN_1240                                    = 0x4D8,
+    SMSG_UNKNOWN_1240                                    = 0xB2C8,    // 45768 - 4.0.6a 13623
     SMSG_TOGGLE_XP_GAIN                                  = 0x4ED,
     SMSG_UNKNOWN_1276                                    = 0x4FC,
     SMSG_UNKNOWN_1295                                    = 0x50F,
-    SMSG_FORCE_SEND_QUEUED_PACKETS                       = 0x511,
+    SMSG_FORCE_SEND_QUEUED_PACKETS                       = 0x2880,    // 10368 - 4.0.6a 13623
     SMSG_UNKNOWN_1300                                    = 0x514,
     SMSG_UNKNOWN_1301                                    = 0x515,
-    SMSG_UNKNOWN_1310                                    = 0x51E,
+    SMSG_UNKNOWN_1310                                    = 0xA2A8,    // 41640 - 4.0.6a 13623
 
     // Fishing
     SMSG_FISH_NOT_HOOKED                                 = 0x3FC8,    // 16388 - 4.0.6a 13623
