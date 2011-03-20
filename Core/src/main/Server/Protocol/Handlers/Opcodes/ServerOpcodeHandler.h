@@ -687,21 +687,21 @@ enum ServerOpcodes
     /****************** TIME / SPEED OPCODES *******************/
     /***********************************************************/
     // Time
-    SMSG_LOGIN_SETTIMESPEED                              = 0x042,
-    SMSG_GAMETIME_UPDATE                                 = 0x043,
+    SMSG_LOGIN_SETTIMESPEED                              = 0x39AC,    // 14764 - 4.0.6a 13623
+    SMSG_GAMETIME_UPDATE                                 = 0xF1EC,    // 61932 - 4.0.6a 13623
     SMSG_GAMETIME_SET                                    = 0x045,
-    SMSG_SERVERTIME                                      = 0x049,
-    SMSG_PLAYED_TIME                                     = 0x1CD,
-    SMSG_QUERY_TIME_RESPONSE                             = 0x1CF,
-    SMSG_TIME_SYNC_REQ                                   = 0x390,
-    SMSG_ITEM_TIME_UPDATE                                = 0x1EA,
-    SMSG_ITEM_ENCHANT_TIME_UPDATE                        = 0x1EB,
-    SMSG_ACCOUNT_DATA_TIMES                              = 0x209,
-    SMSG_PLAY_TIME_WARNING                               = 0x2F5,
+    SMSG_SERVERTIME                                      = 0x23A4,    // 9124  - 4.0.6a 13623
+    SMSG_PLAYED_TIME                                     = 0xE4C8,    // 58568 - 4.0.6a 13623
+    SMSG_QUERY_TIME_RESPONSE                             = 0xF1AC,    // 61868 - 4.0.6a 13623
+    SMSG_TIME_SYNC_REQ                                   = 0xAA80,    // 43648 - 4.0.6a 13623
+    SMSG_ITEM_TIME_UPDATE                                = 0x26A4,    // 3677  - 4.0.6a 13623
+    SMSG_ITEM_ENCHANT_TIME_UPDATE                        = 0x3B80,    // 14164 - 4.0.6a 13329
+    SMSG_ACCOUNT_DATA_TIMES                              = 0x7280,    // 29312 - 4.0.6a 13623
+    SMSG_PLAY_TIME_WARNING                               = 0x32EC,    // 13036 - 4.0.6a 13623
     SMSG_GAMETIMEBIAS_SET                                = 0x314,
 
     // Speed
-    SMSG_GAMESPEED_SET                                   = 0x047,
+    SMSG_GAMESPEED_SET                                   = 0x3EC0,    // 16064 - 4.0.6a 13623
 
     /***********************************************************/
     /****************** UNCATEGORZIED OPCODES ******************/
