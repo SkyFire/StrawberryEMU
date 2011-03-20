@@ -27,13 +27,13 @@ enum ServerOpcodes
     /***********************************************************/
     /********************* ATTACK OPCODES **********************/
     /***********************************************************/
-    SMSG_ATTACKSTART                                     = 0x143,
-    SMSG_ATTACKSTOP                                      = 0x144,
-    SMSG_ATTACKSWING_NOTINRANGE                          = 0x145,
-    SMSG_ATTACKSWING_BADFACING                           = 0x146,
-    SMSG_ATTACKSWING_DEADTARGET                          = 0x148,
-    SMSG_ATTACKSWING_CANT_ATTACK                         = 0x149,
-    SMSG_ATTACKERSTATEUPDATE                             = 0x14A,
+    SMSG_ATTACKSTART                                     = 0xB68C,    // 46732 - 4.0.6a 13623
+    SMSG_ATTACKSTOP                                      = 0x6DCC,    // 28108 - 4.0.6a 13623
+    SMSG_ATTACKSWING_NOTINRANGE                          = 0x36C4,    // 14020 - 4.0.6a 13623
+    SMSG_ATTACKSWING_BADFACING                           = 0x67A8,    // 26536 - 4.0.6a 13623
+    SMSG_ATTACKSWING_DEADTARGET                          = 0xA7C4,    // 42948 - 4.0.6a 13623
+    SMSG_ATTACKSWING_CANT_ATTACK                         = 0x6188,    // 24968 - 4.0.6a 13623
+    SMSG_ATTACKERSTATEUPDATE                             = 0xBBC0,    // 48064 - 4.0.6a 13623
 
     /***********************************************************/
     /******************** AUCTION OPCODES **********************/
