@@ -150,7 +150,7 @@ enum ClientServerOpcodes
     MSG_PETITION_RENAME                  = 0x2C1,
 
     /********************************************/
-    /*********** UNCATEGORZIED OPCODES **********/
+    /*********** UNCATEGORIZED OPCODES **********/
     /********************************************/
     MSG_NULL_ACTION                      = 0x000,
     MSG_MINIMAP_PING                     = 0x1D5,
@@ -163,7 +163,7 @@ enum ClientServerOpcodes
     MSG_QUERY_NEXT_MAIL_TIME             = 0x25C8,    // 9672  - 4.0.6a 13623
     MSG_TALENT_WIPE_CONFIRM              = 0xBFC4,    // 49092 - 4.0.6a 13623
     MSG_DELAY_GHOST_TELEPORT             = 0x32E,
-    
+
     // PVP / Arena
     MSG_INSPECT_HONOR_STATS              = 0x2D6,
     MSG_PVP_LOG_DATA                     = 0x2E0,
