@@ -27,28 +27,28 @@ enum ClientOpcodes
     /***********************************************************/
     /********************* ATTACK OPCODES **********************/
     /***********************************************************/
-    CMSG_ATTACKSWING                                     = 0x141,
-    CMSG_ATTACKSTOP                                      = 0x142,
+    CMSG_ATTACKSWING                                     = 0x74A8,    // 29864 - 4.0.6a 13623
+    CMSG_ATTACKSTOP                                      = 0x62C4,    // 25284 - 4.0.6a 13623
 
     /***********************************************************/
     /******************** AUCTION OPCODES **********************/
     /***********************************************************/
-    CMSG_AUCTION_SELL_ITEM                               = 0x256,
-    CMSG_AUCTION_REMOVE_ITEM                             = 0x257,
-    CMSG_AUCTION_LIST_ITEMS                              = 0x258,
-    CMSG_AUCTION_LIST_OWNER_ITEMS                        = 0x259,
-    CMSG_AUCTION_PLACE_BID                               = 0x25A,
-    CMSG_AUCTION_LIST_BIDDER_ITEMS                       = 0x264,
+    CMSG_AUCTION_SELL_ITEM                               = 0xEE8C,    // 61068 - 4.0.6a 13623
+    CMSG_AUCTION_REMOVE_ITEM                             = 0x9F5D,    // 40797 - 4.0.6a 13623
+    CMSG_AUCTION_LIST_ITEMS                              = 0xE48C,    // 58508 - 4.0.6a 13623
+    CMSG_AUCTION_LIST_OWNER_ITEMS                        = 0x100BC,   // 65724 - 4.0.6a 13623
+    CMSG_AUCTION_PLACE_BID                               = 0x8777,    // 34679 - 4.0.6a 13623
+    CMSG_AUCTION_LIST_BIDDER_ITEMS                       = 0x100BE,   // 65726 - 4.0.6a 13623
     CMSG_AUCTION_LIST_PENDING_SALES                      = 0x48F,
 
     /***********************************************************/
     /***************** AUTHENTICATION OPCODES ******************/
     /***********************************************************/
-    CMSG_AUTH_SESSION                                    = 0x1ED,
+    CMSG_AUTH_SESSION                                    = 0x0E0E,    // 3598 - 4.0.6a 13623
     CMSG_REALM_SPLIT                                     = 0x38C,
-    CMSG_REDIRECTION_FAILED                              = 0x50E,
+    CMSG_REDIRECTION_FAILED                              = 0x0509,    // - 4.0.6a 13623
     CMSG_UNKNOWN_1296                                    = 0x510,
-    CMSG_REDIRECTION_AUTH_PROOF                          = 0x512,
+    CMSG_REDIRECTION_AUTH_PROOF                          = 0x0E4C,    // 3660 - 4.0.6.13529
 
     // SRP6
     CMSG_AUTH_SRP6_BEGIN                                 = 0x033,
@@ -73,22 +73,22 @@ enum ClientOpcodes
     /***********************************************************/
     /******************** CALENDAR OPCODES *********************/
     /***********************************************************/
-    CMSG_CALENDAR_GET_CALENDAR                           = 0x429,
-    CMSG_CALENDAR_GET_EVENT                              = 0x42A,
-    CMSG_CALENDAR_GUILD_FILTER                           = 0x42B,
-    CMSG_CALENDAR_ARENA_TEAM                             = 0x42C,
-    CMSG_CALENDAR_ADD_EVENT                              = 0x42D,
-    CMSG_CALENDAR_UPDATE_EVENT                           = 0x42E,
-    CMSG_CALENDAR_REMOVE_EVENT                           = 0x42F,
-    CMSG_CALENDAR_COPY_EVENT                             = 0x430,
-    CMSG_CALENDAR_EVENT_INVITE                           = 0x431,
-    CMSG_CALENDAR_EVENT_RSVP                             = 0x432,
-    CMSG_CALENDAR_EVENT_REMOVE_INVITE                    = 0x433,
-    CMSG_CALENDAR_EVENT_STATUS                           = 0x434,
-    CMSG_CALENDAR_EVENT_MODERATOR_STATUS                 = 0x435,
-    CMSG_CALENDAR_COMPLAIN                               = 0x446,
-    CMSG_CALENDAR_GET_NUM_PENDING                        = 0x447,
-    CMSG_CALENDAR_CONTEXT_EVENT_SIGNUP                   = 0x4BA,
+    CMSG_CALENDAR_GET_CALENDAR                           = 0x101B4,    // 65972 - 4.0.6a 13623
+    CMSG_CALENDAR_GET_EVENT                              = 0x101B5,    // 65973 - 4.0.6a 13623
+    CMSG_CALENDAR_GUILD_FILTER                           = 0x101B6,    // 65974 - 4.0.6a 13623
+    CMSG_CALENDAR_ARENA_TEAM                             = 0x101B7,    // 65975 - 4.0.6a 13623
+    CMSG_CALENDAR_ADD_EVENT                              = 0x0F488,    // 62600 - 4.0.6a 13623
+    CMSG_CALENDAR_UPDATE_EVENT                           = 0x101B8,    // 65976 - 4.0.6a 13623
+    CMSG_CALENDAR_REMOVE_EVENT                           = 0x04C5F,    // 19551 - 4.0.6a 13623
+    CMSG_CALENDAR_COPY_EVENT                             = 0x101BA,    // 65978 - 4.0.6a 13623
+    CMSG_CALENDAR_EVENT_INVITE                           = 0x0F6C4,    // 63172 - 4.0.6a 13623
+    CMSG_CALENDAR_EVENT_RSVP                             = 0x0757F,    // 30079 - 4.0.6a 13623
+    CMSG_CALENDAR_EVENT_REMOVE_INVITE                    = 0x101BD,    // 65981 - 4.0.6a 13623
+    CMSG_CALENDAR_EVENT_STATUS                           = 0x101BE,    // 65982 - 4.0.6a 13623
+    CMSG_CALENDAR_EVENT_MODERATOR_STATUS                 = 0x101BF,    // 65983 - 4.0.6a 13623
+    CMSG_CALENDAR_COMPLAIN                               = 0x01E75,    // 7797  - 4.0.6a 13623
+    CMSG_CALENDAR_GET_NUM_PENDING                        = 0x0EFAC,    // 61356 - 4.0.6a 13623
+    CMSG_CALENDAR_CONTEXT_EVENT_SIGNUP                   = 0xDC74,     // - 4.0.3.13329
 
     /***********************************************************/
     /******************** CHARACTER OPCODES ********************/
