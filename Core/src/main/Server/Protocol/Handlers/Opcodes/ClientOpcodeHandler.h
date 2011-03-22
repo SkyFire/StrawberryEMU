@@ -184,7 +184,7 @@ enum ClientOpcodes
     /***********************************************************/
     CMSG_SET_FACTION_ATWAR                          = 0x125,
     CMSG_SET_FACTION_CHEAT                          = 0x126,
-    CMSG_SET_ACTION_BUTTON                          = 0x128,
+    CMSG_SET_ACTION_BUTTON                          = 0x72E8,    // 29416 - 4.0.6.13623
     CMSG_RESET_FACTION_CHEAT                        = 0x281,
     CMSG_SET_FACTION_INACTIVE                       = 0x317,
     CMSG_SET_WATCHED_FACTION                        = 0x318,
@@ -219,7 +219,7 @@ enum ClientOpcodes
     // Gamemaster Ticket
     CMSG_GMTICKET_CREATE                            = 0x205,
     CMSG_GMTICKET_UPDATETEXT                        = 0x207,
-    CMSG_GMTICKET_GETTICKET                         = 0x211,
+    CMSG_GMTICKET_GETTICKET                         = 0xB4C4,    // 46276 - 4.0.6.13623
     CMSG_GMTICKET_DELETETICKET                      = 0x217,
     CMSG_GMTICKET_SYSTEMSTATUS                      = 0x21A,
     CMSG_GMTICKETSYSTEM_TOGGLE                      = 0x29A,
@@ -229,51 +229,51 @@ enum ClientOpcodes
     /***********************************************************/
     /****************** (GAME)OBJECT OPCODES *******************/
     /***********************************************************/
-    CMSG_QUERY_OBJECT_POSITION                           = 0x004,
-    CMSG_QUERY_OBJECT_ROTATION                           = 0x006,
-    CMSG_CREATEGAMEOBJECT                                = 0x014,
-    CMSG_GAMEOBJ_USE                                     = 0x0B1,
-    CMSG_GAMEOBJ_REPORT_USE                              = 0x481,
-    CMSG_DUMP_OBJECTS                                    = 0x48B,
+    CMSG_QUERY_OBJECT_POSITION                      = 0x004,
+    CMSG_QUERY_OBJECT_ROTATION                      = 0x006,
+    CMSG_CREATEGAMEOBJECT                           = 0x014,
+    CMSG_GAMEOBJ_USE                                = 0x29E4,    // 10724 - 4.0.6.13623
+    CMSG_GAMEOBJ_REPORT_USE                         = 0x23A0,    // 9120  - 4.0.6.13623
+    CMSG_DUMP_OBJECTS                               = 0x48B,
 
     /***********************************************************/
     /********************** GOSSIP OPCODES *********************/
     /***********************************************************/
-    CMSG_GOSSIP_HELLO                                    = 0x17B,
-    CMSG_GOSSIP_SELECT_OPTION                            = 0x17C,
-    CMSG_NPC_TEXT_QUERY                                  = 0x17F,
-    CMSG_BATTLEMASTER_JOIN                               = 0x2EE,
+    CMSG_GOSSIP_HELLO                               = 0x74C8,    // 29896 - 4.0.6.13623
+    CMSG_GOSSIP_SELECT_OPTION                       = 0xFF88,    // 65416 - 4.0.6.13623
+    CMSG_NPC_TEXT_QUERY                             = 0x17F,
+    CMSG_BATTLEMASTER_JOIN                          = 0x2EE,
 
     // Gossip Questgiver
-    CMSG_QUESTGIVER_STATUS_QUERY                         = 0x182,
-    CMSG_QUESTGIVER_HELLO                                = 0x184,
-    CMSG_QUESTGIVER_QUERY_QUEST                          = 0x186,
-    CMSG_QUESTGIVER_QUEST_AUTOLAUNCH                     = 0x187,
-    CMSG_QUESTGIVER_ACCEPT_QUEST                         = 0x189,
-    CMSG_QUESTGIVER_COMPLETE_QUEST                       = 0x18A,
-    CMSG_QUESTGIVER_REQUEST_REWARD                       = 0x18C,
-    CMSG_QUESTGIVER_CHOOSE_REWARD                        = 0x18E,
-    CMSG_QUESTGIVER_CANCEL                               = 0x190,
+    CMSG_QUESTGIVER_STATUS_QUERY                    = 0x182,
+    CMSG_QUESTGIVER_HELLO                           = 0x184,
+    CMSG_QUESTGIVER_QUERY_QUEST                     = 0x186,
+    CMSG_QUESTGIVER_QUEST_AUTOLAUNCH                = 0x187,
+    CMSG_QUESTGIVER_ACCEPT_QUEST                    = 0x189,
+    CMSG_QUESTGIVER_COMPLETE_QUEST                  = 0x18A,
+    CMSG_QUESTGIVER_REQUEST_REWARD                  = 0x18C,
+    CMSG_QUESTGIVER_CHOOSE_REWARD                   = 0x18E,
+    CMSG_QUESTGIVER_CANCEL                          = 0x190,
 
     // Gossip Trainer
-    CMSG_TRAINER_LIST                                    = 0x1B0,
-    CMSG_TRAINER_BUY_SPELL                               = 0x1B2,
+    CMSG_TRAINER_LIST                               = 0xE5AC,    // 58796 - 4.0.6.13623
+    CMSG_TRAINER_BUY_SPELL                          = 0xFDC8,    // 64968 - 4.0.6.13623
 
     /***********************************************************/
     /********************** GROUP OPCODES **********************/
     /***********************************************************/
-    CMSG_GROUP_INVITE                                    = 0x06E,
-    CMSG_GROUP_CANCEL                                    = 0x070,
-    CMSG_GROUP_ACCEPT                                    = 0x072,
-    CMSG_GROUP_DECLINE                                   = 0x073,
-    CMSG_GROUP_UNINVITE                                  = 0x075,
-    CMSG_GROUP_UNINVITE_GUID                             = 0x076,
-    CMSG_GROUP_SET_LEADER                                = 0x078,
-    CMSG_GROUP_DISBAND                                   = 0x07B,
-    CMSG_GROUP_CHANGE_SUB_GROUP                          = 0x27E,
-    CMSG_GROUP_SWAP_SUB_GROUP                            = 0x280,
-    CMSG_GROUP_RAID_CONVERT                              = 0x28E,
-    CMSG_GROUP_ASSISTANT_LEADER                          = 0x28F,
+    CMSG_GROUP_INVITE                               = 0x27C0,    // 10176 - 4.0.6.13623
+    CMSG_GROUP_CANCEL                               = 0x070,
+    CMSG_GROUP_ACCEPT                               = 0x368C,    // 13964 - 4.0.6.13623
+    CMSG_GROUP_DECLINE                              = 0xB4CC,    // 46284 - 4.0.6.13623
+    CMSG_GROUP_UNINVITE                             = 0xE3C8,    // 58312 - 4.0.6.13623
+    CMSG_GROUP_UNINVITE_GUID                        = 0x076,
+    CMSG_GROUP_SET_LEADER                           = 0x078,
+    CMSG_GROUP_DISBAND                              = 0xBE88,    // 48776 - 4.0.6.13623
+    CMSG_GROUP_CHANGE_SUB_GROUP                     = 0x27E,
+    CMSG_GROUP_SWAP_SUB_GROUP                       = 0x280,
+    CMSG_GROUP_RAID_CONVERT                         = 0x28E,
+    CMSG_GROUP_ASSISTANT_LEADER                     = 0x28F,
 
     /***********************************************************/
     /********************** GUILD OPCODES **********************/
