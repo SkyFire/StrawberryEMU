@@ -278,50 +278,50 @@ enum ClientOpcodes
     /***********************************************************/
     /********************** GUILD OPCODES **********************/
     /***********************************************************/
-    CMSG_GUILD_CREATE                                    = 0x081,
-    CMSG_GUILD_INVITE                                    = 0x082,
-    CMSG_GUILD_ACCEPT                                    = 0x084,
-    CMSG_GUILD_DECLINE                                   = 0x085,
-    CMSG_GUILD_INFO                                      = 0x087,
-    CMSG_GUILD_ROSTER                                    = 0x089,
-    CMSG_GUILD_PROMOTE                                   = 0x08B,
-    CMSG_GUILD_DEMOTE                                    = 0x08C,
-    CMSG_GUILD_LEAVE                                     = 0x08D,
-    CMSG_GUILD_REMOVE                                    = 0x08E,
-    CMSG_GUILD_DISBAND                                   = 0x08F,
-    CMSG_GUILD_LEADER                                    = 0x090,
-    CMSG_GUILD_MOTD                                      = 0x091,
-    CMSG_GUILD_RANK                                      = 0x231,
-    CMSG_GUILD_ADD_RANK                                  = 0x232,
-    CMSG_GUILD_DEL_RANK                                  = 0x233,
-    CMSG_GUILD_SET_PUBLIC_NOTE                           = 0x234,
-    CMSG_GUILD_SET_OFFICER_NOTE                          = 0x235,
-    CMSG_GUILD_INFO_TEXT                                 = 0x2FC,
-    CMSG_MAELSTROM_RENAME_GUILD                          = 0x400,
+    CMSG_GUILD_CREATE                               = 0x081,
+    CMSG_GUILD_INVITE                               = 0x2DA8,    // 11688 - 4.0.6.13623
+    CMSG_GUILD_ACCEPT                               = 0x084,
+    CMSG_GUILD_DECLINE                              = 0x085,
+    CMSG_GUILD_INFO                                 = 0x6884,    // 26756 - 4.0.6.13623
+    CMSG_GUILD_ROSTER                               = 0xB2A4,    // 45732 - 4.0.6.13623
+    CMSG_GUILD_PROMOTE                              = 0x2109,    // 8457  - 4.0.6.13623
+    CMSG_GUILD_DEMOTE                               = 0x08C,
+    CMSG_GUILD_LEAVE                                = 0x3329,    // 13097 - 4.0.6.13623
+    CMSG_GUILD_REMOVE                               = 0x312D,    // 12589 - 4.0.6.13623
+    CMSG_GUILD_DISBAND                              = 0x08F,
+    CMSG_GUILD_LEADER                               = 0x2650,    // 9808  - 4.0.6.13623
+    CMSG_GUILD_MOTD                                 = 0x272D,    // 10029 - 4.0.6.13623
+    CMSG_GUILD_RANK                                 = 0x231,
+    CMSG_GUILD_ADD_RANK                             = 0x232,
+    CMSG_GUILD_DEL_RANK                             = 0x233,
+    CMSG_GUILD_SET_PUBLIC_NOTE                      = 0x234,
+    CMSG_GUILD_SET_OFFICER_NOTE                     = 0x235,
+    CMSG_GUILD_INFO_TEXT                            = 0x2FC,
+    CMSG_MAELSTROM_RENAME_GUILD                     = 0x400,
 
     // Guild Bank
-    CMSG_GUILD_BANKER_ACTIVATE                           = 0x3E6,
-    CMSG_GUILD_BANK_QUERY_TAB                            = 0x3E7,
-    CMSG_GUILD_BANK_SWAP_ITEMS                           = 0x3E9,
-    CMSG_GUILD_BANK_BUY_TAB                              = 0x3EA,
-    CMSG_GUILD_BANK_UPDATE_TAB                           = 0x3EB,
-    CMSG_GUILD_BANK_DEPOSIT_MONEY                        = 0x3EC,
-    CMSG_GUILD_BANK_WITHDRAW_MONEY                       = 0x3ED,
-    CMSG_SET_GUILD_BANK_TEXT                             = 0x40B,
+    CMSG_GUILD_BANKER_ACTIVATE                      = 0xFFC4,    // 65476 - 4.0.6.13623
+    CMSG_GUILD_BANK_QUERY_TAB                       = 0xBBE8,    // 48104 - 4.0.6.13623
+    CMSG_GUILD_BANK_SWAP_ITEMS                      = 0xA8C4,    // 43204 - 4.0.6.13623
+    CMSG_GUILD_BANK_BUY_TAB                         = 0x3EA,
+    CMSG_GUILD_BANK_UPDATE_TAB                      = 0x3EB,
+    CMSG_GUILD_BANK_DEPOSIT_MONEY                   = 0x3EC,
+    CMSG_GUILD_BANK_WITHDRAW_MONEY                  = 0x3ED,
+    CMSG_SET_GUILD_BANK_TEXT                        = 0x40B,
 
     // Guild Petition
-    CMSG_PETITION_SHOWLIST                               = 0x1BB,
-    CMSG_PETITION_BUY                                    = 0x1BD,
-    CMSG_PETITION_SHOW_SIGNATURES                        = 0x1BE,
-    CMSG_PETITION_SIGN                                   = 0x1C0,
-    CMSG_OFFER_PETITION                                  = 0x1C3,
-    CMSG_TURN_IN_PETITION                                = 0x1C4,
-    CMSG_PETITION_QUERY                                  = 0x1C6,
+    CMSG_PETITION_SHOWLIST                          = 0xFCC4,    // 64708 - 4.0.6.13623
+    CMSG_PETITION_BUY                               = 0xB3E4,    // 46052 - 4.0.6.13623
+    CMSG_PETITION_SHOW_SIGNATURES                   = 0x2CA8,    // 11432 - 4.0.6.13623
+    CMSG_PETITION_SIGN                              = 0x1C0,
+    CMSG_OFFER_PETITION                             = 0x1C3,
+    CMSG_TURN_IN_PETITION                           = 0x1C4,
+    CMSG_PETITION_QUERY                             = 0xB1AC,    // 45484 - 4.0.6.13623
 
     // Guild Party
-    CMSG_REQUEST_PARTY_MEMBER_STATS                      = 0x27F,
-    CMSG_PARTY_SILENCE                                   = 0x3DD,
-    CMSG_PARTY_UNSILENCE                                 = 0x3DE,
+    CMSG_REQUEST_PARTY_MEMBER_STATS                 = 0x70C8,    // 28872 - 4.0.6.13623
+    CMSG_PARTY_SILENCE                              = 0x3DD,
+    CMSG_PARTY_UNSILENCE                            = 0x3DE,
 
     /***********************************************************/
     /******************** INSTANCE OPCODES *********************/
