@@ -404,67 +404,69 @@ enum ClientOpcodes
     CMSG_CANCEL_TRADE                               = 0x0013,    // 19    - 4.0.6.13623
     CMSG_SET_TRADE_ITEM                             = 0x0811,    // 2065  - 4.0.6.13623
     CMSG_CLEAR_TRADE_ITEM                           = 0x11E,
-    CMSG_SET_TRADE_GOLD                             = 0x0793,    // 1939 - 4.0.6.1362
+    CMSG_SET_TRADE_GOLD                             = 0x0793,    // 1939  - 4.0.6.1362
     CMSG_LIST_INVENTORY                             = 0xEDC8,    // 60872 - 4.0.6.13623
     
 
     /***********************************************************/
     /********************** LOOT OPCODES ***********************/
     /***********************************************************/
-    CMSG_LOOT_METHOD                                     = 0x07A,
-    CMSG_STORE_LOOT_IN_SLOT                              = 0x109,
-    CMSG_LOOT                                            = 0x15D,
-    CMSG_LOOT_MONEY                                      = 0x15E,
-    CMSG_LOOT_RELEASE                                    = 0x15F,
-    CMSG_OPT_OUT_OF_LOOT                                 = 0x409,
+    CMSG_LOOT_METHOD                                = 0xFCCC,    // 64716 - 4.0.6.13623
+    CMSG_STORE_LOOT_IN_SLOT                         = 0x7FCC,    // 32716 - 4.0.6.13623
+    CMSG_LOOT                                       = 0xFCEC,    // 64748 - 4.0.6.13623
+    CMSG_LOOT_MONEY                                 = 0x79E0,    // 31200 - 4.0.6.13623
+    CMSG_LOOT_RELEASE                               = 0x3CE8,    // 15592 - 4.0.6.13623
+    CMSG_OPT_OUT_OF_LOOT                            = 0x409,
 
     // Loot Group
-    CMSG_LOOT_ROLL                                       = 0x2A0,
-    CMSG_LOOT_MASTER_GIVE                                = 0x2A3,
+    CMSG_LOOT_ROLL                                  = 0x2A0,
+    CMSG_LOOT_MASTER_GIVE                           = 0x2A3,
+
+
     /***********************************************************/
     /******************** MOVEMENT OPCODES *********************/
     /***********************************************************/
-    CMSG_MOVE_SET_RAW_POSITION                           = 0x0E1,
-    CMSG_MOVE_KNOCK_BACK_ACK                             = 0x0F0,
-    CMSG_MOVE_HOVER_ACK                                  = 0x0F6,
-    CMSG_MOVE_TIME_SKIPPED                               = 0x2CE,
-    CMSG_MOVE_NOT_ACTIVE_MOVER                           = 0x2D1,
-    CMSG_MINIGAME_MOVE                                   = 0x2F8,
-    CMSG_MOVE_CHNG_TRANSPORT                             = 0x38D,
-    CMSG_UNKNOWN_1303                                    = 0x517,
+    CMSG_MOVE_SET_RAW_POSITION                      = 0x0E1,
+    CMSG_MOVE_KNOCK_BACK_ACK                        = 0xF580,    // 62848 - 4.0.6.13623
+    CMSG_MOVE_HOVER_ACK                             = 0xF4CC,    // 62668 - 4.0.6.13623
+    CMSG_MOVE_TIME_SKIPPED                          = 0xE180,    // 57728 - 4.0.6.13623
+    CMSG_MOVE_NOT_ACTIVE_MOVER                      = 0xB9A8,    // 47528 - 4.0.6.13623
+    CMSG_MINIGAME_MOVE                              = 0xB2E4,    // 45796 - 4.0.6.13623
+    CMSG_MOVE_CHNG_TRANSPORT                        = 0x38D,
+    CMSG_UNKNOWN_1303                               = 0x517,
 
     // Movement Start / Stop
-    CMSG_MOVE_START_SWIM_CHEAT                           = 0x2D8,
-    CMSG_MOVE_STOP_SWIM_CHEAT                            = 0x2D9,
+    CMSG_MOVE_START_SWIM_CHEAT                      = 0x2D8,
+    CMSG_MOVE_STOP_SWIM_CHEAT                       = 0x2D9,
 
     // Movement Force
-    CMSG_FORCE_RUN_SPEED_CHANGE_ACK                      = 0x0E3,
-    CMSG_FORCE_RUN_BACK_SPEED_CHANGE_ACK                 = 0x0E5,
-    CMSG_FORCE_SWIM_SPEED_CHANGE_ACK                     = 0x0E7,
-    CMSG_FORCE_MOVE_ROOT_ACK                             = 0x0E9,
-    CMSG_FORCE_MOVE_UNROOT_ACK                           = 0x0EB,
-    CMSG_FORCE_WALK_SPEED_CHANGE_ACK                     = 0x2DB,
-    CMSG_FORCE_SWIM_BACK_SPEED_CHANGE_ACK                = 0x2DD,
-    CMSG_FORCE_TURN_RATE_CHANGE_ACK                      = 0x2DF,
-    CMSG_FORCE_FLIGHT_SPEED_CHANGE_ACK                   = 0x382,
-    CMSG_FORCE_FLIGHT_BACK_SPEED_CHANGE_ACK              = 0x384,
-    CMSG_FORCE_PITCH_RATE_CHANGE_ACK                     = 0x45D,
-    CMSG_FORCE_UNK1_SPEED_CHANGE_ACK                     = 0x4CF,
-    CMSG_FORCE_UNK2_SPEED_CHANGE_ACK                     = 0x4D1,
+    CMSG_FORCE_RUN_SPEED_CHANGE_ACK                 = 0x0E3,
+    CMSG_FORCE_RUN_BACK_SPEED_CHANGE_ACK            = 0x0E5,
+    CMSG_FORCE_SWIM_SPEED_CHANGE_ACK                = 0x0E7,
+    CMSG_FORCE_MOVE_ROOT_ACK                        = 0x0E9,
+    CMSG_FORCE_MOVE_UNROOT_ACK                      = 0x0EB,
+    CMSG_FORCE_WALK_SPEED_CHANGE_ACK                = 0x2DB,
+    CMSG_FORCE_SWIM_BACK_SPEED_CHANGE_ACK           = 0x2DD,
+    CMSG_FORCE_TURN_RATE_CHANGE_ACK                 = 0x2DF,
+    CMSG_FORCE_FLIGHT_SPEED_CHANGE_ACK              = 0x382,
+    CMSG_FORCE_FLIGHT_BACK_SPEED_CHANGE_ACK         = 0x384,
+    CMSG_FORCE_PITCH_RATE_CHANGE_ACK                = 0x45D,
+    CMSG_FORCE_UNK1_SPEED_CHANGE_ACK                = 0x4CF,
+    CMSG_FORCE_UNK2_SPEED_CHANGE_ACK                = 0x4D1,
 
     // Movement Teleport / Fall / Fly / Water
-    CMSG_MOVE_FALL_RESET                                 = 0x2CA,
-    CMSG_MOVE_FEATHER_FALL_ACK                           = 0x2CF,
-    CMSG_MOVE_WATER_WALK_ACK                             = 0x2D0,
-    CMSG_MOVE_FLIGHT_ACK                                 = 0x340,
+    CMSG_MOVE_FALL_RESET                            = 0x2CA,
+    CMSG_MOVE_FEATHER_FALL_ACK                      = 0x6EA8,    // 28328 - 4.0.6.13623
+    CMSG_MOVE_WATER_WALK_ACK                        = 0x21C4,    // 8644  - 4.0.6.13623
+    CMSG_MOVE_FLIGHT_ACK                            = 0xA3C8,    // 41928 - 4.0.6.13623
 
     // Movement Set / Unset
-    CMSG_MOVE_SET_CAN_FLY_ACK                            = 0x345,
-    CMSG_MOVE_SET_FLY                                    = 0x346,
-    CMSG_MOVE_SET_RUN_SPEED                              = 0x3AB,
+    CMSG_MOVE_SET_CAN_FLY_ACK                       = 0xFCAC,    // 64684 - 4.0.6.13623
+    CMSG_MOVE_SET_FLY                               = 0xE0E0,    // 57568 - 4.0.6.13623
+    CMSG_MOVE_SET_RUN_SPEED                         = 0x3AB,
 
     // Spline
-    CMSG_MOVE_SPLINE_DONE                                = 0x2C9,
+    CMSG_MOVE_SPLINE_DONE                           = 0x69E8,    // 27112 - 4.0.6.13623
 
     // Spline Set / Unset
 
@@ -472,29 +474,29 @@ enum ClientOpcodes
     /********************* MOVIE OPCODES ***********************/
     /***********************************************************/
     // Cinematic
-    CMSG_TRIGGER_CINEMATIC_CHEAT                         = 0x0F8,
-    CMSG_OPENING_CINEMATIC                               = 0x0F9,
-    CMSG_NEXT_CINEMATIC_CAMERA                           = 0x0FB,
-    CMSG_COMPLETE_CINEMATIC                              = 0x0FC,
+    CMSG_TRIGGER_CINEMATIC_CHEAT                    = 0x0F8,
+    CMSG_OPENING_CINEMATIC                          = 0xB1E8,    // 45544 - 4.0.6.13623
+    CMSG_NEXT_CINEMATIC_CAMERA                      = 0xB2CC,    // 45772 - 4.0.6.13623
+    CMSG_COMPLETE_CINEMATIC                         = 0x2ACC,    // 10956 - 4.0.6.13623
 
     // Movie
-    CMSG_COMPLETE_MOVIE                                  = 0x465,
+    CMSG_COMPLETE_MOVIE                             = 0xE188,    // 57736 - 4.0.6.13623
 
     /***********************************************************/
     /****************** MOUNT / PET OPCODES ********************/
     /***********************************************************/
-    CMSG_MOUNTSPECIAL_ANIM                               = 0x171,
-    CMSG_CANCEL_MOUNT_AURA                               = 0x375,    
+    CMSG_MOUNTSPECIAL_ANIM                          = 0x2EE4,    // 12004 - 4.0.6.13623
+    CMSG_CANCEL_MOUNT_AURA                          = 0x64CC,    // 25804 - 4.0.6.13623
 
     // Pet
-    CMSG_PET_SET_ACTION                                  = 0x174,
-    CMSG_PET_ACTION                                      = 0x175,
-    CMSG_PET_ABANDON                                     = 0x176,
-    CMSG_PET_RENAME                                      = 0x177,
-    CMSG_PET_STOP_ATTACK                                 = 0x2EA,
-    CMSG_PET_UNLEARN                                     = 0x2F0,
-    CMSG_PET_LEARN_TALENT                                = 0x47A,
-    CMSG_PET_UNLEARN_TALENTS                             = 0x47B,
+    CMSG_PET_SET_ACTION                             = 0x174,
+    CMSG_PET_ACTION                                 = 0xAFC0,    // 44992 - 4.0.6.13623
+    CMSG_PET_ABANDON                                = 0x176,
+    CMSG_PET_RENAME                                 = 0x177,
+    CMSG_PET_STOP_ATTACK                            = 0x2EA,
+    CMSG_PET_UNLEARN                                = 0x2F0,
+    CMSG_PET_LEARN_TALENT                           = 0xA7A0,    // 42912 - 4.0.6.13623
+    CMSG_PET_UNLEARN_TALENTS                        = 0x47B,
 
     /***********************************************************/
     /********************* PLAYER OPCODES **********************/
