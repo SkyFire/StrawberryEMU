@@ -836,10 +836,10 @@ enum ClientOpcodes
     /********************** WORLD OPCODES **********************/
     /***********************************************************/
     // World Teleport
-    CMSG_WORLD_TELEPORT                                  = 0x008,
-    CMSG_TELEPORT_TO_UNIT                                = 0x009,
-    CMSG_REQUEST_ACCOUNT_DATA                            = 0x20A,
-    CMSG_UPDATE_ACCOUNT_DATA                             = 0x20B,
+    CMSG_WORLD_TELEPORT                                  = 0x8581,    // 34177 - 4.0.6a 13623
+    CMSG_TELEPORT_TO_UNIT                                = 0xE1AC,    // 57772 - 4.0.6a 13623
+    CMSG_REQUEST_ACCOUNT_DATA                            = 0xEEAC,    // 61100 - 4.0.6a 13623
+    CMSG_UPDATE_ACCOUNT_DATA                             = 0x72A4,    // 29348 - 4.0.6a 13623
 };
 
 extern void ClientOpcodeTable();
