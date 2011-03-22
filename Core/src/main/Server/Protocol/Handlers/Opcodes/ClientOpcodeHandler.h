@@ -27,96 +27,96 @@ enum ClientOpcodes
     /***********************************************************/
     /********************* ATTACK OPCODES **********************/
     /***********************************************************/
-    CMSG_ATTACKSWING                                     = 0x74A8,    // 29864 - 4.0.6a 13623
-    CMSG_ATTACKSTOP                                      = 0x62C4,    // 25284 - 4.0.6a 13623
+    CMSG_ATTACKSWING                                = 0x74A8,    // 29864 - 4.0.6a 13623
+    CMSG_ATTACKSTOP                                 = 0x62C4,    // 25284 - 4.0.6a 13623
 
     /***********************************************************/
     /******************** AUCTION OPCODES **********************/
     /***********************************************************/
-    CMSG_AUCTION_SELL_ITEM                               = 0xEE8C,    // 61068 - 4.0.6a 13623
-    CMSG_AUCTION_REMOVE_ITEM                             = 0x9F5D,    // 40797 - 4.0.6a 13623
-    CMSG_AUCTION_LIST_ITEMS                              = 0xE48C,    // 58508 - 4.0.6a 13623
-    CMSG_AUCTION_LIST_OWNER_ITEMS                        = 0x100BC,   // 65724 - 4.0.6a 13623
-    CMSG_AUCTION_PLACE_BID                               = 0x8777,    // 34679 - 4.0.6a 13623
-    CMSG_AUCTION_LIST_BIDDER_ITEMS                       = 0x100BE,   // 65726 - 4.0.6a 13623
-    CMSG_AUCTION_LIST_PENDING_SALES                      = 0x48F,
+    CMSG_AUCTION_SELL_ITEM                          = 0xEE8C,    // 61068 - 4.0.6a 13623
+    CMSG_AUCTION_REMOVE_ITEM                        = 0x9F5D,    // 40797 - 4.0.6a 13623
+    CMSG_AUCTION_LIST_ITEMS                         = 0xE48C,    // 58508 - 4.0.6a 13623
+    CMSG_AUCTION_LIST_OWNER_ITEMS                   = 0x100BC,   // 65724 - 4.0.6a 13623
+    CMSG_AUCTION_PLACE_BID                          = 0x8777,    // 34679 - 4.0.6a 13623
+    CMSG_AUCTION_LIST_BIDDER_ITEMS                  = 0x100BE,   // 65726 - 4.0.6a 13623
+    CMSG_AUCTION_LIST_PENDING_SALES                 = 0x48F,
 
     /***********************************************************/
     /***************** AUTHENTICATION OPCODES ******************/
     /***********************************************************/
-    CMSG_AUTH_SESSION                                    = 0x0E0E,    // 3598 - 4.0.6a 13623
-    CMSG_REALM_SPLIT                                     = 0x38C,
-    CMSG_REDIRECTION_FAILED                              = 0x0509,    // - 4.0.6a 13623
-    CMSG_UNKNOWN_1296                                    = 0x510,
-    CMSG_REDIRECTION_AUTH_PROOF                          = 0x0E4C,    // 3660 - 4.0.6.13529
+    CMSG_AUTH_SESSION                               = 0x0E0E,    // 3598 - 4.0.6a 13623
+    CMSG_REALM_SPLIT                                = 0x60AC,    // 18301 - 4.0.6.13623
+    CMSG_REDIRECTION_FAILED                         = 0x0509,    // - 4.0.6a 13623
+    CMSG_UNKNOWN_1296                               = 0x510,     //
+    CMSG_REDIRECTION_AUTH_PROOF                     = 0x0E4C,    // 3660 - 4.0.6.13529
 
     // SRP6
-    CMSG_AUTH_SRP6_BEGIN                                 = 0x033,
-    CMSG_AUTH_SRP6_PROOF                                 = 0x034,
-    CMSG_AUTH_SRP6_RECODE                                = 0x035,
+    CMSG_AUTH_SRP6_BEGIN                            = 0x033,     //
+    CMSG_AUTH_SRP6_PROOF                            = 0x034,     //
+    CMSG_AUTH_SRP6_RECODE                           = 0x035,     //
 
     /***********************************************************/
     /******************* BATTLEFIELD OPCODES *******************/
     /***********************************************************/
-    CMSG_BATTLEFIELD_LIST                                = 0x23C,
-    CMSG_BATTLEFIELD_JOIN                                = 0x23E,
-    CMSG_BATTLEFIELD_STATUS                              = 0x2D3,
-    CMSG_BATTLEFIELD_PORT                                = 0x2D5,
-    CMSG_BATTLEMASTER_HELLO                              = 0x2D7,
-    CMSG_LEAVE_BATTLEFIELD                               = 0x2E1,
-    CMSG_BATTLEMASTER_JOIN_ARENA                         = 0x358,
-    CMSG_BATTLEFIELD_MGR_ENTRY_INVITE_RESPONSE           = 0x4DF,
-    CMSG_BATTLEFIELD_MGR_QUEUE_INVITE_RESPONSE           = 0x4E2,
-    CMSG_BATTLEFIELD_MGR_QUEUE_REQUEST                   = 0x4E3,
-    CMSG_BATTLEFIELD_MGR_EXIT_REQUEST                    = 0x4E7,
+    CMSG_BATTLEFIELD_LIST                           = 0x0093,    // 147   - 4.0.6.13623
+    CMSG_BATTLEFIELD_JOIN                           = 0x23E,     //
+    CMSG_BATTLEFIELD_STATUS                         = 0x2D3,     //
+    CMSG_BATTLEFIELD_PORT                           = 0x2D5,     //
+    CMSG_BATTLEMASTER_HELLO                         = 0x2D7,     //
+    CMSG_LEAVE_BATTLEFIELD                          = 0x2E1,     //
+    CMSG_BATTLEMASTER_JOIN_ARENA                    = 0x358,     //
+    CMSG_BATTLEFIELD_MGR_ENTRY_INVITE_RESPONSE      = 0x4DF,     //
+    CMSG_BATTLEFIELD_MGR_QUEUE_INVITE_RESPONSE      = 0x8108,    // 33032 - 4.0.6.13623
+    CMSG_BATTLEFIELD_MGR_QUEUE_REQUEST              = 0x4E3,     //
+    CMSG_BATTLEFIELD_MGR_EXIT_REQUEST               = 0x8580,    // 34176 - 4.0.6.13623
 
     /***********************************************************/
     /******************** CALENDAR OPCODES *********************/
     /***********************************************************/
-    CMSG_CALENDAR_GET_CALENDAR                           = 0x101B4,    // 65972 - 4.0.6a 13623
-    CMSG_CALENDAR_GET_EVENT                              = 0x101B5,    // 65973 - 4.0.6a 13623
-    CMSG_CALENDAR_GUILD_FILTER                           = 0x101B6,    // 65974 - 4.0.6a 13623
-    CMSG_CALENDAR_ARENA_TEAM                             = 0x101B7,    // 65975 - 4.0.6a 13623
-    CMSG_CALENDAR_ADD_EVENT                              = 0x0F488,    // 62600 - 4.0.6a 13623
-    CMSG_CALENDAR_UPDATE_EVENT                           = 0x101B8,    // 65976 - 4.0.6a 13623
-    CMSG_CALENDAR_REMOVE_EVENT                           = 0x04C5F,    // 19551 - 4.0.6a 13623
-    CMSG_CALENDAR_COPY_EVENT                             = 0x101BA,    // 65978 - 4.0.6a 13623
-    CMSG_CALENDAR_EVENT_INVITE                           = 0x0F6C4,    // 63172 - 4.0.6a 13623
-    CMSG_CALENDAR_EVENT_RSVP                             = 0x0757F,    // 30079 - 4.0.6a 13623
-    CMSG_CALENDAR_EVENT_REMOVE_INVITE                    = 0x101BD,    // 65981 - 4.0.6a 13623
-    CMSG_CALENDAR_EVENT_STATUS                           = 0x101BE,    // 65982 - 4.0.6a 13623
-    CMSG_CALENDAR_EVENT_MODERATOR_STATUS                 = 0x101BF,    // 65983 - 4.0.6a 13623
-    CMSG_CALENDAR_COMPLAIN                               = 0x01E75,    // 7797  - 4.0.6a 13623
-    CMSG_CALENDAR_GET_NUM_PENDING                        = 0x0EFAC,    // 61356 - 4.0.6a 13623
-    CMSG_CALENDAR_CONTEXT_EVENT_SIGNUP                   = 0xDC74,     // - 4.0.3.13329
+    CMSG_CALENDAR_GET_CALENDAR                      = 0x101B4,    // 65972 - 4.0.6a 13623
+    CMSG_CALENDAR_GET_EVENT                         = 0x101B5,    // 65973 - 4.0.6a 13623
+    CMSG_CALENDAR_GUILD_FILTER                      = 0x101B6,    // 65974 - 4.0.6a 13623
+    CMSG_CALENDAR_ARENA_TEAM                        = 0x101B7,    // 65975 - 4.0.6a 13623
+    CMSG_CALENDAR_ADD_EVENT                         = 0x0F488,    // 62600 - 4.0.6a 13623
+    CMSG_CALENDAR_UPDATE_EVENT                      = 0x101B8,    // 65976 - 4.0.6a 13623
+    CMSG_CALENDAR_REMOVE_EVENT                      = 0x04C5F,    // 19551 - 4.0.6a 13623
+    CMSG_CALENDAR_COPY_EVENT                        = 0x101BA,    // 65978 - 4.0.6a 13623
+    CMSG_CALENDAR_EVENT_INVITE                      = 0x0F6C4,    // 63172 - 4.0.6a 13623
+    CMSG_CALENDAR_EVENT_RSVP                        = 0x0757F,    // 30079 - 4.0.6a 13623
+    CMSG_CALENDAR_EVENT_REMOVE_INVITE               = 0x101BD,    // 65981 - 4.0.6a 13623
+    CMSG_CALENDAR_EVENT_STATUS                      = 0x101BE,    // 65982 - 4.0.6a 13623
+    CMSG_CALENDAR_EVENT_MODERATOR_STATUS            = 0x101BF,    // 65983 - 4.0.6a 13623
+    CMSG_CALENDAR_COMPLAIN                          = 0x01E75,    // 7797  - 4.0.6a 13623
+    CMSG_CALENDAR_GET_NUM_PENDING                   = 0x0EFAC,    // 61356 - 4.0.6a 13623
+    CMSG_CALENDAR_CONTEXT_EVENT_SIGNUP              = 0xDC74,     // - 4.0.3.13329
 
     /***********************************************************/
     /******************** CHARACTER OPCODES ********************/
     /***********************************************************/
-    CMSG_MOVE_CHARACTER_CHEAT                            = 0x00D,
-    CMSG_CHAR_CREATE                                     = 0x036,
-    CMSG_CHAR_ENUM                                       = 0x037,
-    CMSG_CHAR_DELETE                                     = 0x038,
-    CMSG_CHARACTER_POINT_CHEAT                           = 0x223,
-    CMSG_CHAR_RENAME                                     = 0x2C7,
-    CMSG_CHAR_CUSTOMIZE                                  = 0x473,
-    CMSG_CHAR_FACTION_CHANGE                             = 0x4D9,
-    CMSG_CHAR_RACE_CHANGE                                = 0x4F8,
+    CMSG_MOVE_CHARACTER_CHEAT                       = 0x00D,     //
+    CMSG_CHAR_CREATE                                = 0x7EEC,    // 32492 - 4.0.6.13623
+    CMSG_CHAR_ENUM                                  = 0x6AA4,    // 27300 - 4.0.6.13623
+    CMSG_CHAR_DELETE                                = 0x3B84,    // 15236 - 4.0.6.13623
+    CMSG_CHARACTER_POINT_CHEAT                      = 0x223,     //
+    CMSG_CHAR_RENAME                                = 0x27C4,    // 10180 - 4.0.6.13623
+    CMSG_CHAR_CUSTOMIZE                             = 0x6484,    // 25732 - 4.0.6.13623
+    CMSG_CHAR_FACTION_CHANGE                        = 0xBBCC,    // 48076 - 4.0.6.13623
+    CMSG_CHAR_RACE_CHANGE                           = 0x6EA4,    // 28324 - 4.0.6.13623
 
     // Character World Login / Logout
-    CMSG_PLAYER_LOGIN                                    = 0x03D,
-    CMSG_PLAYER_LOGOUT                                   = 0x04A,
-    CMSG_LOGOUT_REQUEST                                  = 0x04B,
-    CMSG_LOGOUT_CANCEL                                   = 0x04E,
+    CMSG_PLAYER_LOGIN                               = 0x8180,    // 33152 - 4.0.6.13623
+    CMSG_PLAYER_LOGOUT                              = 0xF78C,    // 63372 - 4.0.6.13623
+    CMSG_LOGOUT_REQUEST                             = 0xA7A8,    // 42920 - 4.0.6.13623
+    CMSG_LOGOUT_CANCEL                              = 0x04E,     //
 
     /***********************************************************/
     /********************** CHAT OPCODES ***********************/
     /***********************************************************/
-    CMSG_CHAT_IGNORED                                    = 0x225,
-    CMSG_GM_VISION                                       = 0x226,
-    CMSG_CHAT_FILTERED                                   = 0x331,
-    CMSG_GM_WHISPER                                      = 0x3B2,
-    CMSG_FORCE_SAY_CHEAT                                 = 0x47E,
+    CMSG_CHAT_IGNORED                               = 0xA78C,    // 42892 - 4.0.6.13623
+    CMSG_GM_VISION                                  = 0x226,     //
+    CMSG_CHAT_FILTERED                              = 0x0D5D,    // 3421  - 4.0.3.13329,
+    CMSG_GM_WHISPER                                 = 0x3B2,     //
+    CMSG_FORCE_SAY_CHEAT                            = 0x47E,     //
 
     // Chat Message
     CMSG_MESSAGECHAT_SAY                            = 0x002A,    // 42    - 4.0.6.13623
@@ -137,93 +137,94 @@ enum ClientOpcodes
     CMSG_MESSAGECHAT_RAID_WARNING                   = 0x4A88,    // 19080 - 4.0.3.13329
 
     // Channel
-    CMSG_JOIN_CHANNEL                                    = 0x097,
-    CMSG_LEAVE_CHANNEL                                   = 0x098,
-    CMSG_CHANNEL_LIST                                    = 0x09A,
-    CMSG_CHANNEL_PASSWORD                                = 0x09C,
-    CMSG_CHANNEL_SET_OWNER                               = 0x09D,
-    CMSG_CHANNEL_OWNER                                   = 0x09E,
-    CMSG_CHANNEL_MODERATOR                               = 0x09F,
-    CMSG_CHANNEL_UNMODERATOR                             = 0x0A0,
-    CMSG_CHANNEL_MUTE                                    = 0x0A1,
-    CMSG_CHANNEL_UNMUTE                                  = 0x0A2,
-    CMSG_CHANNEL_INVITE                                  = 0x0A3,
-    CMSG_CHANNEL_KICK                                    = 0x0A4,
-    CMSG_CHANNEL_BAN                                     = 0x0A5,
-    CMSG_CHANNEL_UNBAN                                   = 0x0A6,
-    CMSG_CHANNEL_ANNOUNCEMENTS                           = 0x0A7,
-    CMSG_CHANNEL_MODERATE                                = 0x0A8,
-    CMSG_CHANNEL_SILENCE_VOICE                           = 0x3CC,
-    CMSG_CHANNEL_SILENCE_ALL                             = 0x3CD,
-    CMSG_CHANNEL_UNSILENCE_VOICE                         = 0x3CE,
-    CMSG_CHANNEL_UNSILENCE_ALL                           = 0x3CF,
-    CMSG_CHANNEL_DISPLAY_LIST                            = 0x3D2,
-    CMSG_GET_CHANNEL_MEMBER_COUNT                        = 0x3D4,
-    CMSG_SET_CHANNEL_WATCH                               = 0x3EF,
-    CMSG_CLEAR_CHANNEL_WATCH                             = 0x3F3,
-    CMSG_DECLINE_CHANNEL_INVITE                          = 0x410,
+    CMSG_JOIN_CHANNEL                               = 0x3A98,    // 15000 - 4.0.3.13329
+    CMSG_LEAVE_CHANNEL                              = 0x000B,    // 11    - 4.0.6.13623
+    CMSG_CHANNEL_LIST                               = 0x1A88,    // 6792  - 4.0.3.13329
+    CMSG_CHANNEL_PASSWORD                           = 0x080A,    // 2058  - 4.0.6.13623
+    CMSG_CHANNEL_SET_OWNER                          = 0x0800,    // 2048  - 4.0.6.13623
+    CMSG_CHANNEL_OWNER                              = 0x0848,    // 2120  - 4.0.6.13623
+    CMSG_CHANNEL_MODERATOR                          = 0x0828,    // 2088  - 4.0.6.13623
+    CMSG_CHANNEL_UNMODERATOR                        = 0x0809,    // 2057  - 4.0.6.13623
+    CMSG_CHANNEL_MUTE                               = 0x0023,    // 35    - 4.0.6.13623
+    CMSG_CHANNEL_UNMUTE                             = 0x0841,    // 2113  - 4.0.6.13623
+    CMSG_CHANNEL_INVITE                             = 0x0020,    // 32    - 4.0.6.13623
+    CMSG_CHANNEL_KICK                               = 0x0068,    // 104   - 4.0.6.13623
+    CMSG_CHANNEL_ROSTER_INFO                        = 0x0069,    // 105   - 4.0.6.13623
+    CMSG_CHANNEL_BAN                                = 0x000A,    // 10    - 4.0.6.13623
+    CMSG_CHANNEL_UNBAN                              = 0x0048,    // 72    - 4.0.6.13623
+    CMSG_CHANNEL_ANNOUNCEMENTS                      = 0x004B,    // 75    - 4.0.6.13623
+    CMSG_CHANNEL_MODERATE                           = 0x0A8,
+    CMSG_CHANNEL_SILENCE_VOICE                      = 0x3CC,
+    CMSG_CHANNEL_SILENCE_ALL                        = 0x3CD,
+    CMSG_CHANNEL_UNSILENCE_VOICE                    = 0x3CE,
+    CMSG_CHANNEL_UNSILENCE_ALL                      = 0x3CF,
+    CMSG_CHANNEL_DISPLAY_LIST                       = 0x3D2,
+    CMSG_GET_CHANNEL_MEMBER_COUNT                   = 0x3D4,
+    CMSG_SET_CHANNEL_WATCH                          = 0x7FE0,    // 32736 - 4.0.6.13623
+    CMSG_CLEAR_CHANNEL_WATCH                        = 0xA1E0,    // 41440 - 4.0.6.13623
+    CMSG_DECLINE_CHANNEL_INVITE                     = 0x410,
 
     // Char Server Message
-    CMSG_SERVER_BROADCAST                                = 0x2B2,
-    CMSG_SERVER_INFO_QUERY                               = 0x4A0,
+    CMSG_SERVER_BROADCAST                           = 0x2B2,
+    CMSG_SERVER_INFO_QUERY                          = 0x4A0,
 
     /***********************************************************/
     /********************* COMBAT OPCODES **********************/
     /***********************************************************/
-    CMSG_ENABLE_DAMAGE_LOG                               = 0x27D,
+    CMSG_ENABLE_DAMAGE_LOG                          = 0x27D,
 
     /***********************************************************/
     /********************** DUEL OPCODES ***********************/
     /***********************************************************/
-    CMSG_DUEL_ACCEPTED                                   = 0x16C,
-    CMSG_DUEL_CANCELLED                                  = 0x16D,
+    CMSG_DUEL_ACCEPTED                              = 0xA688,    // 42632 - 4.0.6.13623
+    CMSG_DUEL_CANCELLED                             = 0x6F8C,    // 28556 - 4.0.6.13623
 
     /***********************************************************/
     /******************** FACTION OPCODES **********************/
     /***********************************************************/
-    CMSG_SET_FACTION_ATWAR                               = 0x125,
-    CMSG_SET_FACTION_CHEAT                               = 0x126,
-    CMSG_SET_ACTION_BUTTON                               = 0x128,
-    CMSG_RESET_FACTION_CHEAT                             = 0x281,
-    CMSG_SET_FACTION_INACTIVE                            = 0x317,
-    CMSG_SET_WATCHED_FACTION                             = 0x318,
+    CMSG_SET_FACTION_ATWAR                          = 0x125,
+    CMSG_SET_FACTION_CHEAT                          = 0x126,
+    CMSG_SET_ACTION_BUTTON                          = 0x128,
+    CMSG_RESET_FACTION_CHEAT                        = 0x281,
+    CMSG_SET_FACTION_INACTIVE                       = 0x317,
+    CMSG_SET_WATCHED_FACTION                        = 0x318,
 
     /***********************************************************/
     /******************* GAMEMASTER OPCODES ********************/
     /***********************************************************/
-    CMSG_GM_INVIS                                        = 0x1E6,
-    CMSG_GM_SET_SECURITY_GROUP                           = 0x1F9,
-    CMSG_GM_NUKE                                         = 0x1FA,
-    CMSG_GM_TEACH                                        = 0x20F,
-    CMSG_GM_CREATE_ITEM_TARGET                           = 0x210,
-    CMSG_GM_SILENCE                                      = 0x228,
-    CMSG_GM_REVEALTO                                     = 0x229,
-    CMSG_GM_RESURRECT                                    = 0x22A,
-    CMSG_GM_SUMMONMOB                                    = 0x22B,
-    CMSG_GM_MOVECORPSE                                   = 0x22C,
-    CMSG_GM_FREEZE                                       = 0x22D,
-    CMSG_GM_UBERINVIS                                    = 0x22E,
-    CMSG_GM_REQUEST_PLAYER_INFO                          = 0x22F,
-    CMSG_GM_UNTEACH                                      = 0x2E5,
-    CMSG_GM_NUKE_ACCOUNT                                 = 0x30F,
-    CMSG_GM_DESTROY_ONLINE_CORPSE                        = 0x311,
-    CMSG_MAELSTROM_GM_SENT_MAIL                          = 0x395,
-    CMSG_GM_SHOW_COMPLAINTS                              = 0x3CA,
-    CMSG_GM_UNSQUELCH                                    = 0x3CB,
-    CMSG_GM_CHARACTER_RESTORE                            = 0x3FA,
-    CMSG_GM_CHARACTER_SAVE                               = 0x3FB,
-    CMSG_GMRESPONSE_RESOLVE                              = 0x4F0,
-    CMSG_GM_REPORT_LAG                                   = 0x502,
+    CMSG_GM_INVIS                                   = 0x1E6,
+    CMSG_GM_SET_SECURITY_GROUP                      = 0x1F9,
+    CMSG_GM_NUKE                                    = 0x1FA,
+    CMSG_GM_TEACH                                   = 0x20F,
+    CMSG_GM_CREATE_ITEM_TARGET                      = 0x210,
+    CMSG_GM_SILENCE                                 = 0x228,
+    CMSG_GM_REVEALTO                                = 0x229,
+    CMSG_GM_RESURRECT                               = 0x22A,
+    CMSG_GM_SUMMONMOB                               = 0x22B,
+    CMSG_GM_MOVECORPSE                              = 0x22C,
+    CMSG_GM_FREEZE                                  = 0x22D,
+    CMSG_GM_UBERINVIS                               = 0x22E,
+    CMSG_GM_REQUEST_PLAYER_INFO                     = 0x22F,
+    CMSG_GM_UNTEACH                                 = 0x2E5,
+    CMSG_GM_NUKE_ACCOUNT                            = 0x30F,
+    CMSG_GM_DESTROY_ONLINE_CORPSE                   = 0x311,
+    CMSG_MAELSTROM_GM_SENT_MAIL                     = 0x395,
+    CMSG_GM_SHOW_COMPLAINTS                         = 0x3CA,
+    CMSG_GM_UNSQUELCH                               = 0x3CB,
+    CMSG_GM_CHARACTER_RESTORE                       = 0x3FA,
+    CMSG_GM_CHARACTER_SAVE                          = 0x3FB,
+    CMSG_GMRESPONSE_RESOLVE                         = 0x4F0,
+    CMSG_GM_REPORT_LAG                              = 0x502,
 
     // Gamemaster Ticket
-    CMSG_GMTICKET_CREATE                                 = 0x205,
-    CMSG_GMTICKET_UPDATETEXT                             = 0x207,
-    CMSG_GMTICKET_GETTICKET                              = 0x211,
-    CMSG_GMTICKET_DELETETICKET                           = 0x217,
-    CMSG_GMTICKET_SYSTEMSTATUS                           = 0x21A,
-    CMSG_GMTICKETSYSTEM_TOGGLE                           = 0x29A,
-    CMSG_GM_UPDATE_TICKET_STATUS                         = 0x327,
-    CMSG_GMSURVEY_SUBMIT                                 = 0x32A,
+    CMSG_GMTICKET_CREATE                            = 0x205,
+    CMSG_GMTICKET_UPDATETEXT                        = 0x207,
+    CMSG_GMTICKET_GETTICKET                         = 0x211,
+    CMSG_GMTICKET_DELETETICKET                      = 0x217,
+    CMSG_GMTICKET_SYSTEMSTATUS                      = 0x21A,
+    CMSG_GMTICKETSYSTEM_TOGGLE                      = 0x29A,
+    CMSG_GM_UPDATE_TICKET_STATUS                    = 0x327,
+    CMSG_GMSURVEY_SUBMIT                            = 0x32A,
 
     /***********************************************************/
     /****************** (GAME)OBJECT OPCODES *******************/
