@@ -501,147 +501,147 @@ enum ClientOpcodes
     /***********************************************************/
     /********************* PLAYER OPCODES **********************/
     /***********************************************************/
-    CMSG_UNDRESSPLAYER                                   = 0x020,
-    CMSG_GODMODE                                         = 0x022,
-    CMSG_PLAYER_DIFFICULTY_CHANGE                        = 0x1FD,
-    CMSG_PLAYER_AI_CHEAT                                 = 0x26C,
-    CMSG_SET_ACTIONBAR_TOGGLES                           = 0x2BF,
-    CMSG_IGNORE_REQUIREMENTS_CHEAT                       = 0x3A8,
-    CMSG_SET_PLAYER_DECLINED_NAMES                       = 0x419,
+    CMSG_UNDRESSPLAYER                              = 0x020,
+    CMSG_GODMODE                                    = 0x022,
+    CMSG_PLAYER_DIFFICULTY_CHANGE                   = 0x1FD,
+    CMSG_PLAYER_AI_CHEAT                            = 0x26C,
+    CMSG_SET_ACTIONBAR_TOGGLES                      = 0x32C4,    // 12996 - 4.0.6.13623
+    CMSG_IGNORE_REQUIREMENTS_CHEAT                  = 0x3A8,
+    CMSG_SET_PLAYER_DECLINED_NAMES                  = 0xADC0,    // 44480 - 4.0.6.13623
 
     // Player Achievement
-    CMSG_QUERY_INSPECT_ACHIEVEMENTS                      = 0x46B,
-    CMSG_COMPLETE_ACHIEVEMENT_CHEAT                      = 0x46E,
-    CMSG_SET_CRITERIA_CHEAT                              = 0x470,
-    CMSG_CHECK_LOGIN_CRITERIA                            = 0x4A2,
+    CMSG_QUERY_INSPECT_ACHIEVEMENTS                 = 0x46B,
+    CMSG_COMPLETE_ACHIEVEMENT_CHEAT                 = 0x46E,
+    CMSG_SET_CRITERIA_CHEAT                         = 0x470,
+    CMSG_CHECK_LOGIN_CRITERIA                       = 0x4A2,
 
     // Player Exploration
-    CMSG_SET_EXPLORATION                                 = 0x2BE,
-    CMSG_SET_EXPLORATION_ALL                             = 0x31B,
+    CMSG_SET_EXPLORATION                            = 0x2BE,
+    CMSG_SET_EXPLORATION_ALL                        = 0x31B,
 
     // Friends / Contacts / ...
-    CMSG_WHO                                             = 0x062,
-    CMSG_WHOIS                                           = 0x064,
-    CMSG_CONTACT_LIST                                    = 0x066,
-    CMSG_ADD_FRIEND                                      = 0x069,
-    CMSG_DEL_FRIEND                                      = 0x06A,
-    CMSG_SET_CONTACT_NOTES                               = 0x06B,
-    CMSG_ADD_IGNORE                                      = 0x06C,
-    CMSG_DEL_IGNORE                                      = 0x06D,
-    CMSG_SAVE_PLAYER                                     = 0x153,
-    CMSG_REFER_A_FRIEND                                  = 0x40E,
+    CMSG_WHO                                        = 0xA4CC,    // 42188 - 4.0.6.13623
+    CMSG_WHOIS                                      = 0x2180,    // 8576  - 4.0.6.13623
+    CMSG_CONTACT_LIST                               = 0xEAA4,    // 60068 - 4.0.6.13623
+    CMSG_ADD_FRIEND                                 = 0x069,
+    CMSG_DEL_FRIEND                                 = 0x06A,
+    CMSG_SET_CONTACT_NOTES                          = 0x06B,
+    CMSG_ADD_FRIEND                                 = 0x3980,    // 14720 - 4.0.6.13623
+    CMSG_DEL_FRIEND                                 = 0x2980,    // 10624 - 4.0.6.13623
+    CMSG_SAVE_PLAYER                                = 0x153,
+    CMSG_REFER_A_FRIEND                             = 0x40E,
 
     // Player Dance
-    CMSG_SAVE_DANCE                                      = 0x449,
-    CMSG_PLAY_DANCE                                      = 0x44B,
-    CMSG_LOAD_DANCES                                     = 0x44D,
-    CMSG_STOP_DANCE                                      = 0x44E,
-    CMSG_SYNC_DANCE                                      = 0x450,
-    CMSG_DANCE_QUERY                                     = 0x451,
-    CMSG_DELETE_DANCE                                    = 0x454,
-    CMSG_LEARN_DANCE_MOVE                                = 0x456,
-    CMSG_UNLEARN_DANCE_MOVE                              = 0x457,
+    CMSG_SAVE_DANCE                                 = 0x449,
+    CMSG_PLAY_DANCE                                 = 0x44B,
+    CMSG_LOAD_DANCES                                = 0x44D,
+    CMSG_STOP_DANCE                                 = 0x44E,
+    CMSG_SYNC_DANCE                                 = 0x450,
+    CMSG_DANCE_QUERY                                = 0x22A0,    // 8864  - 4.0.6.13623
+    CMSG_DELETE_DANCE                               = 0x454,
+    CMSG_LEARN_DANCE_MOVE                           = 0x456,
+    CMSG_UNLEARN_DANCE_MOVE                         = 0x457,
 
     // Player Level
-    CMSG_LEVEL_CHEAT                                     = 0x025,
-    CMSG_SET_GRANTABLE_LEVELS                            = 0x40C,
-    CMSG_GRANT_LEVEL                                     = 0x40D,
-    CMSG_ACCEPT_LEVEL_GRANT                              = 0x420,
+    CMSG_LEVEL_CHEAT                                = 0x025,
+    CMSG_SET_GRANTABLE_LEVELS                       = 0x40C,
+    CMSG_GRANT_LEVEL                                = 0xB980,    // 47488 - 4.0.6.13623
+    CMSG_ACCEPT_LEVEL_GRANT                         = 0xB5CC,    // 46540 - 4.0.6.13623
 
     // Player Pet
-    CMSG_PET_LEVEL_CHEAT                                 = 0x026,
-    CMSG_STABLE_PET                                      = 0x270,
-    CMSG_UNSTABLE_PET                                    = 0x271,
-    CMSG_BUY_STABLE_SLOT                                 = 0x272,
-    CMSG_STABLE_REVIVE_PET                               = 0x274,
-    CMSG_STABLE_SWAP_PET                                 = 0x275,
-    CMSG_REQUEST_PET_INFO                                = 0x279,
+    CMSG_PET_LEVEL_CHEAT                            = 0x026,
+    CMSG_STABLE_PET                                 = 0x270,
+    CMSG_UNSTABLE_PET                               = 0x271,
+    CMSG_BUY_STABLE_SLOT                            = 0x272,
+    CMSG_STABLE_REVIVE_PET                          = 0x274,
+    CMSG_STABLE_SWAP_PET                            = 0x275,
+    CMSG_REQUEST_PET_INFO                           = 0xEAE4,    // 60132 - 4.0.6.13623
 
     // Player PVP / Honor / ...
-    CMSG_DISABLE_PVP_CHEAT                               = 0x030,
-    CMSG_TOGGLE_PVP                                      = 0x253,
-    CMSG_SET_PVP_RANK_CHEAT                              = 0x288,
-    CMSG_ADD_PVP_MEDAL_CHEAT                             = 0x289,
-    CMSG_DEL_PVP_MEDAL_CHEAT                             = 0x28A,
-    CMSG_SET_PVP_TITLE                                   = 0x28B,
-    CMSG_SET_TITLE                                       = 0x374,
-    CMSG_CHEAT_SET_HONOR_CURRENCY                        = 0x37B,
-    CMSG_ACTIVE_PVP_CHEAT                                = 0x399,
-    CMSG_REPORT_PVP_AFK                                  = 0x3E4,
-    CMSG_SET_TITLE_SUFFIX                                = 0x3F7,
+    CMSG_DISABLE_PVP_CHEAT                          = 0x030,
+    CMSG_TOGGLE_PVP                                 = 0x6480,    // 25728 - 4.0.6.13623
+    CMSG_SET_PVP_RANK_CHEAT                         = 0x288,
+    CMSG_ADD_PVP_MEDAL_CHEAT                        = 0x289,
+    CMSG_DEL_PVP_MEDAL_CHEAT                        = 0x28A,
+    CMSG_SET_PVP_TITLE                              = 0x28B,
+    CMSG_SET_TITLE                                  = 0xEC8C,    // 60556 - 4.0.6.13623
+    CMSG_CHEAT_SET_HONOR_CURRENCY                   = 0x37B,
+    CMSG_ACTIVE_PVP_CHEAT                           = 0x399,
+    CMSG_REPORT_PVP_AFK                             = 0xE3AC,    // 58284 - 4.0.6.13623
+    CMSG_SET_TITLE_SUFFIX                           = 0x3F7,
 
     // Player Arena
-    CMSG_ARENA_TEAM_CREATE                               = 0x348,
-    CMSG_ARENA_TEAM_QUERY                                = 0x34B,
-    CMSG_ARENA_TEAM_ROSTER                               = 0x34D,
-    CMSG_ARENA_TEAM_INVITE                               = 0x34F,
-    CMSG_ARENA_TEAM_ACCEPT                               = 0x351,
-    CMSG_ARENA_TEAM_DECLINE                              = 0x352,
-    CMSG_ARENA_TEAM_LEAVE                                = 0x353,
-    CMSG_ARENA_TEAM_REMOVE                               = 0x354,
-    CMSG_ARENA_TEAM_DISBAND                              = 0x355,
-    CMSG_ARENA_TEAM_LEADER                               = 0x356,
-    CMSG_CHEAT_SET_ARENA_CURRENCY                        = 0x37C,
-    CMSG_CHANGE_PERSONAL_ARENA_RATING                    = 0x425,
+    CMSG_ARENA_TEAM_CREATE                          = 0x348,
+    CMSG_ARENA_TEAM_QUERY                           = 0xB9C8,    // 47560 - 4.0.6.13623
+    CMSG_ARENA_TEAM_ROSTER                          = 0x34D,
+    CMSG_ARENA_TEAM_INVITE                          = 0xE9CC,    // 59852 - 4.0.6.13623
+    CMSG_ARENA_TEAM_ACCEPT                          = 0x61AC,    // 25004 - 4.0.6.13623
+    CMSG_ARENA_TEAM_DECLINE                         = 0xF2C0,    // 62144 - 4.0.6.13623
+    CMSG_ARENA_TEAM_LEAVE                           = 0x64C4,    // 25796 - 4.0.6.13623
+    CMSG_ARENA_TEAM_REMOVE                          = 0x7E84,    // 32388 - 4.0.6.13623
+    CMSG_ARENA_TEAM_DISBAND                         = 0x698C,    // 27020 - 4.0.6.13623
+    CMSG_ARENA_TEAM_LEADER                          = 0x218C,    // 8588  - 4.0.6.13623
+    CMSG_CHEAT_SET_ARENA_CURRENCY                   = 0x37C,
+    CMSG_CHANGE_PERSONAL_ARENA_RATING               = 0x425,
 
     // Player Tutorial
-    CMSG_TUTORIAL_FLAG                                   = 0x0FE,
-    CMSG_TUTORIAL_CLEAR                                  = 0x0FF,
-    CMSG_TUTORIAL_RESET                                  = 0x100,
+    CMSG_TUTORIAL_FLAG                              = 0xE4CC,    // 58572 - 4.0.6.13623
+    CMSG_TUTORIAL_CLEAR                             = 0xA5E4,    // 42468 - 4.0.6.13623
+    CMSG_TUTORIAL_RESET                             = 0xDE75,    // 56949 - 4.0.3.13329
 
     // Player Emote
-    CMSG_EMOTE                                           = 0x102,
-    CMSG_TEXT_EMOTE                                      = 0x104,
+    CMSG_EMOTE                                      = 0x7F5C,    // 59872 - 4.0.3.13329
+    CMSG_TEXT_EMOTE                                 = 0xE9E0,    // 59872 - 4.0.6.13623
 
     // Player Corpse / Resurrect / Death
-    CMSG_SETDEATHBINDPOINT                               = 0x154,
-    CMSG_GETDEATHBINDZONE                                = 0x156,
-    CMSG_REPOP_REQUEST                                   = 0x15A,
-    CMSG_RESURRECT_RESPONSE                              = 0x15C,
-    CMSG_RECLAIM_CORPSE                                  = 0x1D2,
-    CMSG_GHOST                                           = 0x1E5,
-    CMSG_HEARTH_AND_RESURRECT                            = 0x49C,
+    CMSG_SETDEATHBINDPOINT                          = 0x154,
+    CMSG_GETDEATHBINDZONE                           = 0x156,
+    CMSG_REPOP_REQUEST                              = 0xA9E4,    // 43492 - 4.0.6.13623
+    CMSG_RESURRECT_RESPONSE                         = 0x15C,
+    CMSG_RECLAIM_CORPSE                             = 0x7CC8,    // 31944 - 4.0.6.13623
+    CMSG_GHOST                                      = 0x1E5,
+    CMSG_HEARTH_AND_RESURRECT                       = 0x49C,
 
     // Player Health / Power / Mana / ...
-    CMSG_SET_RUNE_COUNT                                  = 0x458,
-    CMSG_SET_RUNE_COOLDOWN                               = 0x459,
+    CMSG_SET_RUNE_COUNT                             = 0x458,
+    CMSG_SET_RUNE_COOLDOWN                          = 0x459,
 
     // Player Glyph
-    CMSG_SET_GLYPH_SLOT                                  = 0x466,
-    CMSG_SET_GLYPH                                       = 0x467,
-    CMSG_REMOVE_GLYPH                                    = 0x48A,
+    CMSG_SET_GLYPH_SLOT                             = 0x466,
+    CMSG_SET_GLYPH                                  = 0x467,
+    CMSG_REMOVE_GLYPH                               = 0x48A,
 
     // Player Talent / Skill
-    CMSG_UNLEARN_TALENTS                                 = 0x213,
-    CMSG_USE_SKILL_CHEAT                                 = 0x029,
-    CMSG_SKILL_BUY_STEP                                  = 0x21F,
-    CMSG_SKILL_BUY_RANK                                  = 0x220,
-    CMSG_LEARN_TALENT                                    = 0x251,
-    CMSG_LEARN_PREVIEW_TALENTS                           = 0x4C1,
-    CMSG_LEARN_PREVIEW_TALENTS_PET                       = 0x4C2,
+    CMSG_UNLEARN_TALENTS                            = 0x213,
+    CMSG_USE_SKILL_CHEAT                            = 0x029,
+    CMSG_SKILL_BUY_STEP                             = 0x21F,
+    CMSG_SKILL_BUY_RANK                             = 0x220,
+    CMSG_LEARN_TALENT                               = 0xA7CC,    // 42956 - 4.0.6.13623
+    CMSG_LEARN_PREVIEW_TALENTS                      = 0xFFAC,    // 65452 - 4.0.6.13623
+    CMSG_LEARN_PREVIEW_TALENTS_PET                  = 0xBCE8,    // 48360 - 4.0.6.13623
 
     // Player Mail
-    CMSG_SEND_MAIL                                       = 0x238,
-    CMSG_GET_MAIL_LIST                                   = 0x23A,
-    CMSG_MAIL_TAKE_MONEY                                 = 0x245,
-    CMSG_MAIL_TAKE_ITEM                                  = 0x246,
-    CMSG_MAIL_MARK_AS_READ                               = 0x247,
-    CMSG_MAIL_RETURN_TO_SENDER                           = 0x248,
-    CMSG_MAIL_DELETE                                     = 0x249,
-    CMSG_MAIL_CREATE_TEXT_ITEM                           = 0x24A,
+    CMSG_SEND_MAIL                                  = 0x2DEC,    // 11756 - 4.0.6.13623
+    CMSG_GET_MAIL_LIST                              = 0xB284,    //
+    CMSG_MAIL_TAKE_MONEY                            = 0xE8EC,    // 59628 - 4.0.6.13623
+    CMSG_MAIL_TAKE_ITEM                             = 0x62A8,    // 25256 - 4.0.6.13623
+    CMSG_MAIL_MARK_AS_READ                          = 0xE8C0,    // 59584 - 4.0.6.13623
+    CMSG_MAIL_RETURN_TO_SENDER                      = 0x65A4,    // 26020 - 4.0.6.13623
+    CMSG_MAIL_DELETE                                = 0x7DE4,    // 32228 - 4.0.6.13623
+    CMSG_MAIL_CREATE_TEXT_ITEM                      = 0xFAE4,    // 64228 - 4.0.6.13623
 
     // Player Voice
-    CMSG_VOICE_SET_TALKER_MUTED_REQUEST                  = 0x3A1,
-    CMSG_VOICE_SESSION_ENABLE                            = 0x3AF,
-    CMSG_SET_ACTIVE_VOICE_CHANNEL                        = 0x3D3,
-    CMSG_CHANNEL_VOICE_ON                                = 0x3D6,
-    CMSG_CHANNEL_VOICE_OFF                               = 0x3D7,
-    CMSG_DEBUG_LIST_TARGETS                              = 0x3D8,
-    CMSG_ADD_VOICE_IGNORE                                = 0x3DB,
-    CMSG_DEL_VOICE_IGNORE                                = 0x3DC,
+    CMSG_VOICE_SET_TALKER_MUTED_REQUEST             = 0x3A1,
+    CMSG_VOICE_SESSION_ENABLE                       = 0xFEA4,    // 65188 - 4.0.6.13623
+    CMSG_SET_ACTIVE_VOICE_CHANNEL                   = 0x32A4,    // 12964 - 4.0.6.13623
+    CMSG_CHANNEL_VOICE_ON                           = 0x5A98,    //
+    CMSG_CHANNEL_VOICE_OFF                          = 0x7A88,    //
+    CMSG_DEBUG_LIST_TARGETS                         = 0x3D8,
+    CMSG_ADD_VOICE_IGNORE                           = 0x3DB,
+    CMSG_DEL_VOICE_IGNORE                           = 0x3DC,
 
     // Player Totem
-    CMSG_TOTEM_DESTROYED                                 = 0x414,
+    CMSG_TOTEM_DESTROYED                            = 0x34A0,    // 13472 - 4.0.6.13623
 
     /***********************************************************/
     /********************* QUERY OPCODES ***********************/
