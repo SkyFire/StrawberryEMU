@@ -728,12 +728,12 @@ enum ClientOpcodes
     // Time
     CMSG_GAMETIME_SET                                    = 0x044,
     CMSG_SERVERTIME                                      = 0x048,
-    CMSG_PLAYED_TIME                                     = 0x1CC,
-    CMSG_QUERY_TIME                                      = 0x1CE,
-    CMSG_TIME_SYNC_RESP                                  = 0x391,
-    CMSG_KEEP_ALIVE                                      = 0x407,
-    CMSG_WORLD_STATE_UI_TIMER_UPDATE                     = 0x4F6,
-    CMSG_READY_FOR_ACCOUNT_DATA_TIMES                    = 0x4FF,
+    CMSG_PLAYED_TIME                                     = 0xF480,    // 62592 - 4.0.6.13623
+    CMSG_QUERY_TIME                                      = 0xB1C0,    // 45504 - 4.0.6.13623
+    CMSG_TIME_SYNC_RESP                                  = 0xA8AC,    // 43180 - 4.0.6.13623
+    CMSG_KEEP_ALIVE                                      = 0x2CE0,    // 11488 - 4.0.6.13623
+    CMSG_WORLD_STATE_UI_TIMER_UPDATE                     = 0x3FA8,    // 16296 - 4.0.6.13623
+    CMSG_READY_FOR_ACCOUNT_DATA_TIMES                    = 0x7DA8,    // 32168 - 4.0.6.13623
 
     // Speed
     CMSG_GAMESPEED_SET                                   = 0x046,
