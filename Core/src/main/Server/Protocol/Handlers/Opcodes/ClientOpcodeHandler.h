@@ -703,7 +703,7 @@ enum ClientOpcodes
     CMSG_COOLDOWN_CHEAT                                  = 0x028,
 
     // Spell Pet
-    CMSG_PET_CAST_SPELL                                  = 0x1F0,
+    CMSG_PET_CAST_SPELL                                  = 0x2888,    // 10376 - 4.0.6.13623
     CMSG_PET_SPELL_AUTOCAST                              = 0x2F3,
 
     /***********************************************************/
@@ -713,14 +713,14 @@ enum ClientOpcodes
     CMSG_TAXICLEARALLNODES                               = 0x1A6,
     CMSG_TAXIENABLEALLNODES                              = 0x1A7,
     CMSG_TAXISHOWNODES                                   = 0x1A8,
-    CMSG_TAXINODE_STATUS_QUERY                           = 0x1AA,
-    CMSG_TAXIQUERYAVAILABLENODES                         = 0x1AC,
-    CMSG_ACTIVATETAXI                                    = 0x1AD,
+    CMSG_TAXINODE_STATUS_QUERY                           = 0xA1EC,    // 41452 - 4.0.6.13623
+    CMSG_TAXIQUERYAVAILABLENODES                         = 0xB8E8,    // 47336 - 4.0.6.13623
+    CMSG_ACTIVATETAXI                                    = 0x39A4,    // 14756 - 4.0.6.13623
     CMSG_TAXICLEARNODE                                   = 0x241,
     CMSG_TAXIENABLENODE                                  = 0x242,
-    CMSG_ACTIVATETAXIEXPRESS                             = 0x312,
-    CMSG_SET_TAXI_BENCHMARK_MODE                         = 0x389,
-    CMSG_ENABLETAXI                                      = 0x493,
+    CMSG_ACTIVATETAXIEXPRESS                             = 0xFC8C,    // 64652 - 4.0.6.13623
+    CMSG_SET_TAXI_BENCHMARK_MODE                         = 0x73C4,    // 29636 - 4.0.6.13623
+    CMSG_ENABLETAXI                                      = 0x328C,    // 12940 - 4.0.6.13623
 
     /***********************************************************/
     /****************** TIME / SPEED OPCODES *******************/
