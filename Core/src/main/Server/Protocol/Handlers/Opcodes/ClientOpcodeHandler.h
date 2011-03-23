@@ -648,7 +648,7 @@ enum ClientOpcodes
     CMSG_PET_NAME_QUERY                                  = 0xF180,    // 61824 - 4.0.6a 13623
     CMSG_GUILD_QUERY                                     = 0xAFC4,    // 44996 - 4.0.6a 13623
     CMSG_ITEM_QUERY_SINGLE                               = 0x8588,    // 34184 - 4.0.6a 13623
-    CMSG_ITEM_QUERY_MULTIPLE                             = 0x048A,    // 1162  - 4.0.3.13329
+    CMSG_ITEM_QUERY_MULTIPLE                             = 0x057,
     CMSG_PAGE_TEXT_QUERY                                 = 0xAC8C,    // 44172 - 4.0.6a 13623
     CMSG_QUEST_QUERY                                     = 0xEFE8,    // 61416 - 4.0.6a 13623
     CMSG_GAMEOBJECT_QUERY                                = 0x72A0,    // 29344 - 4.0.6a 13623
@@ -664,15 +664,15 @@ enum ClientOpcodes
     CMSG_FLAG_QUEST_FINISH                               = 0x02B,
     CMSG_CLEAR_QUEST                                     = 0x02C,
     CMSG_QUESTLOG_SWAP_QUEST                             = 0x193,
-    CMSG_QUESTLOG_REMOVE_QUEST                           = 0x194,
-    CMSG_QUEST_CONFIRM_ACCEPT                            = 0x19B,
-    CMSG_PUSHQUESTTOPARTY                                = 0x19D,
-    CMSG_QUEST_POI_QUERY                                 = 0x1E3,
+    CMSG_QUESTLOG_REMOVE_QUEST                           = 0xEDA8,    // 60840 - 4.0.6.13623
+    CMSG_QUEST_CONFIRM_ACCEPT                            = 0x6FCC,    // 28620 - 4.0.6.13623
+    CMSG_PUSHQUESTTOPARTY                                = 0x29E8,    // 10728 - 4.0.6.13623
+    CMSG_QUEST_POI_QUERY                                 = 0x7DE0,    // 32224 - 4.0.6.13623
     CMSG_START_QUEST                                     = 0x489,
     CMSG_QUERY_QUESTS_COMPLETED                          = 0x500,
 
     // Questgiver
-    CMSG_QUESTGIVER_STATUS_MULTIPLE_QUERY                = 0x417,
+    CMSG_QUESTGIVER_STATUS_MULTIPLE_QUERY                = 0x2DAC,    // 11692 - 4.0.6.13623
 
     /***********************************************************/
     /********************* SPELL OPCODES ***********************/
@@ -680,13 +680,13 @@ enum ClientOpcodes
     CMSG_RECHARGE                                        = 0x00F,
     CMSG_LEARN_SPELL                                     = 0x010,
     CMSG_NEW_SPELL_SLOT                                  = 0x12D,
-    CMSG_CAST_SPELL                                      = 0x12E,
-    CMSG_CANCEL_CAST                                     = 0x12F,
-    CMSG_CANCEL_CHANNELLING                              = 0x13B,
+    CMSG_CAST_SPELL                                      = 0x65C4,    // 26052 - 4.0.6.13623
+    CMSG_CANCEL_CAST                                     = 0xA1C0,    // 41408 - 4.0.6.13623
+    CMSG_CANCEL_CHANNELLING                              = 0xA780,    // 42880 - 4.0.6.13623
     CMSG_UNLEARN_SPELL                                   = 0x201,
     CMSG_DECHARGE                                        = 0x204,
-    CMSG_CANCEL_AUTO_REPEAT_SPELL                        = 0x26D,
-    CMSG_SUMMON_RESPONSE                                 = 0x2AC,
+    CMSG_CANCEL_AUTO_REPEAT_SPELL                        = 0x75CC,    // 30156 - 4.0.6.13623
+    CMSG_SUMMON_RESPONSE                                 = 0x6BA0,    // 27552 - 4.0.6.13623
     CMSG_SEND_GENERAL_TRIGGER                            = 0x393,
     CMSG_SEND_COMBAT_TRIGGER                             = 0x394,
     CMSG_TARGET_CAST                                     = 0x3D0,
@@ -695,9 +695,9 @@ enum ClientOpcodes
     CMSG_NO_SPELL_VARIANCE                               = 0x416,
 
     // Spell Aura
-    CMSG_CANCEL_AURA                                     = 0x136,
-    CMSG_PET_CANCEL_AURA                                 = 0x26B,
-    CMSG_CANCEL_GROWTH_AURA                              = 0x29B,
+    CMSG_CANCEL_AURA                                     = 0x7684,    // 30340 - 4.0.6.13623
+    CMSG_PET_CANCEL_AURA                                 = 0xF6C0,    // 63168 - 4.0.6.13623
+    CMSG_CANCEL_GROWTH_AURA                              = 0xFECC,    // 65228 - 4.0.6.13623
 
     // Spell Cooldown
     CMSG_COOLDOWN_CHEAT                                  = 0x028,
