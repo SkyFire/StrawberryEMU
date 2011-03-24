@@ -755,32 +755,32 @@ enum ClientOpcodes
     CMSG_CHEAT_SETMONEY                                  = 0x024,
     CMSG_SET_WORLDSTATE                                  = 0x027,
     CMSG_ADVANCE_SPAWN_TIME                              = 0x031,
-    CMSG_AREATRIGGER                                     = 0x0B4,
-    CMSG_STANDSTATECHANGE                                = 0x101,
+    CMSG_AREATRIGGER                                     = 0xADA8,    // 44456 - 4.0.6.13623
+    CMSG_STANDSTATECHANGE                                = 0xFC88,    // 64648 - 4.0.6.13623
     CMSG_SET_SELECTION                                   = 0x13D,
     CMSG_UNUSED2                                         = 0x140,
-    CMSG_BINDER_ACTIVATE                                 = 0x1B5,
-    CMSG_BANKER_ACTIVATE                                 = 0x1B7,
+    CMSG_BINDER_ACTIVATE                                 = 0xA48C,    // 42124 - 4.0.6.13623
+    CMSG_BANKER_ACTIVATE                                 = 0xE7E0,    // 59360 - 4.0.6.13623
     CMSG_BUY_BANK_SLOT                                   = 0x1B9,
-    CMSG_BUG                                             = 0x1CA,
+    CMSG_BUG                                             = 0x34AC,    // 13484 - 4.0.6.13623
     CMSG_SET_SKILL_CHEAT                                 = 0x1D8,
-    CMSG_PING                                            = 0x1DC,
-    CMSG_SETSHEATHED                                     = 0x1E0,
-    CMSG_ZONEUPDATE                                      = 0x1F4,
+    CMSG_PING                                            = 0x064E,    // 1614  - 4.0.6.13623
+    CMSG_SETSHEATHED                                     = 0xAAE4,    // 43748 - 4.0.6.13623
+    CMSG_ZONEUPDATE                                      = 0x33E4,    // 13284 - 4.0.6.13623
     CMSG_UNLEARN_SKILL                                   = 0x202,
-    CMSG_SPIRIT_HEALER_ACTIVATE                          = 0x21C,
+    CMSG_SPIRIT_HEALER_ACTIVATE                          = 0xF3AC,    // 62380 - 4.0.6.13623
     CMSG_SET_STAT_CHEAT                                  = 0x21D,
     CMSG_XP_CHEAT                                        = 0x221,
     CMSG_SERVER_COMMAND                                  = 0x227,
     CMSG_CLEAR_EXPLORATION                               = 0x237,
     CMSG_SET_AMMO                                        = 0x268,
-    CMSG_SET_ACTIVE_MOVER                                = 0x26A,
-    CMSG_FAR_SIGHT                                       = 0x27A,
-    CMSG_SELF_RES                                        = 0x2B3,
+    CMSG_SET_ACTIVE_MOVER                                = 0x6CA0,    // 27808 - 4.0.6.13623
+    CMSG_FAR_SIGHT                                       = 0xB2EC,    // 45804 - 4.0.6.13623
+    CMSG_SELF_RES                                        = 0xAEC4,    // 44740 - 4.0.6.13623
     CMSG_RUN_SCRIPT                                      = 0x2B5,
-    CMSG_AREA_SPIRIT_HEALER_QUERY                        = 0x2E2,
-    CMSG_AREA_SPIRIT_HEALER_QUEUE                        = 0x2E3,
-    CMSG_WARDEN_DATA                                     = 0x2E7,
+    CMSG_AREA_SPIRIT_HEALER_QUERY                        = 0xA6C0,    // 42688 - 4.0.6.13623
+    CMSG_AREA_SPIRIT_HEALER_QUEUE                        = 0xF388,    // 62344 - 4.0.6.13623
+    CMSG_WARDEN_DATA                                     = 0x2F84,    // 12164 - 4.0.6.13623
     CMSG_DEBUG_ACTIONS_START                             = 0x315,
     CMSG_DEBUG_ACTIONS_STOP                              = 0x316,
     CMSG_LUA_USAGE                                       = 0x323,
@@ -790,14 +790,14 @@ enum ClientOpcodes
     CMSG_BOT_DETECTED                                    = 0x3C0,
     CMSG_CHEAT_PLAYER_LOGIN                              = 0x3C2,
     CMSG_CHEAT_PLAYER_LOOKUP                             = 0x3C3,
-    CMSG_COMPLAIN                                        = 0x3C7,
-    CMSG_GET_MIRRORIMAGE_DATA                            = 0x401,
+    CMSG_COMPLAIN                                        = 0x68C8,    // 26824 - 4.0.6.13623
+    CMSG_GET_MIRRORIMAGE_DATA                            = 0xA08C,    // 41100 - 4.0.6.13623
     CMSG_IGNORE_DIMINISHING_RETURNS_CHEAT                = 0x405,
     CMSG_QUERY_SERVER_BUCK_DATA                          = 0x41B,
     CMSG_CLEAR_SERVER_BUCK_DATA                          = 0x41C,
     CMSG_ALTER_APPEARANCE                                = 0x426,
     CMSG_UNITANIMTIER_CHEAT                              = 0x472,
-    CMSG_DISMISS_CRITTER                                 = 0x48D,
+    CMSG_DISMISS_CRITTER                                 = 0xB7CC,    // 47052 - 4.0.6.13623
     CMSG_FLOOD_GRACE_CHEAT                               = 0x497,
 
     // Lottery
@@ -823,15 +823,15 @@ enum ClientOpcodes
     CMSG_COMMENTATOR_SKIRMISH_QUEUE_COMMAND              = 0x51B,
 
     // Vehicle
-    CMSG_DISMISS_CONTROLLED_VEHICLE                      = 0x46D,
-    CMSG_REQUEST_VEHICLE_EXIT                            = 0x476,
-    CMSG_REQUEST_VEHICLE_PREV_SEAT                       = 0x477,
-    CMSG_REQUEST_VEHICLE_NEXT_SEAT                       = 0x478,
-    CMSG_REQUEST_VEHICLE_SWITCH_SEAT                     = 0x479,
-    CMSG_CHANGE_SEATS_ON_CONTROLLED_VEHICLE              = 0x49B,
+    CMSG_DISMISS_CONTROLLED_VEHICLE                      = 0xE3C0,    // 58304 - 4.0.6.13623
+    CMSG_REQUEST_VEHICLE_EXIT                            = 0x208C,    // 8332  - 4.0.6.13623
+    CMSG_REQUEST_VEHICLE_PREV_SEAT                       = 0x2DE4,    // 11748 - 4.0.6.13623
+    CMSG_REQUEST_VEHICLE_NEXT_SEAT                       = 0x64E4,    // 25828 - 4.0.6.13623
+    CMSG_REQUEST_VEHICLE_SWITCH_SEAT                     = 0xA8CC,    // 43212 - 4.0.6.13623
+    CMSG_CHANGE_SEATS_ON_CONTROLLED_VEHICLE              = 0xE988,    // 59784 - 4.0.6.13623
     CMSG_QUERY_VEHICLE_STATUS                            = 0x4A4,
     CMSG_PLAYER_VEHICLE_ENTER                            = 0x4A8,
-    CMSG_EJECT_PASSENGER                                 = 0x4A9,
+    CMSG_EJECT_PASSENGER                                 = 0xF688,    // 63112 - 4.0.6.13623
 
     /***********************************************************/
     /********************** WORLD OPCODES **********************/
