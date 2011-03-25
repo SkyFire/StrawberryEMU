@@ -269,4 +269,157 @@ void ClientOpcodeTable()
     OPCODE(CMSG_GROUP_SWAP_SUB_GROUP,            STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleNULL                      );
     OPCODE(CMSG_GROUP_RAID_CONVERT,              STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleGroupRaidConvertOpcode    );
     OPCODE(CMSG_GROUP_ASSISTANT_LEADER,          STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleGroupAssistantLeaderOpcode);
+    
+    /***********************************************************/
+    /********************** GUILD OPCODES **********************/
+    /***********************************************************/
+    OPCODE(CMSG_GUILD_CREATE,                    STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleGuildCreateOpcode );
+    OPCODE(CMSG_GUILD_INVITE,                    STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleGuildInviteOpcode );
+    OPCODE(CMSG_GUILD_ACCEPT,                    STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleGuildAcceptOpcode );
+    OPCODE(CMSG_GUILD_DECLINE,                   STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleGuildDeclineOpcode );
+    OPCODE(CMSG_GUILD_INFO,                      STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleGuildInfoOpcode );
+    OPCODE(CMSG_GUILD_ROSTER,                    STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleGuildRosterOpcode );
+    OPCODE(CMSG_GUILD_PROMOTE,                   STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleGuildPromoteOpcode );
+    OPCODE(CMSG_GUILD_DEMOTE,                    STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleGuildDemoteOpcode );
+    OPCODE(CMSG_GUILD_LEAVE,                     STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleGuildLeaveOpcode );
+    OPCODE(CMSG_GUILD_REMOVE,                    STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleGuildRemoveOpcode );
+    OPCODE(CMSG_GUILD_DISBAND,                   STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleGuildDisbandOpcode );
+    OPCODE(CMSG_GUILD_LEADER,                    STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleGuildLeaderOpcode );
+    OPCODE(CMSG_GUILD_MOTD,                      STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleGuildMOTDOpcode );
+    OPCODE(CMSG_GUILD_RANK,                      STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleGuildRankOpcode );
+    OPCODE(CMSG_GUILD_ADD_RANK,                  STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleGuildAddRankOpcode );
+    OPCODE(CMSG_GUILD_DEL_RANK,                  STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleGuildDelRankOpcode );
+    OPCODE(CMSG_GUILD_SET_PUBLIC_NOTE,           STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleGuildSetPublicNoteOpcode );
+    OPCODE(CMSG_GUILD_SET_OFFICER_NOTE,          STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleGuildSetOfficerNoteOpcode );
+    OPCODE(CMSG_GUILD_INFO_TEXT,                 STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleGuildChangeInfoTextOpcode );
+    OPCODE(CMSG_MAELSTROM_RENAME_GUILD,          STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+     
+    // Guild Bank
+    OPCODE(CMSG_GUILD_BANKER_ACTIVATE,           STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleGuildBankerActivate );
+    OPCODE(CMSG_GUILD_BANK_QUERY_TAB,            STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleGuildBankQueryTab );
+    OPCODE(CMSG_GUILD_BANK_SWAP_ITEMS,           STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleGuildBankSwapItems );
+    OPCODE(CMSG_GUILD_BANK_BUY_TAB,              STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleGuildBankBuyTab );
+    OPCODE(CMSG_GUILD_BANK_UPDATE_TAB,           STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleGuildBankUpdateTab );
+    OPCODE(CMSG_GUILD_BANK_DEPOSIT_MONEY,        STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleGuildBankDepositMoney );
+    OPCODE(CMSG_GUILD_BANK_WITHDRAW_MONEY,       STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleGuildBankWithdrawMoney );
+    OPCODE(CMSG_SET_GUILD_BANK_TEXT,             STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleSetGuildBankTabText );
+    
+    // Guild Petition
+    OPCODE(CMSG_PETITION_SHOWLIST,               STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandlePetitionShowListOpcode );
+    OPCODE(CMSG_PETITION_BUY,                    STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandlePetitionBuyOpcode );
+    OPCODE(CMSG_PETITION_SHOW_SIGNATURES,        STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandlePetitionShowSignOpcode );
+    OPCODE(CMSG_PETITION_SIGN,                   STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandlePetitionSignOpcode );
+    OPCODE(CMSG_TURN_IN_PETITION,                STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleTurnInPetitionOpcode );
+    OPCODE(CMSG_OFFER_PETITION,                  STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleOfferPetitionOpcode );
+    OPCODE(CMSG_PETITION_QUERY,                  STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandlePetitionQueryOpcode );
+    
+    // Guild Party
+    OPCODE(CMSG_REQUEST_PARTY_MEMBER_STATS,      STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleRequestPartyMemberStatsOpcode);
+    OPCODE(CMSG_PARTY_SILENCE,                   STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_PARTY_UNSILENCE,                 STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    
+    /***********************************************************/
+    /******************** INSTANCE OPCODES *********************/
+    /***********************************************************/
+    OPCODE(CMSG_INSTANCE_LOCK_WARNING_RESPONSE,  STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleInstanceLockResponse );
+    OPCODE(CMSG_REQUEST_RAID_INFO,               STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleRequestRaidInfoOpcode );
+    OPCODE(CMSG_EXPIRE_RAID_INSTANCE,            STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_SET_ALLOW_LOW_LEVEL_RAID1,       STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_SET_ALLOW_LOW_LEVEL_RAID2,       STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    
+    // LFG
+    OPCODE(CMSG_LFG_JOIN,                        STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleLfgJoinOpcode );
+    OPCODE(CMSG_LFG_LEAVE,                       STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleLfgLeaveOpcode );
+    OPCODE(CMSG_SEARCH_LFG_JOIN,                 STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleLfrSearchOpcode );
+    OPCODE(CMSG_SEARCH_LFG_LEAVE,                STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleLfrLeaveOpcode );
+    OPCODE(CMSG_LFG_PROPOSAL_RESULT,             STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleLfgProposalResultOpcode );
+    OPCODE(CMSG_SET_LFG_COMMENT,                 STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleLfgSetCommentOpcode );
+    OPCODE(CMSG_LFG_SET_ROLES,                   STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleLfgSetRolesOpcode );
+    OPCODE(CMSG_LFG_SET_NEEDS,                   STATUS_LOGGEDIN, PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_LFG_SET_BOOT_VOTE,               STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleLfgSetBootVoteOpcode );
+    OPCODE(CMSG_LFD_PLAYER_LOCK_INFO_REQUEST,    STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleLfgPlayerLockInfoRequestOpcode);
+    OPCODE(CMSG_LFG_TELEPORT,                    STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleLfgTeleportOpcode );
+    OPCODE(CMSG_LFD_PARTY_LOCK_INFO_REQUEST,     STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleLfgPartyLockInfoRequestOpcode);
+    
+    // Meetingstone
+    OPCODE(CMSG_MEETINGSTONE_INFO,               STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleMeetingStoneInfo );
+    OPCODE(CMSG_MEETINGSTONE_CHEAT,              STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    
+    /***********************************************************/
+    /********************** ITEM OPCODES ***********************/
+    /***********************************************************/
+    OPCODE(CMSG_CREATEITEM,                      STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_USE_ITEM,                        STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleUseItemOpcode );
+    OPCODE(CMSG_OPEN_ITEM,                       STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleOpenItemOpcode );
+    OPCODE(CMSG_READ_ITEM,                       STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleReadItem );
+    OPCODE(CMSG_DESTROY_ITEMS,                   STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_SWAP_ITEM,                       STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleSwapItem );
+    OPCODE(CMSG_SWAP_INV_ITEM,                   STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleSwapInvItemOpcode );
+    OPCODE(CMSG_SPLIT_ITEM,                      STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleSplitItemOpcode );
+    OPCODE(OBSOLETE_DROP_ITEM,                   STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_DESTROYITEM,                     STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleDestroyItemOpcode );
+    OPCODE(CMSG_SELL_ITEM,                       STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleSellItemOpcode );
+    OPCODE(CMSG_BUY_ITEM,                        STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleBuyItemOpcode );
+    OPCODE(CMSG_BUY_ITEM_IN_SLOT,                STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleBuyItemInSlotOpcode );
+    OPCODE(CMSG_WRAP_ITEM,                       STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleWrapItemOpcode );
+    OPCODE(CMSG_SET_DURABILITY_CHEAT,            STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_BUYBACK_ITEM,                    STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleBuybackItem );
+    OPCODE(CMSG_REPAIR_ITEM,                     STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleRepairItemOpcode );
+    OPCODE(CMSG_SHOWING_HELM,                    STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleShowingHelmOpcode );
+    OPCODE(CMSG_SHOWING_CLOAK,                   STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleShowingCloakOpcode );
+    OPCODE(CMSG_SOCKET_GEMS,                     STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleSocketOpcode );
+    OPCODE(CMSG_CANCEL_TEMP_ENCHANTMENT,         STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleCancelTempEnchantmentOpcode);
+    OPCODE(CMSG_CHEAT_DUMP_ITEMS_DEBUG_ONLY,     STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_UPDATE_MISSILE_TRAJECTORY,       STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_ITEM_REFUND_INFO,                STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleItemRefundInfoRequest );
+    OPCODE(CMSG_ITEM_REFUND,                     STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleItemRefund );
+    OPCODE(CMSG_UPDATE_PROJECTILE_POSITION,      STATUS_UNHANDLED,PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    
+    // Item Equipment
+    OPCODE(CMSG_AUTOEQUIP_GROUND_ITEM,           STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_AUTOSTORE_GROUND_ITEM,           STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_AUTOSTORE_LOOT_ITEM,             STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleAutostoreLootItemOpcode );
+    OPCODE(CMSG_AUTOEQUIP_ITEM,                  STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleAutoEquipItemOpcode );
+    OPCODE(CMSG_AUTOSTORE_BAG_ITEM,              STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleAutoStoreBagItemOpcode );
+    OPCODE(CMSG_AUTOEQUIP_ITEM_SLOT,             STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleAutoEquipItemSlotOpcode );
+    OPCODE(CMSG_EQUIPMENT_SET_DELETE,            STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleEquipmentSetDelete );
+    OPCODE(CMSG_AUTOSTORE_BANK_ITEM,             STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleAutoStoreBankItemOpcode );
+    OPCODE(CMSG_AUTOBANK_ITEM,                   STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleAutoBankItemOpcode );
+    OPCODE(CMSG_EQUIPMENT_SET_SAVE,              STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleEquipmentSetSave );
+    OPCODE(CMSG_EQUIPMENT_SET_USE,               STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleEquipmentSetUse );
+    
+    // Inventory / Trade
+    OPCODE(CMSG_INSPECT,                         STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleInspectOpcode );
+    OPCODE(CMSG_INITIATE_TRADE,                  STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleInitiateTradeOpcode );
+    OPCODE(CMSG_BEGIN_TRADE,                     STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleBeginTradeOpcode );
+    OPCODE(CMSG_BUSY_TRADE,                      STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleBusyTradeOpcode );
+    OPCODE(CMSG_IGNORE_TRADE,                    STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleIgnoreTradeOpcode );
+    OPCODE(CMSG_ACCEPT_TRADE,                    STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleAcceptTradeOpcode );
+    OPCODE(CMSG_UNACCEPT_TRADE,                  STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleUnacceptTradeOpcode );
+    OPCODE(CMSG_CANCEL_TRADE,                    STATUS_LOGGEDIN_OR_RECENTLY_LOGGOUT, PROCESS_THREADUNSAFE, &WorldSession::HandleCancelTradeOpcode);
+    OPCODE(CMSG_SET_TRADE_ITEM,                  STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleSetTradeItemOpcode );
+    OPCODE(CMSG_CLEAR_TRADE_ITEM,                STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleClearTradeItemOpcode );
+    OPCODE(CMSG_SET_TRADE_GOLD,                  STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleSetTradeGoldOpcode );
+    OPCODE(CMSG_LIST_INVENTORY,                  STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleListInventoryOpcode );
+    
+    /***********************************************************/
+    /********************** LOOT OPCODES ***********************/
+    /***********************************************************/
+    OPCODE(CMSG_LOOT_METHOD,                     STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleLootMethodOpcode );
+    OPCODE(CMSG_STORE_LOOT_IN_SLOT,              STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_LOOT,                            STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleLootOpcode );
+    OPCODE(CMSG_LOOT_MONEY,                      STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleLootMoneyOpcode );
+    OPCODE(CMSG_LOOT_RELEASE,                    STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleLootReleaseOpcode );
+    OPCODE(CMSG_OPT_OUT_OF_LOOT,                 STATUS_AUTHED,   PROCESS_THREADUNSAFE, &WorldSession::HandleOptOutOfLootOpcode );
+    
+    // Loot Group
+    OPCODE(CMSG_LOOT_ROLL,                       STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleLootRoll );
+    OPCODE(CMSG_LOOT_MASTER_GIVE,                STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleLootMasterGiveOpcode );
+    
+    /***********************************************************/
+    /******************** MOVEMENT OPCODES *********************/
+    /***********************************************************/
 };
+
+
+
