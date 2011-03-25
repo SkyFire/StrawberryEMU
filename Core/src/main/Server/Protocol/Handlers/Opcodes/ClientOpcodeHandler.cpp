@@ -21,5 +21,34 @@
 
 void ClientOpcodeTable()
 {
-    OPCODE(CMSG_AUTH_SESSION, STATUS_NEVER, PROCESS_INPLACE, &WorldSession::HandleEarlyProccess);
+    /***********************************************************/
+    /********************* ATTACK OPCODES **********************/
+    /***********************************************************/
+    OPCODE(CMSG_ATTACKSWING,  STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleAttackSwingOpcode);
+    OPCODE(CMSG_ATTACKSTOP,   STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleAttackStopOpcode );
+
+    /***********************************************************/
+    /******************** AUCTION OPCODES **********************/
+    /***********************************************************/
+    OPCODE(CMSG_AUCTION_SELL_ITEM,          STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleAuctionSellItem      );
+    OPCODE(CMSG_AUCTION_REMOVE_ITEM,        STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleAuctionRemoveItem    );
+    OPCODE(CMSG_AUCTION_LIST_ITEMS,         STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleAuctionListItems     );
+    OPCODE(CMSG_AUCTION_LIST_OWNER_ITEMS,   STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleAuctionListOwnerItems);
+    OPCODE(CMSG_AUCTION_PLACE_BID,          STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleAuctionPlaceBid      );
+    OPCODE(CMSG_AUCTION_LIST_BIDDER_ITEMS,  STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleAuctionListBidderItems);
+    OPCODE(CMSG_AUCTION_LIST_PENDING_SALES, STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleAuctionListPendingSales);
+
+    /***********************************************************/
+    /***************** AUTHENTICATION OPCODES ******************/
+    /***********************************************************/
+    OPCODE(CMSG_AUTH_SESSION,           STATUS_NEVER,  PROCESS_INPLACE, &WorldSession::HandleEarlyProccess        );
+    OPCODE(CMSG_REALM_SPLIT,            STATUS_AUTHED, PROCESS_THREADUNSAFE, &WorldSession::HandleRealmSplitOpcode);
+    OPCODE(CMSG_REDIRECTION_FAILED,     STATUS_NEVER,  PROCESS_INPLACE,      &WorldSession::HandleNULL            );
+    OPCODE(CMSG_UNKNOWN_1296,           STATUS_NEVER,  PROCESS_INPLACE,      &WorldSession::HandleNULL            );
+    OPCODE(CMSG_REDIRECTION_AUTH_PROOF, STATUS_NEVER,  PROCESS_INPLACE,      &WorldSession::HandleNULL            );
+
+    // SRP6
+    OPCODE(CMSG_AUTH_SRP6_BEGIN,        STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleNULL          );
+    OPCODE(CMSG_AUTH_SRP6_PROOF,        STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleNULL          );
+    OPCODE(CMSG_AUTH_SRP6_RECODE,       STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleNULL          );
 };
