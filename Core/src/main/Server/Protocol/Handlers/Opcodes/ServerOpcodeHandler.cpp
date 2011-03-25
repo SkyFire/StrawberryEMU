@@ -507,151 +507,360 @@ void ServerOpcodeTable()
     /********************* PLAYER OPCODES **********************/
     /***********************************************************/
 
-    OPCODE(SMSG_PLAYER_DIFFICULTY_CHANGE,                STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide );
-    OPCODE(SMSG_PLAYER_SKINNED,                          STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide );
-    OPCODE(SMSG_ADDON_INFO,                              STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide );
-    OPCODE(SMSG_GHOSTEE_GONE,                            STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide );
-    OPCODE(SMSG_TITLE_EARNED,                            STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide );
-    OPCODE(SMSG_UPDATE_COMBO_POINTS,                     STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide );
-    OPCODE(SMSG_CHEAT_PLAYER_LOOKUP,                     STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide );
-    OPCODE(SMSG_KICK_REASON,                             STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide );
-    OPCODE(SMSG_SET_PLAYER_DECLINED_NAMES_RESULT,        STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide );
-    OPCODE(SMSG_HIGHEST_THREAT_UPDATE,                   STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide );
-    OPCODE(SMSG_THREAT_UPDATE,                           STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide );
-    OPCODE(SMSG_THREAT_REMOVE,                           STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide );
-    OPCODE(SMSG_THREAT_CLEAR,                            STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide );
+    OPCODE(SMSG_PLAYER_DIFFICULTY_CHANGE,                STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_PLAYER_SKINNED,                          STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_ADDON_INFO,                              STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_GHOSTEE_GONE,                            STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_TITLE_EARNED,                            STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_UPDATE_COMBO_POINTS,                     STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_CHEAT_PLAYER_LOOKUP,                     STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_KICK_REASON,                             STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_SET_PLAYER_DECLINED_NAMES_RESULT,        STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_HIGHEST_THREAT_UPDATE,                   STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_THREAT_UPDATE,                           STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_THREAT_REMOVE,                           STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_THREAT_CLEAR,                            STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
 
     // Player Dance
-    OPCODE(SMSG_NOTIFY_DANCE,                            STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide );
-    OPCODE(SMSG_PLAY_DANCE,                              STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide );
-    OPCODE(SMSG_STOP_DANCE,                              STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide );
-    OPCODE(SMSG_DANCE_QUERY_RESPONSE,                    STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide );
-    OPCODE(SMSG_INVALIDATE_DANCE,                        STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide );
-    OPCODE(SMSG_LEARNED_DANCE_MOVES,                     STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide );
-
+    OPCODE(SMSG_NOTIFY_DANCE,                            STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_PLAY_DANCE,                              STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_STOP_DANCE,                              STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_DANCE_QUERY_RESPONSE,                    STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_INVALIDATE_DANCE,                        STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_LEARNED_DANCE_MOVES,                     STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    
     // Player Achievement
-    OPCODE(SMSG_ACHIEVEMENT_EARNED,                      STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide );
-    OPCODE(SMSG_CRITERIA_UPDATE,                         STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide );
-    OPCODE(SMSG_RESPOND_INSPECT_ACHIEVEMENTS,            STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide );
-    OPCODE(SMSG_ALL_ACHIEVEMENT_DATA,                    STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide );
-    OPCODE(SMSG_SERVER_FIRST_ACHIEVEMENT,                STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide );
-    OPCODE(SMSG_CRITERIA_DELETED,                        STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide );
-    OPCODE(SMSG_ACHIEVEMENT_DELETED,                     STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide );
+    OPCODE(SMSG_ACHIEVEMENT_EARNED,                      STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_CRITERIA_UPDATE,                         STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_RESPOND_INSPECT_ACHIEVEMENTS,            STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_ALL_ACHIEVEMENT_DATA,                    STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_SERVER_FIRST_ACHIEVEMENT,                STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_CRITERIA_DELETED,                        STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_ACHIEVEMENT_DELETED,                     STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
 
     // Player Exploration
-    OPCODE(SMSG_EXPLORATION_EXPERIENCE,                  STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide );
+    OPCODE(SMSG_EXPLORATION_EXPERIENCE,                  STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
 
     // Player Corpse / Resurrect / Death
-    OPCODE(SMSG_RESURRECT_REQUEST,                       STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide );
-    OPCODE(SMSG_RESURRECT_FAILED,                        STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide );
-    OPCODE(SMSG_CORPSE_RECLAIM_DELAY,                    STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide );
-    OPCODE(SMSG_FEIGN_DEATH_RESISTED,                    STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide );
-    OPCODE(SMSG_DEATH_RELEASE_LOC,                       STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide );
-    OPCODE(SMSG_FORCED_DEATH_UPDATE,                     STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide );
-    OPCODE(SMSG_PRE_RESURRECT,                           STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide );
-    OPCODE(SMSG_CORPSE_NOT_IN_INSTANCE,                  STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide );
+    OPCODE(SMSG_RESURRECT_REQUEST,                       STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_RESURRECT_FAILED,                        STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_CORPSE_RECLAIM_DELAY,                    STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_FEIGN_DEATH_RESISTED,                    STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_DEATH_RELEASE_LOC,                       STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_FORCED_DEATH_UPDATE,                     STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_PRE_RESURRECT,                           STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_CORPSE_NOT_IN_INSTANCE,                  STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
 
     // Player Pet
-    OPCODE(SMSG_STABLE_RESULT,                           STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide );
-    OPCODE(SMSG_SUMMON_REQUEST,                          STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide );
-    OPCODE(SMSG_PET_BROKEN,                              STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide );
-    OPCODE(SMSG_PET_ACTION_FEEDBACK,                     STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide );
-    OPCODE(SMSG_PET_UNLEARN_CONFIRM,                     STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide );
-    OPCODE(SMSG_PET_RENAMEABLE,                          STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide );
-    OPCODE(SMSG_PET_GUIDS,                               STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide );
-    OPCODE(SMSG_PET_ACTION_SOUND,                        STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide );
-    OPCODE(SMSG_PET_DISMISS_SOUND,                       STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide );
+    OPCODE(SMSG_STABLE_RESULT,                           STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_SUMMON_REQUEST,                          STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_PET_BROKEN,                              STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_PET_ACTION_FEEDBACK,                     STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_PET_UNLEARN_CONFIRM,                     STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_PET_RENAMEABLE,                          STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_PET_GUIDS,                               STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_PET_ACTION_SOUND,                        STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_PET_DISMISS_SOUND,                       STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
 
     // Player PVP / Honor / Arena
-    OPCODE(SMSG_PVP_CREDIT,                              STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide );
-    OPCODE(SMSG_ARENA_TEAM_COMMAND_RESULT,               STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide );
-    OPCODE(SMSG_ARENA_TEAM_QUERY_RESPONSE,               STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide );
-    OPCODE(SMSG_ARENA_TEAM_ROSTER,                       STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide );
-    OPCODE(SMSG_ARENA_TEAM_INVITE,                       STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide );
-    OPCODE(SMSG_ARENA_TEAM_EVENT,                        STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide );
-    OPCODE(SMSG_ARENA_TEAM_STATS,                        STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide );
-    OPCODE(SMSG_ARENA_ERROR,                             STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide );
-    OPCODE(SMSG_REPORT_PVP_AFK_RESULT,                   STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_NULL );
-    OPCODE(SMSG_ARENA_OPPONENT_UPDATE,                   STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide );
-    OPCODE(SMSG_ARENA_TEAM_CHANGE_FAILED_QUEUED,         STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide );
+    OPCODE(SMSG_PVP_CREDIT,                              STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_ARENA_TEAM_COMMAND_RESULT,               STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_ARENA_TEAM_QUERY_RESPONSE,               STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_ARENA_TEAM_ROSTER,                       STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_ARENA_TEAM_INVITE,                       STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_ARENA_TEAM_EVENT,                        STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_ARENA_TEAM_STATS,                        STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_ARENA_ERROR,                             STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_REPORT_PVP_AFK_RESULT,                   STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_NULL);
+    OPCODE(SMSG_ARENA_OPPONENT_UPDATE,                   STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_ARENA_TEAM_CHANGE_FAILED_QUEUED,         STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
     
     // Player Minigame
-    OPCODE(SMSG_MINIGAME_SETUP,                          STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide );
-    OPCODE(SMSG_MINIGAME_STATE,                          STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide );
-    OPCODE(SMSG_MINIGAME_MOVE_FAILED,                    STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide );
-
+    OPCODE(SMSG_MINIGAME_SETUP,                          STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_MINIGAME_STATE,                          STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_MINIGAME_MOVE_FAILED,                    STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    
     // Friends / Contacts / ...
-    OPCODE(SMSG_USERLIST_ADD,                            STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide );
-    OPCODE(SMSG_USERLIST_REMOVE,                         STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide );
-    OPCODE(SMSG_USERLIST_UPDATE,                         STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide );
-    OPCODE(SMSG_REFER_A_FRIEND_FAILURE,                  STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide );
+    OPCODE(SMSG_USERLIST_ADD,                            STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_USERLIST_REMOVE,                         STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_USERLIST_UPDATE,                         STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_REFER_A_FRIEND_FAILURE,                  STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
 
     // Talents
-    OPCODE(SMSG_INSPECT_TALENT,                          STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide );
-    OPCODE(SMSG_TALENTS_INFO,                            STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide );
-    OPCODE(SMSG_TALENTS_INVOLUNTARILY_RESET,             STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide );
+    OPCODE(SMSG_INSPECT_TALENT,                          STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_TALENTS_INFO,                            STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_TALENTS_INVOLUNTARILY_RESET,             STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
 
     // Totem
-    OPCODE(SMSG_TOTEM_CREATED,                           STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide );
+    OPCODE(SMSG_TOTEM_CREATED,                           STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
 
     // Barber 
-    OPCODE(SMSG_ENABLE_BARBER_SHOP,                      STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide );
-    OPCODE(SMSG_BARBER_SHOP_RESULT,                      STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide );
+    OPCODE(SMSG_ENABLE_BARBER_SHOP,                      STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_BARBER_SHOP_RESULT,                      STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
 
     // Player Health / Power / Mana / ...
-    OPCODE(SMSG_HEALTH_UPDATE,                           STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide );
-    OPCODE(SMSG_POWER_UPDATE,                            STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide );
-    OPCODE(SMSG_CONVERT_RUNE,                            STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide );
-    OPCODE(SMSG_RESYNC_RUNES,                            STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide );
-    OPCODE(SMSG_ADD_RUNE_POWER,                          STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide );
+    OPCODE(SMSG_HEALTH_UPDATE,                           STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_POWER_UPDATE,                            STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_CONVERT_RUNE,                            STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_RESYNC_RUNES,                            STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_ADD_RUNE_POWER,                          STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
 
     // Player Vehicle
-    OPCODE(SMSG_PLAYER_VEHICLE_DATA,                     STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide );
+    OPCODE(SMSG_PLAYER_VEHICLE_DATA,                     STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
 
     /***********************************************************/
     /********************* QUERY OPCODES ***********************/
     /***********************************************************/
 
-
+    OPCODE(SMSG_NAME_QUERY_RESPONSE,                     STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_PET_NAME_QUERY_RESPONSE,                 STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_GUILD_QUERY_RESPONSE,                    STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_ITEM_QUERY_SINGLE_RESPONSE,              STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_ITEM_QUERY_MULTIPLE_RESPONSE,            STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_PAGE_TEXT_QUERY_RESPONSE,                STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_QUEST_QUERY_RESPONSE,                    STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_GAMEOBJECT_QUERY_RESPONSE,               STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_CREATURE_QUERY_RESPONSE,                 STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_ITEM_TEXT_QUERY_RESPONSE,                STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_ITEM_NAME_QUERY_RESPONSE,                STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_QUEST_POI_QUERY_RESPONSE,                STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_CORPSE_MAP_POSITION_QUERY_RESPONSE,      STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_QUERY_QUESTS_COMPLETED_RESPONSE,         STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
 
     /***********************************************************/
     /********************* QUEST OPCODES ***********************/
     /***********************************************************/
 
+    OPCODE(SMSG_QUESTLOG_FULL,                           STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_QUEST_FORCE_REMOVED,                     STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_QUEST_CONFIRM_ACCEPT,                    STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
 
+    // Quest Update
+    OPCODE(SMSG_QUESTUPDATE_FAILED,                      STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_QUESTUPDATE_FAILEDTIMER,                 STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_QUESTUPDATE_COMPLETE,                    STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_QUESTUPDATE_ADD_KILL,                    STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_QUESTUPDATE_ADD_ITEM,                    STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_QUESTUPDATE_ADD_PVP_KILL,                STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
 
     /***********************************************************/
     /********************* SPELL OPCODES ***********************/
     /***********************************************************/
 
+    OPCODE(SMSG_INITIAL_SPELLS,                          STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_LEARNED_SPELL,                           STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_SUPERCEDED_SPELL,                        STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE( SMSG_CAST_FAILED,                            STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_SPELL_START,                             STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_SPELL_GO,                                STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_SPELL_FAILURE,                           STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_DAMAGE_DONE_OBSOLETE,                    STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_UNIT_SPELLCAST_START,                    STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_SPELL_DELAYED,                           STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_PLAY_SPELL_VISUAL,                       STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_PLAY_SPELL_IMPACT,                       STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_REMOVED_SPELL,                           STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_DISPEL_FAILED,                           STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_SPELLORDAMAGE_IMMUNE,                    STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_SET_FLAT_SPELL_MODIFIER,                 STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_SET_PCT_SPELL_MODIFIER,                  STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_CANCEL_AUTO_REPEAT,                      STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_SPELL_FAILED_OTHER,                      STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_SPELL_UPDATE_CHAIN_TARGETS,              STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_SPELL_CHANCE_RESIST_PUSHBACK,            STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_SUMMON_CANCEL,                           STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_NOTIFY_DEST_LOC_SPELL_CAST,              STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_CAMERA_SHAKE,                            STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
 
+    // Cooldown
+    OPCODE(SMSG_SPELL_COOLDOWN,                          STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_COOLDOWN_EVENT,                          STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_CLEAR_COOLDOWN,                          STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_COOLDOWN_CHEAT,                          STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_MODIFY_COOLDOWN,                         STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+
+    // Pet
+    OPCODE(SMSG_PET_CAST_FAILED,                         STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_PET_LEARNED_SPELL,                       STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_PET_REMOVED_SPELL,                       STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+
+    // Trainer
+    OPCODE(SMSG_TRAINER_LIST,                            STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_TRAINER_BUY_SUCCEEDED,                   STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_TRAINER_BUY_FAILED,                      STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_SEND_UNLEARN_SPELLS,                     STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+
+    // Auras
+    OPCODE(SMSG_INIT_EXTRA_AURA_INFO_OBSOLETE,           STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_SET_EXTRA_AURA_INFO_OBSOLETE,            STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_SET_EXTRA_AURA_INFO_NEED_UPDATE_OBSOLETE, STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_CLEAR_EXTRA_AURA_INFO_OBSOLETE,          STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_AURA_UPDATE_ALL,                         STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_AURA_UPDATE,                             STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_ON_CANCEL_EXPECTED_RIDE_VEHICLE_AURA,    STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
 
     /***********************************************************/
     /******************* TRANSPORT OPCODES *********************/
     /***********************************************************/
 
-
+    // Transport Taxi
+    OPCODE( SMSG_SHOWTAXINODES,                          STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE( SMSG_TAXINODE_STATUS,                        STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE( SMSG_ACTIVATETAXIREPLY,                      STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE( SMSG_NEW_TAXI_PATH,                          STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE( SMSG_MONSTER_MOVE_TRANSPORT,                 STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
 
     /***********************************************************/
     /****************** TIME / SPEED OPCODES *******************/
     /***********************************************************/
 
+    // Time
+    OPCODE(SMSG_LOGIN_SETTIMESPEED,                      STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_GAMETIME_UPDATE,                         STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_GAMETIME_SET,                            STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_SERVERTIME,                              STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_PLAYED_TIME,                             STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_QUERY_TIME_RESPONSE,                     STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_TIME_SYNC_REQ,                           STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_ITEM_TIME_UPDATE,                        STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_ITEM_ENCHANT_TIME_UPDATE,                STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_ACCOUNT_DATA_TIMES,                      STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_PLAY_TIME_WARNING,                       STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_GAMETIMEBIAS_SET,                        STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
 
+    //Speed
+    OPCODE(SMSG_GAMESPEED_SET,                           STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
 
     /***********************************************************/
     /****************** UNCATEGORZIED OPCODES ******************/
     /***********************************************************/
 
+    OPCODE(SMSG_DBLOOKUP,                                STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_QUERY_OBJECT_POSITION,                   STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_QUERY_OBJECT_ROTATION,                   STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_ZONE_MAP,                                STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_CHECK_FOR_BOTS,                          STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_FORCEACTIONSHOW,                         STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_PETGODMODE,                              STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_REFER_A_FRIEND_EXPIRED,                  STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_GODMODE,                                 STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_DEBUG_AISTATE,                           STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_DESTRUCTIBLE_BUILDING_DAMAGE,            STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_NULL);
+    OPCODE(SMSG_TRANSFER_PENDING,                        STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_TRANSFER_ABORTED,                        STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_WHO,                                     STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_WHOIS,                                   STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_CONTACT_LIST,                            STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_FRIEND_STATUS,                           STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_MONSTER_MOVE,                            STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_TUTORIAL_FLAGS,                          STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_EMOTE,                                   STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_TEXT_EMOTE,                              STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_SET_PROFICIENCY,                         STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_ACTION_BUTTONS,                          STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_AI_REACTION,                             STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_CLIENT_CONTROL_UPDATE,                   STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_FLIGHT_SPLINE_SYNC,                      STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_SHOW_BANK,                               STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_NOTIFICATION,                            STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_LOG_XPGAIN,                              STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_LEVELUP_INFO,                            STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_START_MIRROR_TIMER,                      STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_PAUSE_MIRROR_TIMER,                      STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_STOP_MIRROR_TIMER,                       STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_PONG,                                    STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_INVALID_PROMOTION_CODE,                  STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_RWHOIS,                                  STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_UPDATE_ACCOUNT_DATA,                     STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_CLEAR_FAR_SIGHT_IMMEDIATE,               STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_SPIRIT_HEALER_CONFIRM,                   STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_ZONE_UNDER_ATTACK,                       STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_PROCRESIST,                              STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_STANDSTATE_CHANGE_FAILURE_OBSOLETE,      STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_PLAY_MUSIC,                              STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_PLAY_OBJECT_SOUND,                       STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_SERVER_MESSAGE,                          STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_STANDSTATE_UPDATE,                       STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_SET_FORCED_REACTIONS,                    STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_SCRIPT_MESSAGE,                          STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_AREA_TRIGGER_MESSAGE,                    STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_DURABILITY_DAMAGE_DEATH,                 STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_PLAY_SOUND,                              STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_AREA_SPIRIT_HEALER_TIME,                 STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_WARDEN_DATA,                             STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_INVALIDATE_PLAYER,                       STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_LOTTERY_QUERY_RESULT_OBSOLETE,           STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_LOTTERY_RESULT_OBSOLETE,                 STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_CHEAT_DUMP_ITEMS_DEBUG_ONLY_RESPONSE,    STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_CHEAT_DUMP_ITEMS_DEBUG_ONLY_RESPONSE_WRITE_FILE, STATUS_NEVER, PROCESS_INPLACE,  &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_IGNORE_REQUIREMENTS_CHEAT,               STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_CLEAR_TARGET,                            STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_CROSSED_INEBRIATION_THRESHOLD,           STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_COMPLAIN_RESULT,                         STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_FEATURE_SYSTEM_STATUS,                   STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_DEBUG_LIST_TARGETS,                      STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_GOGOGO_OBSOLETE,                         STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_MIRRORIMAGE_DATA,                        STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_FORCE_DISPLAY_UPDATE,                    STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_IGNORE_DIMINISHING_RETURNS_CHEAT,        STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_OVERRIDE_LIGHT,                          STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_SERVER_BUCK_DATA,                        STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_PROPOSE_LEVEL_GRANT,                     STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_UPDATE_ACCOUNT_DATA_COMPLETE,            STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_SERVER_BUCK_DATA_START,                  STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_CLIENTCACHE_VERSION,                     STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_SET_PROJECTILE_POSITION,                 STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_UNKNOWN_1240,                            STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_TOGGLE_XP_GAIN,                          STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_UNKNOWN_1276,                            STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_UNKNOWN_1295,                            STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_FORCE_SEND_QUEUED_PACKETS,               STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_UNKNOWN_1300,                            STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_UNKNOWN_1301,                            STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_UNKNOWN_1310,                            STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
 
+    // Fishing
+    OPCODE(SMSG_FISH_NOT_HOOKED,                         STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide );
+    OPCODE(SMSG_FISH_ESCAPED,                            STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide );
+
+    // Voice
+    OPCODE(SMSG_VOICE_SESSION_ROSTER_UPDATE,             STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_VOICE_SESSION_LEAVE,                     STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_VOICE_SESSION_ADJUST_PRIORITY,           STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_VOICE_SET_TALKER_MUTED,                  STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_VOICE_SESSION_ENABLE,                    STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_NULL);
+    OPCODE(SMSG_VOICE_PARENTAL_CONTROLS,                 STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_VOICE_CHAT_STATUS,                       STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_VOICESESSION_FULL,                       STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+
+    // Commentator
+    OPCODE(SMSG_COMMENTATOR_STATE_CHANGED,               STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_COMMENTATOR_MAP_INFO,                    STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_COMMENTATOR_GET_PLAYER_INFO,             STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_COMMENTATOR_PLAYER_INFO,                 STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_UNKNOWN_1308,                            STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_UNKNOWN_1309,                            STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+
+    // Comsat
+    OPCODE(SMSG_COMSAT_RECONNECT_TRY,                    STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_COMSAT_DISCONNECT,                       STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_COMSAT_CONNECT_FAIL,                     STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
 
     /***********************************************************/
     /********************** WORLD OPCODES **********************/
     /***********************************************************/
 
-
-
-    
-
+    OPCODE(SMSG_NEW_WORLD,                               STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_UPDATE_OBJECT,                           STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_DESTROY_OBJECT,                          STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_COMPRESSED_UPDATE_OBJECT,                STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_LOGIN_VERIFY_WORLD,                      STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_INIT_WORLD_STATES,                       STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_UPDATE_WORLD_STATE,                      STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_WEATHER,                                 STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_SET_PHASE_SHIFT,                         STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+    OPCODE(SMSG_WORLD_STATE_UI_TIMER_UPDATE,             STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::Handle_ServerSide);
+     
 };
 
 
