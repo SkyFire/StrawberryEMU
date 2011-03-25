@@ -607,7 +607,7 @@ enum ServerOpcodes
     /********************* QUEST OPCODES ***********************/
     /***********************************************************/
     SMSG_QUESTLOG_FULL                                   = 0x618C,    // 24972 - 4.0.6a 13623
-    SMSG_QUEST_FORCE_REMOVE                              = 0x34E8,    // 13544 - 4.0.6a 13623
+    SMSG_QUEST_FORCE_REMOVED                             = 0x34E8,    // 13544 - 4.0.6a 13623
     SMSG_QUEST_CONFIRM_ACCEPT                            = 0x7C8C,    // 31884 - 4.0.6a 13623
 
     // Quest Update

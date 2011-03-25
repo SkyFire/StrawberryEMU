@@ -521,11 +521,9 @@ enum ClientOpcodes
     CMSG_WHO                                            = 0xA4CC,    // 42188 - 4.0.6a 13623
     CMSG_WHOIS                                          = 0x2180,    // 8576  - 4.0.6a 13623
     CMSG_CONTACT_LIST                                   = 0xEAA4,    // 60068 - 4.0.6a 13623
-    CMSG_ADD_FRIEND                                     = 0x069,
-    CMSG_DEL_FRIEND                                     = 0x06A,
-    CMSG_SET_CONTACT_NOTES                              = 0x06B,
     CMSG_ADD_FRIEND                                     = 0x3980,    // 14720 - 4.0.6a 13623
     CMSG_DEL_FRIEND                                     = 0x2980,    // 10624 - 4.0.6a 13623
+    CMSG_SET_CONTACT_NOTES                              = 0x06B,
     CMSG_SAVE_PLAYER                                    = 0x153,
     CMSG_REFER_A_FRIEND                                 = 0x40E,
 
