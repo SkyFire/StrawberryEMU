@@ -745,7 +745,97 @@ void ClientOpcodeTable()
     /****************** UNCATEGORZIED OPCODES ******************/
     /***********************************************************/
 
+    OPCODE(CMSG_BOOTME,                            STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_DBLOOKUP,                          STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_ZONE_MAP,                          STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_DEBUG_CHANGECELLZONE,              STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_CREATEMONSTER,                     STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_DESTROYMONSTER,                    STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_WEATHER_SPEED_CHEAT,               STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_MAKEMONSTERATTACKGUID,             STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_BOT_DETECTED2,                     STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_PETGODMODE,                        STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_BEASTMASTER,                       STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_CHEAT_SETMONEY,                    STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_SET_WORLDSTATE,                    STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_ADVANCE_SPAWN_TIME,                STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_AREATRIGGER,                       STATUS_LOGGEDIN, PROCESS_THREADSAFE,   &WorldSession::HandleAreaTriggerOpcode );
+    OPCODE(CMSG_STANDSTATECHANGE,                  STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleStandStateChangeOpcode );
+    OPCODE(CMSG_SET_SELECTION,                     STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleSetSelectionOpcode );
+    OPCODE(CMSG_UNUSED2,                           STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_BINDER_ACTIVATE,                   STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleBinderActivateOpcode );
+    OPCODE(CMSG_BANKER_ACTIVATE,                   STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleBankerActivateOpcode );
+    OPCODE(CMSG_BUY_BANK_SLOT,                     STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleBuyBankSlotOpcode );
+    OPCODE(CMSG_BUG,                               STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleBugOpcode );
+    OPCODE(CMSG_SET_SKILL_CHEAT,                   STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_PING,                              STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_EarlyProccess );
+    OPCODE(CMSG_SETSHEATHED,                       STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleSetSheathedOpcode );
+    OPCODE(CMSG_ZONEUPDATE,                        STATUS_LOGGEDIN, PROCESS_THREADSAFE,   &WorldSession::HandleZoneUpdateOpcode );
+    OPCODE(CMSG_UNLEARN_SKILL,                     STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleUnlearnSkillOpcode );
+    OPCODE(CMSG_SPIRIT_HEALER_ACTIVATE,            STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleSpiritHealerActivateOpcode);
+    OPCODE(CMSG_SET_STAT_CHEAT,                    STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_XP_CHEAT,                          STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_SERVER_COMMAND,                    STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_CLEAR_EXPLORATION,                 STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_SET_AMMO,                          STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleSetAmmoOpcode );
+    OPCODE(CMSG_SET_ACTIVE_MOVER,                  STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleSetActiveMoverOpcode );
+    OPCODE(CMSG_FAR_SIGHT,                         STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleFarSightOpcode );
+    OPCODE(CMSG_SELF_RES,                          STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleSelfResOpcode );
+    OPCODE(CMSG_RUN_SCRIPT,                        STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_AREA_SPIRIT_HEALER_QUERY,          STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleAreaSpiritHealerQueryOpcode);
+    OPCODE(CMSG_AREA_SPIRIT_HEALER_QUEUE,          STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleAreaSpiritHealerQueueOpcode);
+    OPCODE(CMSG_WARDEN_DATA,                       STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleWardenDataOpcode );
+    OPCODE(CMSG_DEBUG_ACTIONS_START,               STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_DEBUG_ACTIONS_STOP,                STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_LUA_USAGE,                         STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_IGNORE_KNOCKBACK_CHEAT,            STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_MAELSTROM_INVALIDATE_CACHE,        STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_SEND_LOCAL_EVENT,                  STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_BOT_DETECTED,                      STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_CHEAT_PLAYER_LOGIN,                STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_CHEAT_PLAYER_LOOKUP,               STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_COMPLAIN,                          STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleComplainOpcode );
+    OPCODE(CMSG_GET_MIRRORIMAGE_DATA,              STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleMirrrorImageDataRequest );
+    OPCODE(CMSG_IGNORE_DIMINISHING_RETURNS_CHEAT,  STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_QUERY_SERVER_BUCK_DATA,            STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_CLEAR_SERVER_BUCK_DATA,            STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_ALTER_APPEARANCE,                  STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleAlterAppearance );
+    OPCODE(CMSG_UNITANIMTIER_CHEAT,                STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_DISMISS_CRITTER,                   STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleDismissCritter );
+    OPCODE(CMSG_FLOOD_GRACE_CHEAT,                 STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
 
+    // Lottery
+    OPCODE(CMSG_LOTTERY_QUERY_OBSOLETE,            STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );    
+    OPCODE(CMSG_BUY_LOTTERY_TICKET_OBSOLETE,       STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+
+    // Action
+    OPCODE(CMSG_FORCEACTION,                       STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_FORCEACTIONONOTHER,                STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_FORCEACTIONSHOW,                   STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+     
+    // Event
+    OPCODE(CMSG_SEND_EVENT,                        STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_DEBUG_AISTATE,                     STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+
+    // Commentator
+    OPCODE(CMSG_COMMENTATOR_ENABLE,                STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_COMMENTATOR_GET_MAP_INFO,          STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_COMMENTATOR_GET_PLAYER_INFO,       STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_COMMENTATOR_ENTER_INSTANCE,        STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_COMMENTATOR_EXIT_INSTANCE,         STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_COMMENTATOR_INSTANCE_COMMAND,      STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_COMMENTATOR_SKIRMISH_QUEUE_COMMAND, STATUS_NEVER,   PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+
+    // Vehicle
+    OPCODE(CMSG_DISMISS_CONTROLLED_VEHICLE,        STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleDismissControlledVehicle );
+    OPCODE(CMSG_REQUEST_VEHICLE_EXIT,              STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleRequestVehicleExit );
+    OPCODE(CMSG_REQUEST_VEHICLE_PREV_SEAT,         STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleChangeSeatsOnControlledVehicle);
+    OPCODE(CMSG_REQUEST_VEHICLE_NEXT_SEAT,         STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleChangeSeatsOnControlledVehicle);
+    OPCODE(CMSG_REQUEST_VEHICLE_SWITCH_SEAT,       STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleChangeSeatsOnControlledVehicle);
+    OPCODE(CMSG_CHANGE_SEATS_ON_CONTROLLED_VEHICLE, STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleChangeSeatsOnControlledVehicle);
+    OPCODE(CMSG_QUERY_VEHICLE_STATUS,              STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_PLAYER_VEHICLE_ENTER,              STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleEnterPlayerVehicle );
+    OPCODE(CMSG_EJECT_PASSENGER,                   STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleEjectPassenger );
 
     /***********************************************************/
     /********************** WORLD OPCODES **********************/
