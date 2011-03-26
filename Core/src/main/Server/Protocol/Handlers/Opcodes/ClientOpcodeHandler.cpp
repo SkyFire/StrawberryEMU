@@ -642,13 +642,37 @@ void ClientOpcodeTable()
     /********************* QUERY OPCODES ***********************/
     /***********************************************************/
 
+    OPCODE(CMSG_NAME_QUERY,                      STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleNameQueryOpcode );
+    OPCODE(CMSG_PET_NAME_QUERY,                  STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandlePetNameQuery );
+    OPCODE(CMSG_GUILD_QUERY,                     STATUS_AUTHED,   PROCESS_THREADUNSAFE, &WorldSession::HandleGuildQueryOpcode );
+    OPCODE(CMSG_ITEM_QUERY_SINGLE,               STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleItemQuerySingleOpcode );
+    OPCODE(CMSG_ITEM_QUERY_MULTIPLE,             STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_PAGE_TEXT_QUERY,                 STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandlePageTextQueryOpcode );
+    OPCODE(CMSG_QUEST_QUERY,                     STATUS_LOGGEDIN_OR_RECENTLY_LOGGOUT, PROCESS_THREADUNSAFE, &WorldSession::HandleQuestQueryOpcode );
+    OPCODE(CMSG_GAMEOBJECT_QUERY,                STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleGameObjectQueryOpcode );
+    OPCODE(CMSG_CREATURE_QUERY,                  STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleCreatureQueryOpcode );
+    OPCODE(CMSG_ITEM_TEXT_QUERY,                 STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleItemTextQuery );
+    OPCODE(CMSG_ITEM_NAME_QUERY,                 STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleItemNameQueryOpcode );
+    OPCODE(CMSG_CORPSE_MAP_POSITION_QUERY,       STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleCorpseMapPositionQuery );
 
 
     /***********************************************************/
     /********************* QUEST OPCODES ***********************/
     /***********************************************************/
 
+    OPCODE(CMSG_FLAG_QUEST,                      STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_FLAG_QUEST_FINISH,               STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_CLEAR_QUEST,                     STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_QUESTLOG_SWAP_QUEST,             STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleQuestLogSwapQuest );
+    OPCODE(CMSG_QUESTLOG_REMOVE_QUEST,           STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleQuestLogRemoveQuest );
+    OPCODE(CMSG_QUEST_CONFIRM_ACCEPT,            STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleQuestConfirmAccept );
+    OPCODE(CMSG_PUSHQUESTTOPARTY,                STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandlePushQuestToParty );
+    OPCODE(CMSG_QUEST_POI_QUERY,                 STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleQuestPOIQuery );
+    OPCODE(CMSG_START_QUEST,                     STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_QUERY_QUESTS_COMPLETED,          STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleQueryQuestsCompleted );
 
+    // Questgiver
+    OPCODE(CMSG_QUESTGIVER_STATUS_MULTIPLE_QUERY, STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleQuestgiverStatusMultipleQuery);
 
     /***********************************************************/
     /********************* SPELL OPCODES ***********************/
