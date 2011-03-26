@@ -325,6 +325,7 @@
     <ClInclude Include="..\..\src\shared\Logging\Log.h" />
     <ClInclude Include="..\..\src\shared\Packets\ByteBuffer.h" />
     <ClInclude Include="..\..\src\shared\Packets\WorldPacket.h" />
+    <ClInclude Include="..\..\src\shared\revision_nr.h" />
     <ClInclude Include="..\..\src\shared\Threading\Callback.h" />
     <ClInclude Include="..\..\src\shared\Threading\DelayExecutor.h" />
     <ClInclude Include="..\..\src\shared\Threading\LockedQueue.h" />

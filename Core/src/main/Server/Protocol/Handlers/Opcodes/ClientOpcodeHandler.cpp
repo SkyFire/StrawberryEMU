@@ -540,10 +540,11 @@ void ClientOpcodeTable()
     /***********************************************************/
 
     // World Teleport
-    OPCODE(CMSG_WORLD_TELEPORT,                  STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleWorldTeleportOpcode );
-    OPCODE(CMSG_TELEPORT_TO_UNIT,                STATUS_LOGGEDIN, PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_WORLD_TELEPORT,                  STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleWorldTeleportOpcode);
+    OPCODE(CMSG_WORLD_LOGIN,                     STATUS_AUTHED,   PROCESS_THREADUNSAFE, &WorldSession::HandleWorldLoginOpcode   );
+    OPCODE(CMSG_TELEPORT_TO_UNIT,                STATUS_LOGGEDIN, PROCESS_INPLACE,      &WorldSession::HandleNULL               );
     OPCODE(CMSG_REQUEST_ACCOUNT_DATA,            STATUS_AUTHED,   PROCESS_THREADUNSAFE, &WorldSession::HandleRequestAccountData );
-    OPCODE(CMSG_UPDATE_ACCOUNT_DATA,             STATUS_AUTHED,   PROCESS_THREADUNSAFE, &WorldSession::HandleUpdateAccountData );
+    OPCODE(CMSG_UPDATE_ACCOUNT_DATA,             STATUS_AUTHED,   PROCESS_THREADUNSAFE, &WorldSession::HandleUpdateAccountData  );
 
 };
 
