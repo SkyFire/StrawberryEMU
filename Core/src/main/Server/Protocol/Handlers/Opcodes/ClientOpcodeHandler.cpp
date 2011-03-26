@@ -711,13 +711,35 @@ void ClientOpcodeTable()
     /******************* TRANSPORT OPCODES *********************/
     /***********************************************************/
 
-
+    // Transport Taxi
+    OPCODE(CMSG_TAXICLEARALLNODES,                 STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleNULL                      );
+    OPCODE(CMSG_TAXIENABLEALLNODES,                STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleNULL                      );
+    OPCODE(CMSG_TAXISHOWNODES,                     STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleNULL                      );
+    OPCODE(CMSG_TAXINODE_STATUS_QUERY,             STATUS_LOGGEDIN, PROCESS_THREADSAFE,   &WorldSession::HandleTaxiNodeStatusQueryOpcode );
+    OPCODE(CMSG_TAXIQUERYAVAILABLENODES,           STATUS_LOGGEDIN, PROCESS_THREADSAFE,   &WorldSession::HandleTaxiQueryAvailableNodes   );
+    OPCODE(CMSG_ACTIVATETAXI,                      STATUS_LOGGEDIN, PROCESS_THREADSAFE,   &WorldSession::HandleActivateTaxiOpcode        );
+    OPCODE(CMSG_TAXICLEARNODE,                     STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleNULL                      );
+    OPCODE(CMSG_TAXIENABLENODE,                    STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleNULL                      );
+    OPCODE(CMSG_ACTIVATETAXIEXPRESS,               STATUS_LOGGEDIN, PROCESS_THREADSAFE,   &WorldSession::HandleActivateTaxiExpressOpcode );
+    OPCODE(CMSG_SET_TAXI_BENCHMARK_MODE,           STATUS_AUTHED,   PROCESS_THREADUNSAFE, &WorldSession::HandleSetTaxiBenchmarkOpcode    );
+    OPCODE(CMSG_ENABLETAXI,                        STATUS_LOGGEDIN, PROCESS_THREADSAFE,   &WorldSession::HandleTaxiQueryAvailableNodes   );
 
     /***********************************************************/
     /****************** TIME / SPEED OPCODES *******************/
     /***********************************************************/
 
+    // Time
+    OPCODE(CMSG_GAMETIME_SET,                      STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleNULL                      );
+    OPCODE(CMSG_SERVERTIME,                        STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleNULL                      );
+    OPCODE(CMSG_PLAYED_TIME,                       STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandlePlayedTime                );
+    OPCODE(CMSG_QUERY_TIME,                        STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleQueryTimeOpcode           );
+    OPCODE(CMSG_TIME_SYNC_RESP,                    STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleTimeSyncResp              );
+    OPCODE(CMSG_KEEP_ALIVE,                        STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleEarlyProccess             );
+    OPCODE(CMSG_WORLD_STATE_UI_TIMER_UPDATE,       STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleWorldStateUITimerUpdate   );
+    OPCODE(CMSG_READY_FOR_ACCOUNT_DATA_TIMES,      STATUS_AUTHED,   PROCESS_THREADUNSAFE, &WorldSession::HandleReadyForAccountDataTimes  );
 
+    // Speed
+    OPCODE(CMSG_GAMESPEED_SET,                     STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleNULL                      );
 
     /***********************************************************/
     /****************** UNCATEGORZIED OPCODES ******************/
