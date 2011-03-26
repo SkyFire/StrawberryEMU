@@ -419,6 +419,132 @@ void ClientOpcodeTable()
     /***********************************************************/
     /******************** MOVEMENT OPCODES *********************/
     /***********************************************************/
+    OPCODE(CMSG_MOVE_SET_RAW_POSITION,           STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_MOVE_KNOCK_BACK_ACK,             STATUS_LOGGEDIN, PROCESS_THREADSAFE,   &WorldSession::HandleMoveKnockBackAck );
+    OPCODE(CMSG_MOVE_HOVER_ACK,                  STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleMoveHoverAck );
+    OPCODE(CMSG_MOVE_TIME_SKIPPED,               STATUS_LOGGEDIN, PROCESS_INPLACE,      &WorldSession::HandleMoveTimeSkippedOpcode );
+    OPCODE(CMSG_MOVE_NOT_ACTIVE_MOVER,           STATUS_LOGGEDIN, PROCESS_THREADSAFE,   &WorldSession::HandleMoveNotActiveMover );
+    OPCODE(CMSG_MINIGAME_MOVE,                   STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_MOVE_CHNG_TRANSPORT,             STATUS_LOGGEDIN, PROCESS_THREADSAFE,   &WorldSession::HandleMovementOpcodes );
+    OPCODE(CMSG_UNKNOWN_1303,                    STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+     
+    // Movement Start / Stop
+    OPCODE(CMSG_MOVE_START_SWIM_CHEAT,           STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_MOVE_STOP_SWIM_CHEAT,            STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+
+    // Movement Force
+    OPCODE(CMSG_FORCE_RUN_SPEED_CHANGE_ACK,      STATUS_LOGGEDIN, PROCESS_THREADSAFE,   &WorldSession::HandleForceSpeedChangeAck );
+    OPCODE(CMSG_FORCE_RUN_BACK_SPEED_CHANGE_ACK, STATUS_LOGGEDIN, PROCESS_THREADSAFE,   &WorldSession::HandleForceSpeedChangeAck );
+    OPCODE(CMSG_FORCE_SWIM_SPEED_CHANGE_ACK,     STATUS_LOGGEDIN, PROCESS_THREADSAFE,   &WorldSession::HandleForceSpeedChangeAck );
+    OPCODE(CMSG_FORCE_MOVE_ROOT_ACK,             STATUS_LOGGEDIN, PROCESS_THREADSAFE,   &WorldSession::HandleMoveRootAck );
+    OPCODE(CMSG_FORCE_MOVE_UNROOT_ACK,           STATUS_LOGGEDIN, PROCESS_THREADSAFE,   &WorldSession::HandleMoveUnRootAck );
+    OPCODE(CMSG_FORCE_WALK_SPEED_CHANGE_ACK,     STATUS_LOGGEDIN, PROCESS_THREADSAFE,   &WorldSession::HandleForceSpeedChangeAck );
+    OPCODE(CMSG_FORCE_SWIM_BACK_SPEED_CHANGE_ACK, STATUS_LOGGEDIN, PROCESS_THREADSAFE,  &WorldSession::HandleForceSpeedChangeAck );
+    OPCODE(CMSG_FORCE_TURN_RATE_CHANGE_ACK,      STATUS_LOGGEDIN, PROCESS_THREADSAFE,   &WorldSession::HandleForceSpeedChangeAck );
+    OPCODE(CMSG_FORCE_FLIGHT_SPEED_CHANGE_ACK,   STATUS_LOGGEDIN, PROCESS_THREADSAFE,   &WorldSession::HandleForceSpeedChangeAck );
+    OPCODE(CMSG_FORCE_FLIGHT_BACK_SPEED_CHANGE_ACK, STATUS_LOGGEDIN, PROCESS_THREADSAFE, &WorldSession::HandleForceSpeedChangeAck );
+    OPCODE(CMSG_FORCE_PITCH_RATE_CHANGE_ACK,     STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_FORCE_UNK1_SPEED_CHANGE_ACK,     STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_FORCE_UNK2_SPEED_CHANGE_ACK,     STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+
+    // Movement Teleport / Fall / Fly / Water
+    OPCODE(CMSG_MOVE_FALL_RESET,                 STATUS_LOGGEDIN, PROCESS_THREADSAFE,   &WorldSession::HandleMovementOpcodes );
+    OPCODE(CMSG_MOVE_FEATHER_FALL_ACK,           STATUS_LOGGEDIN, PROCESS_THREADSAFE,   &WorldSession::HandleFeatherFallAck );
+    OPCODE(CMSG_MOVE_WATER_WALK_ACK,             STATUS_LOGGEDIN, PROCESS_THREADSAFE,   &WorldSession::HandleMoveWaterWalkAck );
+    OPCODE(CMSG_MOVE_FLIGHT_ACK,                 STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+
+    // Movement Set / Unset
+    OPCODE(CMSG_MOVE_SET_CAN_FLY_ACK,            STATUS_LOGGEDIN, PROCESS_THREADSAFE,   &WorldSession::HandleMoveSetCanFlyAckOpcode );
+    OPCODE(CMSG_MOVE_SET_FLY,                    STATUS_LOGGEDIN, PROCESS_THREADSAFE,   &WorldSession::HandleMovementOpcodes );
+    OPCODE(CMSG_MOVE_SET_RUN_SPEED,              STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+
+    // Spline
+    OPCODE(CMSG_MOVE_SPLINE_DONE,                STATUS_LOGGEDIN, PROCESS_THREADSAFE,   &WorldSession::HandleMoveSplineDoneOpcode );
+
+    // Spline Set / Unset
+
+    /***********************************************************/
+    /********************* MOVIE OPCODES ***********************/
+    /***********************************************************/
+
+    // Cinematic 
+    OPCODE(CMSG_TRIGGER_CINEMATIC_CHEAT,         STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_OPENING_CINEMATIC,               STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_NEXT_CINEMATIC_CAMERA,           STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleNextCinematicCamera );
+    OPCODE(CMSG_COMPLETE_CINEMATIC,              STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleCompleteCinematic );
+
+    // Movie
+    OPCODE(CMSG_COMPLETE_MOVIE,                  STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+
+    /***********************************************************/ 
+    /****************** MOUNT / PET OPCODES ********************/
+    /***********************************************************/
+
+    OPCODE(CMSG_MOUNTSPECIAL_ANIM,               STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleMountSpecialAnimOpcode );
+    OPCODE(CMSG_CANCEL_MOUNT_AURA,               STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleCancelMountAuraOpcode );
+
+    // Pet
+    OPCODE(CMSG_PET_SET_ACTION,                  STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandlePetSetAction );
+    OPCODE(CMSG_PET_ACTION,                      STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandlePetAction );
+    OPCODE(CMSG_PET_ABANDON,                     STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandlePetAbandon );
+    OPCODE(CMSG_PET_RENAME,                      STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandlePetRename );
+    OPCODE(CMSG_PET_STOP_ATTACK,                 STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandlePetStopAttack );
+    OPCODE(CMSG_PET_UNLEARN,                     STATUS_LOGGEDIN, PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_PET_LEARN_TALENT,                STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandlePetLearnTalent );
+    OPCODE(CMSG_PET_UNLEARN_TALENTS,             STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+
+    /***********************************************************/
+    /********************* PLAYER OPCODES **********************/
+    /***********************************************************/
+
+
+
+    /***********************************************************/
+    /********************* QUERY OPCODES ***********************/
+    /***********************************************************/
+
+
+
+    /***********************************************************/
+    /********************* QUEST OPCODES ***********************/
+    /***********************************************************/
+
+
+
+    /***********************************************************/
+    /********************* SPELL OPCODES ***********************/
+    /***********************************************************/
+
+
+
+    /***********************************************************/
+    /******************* TRANSPORT OPCODES *********************/
+    /***********************************************************/
+
+
+
+    /***********************************************************/
+    /****************** TIME / SPEED OPCODES *******************/
+    /***********************************************************/
+
+
+
+    /***********************************************************/
+    /****************** UNCATEGORZIED OPCODES ******************/
+    /***********************************************************/
+
+
+
+    /***********************************************************/
+    /********************** WORLD OPCODES **********************/
+    /***********************************************************/
+
+    // World Teleport
+    OPCODE(CMSG_WORLD_TELEPORT,                  STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleWorldTeleportOpcode );
+    OPCODE(CMSG_TELEPORT_TO_UNIT,                STATUS_LOGGEDIN, PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_REQUEST_ACCOUNT_DATA,            STATUS_AUTHED,   PROCESS_THREADUNSAFE, &WorldSession::HandleRequestAccountData );
+    OPCODE(CMSG_UPDATE_ACCOUNT_DATA,             STATUS_AUTHED,   PROCESS_THREADUNSAFE, &WorldSession::HandleUpdateAccountData );
+
 };
 
 
