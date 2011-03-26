@@ -497,6 +497,145 @@ void ClientOpcodeTable()
     /********************* PLAYER OPCODES **********************/
     /***********************************************************/
 
+    OPCODE(CMSG_UNDRESSPLAYER,                   STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_GODMODE,                         STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_PLAYER_DIFFICULTY_CHANGE,        STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_PLAYER_AI_CHEAT,                 STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_SET_ACTIONBAR_TOGGLES,           STATUS_AUTHED,   PROCESS_THREADUNSAFE, &WorldSession::HandleSetActionBarToggles );
+    OPCODE(CMSG_IGNORE_REQUIREMENTS_CHEAT,       STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_SET_PLAYER_DECLINED_NAMES,       STATUS_AUTHED,   PROCESS_THREADUNSAFE, &WorldSession::HandleSetPlayerDeclinedNames );
+
+    // Player Achievement
+    OPCODE(CMSG_QUERY_INSPECT_ACHIEVEMENTS,      STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleQueryInspectAchievements );
+    OPCODE(CMSG_COMPLETE_ACHIEVEMENT_CHEAT,      STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_SET_CRITERIA_CHEAT,              STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_CHECK_LOGIN_CRITERIA,            STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+
+    // Player Exploration
+    OPCODE(CMSG_SET_EXPLORATION,                 STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_SET_EXPLORATION_ALL,             STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+
+    // Friends / Contacts / ...
+    OPCODE(CMSG_WHO,                             STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleWhoOpcode );
+    OPCODE(CMSG_WHOIS,                           STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleWhoisOpcode );
+    OPCODE(CMSG_CONTACT_LIST,                    STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleContactListOpcode );
+    OPCODE(CMSG_ADD_FRIEND,                      STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleAddFriendOpcode );
+    OPCODE(CMSG_DEL_FRIEND,                      STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleDelFriendOpcode );
+    OPCODE(CMSG_SET_CONTACT_NOTES,               STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleSetContactNotesOpcode );
+    OPCODE(CMSG_SAVE_PLAYER,                     STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_REFER_A_FRIEND,                  STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+
+    // Player Dance
+    OPCODE(CMSG_SAVE_DANCE,                      STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_PLAY_DANCE,                      STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_LOAD_DANCES,                     STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_STOP_DANCE,                      STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_SYNC_DANCE,                      STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_DANCE_QUERY,                     STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_DELETE_DANCE,                    STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_LEARN_DANCE_MOVE,                STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_UNLEARN_DANCE_MOVE,              STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+
+    // Player Level
+    OPCODE(CMSG_LEVEL_CHEAT,                     STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_SET_GRANTABLE_LEVELS,            STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_GRANT_LEVEL,                     STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_ACCEPT_LEVEL_GRANT,              STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+
+    // Player Pet
+    OPCODE(CMSG_PET_LEVEL_CHEAT,                 STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_STABLE_PET,                      STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleStablePet );
+    OPCODE(CMSG_UNSTABLE_PET,                    STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleUnstablePet );
+    OPCODE(CMSG_BUY_STABLE_SLOT,                 STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleBuyStableSlot );
+    OPCODE(CMSG_STABLE_REVIVE_PET,               STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleStableRevivePet );
+    OPCODE(CMSG_STABLE_SWAP_PET,                 STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleStableSwapPet );
+    OPCODE(CMSG_REQUEST_PET_INFO,                STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleRequestPetInfoOpcode );
+
+    // Player PVP / Honor / ...
+    OPCODE(CMSG_DISABLE_PVP_CHEAT,               STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_TOGGLE_PVP,                      STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleTogglePvP );
+    OPCODE(CMSG_SET_PVP_RANK_CHEAT,              STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_ADD_PVP_MEDAL_CHEAT,             STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_DEL_PVP_MEDAL_CHEAT,             STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_SET_PVP_TITLE,                   STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_SET_TITLE,                       STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleSetTitleOpcode );
+    OPCODE(CMSG_CHEAT_SET_HONOR_CURRENCY,        STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_ACTIVE_PVP_CHEAT,                STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_REPORT_PVP_AFK,                  STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleReportPvPAFK );
+    OPCODE(CMSG_SET_TITLE_SUFFIX,                STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+
+    // Player Arena
+    OPCODE(CMSG_ARENA_TEAM_CREATE,               STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_ARENA_TEAM_QUERY,                STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleArenaTeamQueryOpcode );
+    OPCODE(CMSG_ARENA_TEAM_ROSTER,               STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleArenaTeamRosterOpcode );
+    OPCODE(CMSG_ARENA_TEAM_INVITE,               STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleArenaTeamInviteOpcode );
+    OPCODE(CMSG_ARENA_TEAM_ACCEPT,               STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleArenaTeamAcceptOpcode );
+    OPCODE(CMSG_ARENA_TEAM_DECLINE,              STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleArenaTeamDeclineOpcode );
+    OPCODE(CMSG_ARENA_TEAM_LEAVE,                STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleArenaTeamLeaveOpcode );
+    OPCODE(CMSG_ARENA_TEAM_REMOVE,               STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleArenaTeamRemoveOpcode );
+    OPCODE(CMSG_ARENA_TEAM_DISBAND,              STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleArenaTeamDisbandOpcode );
+    OPCODE(CMSG_ARENA_TEAM_LEADER,               STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleArenaTeamLeaderOpcode );
+    OPCODE(CMSG_CHEAT_SET_ARENA_CURRENCY,        STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_CHANGE_PERSONAL_ARENA_RATING,    STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+
+    // Player Tutorial
+    OPCODE(CMSG_TUTORIAL_FLAG,                   STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleTutorialFlag );
+    OPCODE(CMSG_TUTORIAL_CLEAR,                  STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleTutorialClear );
+    OPCODE(CMSG_TUTORIAL_RESET,                  STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleTutorialReset );
+
+    // Player Emote
+    OPCODE(CMSG_EMOTE,                           STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleEmoteOpcode );
+    OPCODE(CMSG_TEXT_EMOTE,                      STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleTextEmoteOpcode );
+
+    // Player Corpse / Resurrect / Death
+    OPCODE(CMSG_SETDEATHBINDPOINT,               STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_GETDEATHBINDZONE,                STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_REPOP_REQUEST,                   STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleRepopRequestOpcode );
+    OPCODE(CMSG_RESURRECT_RESPONSE,              STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleResurrectResponseOpcode );
+    OPCODE(CMSG_RECLAIM_CORPSE,                  STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleReclaimCorpseOpcode );
+    OPCODE(CMSG_GHOST,                           STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_HEARTH_AND_RESURRECT,            STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleHearthAndResurrect );
+
+    // Player Health / Power / Mana / ...
+    OPCODE(CMSG_SET_RUNE_COUNT,                  STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_SET_RUNE_COOLDOWN,               STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+
+    // Player Glyph
+    OPCODE(CMSG_SET_GLYPH_SLOT,                  STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_SET_GLYPH,                       STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_REMOVE_GLYPH,                    STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleRemoveGlyph );
+
+    // Player Talent / Skill
+    OPCODE(CMSG_UNLEARN_TALENTS,                 STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_USE_SKILL_CHEAT,                 STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_SKILL_BUY_STEP,                  STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_SKILL_BUY_RANK,                  STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_LEARN_TALENT,                    STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleLearnTalentOpcode );
+    OPCODE(CMSG_LEARN_PREVIEW_TALENTS,           STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleLearnPreviewTalents );
+    OPCODE(CMSG_LEARN_PREVIEW_TALENTS_PET,       STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleLearnPreviewTalentsPet );
+
+    // Player Mail
+    OPCODE(CMSG_SEND_MAIL,                       STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleSendMail );
+    OPCODE(CMSG_GET_MAIL_LIST,                   STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleGetMailList );
+    OPCODE(CMSG_MAIL_TAKE_MONEY,                 STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleMailTakeMoney );
+    OPCODE(CMSG_MAIL_TAKE_ITEM,                  STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleMailTakeItem );
+    OPCODE(CMSG_MAIL_MARK_AS_READ,               STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleMailMarkAsRead );
+    OPCODE(CMSG_MAIL_RETURN_TO_SENDER,           STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleMailReturnToSender );
+    OPCODE(CMSG_MAIL_DELETE,                     STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleMailDelete );
+    OPCODE(CMSG_MAIL_CREATE_TEXT_ITEM,           STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleMailCreateTextItem );
+
+    // Player Voice
+    OPCODE(CMSG_VOICE_SET_TALKER_MUTED_REQUEST,  STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_VOICE_SESSION_ENABLE,            STATUS_AUTHED,   PROCESS_THREADUNSAFE, &WorldSession::HandleVoiceSessionEnableOpcode );
+    OPCODE(CMSG_SET_ACTIVE_VOICE_CHANNEL,        STATUS_AUTHED,   PROCESS_THREADUNSAFE, &WorldSession::HandleSetActiveVoiceChannel );
+    OPCODE(CMSG_CHANNEL_VOICE_ON,                STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleChannelVoiceOnOpcode );
+    OPCODE(CMSG_CHANNEL_VOICE_OFF,               STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(SMSG_DEBUG_LIST_TARGETS,              STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_ServerSide );
+    OPCODE( CMSG_ADD_VOICE_IGNORE,               STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+    OPCODE(CMSG_DEL_VOICE_IGNORE,                STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL );
+
+    // Player Totem
+    OPCODE(CMSG_TOTEM_DESTROYED,                 STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleTotemDestroyed );
 
 
     /***********************************************************/
