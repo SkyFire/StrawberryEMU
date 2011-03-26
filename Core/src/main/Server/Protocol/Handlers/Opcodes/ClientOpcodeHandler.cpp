@@ -768,7 +768,7 @@ void ClientOpcodeTable()
     OPCODE(CMSG_BUY_BANK_SLOT,                     STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleBuyBankSlotOpcode );
     OPCODE(CMSG_BUG,                               STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleBugOpcode );
     OPCODE(CMSG_SET_SKILL_CHEAT,                   STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleNULL );
-    OPCODE(CMSG_PING,                              STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_EarlyProccess );
+    OPCODE(CMSG_PING,                              STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleEarlyProccess );
     OPCODE(CMSG_SETSHEATHED,                       STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleSetSheathedOpcode );
     OPCODE(CMSG_ZONEUPDATE,                        STATUS_LOGGEDIN, PROCESS_THREADSAFE,   &WorldSession::HandleZoneUpdateOpcode );
     OPCODE(CMSG_UNLEARN_SKILL,                     STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleUnlearnSkillOpcode );
