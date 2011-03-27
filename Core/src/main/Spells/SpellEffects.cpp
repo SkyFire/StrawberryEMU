@@ -3980,7 +3980,11 @@ void Spell::SpellDamageWeaponDmg(SpellEffectEntry const* effect)
     // and handle all effects at once
     for (uint32 j = 0; j < MAX_SPELL_EFFECTS; ++j)
     {
-        switch (effect->Effect)
+        SpellEffectEntry const* spellEffect = m_spellInfo->GetSpellEffect(SpellEffIndex(j));
+        if (!spellEffect)
+            continue;
+
+        switch (spellEffect->Effect)
         {
             case SPELL_EFFECT_WEAPON_DAMAGE:
             case SPELL_EFFECT_WEAPON_DAMAGE_NOSCHOOL:
@@ -4193,7 +4197,11 @@ void Spell::SpellDamageWeaponDmg(SpellEffectEntry const* effect)
     float weaponDamagePercentMod = 1.0f;
     for (int j = 0; j < MAX_SPELL_EFFECTS; ++j)
     {
-        switch (effect->Effect)
+        SpellEffectEntry const* spellEffect = m_spellInfo->GetSpellEffect(SpellEffIndex(j));
+        if (!spellEffect)
+            continue;
+
+        switch (spellEffect->Effect)
         {
             case SPELL_EFFECT_WEAPON_DAMAGE:
             case SPELL_EFFECT_WEAPON_DAMAGE_NOSCHOOL:
@@ -4238,9 +4246,13 @@ void Spell::SpellDamageWeaponDmg(SpellEffectEntry const* effect)
     // Sequence is important
     for (int j = 0; j < MAX_SPELL_EFFECTS; ++j)
     {
+        SpellEffectEntry const* spellEffect = m_spellInfo->GetSpellEffect(SpellEffIndex(j));
+        if (!spellEffect)
+            continue;
+
         // We assume that a spell have at most one fixed_bonus
         // and at most one weaponDamagePercentMod
-        switch(effect->Effect)
+        switch(spellEffect->Effect)
         {
             case SPELL_EFFECT_WEAPON_DAMAGE:
             case SPELL_EFFECT_WEAPON_DAMAGE_NOSCHOOL:
