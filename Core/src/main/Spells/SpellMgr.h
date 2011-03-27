@@ -534,6 +534,8 @@ inline bool IsAutoRepeatRangedSpell(SpellEntry const* spellInfo)
 inline bool IsRangedWeaponSpell(SpellEntry const* spellInfo)
 {
     SpellClassOptionsEntry const* classOptions = spellInfo->GetSpellClassOptions();
+    if (!classOptions)
+        return false;
     SpellEquippedItemsEntry const* equipItems = spellInfo->GetSpellEquippedItems();
     //spell->GetDmgClass() == SPELL_DAMAGE_CLASS_RANGED should be checked outside
     return (classOptions->SpellFamilyName == SPELLFAMILY_HUNTER && !(classOptions->SpellFamilyFlags & 0x10000000)) // for 53352, cannot find better way
@@ -978,6 +980,27 @@ inline bool IsProfessionOrRidingSkill(uint32 skill)
 {
     return  IsProfessionSkill(skill) || skill == SKILL_RIDING;
 }
+
+inline float roundf(float value)
+{
+    return floor(value + 0.5f);
+}
+
+struct SpellScaling
+{
+    uint8 playerLevel;
+    const SpellEntry* spellEntry;
+    
+    float avg[3];
+    float min[3];
+    float max[3];
+    float pts[3];
+    
+    int32 cast;
+    
+    bool canScale;
+    SpellScaling(uint8 playerLevel_, const SpellEntry * spellEntry_);
+};
 
 bool IsPartOfSkillLine(uint32 skillId, uint32 spellId);
 

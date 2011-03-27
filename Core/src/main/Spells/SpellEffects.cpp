@@ -351,7 +351,7 @@ void Spell::SpellDamageSchoolDmg(SpellEffectEntry const* effect)
                 {
                     uint32 count = 0;
                     for (std::list<TargetInfo>::iterator ihit= m_UniqueTargetInfo.begin(); ihit != m_UniqueTargetInfo.end(); ++ihit)
-                        if (ihit->effectMask & (1 << EFFECT_0))
+                        if (ihit->effectMask & (1 << effect->EffectIndex))
                             ++count;
 
                     damage /= count;                    // divide to all targets
@@ -1024,7 +1024,7 @@ void Spell::EffectDummy(SpellEffectEntry const* effect)
 
                      // now deal the damage
                     for (std::list<TargetInfo>::iterator ihit = m_UniqueTargetInfo.begin(); ihit != m_UniqueTargetInfo.end(); ++ihit)
-                        if (ihit->effectMask & (1 << SpellEffIndex(EFFECT_0)))
+                        if (ihit->effectMask & (1 << effect->EffectIndex))
                         {
                             if (Unit* casttarget = Unit::GetUnit((*unitTarget), ihit->targetGUID))
                                 m_caster->DealDamage(casttarget, damage, NULL, SPELL_DIRECT_DAMAGE, SPELL_SCHOOL_MASK_ARCANE, spellInfo, false);
@@ -2235,7 +2235,7 @@ void Spell::EffectPowerBurn(SpellEffectEntry const* effect)
     int32 newDamage = -(unitTarget->ModifyPower(powerType, -power));
 
     // NO - Not a typo - EffectPowerBurn uses effect value multiplier - not effect damage multiplier
-    float dmgMultiplier = SpellMgr::CalculateSpellEffectValueMultiplier(m_spellInfo, EFFECT_0, m_originalCaster, this);
+    float dmgMultiplier = SpellMgr::CalculateSpellEffectValueMultiplier(m_spellInfo, effect->EffectIndex, m_originalCaster, this);
 
     // add log data before multiplication (need power amount, not damage)
     ExecuteLogEffectTakeTargetPower(EFFECT_0, unitTarget, powerType, newDamage, 0.0f);
@@ -3980,7 +3980,11 @@ void Spell::SpellDamageWeaponDmg(SpellEffectEntry const* effect)
     // and handle all effects at once
     for (uint32 j = 0; j < MAX_SPELL_EFFECTS; ++j)
     {
-        switch (m_spellInfo->GetSpellEffectIdByIndex(SpellEffIndex(j)))
+        SpellEffectEntry const* spellEffect = m_spellInfo->GetSpellEffect(SpellEffIndex(j));
+        if (!spellEffect)
+            continue;
+
+        switch (spellEffect->Effect)
         {
             case SPELL_EFFECT_WEAPON_DAMAGE:
             case SPELL_EFFECT_WEAPON_DAMAGE_NOSCHOOL:
@@ -4009,7 +4013,7 @@ void Spell::SpellDamageWeaponDmg(SpellEffectEntry const* effect)
                 {
                     uint32 count = 0;
                     for (std::list<TargetInfo>::iterator ihit = m_UniqueTargetInfo.begin(); ihit != m_UniqueTargetInfo.end(); ++ihit)
-                        if (ihit->effectMask & (1 << EFFECT_0))
+                        if (ihit->effectMask & (1 << effect->EffectIndex))
                             ++count;
 
                     totalDamagePercentMod /= count;
