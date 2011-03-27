@@ -101,7 +101,7 @@ enum ClientServerOpcodes
     MSG_MOVE_TELEPORT                    = 0x24E4,    // 9444  - 4.0.6.13623
     MSG_MOVE_TELEPORT_CHEAT              = 0xE7EC,    // 59372 - 4.0.6.13623
     MSG_MOVE_TELEPORT_ACK                = 0x6DAC,    // 28076 - 4.0.6.13623
-    MSG_MOVE_JUMP                        = 0x0BB,
+    MSG_MOVE_JUMP                        = 0x65AC,    // 26028 - 4.0.6.13623
     MSG_MOVE_FALL_LAND                   = 0xAFAC,    // 44972 - 4.0.6.13623
     MSG_MOVE_WORLDPORT_ACK               = 0x2FC0,    // 12224 - 4.0.6.13623
     MSG_MOVE_FEATHER_FALL                = 0xB6A8,    // 46760 - 4.0.6.13623
