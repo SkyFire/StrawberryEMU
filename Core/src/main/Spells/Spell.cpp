@@ -434,7 +434,7 @@ void SpellCastTargets::write (ByteBuffer & data)
 }
 
 Spell::Spell(Unit* Caster, SpellEntry const *info, bool triggered, uint64 originalCasterGUID, bool skipCheck):
-m_spellInfo(sSpellMgr->GetSpellForDifficultyFromSpell(info, Caster)),
+m_spellInfo(sSpellMgr->GetSpellForDifficultyFromSpell(info, Caster)), m_classOptions(),
 m_caster(Caster), m_spellValue(new SpellValue(m_spellInfo))
 {
     m_customAttr = sSpellMgr->GetSpellCustomAttr(m_spellInfo->Id);
@@ -7095,16 +7095,16 @@ int32 Spell::CalculateDamageDone(Unit *unit, const uint32 effectMask, float * mu
             switch(spellEffect->Effect)
             {
                 case SPELL_EFFECT_SCHOOL_DAMAGE:
-                    SpellDamageSchoolDmg(m_spellInfo->GetSpellEffect(SpellEffIndex(i)));
+                    SpellDamageSchoolDmg(spellEffect);
                     break;
                 case SPELL_EFFECT_WEAPON_DAMAGE:
                 case SPELL_EFFECT_WEAPON_DAMAGE_NOSCHOOL:
                 case SPELL_EFFECT_NORMALIZED_WEAPON_DMG:
                 case SPELL_EFFECT_WEAPON_PERCENT_DAMAGE:
-                    SpellDamageWeaponDmg(m_spellInfo->GetSpellEffect(SpellEffIndex(i)));
+                    SpellDamageWeaponDmg(spellEffect);
                     break;
                 case SPELL_EFFECT_HEAL:
-                    SpellDamageHeal(m_spellInfo->GetSpellEffect(SpellEffIndex(i)));
+                    SpellDamageHeal(spellEffect);
                     break;
             }
 

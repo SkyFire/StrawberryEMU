@@ -3848,7 +3848,7 @@ void SpellMgr::LoadSpellCustomAttr()
         case 26029: // dark glare
         case 37433: // spout
         case 43140: case 43215: // flame breath
-		case 70461: // Coldflame Trap
+        case 70461: // Coldflame Trap
             mSpellCustomAttr[i] |= SPELL_ATTR_CU_CONE_LINE;
             count++;
             break;
@@ -4188,7 +4188,7 @@ void SpellMgr::LoadSpellCustomAttr()
         case 70834: // Bone Storm (Lord Marrowgar)
         case 70835: // Bone Storm (Lord Marrowgar)
         case 70836: // Bone Storm (Lord Marrowgar)
-		case 72864: // Death Plague (Rotting Frost Giant)
+        case 72864: // Death Plague (Rotting Frost Giant)
         case 72378: // Blood Nova (Deathbringer Saurfang)
         case 73058: // Blood Nova (Deathbringer Saurfang)
             //spellEffect->EffectRadiusIndex = 12;
@@ -4204,7 +4204,7 @@ void SpellMgr::LoadSpellCustomAttr()
             break;
         case 70460: // Coldflame Jets (Traps after Saurfang)
             spellInfo->DurationIndex = 1;   // 10 seconds
-			count++;
+            count++;
             break;
         case 71413: // Green Ooze Summon (Professor Putricide)
         case 71414: // Orange Ooze Summon (Professor Putricide)
@@ -4254,7 +4254,7 @@ void SpellMgr::LoadSpellCustomAttr()
             //spellInfo->AreaGroupId = 0;
             count++;
             break;
-		case 71708: // Empowered Flare (Blood Prince Council)
+        case 71708: // Empowered Flare (Blood Prince Council)
         case 72785: // Empowered Flare (Blood Prince Council)
         case 72786: // Empowered Flare (Blood Prince Council)
         case 72787: // Empowered Flare (Blood Prince Council)
@@ -4265,7 +4265,7 @@ void SpellMgr::LoadSpellCustomAttr()
             spellInfo->DurationIndex = 21;
             count++;
             break;
-		case 71357: // Order Whelp
+        case 71357: // Order Whelp
             //spellInfo->EffectRadiusIndex[0] = 22;
             count++;
             break;

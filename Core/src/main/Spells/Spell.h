@@ -300,6 +300,7 @@ class Spell
         void EffectUnused(SpellEffectEntry const* effect);
         void EffectDistract(SpellEffectEntry const* effect);
         void EffectPull(SpellEffectEntry const* effect);
+        void SpellDamageSchoolDmg(SpellEffectEntry const* effect);
         void EffectSchoolDMG(SpellEffectEntry const* effect);
         void EffectEnvirinmentalDMG(SpellEffectEntry const* effect);
         void EffectInstaKill(SpellEffectEntry const* effect);
@@ -505,6 +506,7 @@ class Spell
         void HandleThreatSpells(uint32 spellId);
 
         const SpellEntry * const m_spellInfo;
+        const SpellClassOptionsEntry* const m_classOptions;
         SpellInterruptsEntry const* m_spellInterrupts;
         Item* m_CastItem;
         uint64 m_castItemGUID;
@@ -684,7 +686,6 @@ class Spell
         bool IsValidDeadOrAliveTarget(Unit const* target) const;
         void CalculateDamageDoneForAllTargets();
         int32 CalculateDamageDone(Unit *unit, const uint32 effectMask, float *multiplier);
-        void SpellDamageSchoolDmg(SpellEffectEntry const* effect);
         void SpellDamageWeaponDmg(SpellEffectEntry const* effect);
         void SpellDamageHeal(SpellEffectEntry const* effect);
 

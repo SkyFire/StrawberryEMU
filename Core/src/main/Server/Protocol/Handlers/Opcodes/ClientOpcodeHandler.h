@@ -47,19 +47,19 @@ enum ClientOpcodes
     CMSG_AUTH_SESSION                                   = 0x0E0E,    // 3598 - 4.0.6.13623
     CMSG_REALM_SPLIT                                    = 0x60AC,    // 18301 - 4.0.6.13623
     CMSG_REDIRECTION_FAILED                             = 0x0509,    // - 4.0.6.13623
-    CMSG_UNKNOWN_1296                                   = 0x510,     //
+    CMSG_UNKNOWN_1296                                   = 0x510,
     CMSG_REDIRECTION_AUTH_PROOF                         = 0x0E4C,    // 3660 - 4.0.6.13529
 
     // SRP6
-    CMSG_AUTH_SRP6_BEGIN                                = 0x033,
-    CMSG_AUTH_SRP6_PROOF                                = 0x034,
-    CMSG_AUTH_SRP6_RECODE                               = 0x035,
+    CMSG_AUTH_SRP6_BEGIN                                = 0x033,     // 51   - 4.0.6.13623
+    CMSG_AUTH_SRP6_PROOF                                = 0x034,     // 52   - 4.0.6.13623
+    CMSG_AUTH_SRP6_RECODE                               = 0x035,     // 53   - 4.0.6.13623
 
     /***********************************************************/
     /******************* BATTLEFIELD OPCODES *******************/
     /***********************************************************/
     CMSG_BATTLEFIELD_LIST                               = 0x0093,    // 147   - 4.0.6.13623
-    CMSG_BATTLEFIELD_JOIN                               = 0x23E,     //
+    CMSG_BATTLEFIELD_JOIN                               = 0x23E,
     CMSG_BATTLEFIELD_STATUS                             = 0x2D3,     //
     CMSG_BATTLEFIELD_PORT                               = 0x2D5,     //
     CMSG_BATTLEMASTER_HELLO                             = 0x2D7,     //
@@ -139,7 +139,7 @@ enum ClientOpcodes
     // Channel
     CMSG_JOIN_CHANNEL                                   = 0x0002,    // 2     - 4.0.6.13623
     CMSG_LEAVE_CHANNEL                                  = 0x000B,    // 11    - 4.0.6.13623
-    CMSG_CHANNEL_LIST                                   = 0x1A88,
+    CMSG_CHANNEL_LIST                                   = 0x0069,    // 105   - 4.0.6.13623
     CMSG_CHANNEL_PASSWORD                               = 0x080A,    // 2058  - 4.0.6.13623
     CMSG_CHANNEL_SET_OWNER                              = 0x0800,    // 2048  - 4.0.6.13623
     CMSG_CHANNEL_OWNER                                  = 0x0848,    // 2120  - 4.0.6.13623
@@ -154,15 +154,15 @@ enum ClientOpcodes
     CMSG_CHANNEL_UNBAN                                  = 0x0048,    // 72    - 4.0.6.13623
     CMSG_CHANNEL_ANNOUNCEMENTS                          = 0x004B,    // 75    - 4.0.6.13623
     CMSG_CHANNEL_MODERATE                               = 0x0A8,
-    CMSG_CHANNEL_SILENCE_VOICE                          = 0x3CC,
-    CMSG_CHANNEL_SILENCE_ALL                            = 0x3CD,
-    CMSG_CHANNEL_UNSILENCE_VOICE                        = 0x3CE,
-    CMSG_CHANNEL_UNSILENCE_ALL                          = 0x3CF,
-    CMSG_CHANNEL_DISPLAY_LIST                           = 0x3D2,
+    CMSG_CHANNEL_SILENCE_VOICE                          = 0x0801,    // 2049  - 4.0.6.13623
+    CMSG_CHANNEL_SILENCE_ALL                            = 0x0021,    // 33    - 4.0.6.13623
+    CMSG_CHANNEL_UNSILENCE_VOICE                        = 0x002B,    // 43    - 4.0.6.13623
+    CMSG_CHANNEL_UNSILENCE_ALL                          = 0x0840,    // 2112 - 4.0.6.13623
+    CMSG_CHANNEL_DISPLAY_LIST                           = 0x0009,    // 9     - 4.0.6.13623
     CMSG_GET_CHANNEL_MEMBER_COUNT                       = 0x3D4,
     CMSG_SET_CHANNEL_WATCH                              = 0x7FE0,    // 32736 - 4.0.6.13623
     CMSG_CLEAR_CHANNEL_WATCH                            = 0xA1E0,    // 41440 - 4.0.6.13623
-    CMSG_DECLINE_CHANNEL_INVITE                         = 0x410,
+    CMSG_DECLINE_CHANNEL_INVITE                         = 0xE68C,    // 59020 - 4.0.6.13623
 
     // Char Server Message
     CMSG_SERVER_BROADCAST                               = 0x2B2,

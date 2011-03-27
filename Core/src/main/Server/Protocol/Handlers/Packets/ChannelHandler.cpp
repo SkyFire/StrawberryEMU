@@ -27,7 +27,6 @@ void WorldSession::HandleJoinChannel(WorldPacket& recvPacket)
     sLog->outDebug(LOG_FILTER_NETWORKIO, "Opcode %u", recvPacket.GetOpcode());
 
     uint32 channel_id;
-    uint8 unknown1, unknown2;
     std::string channelname, pass;
 
     recvPacket >> channel_id;
@@ -46,13 +45,14 @@ void WorldSession::HandleJoinChannel(WorldPacket& recvPacket)
             return;
     }
 
-    recvPacket >> unknown1 >> unknown2;
+    recvPacket.read_skip<uint8>();
+    recvPacket.read_skip<uint8>();
+    recvPacket >> pass;
     recvPacket >> channelname;
 
     if (channelname.empty())
         return;
 
-    recvPacket >> pass;
     if (ChannelMgr* cMgr = channelMgr(_player->GetTeam()))
     {
         cMgr->team = _player->GetTeam();
@@ -64,15 +64,12 @@ void WorldSession::HandleJoinChannel(WorldPacket& recvPacket)
 void WorldSession::HandleLeaveChannel(WorldPacket& recvPacket)
 {
     sLog->outDebug(LOG_FILTER_NETWORKIO, "Opcode %u", recvPacket.GetOpcode());
-    //recvPacket.hexlike();
 
-    uint8 unk;
-    uint8 unk1;
     uint32 channelId;
-    std::string channelname, unk2;
+    std::string channelname;
 
-    recvPacket >> unk >> unk1 >> channelId;
-    recvPacket >> channelname >> unk2;
+    recvPacket >> channelId;
+    recvPacket >> channelname;
 
     if (channelname.empty())
         return;
