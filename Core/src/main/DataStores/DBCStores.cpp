@@ -1074,12 +1074,14 @@ float GetGtSpellScalingValue(int8 class_, uint8 level)
     if(class_ < 0)
         class_ = MAX_CLASSES - class_ + 1; //there are negative values in SpellScaling.dbc.
     if(class_ == 0)
-        class_ = 12; //use general scaling.
+        class_ = MAX_CLASSES; //use general scaling.
     
     //They really wants that players reach level 100... in the 5th expansion.
     SpellScalingEntry const* spellscaling = sSpellScalingStore.LookupEntry((class_-1) * 100 + level);
-    assert(spellscaling);
-    return spellscaling->coeff1[0];
+    if (spellscaling)
+        return spellscaling->coeff1[0];
+    else
+        return -1.0f;
 }
 
 // script support functions

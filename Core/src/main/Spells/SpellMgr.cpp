@@ -260,6 +260,73 @@ SpellMgr::~SpellMgr()
 {
 }
 
+SpellScaling::SpellScaling(uint8 playerLevel_, const SpellEntry * spellEntry_)
+{
+    playerLevel = playerLevel_;
+    spellEntry = spellEntry_;
+    for(int i = 0; i < 3; i++)
+    {
+        avg[i] = 0.f;
+        min[i] = 0.f;
+        max[i] = 0.f;
+        pts[i] = 0.f;
+    }
+    cast = 0;
+    canScale = false;
+
+    SpellScalingEntry const* spellScalling = spellEntry->GetSpellScaling();
+    if (!spellScalling)
+        return;
+
+    if (!spellEntry->SpellScalingId)
+        return;
+
+    float base_coef = spellScalling->unkMult;
+    uint8 base_level = spellScalling->unkLevel;
+
+    int32 ct_min = spellScalling->castTimeMin;
+    int32 ct_max = spellScalling->castTimeMax;
+    uint8 ct_level = spellScalling->castScalingMaxLevel;
+
+    int8 class_ = spellScalling->playerClass;
+
+    float gtCoef = GetGtSpellScalingValue(class_, playerLevel_);
+
+    if (gtCoef == -1.0f)
+        return;
+
+    gtCoef *= (std::min(playerLevel,base_level) + (base_coef * std::max(0,playerLevel-base_level))) / playerLevel;
+
+    //cast time
+    cast = 0;
+    if (ct_max > 0 && playerLevel_ > 1)
+        cast = ct_min + (((playerLevel-1) * (ct_max-ct_min)) / (ct_level - 1));
+    else
+        cast = ct_min;
+
+    if (cast > ct_max)
+        cast = ct_max;
+
+    //effects
+    for (uint8 effIndex = 0; effIndex < 3; effIndex++)
+    {
+        float mult = spellScalling->coeff1[effIndex];
+        float randommult = spellScalling->coeff2[effIndex];
+        float othermult = spellScalling->coeff3[effIndex];
+
+        avg[effIndex] = mult * gtCoef;
+        if (ct_max > 0)
+            avg[effIndex] *= float(cast) / float(ct_max);
+
+        min[effIndex] = roundf(avg[effIndex])-std::floor(avg[effIndex]*randommult/2);
+        max[effIndex] = roundf(avg[effIndex])+std::floor(avg[effIndex]*randommult/2);
+        pts[effIndex] = roundf(othermult*gtCoef);
+        avg[effIndex] = std::max((float)ceil(mult),roundf(avg[effIndex]));
+    }
+
+    canScale = true;
+}
+
 bool SpellMgr::IsSrcTargetSpell(SpellEntry const *spellInfo) const
 {
     for (uint8 i = 0; i< MAX_SPELL_EFFECTS; ++i)
@@ -328,6 +395,15 @@ uint32 GetSpellCastTime(SpellEntry const* spellInfo, Spell * spell)
         return 0;
 
     int32 castTime = spellCastTimeEntry->CastTime;
+
+    if (spell && spell->GetCaster())
+    {
+        SpellScaling values(spell->GetCaster()->getLevel(), spell->GetSpellInfo());
+        if (values.canScale)
+        {
+            castTime = values.cast;
+        }
+    }
 
     if (spell && spell->GetCaster())
         spell->GetCaster()->ModSpellCastTime(spellInfo, castTime, spell);
@@ -1912,16 +1988,26 @@ int32 SpellMgr::CalculateSpellEffectAmount(SpellEntry const * spellEntry, uint8 
     // base amount modification based on spell lvl vs caster lvl
     if (caster)
     {
-        int32 level = int32(caster->getLevel());
-        if (level > int32(spellEntry->GetMaxLevel()) && spellEntry->GetMaxLevel() > 0)
-            level = int32(spellEntry->GetMaxLevel());
-        else if (level < int32(spellEntry->GetBaseLevel()))
-            level = int32(spellEntry->GetBaseLevel());
-        level -= int32(spellEntry->GetSpellLevel());
-        basePoints += int32(level * basePointsPerLevel);
+        SpellScaling values(caster->getLevel(), spellEntry);
+        if (values.canScale && (int32)values.min[effIndex] != 0)
+        {
+            basePoints = (int32)values.min[effIndex];
+            maxPoints = values.max[effIndex];
+            comboPointScaling = values.pts[effIndex];
+        }
+        else
+        {
+            int32 level = int32(caster->getLevel());
+            if (level > int32(spellEntry->GetMaxLevel()) && spellEntry->GetMaxLevel() > 0)
+                level = int32(spellEntry->GetMaxLevel());
+            else if (level < int32(spellEntry->GetBaseLevel()))
+                level = int32(spellEntry->GetBaseLevel());
+            level -= int32(spellEntry->GetSpellLevel());
+            basePoints += int32(level * basePointsPerLevel);
+        }
     }
 
-    if(maxPoints != 0.00f)
+    if (maxPoints != 0.00f)
         basePoints = irand(basePoints, int32(maxPoints));
     else
     {
@@ -1952,13 +2038,18 @@ int32 SpellMgr::CalculateSpellEffectAmount(SpellEntry const * spellEntry, uint8 
 
         // bonus amount from combo points
         if  (caster->m_movedPlayer)
+        {
             if (uint8 comboPoints = caster->m_movedPlayer->GetComboPoints())
+            {
                 if (float comboDamage = spellEffect->EffectPointsPerComboPoint)
                 {
-                    if(comboPointScaling != 0.00f)
+                    if (comboPointScaling != 0.00f)
                         comboDamage = comboPointScaling;
-                    value += comboDamage * comboPoints;
+
+                    value += int32(comboDamage * comboPoints);
                 }
+            }
+        }
 
         value = caster->ApplyEffectModifiers(spellEntry, effIndex, value);
 
@@ -3981,7 +4072,7 @@ void SpellMgr::LoadSpellCustomAttr()
         case 39805:    // Lightning Overload
         case 64823:    // Item - Druid T8 Balance 4P Bonus
         case 44401:
-//            spellInfo->GetProcCharges() = 1;
+            spellInfo->GetProcCharges();
             count++;
             break;
         case 53390: // Tidal Wave
