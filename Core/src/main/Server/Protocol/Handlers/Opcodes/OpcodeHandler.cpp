@@ -17,4 +17,4 @@
 
 #include "OpcodeHandler.h"
 
-OpcodeHandler opcodeTable[NUM_MSG_TYPES];
+//OpcodeHandler opcodeTable[NUM_MSG_TYPES];

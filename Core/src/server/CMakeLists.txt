@@ -1,2 +1,3 @@
-add_subdirectory(logon)
+add_subdirectory(realm)
+
 add_subdirectory(world)

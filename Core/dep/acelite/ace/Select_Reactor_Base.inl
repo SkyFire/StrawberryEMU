@@ -112,10 +112,9 @@ ACE_Event_Tuple::operator!= (const ACE_Event_Tuple &rhs) const
   return !(*this == rhs);
 }
 
-#if defined (ACE_WIN32_VC8) || defined (ACE_WIN32_VC9)
-#  pragma warning (push)
-#  pragma warning (disable:4355)  /* Use of 'this' in initializer list */
-#endif
+#pragma warning (push)
+#pragma warning (disable:4355)  /* Use of 'this' in initializer list */
+
 ACE_INLINE
 ACE_Select_Reactor_Impl::ACE_Select_Reactor_Impl (bool ms)
   : handler_rep_ (*this)

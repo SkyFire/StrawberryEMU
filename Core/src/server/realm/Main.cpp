@@ -245,24 +245,24 @@ extern int main(int argc, char **argv)
 // Initialize connection to the database
 bool StartDB()
 {
-    std::string dbstring = sConfig->GetStringDefault("LogonDB.Connection", "");
+    std::string dbstring = sConfig->GetStringDefault("RealmDB.Connection", "");
     if (dbstring.empty())
     {
         sLog->outError("Database not specified");
         return false;
     }
 
-    uint8 worker_threads = sConfig->GetIntDefault("LogonDB.ASynchThreads", 1);
+    uint8 worker_threads = sConfig->GetIntDefault("RealmDB.ASynchThreads", 1);
     if (worker_threads < 1 || worker_threads > 32)
     {
-        sLog->outError("Improper value specified for LogonDB.ASynchThreads, defaulting to 1.");
+        sLog->outError("Improper value specified for RealmDB.ASynchThreads, defaulting to 1.");
         worker_threads = 1;
     }
 
-    uint8 synch_threads = sConfig->GetIntDefault("LogonDB.Connections", 1);
+    uint8 synch_threads = sConfig->GetIntDefault("RealmDB.Connections", 1);
     if (synch_threads < 1 || synch_threads > 32)
     {
-        sLog->outError("Improper value specified for LogonDB.Connections, defaulting to 1.");
+        sLog->outError("Improper value specified for RealmDB.Connections, defaulting to 1.");
         synch_threads = 1;
     }
 
