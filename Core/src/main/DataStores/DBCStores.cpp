@@ -249,7 +249,7 @@ static bool ReadDBCBuildFileText(const std::string& dbc_path, char const* locale
 {
     std::string filename  = dbc_path + "component.wow-" + localeName + ".txt";
 
-    if(FILE* file = fopen(filename.c_str(),"rb"))
+    if (FILE* file = fopen(filename.c_str(),"rb"))
     {
         char buf[100];
         fread(buf,1,100-1,file);
@@ -331,7 +331,7 @@ inline void LoadDBC(LocalData& localeData, StoreProblemList& errlist, DBCStorage
     if (custom_entries)
         sql = new SqlDbc(&filename, custom_entries, idname, storage.GetFormat());
 
-    if(storage.Load(dbc_filename.c_str(),localeData.defaultLocale, sql))
+    if(storage.Load(dbc_filename.c_str(), localeData.defaultLocale, sql))
     {
         for(uint8 i = 0; fullLocaleNameList[i].name; ++i)
         {
@@ -347,7 +347,7 @@ inline void LoadDBC(LocalData& localeData, StoreProblemList& errlist, DBCStorage
                 localeData.checkedDbcLocaleBuilds |= (1<<i);// mark as checked for speedup next checks
 
 
-                uint32 build_loc = ReadDBCBuild(dbc_dir_loc,localStr);
+                uint32 build_loc = ReadDBCBuild(dbc_dir_loc, localStr);
                 if(localeData.main_build != build_loc)
                 {
                     localeData.availableDbcLocales &= ~(1<<i);  // mark as not available for speedup next checks
@@ -366,7 +366,7 @@ inline void LoadDBC(LocalData& localeData, StoreProblemList& errlist, DBCStorage
             }
 
             std::string dbc_filename_loc = dbc_path + localStr->name + "/" + filename;
-            if(!storage.LoadStringsFrom(dbc_filename_loc.c_str(),localStr->locale))
+            if (!storage.LoadStringsFrom(dbc_filename_loc.c_str(),localStr->locale))
                 localeData.availableDbcLocales &= ~(1<<i);  // mark as not available for speedup next checks
         }
     }
@@ -374,7 +374,7 @@ inline void LoadDBC(LocalData& localeData, StoreProblemList& errlist, DBCStorage
     {
         // sort problematic dbc to (1) non compatible and (2) nonexistent
         FILE * f=fopen(dbc_filename.c_str(),"rb");
-        if(f)
+        if (f)
         {
             char buf[100];
             snprintf(buf,100," (exist, but have %d fields instead " SIZEFMTD ") Wrong client version DBC file?",storage.GetFieldCount(),strlen(storage.GetFormat()));

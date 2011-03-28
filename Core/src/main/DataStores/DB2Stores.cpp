@@ -77,7 +77,7 @@ inline void LoadDB2(LocalDB2Data& localeData, StoreProblemList1& errlist, DB2Sto
         if(f)
         {
             char buf[100];
-            snprintf(buf,100," (exist, but have %d fields instead " SIZEFMTD ") Wrong client version DBC file?",storage.GetFieldCount(),strlen(storage.GetFormat()));
+            snprintf(buf,100," (exist, but have %d fields instead " SIZEFMTD ") Wrong client version DB2 file?",storage.GetFieldCount(),strlen(storage.GetFormat()));
             errlist.push_back(db2_filename + buf);
             fclose(f);
         }
@@ -89,7 +89,7 @@ inline void LoadDB2(LocalDB2Data& localeData, StoreProblemList1& errlist, DB2Sto
 void LoadDB2Stores(const std::string& dataPath)
 {
     uint32 oldMSTime = getMSTime();
-    std::string db2Path = dataPath + "dbc/";
+    std::string db2Path = dataPath + "db2/";
 
     LocaleNameStr const* defaultLocaleNameStr = NULL;
 
