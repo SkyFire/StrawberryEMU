@@ -44,9 +44,9 @@ enum ClientOpcodes
     /***********************************************************/
     /***************** AUTHENTICATION OPCODES ******************/
     /***********************************************************/
-    CMSG_AUTH_SESSION                                   = 0x0E0E,    // 3598 - 4.0.6.13623
+    CMSG_AUTH_SESSION                                   = 0x0E0E,    // 3598  - 4.0.6.13623
     CMSG_REALM_SPLIT                                    = 0x60AC,    // 18301 - 4.0.6.13623
-    CMSG_REDIRECTION_FAILED                             = 0x0509,    // - 4.0.6.13623
+    CMSG_REDIRECTION_FAILED                             = 0x0509,    // 1289  - 4.0.6.13623
     CMSG_UNKNOWN_1296                                   = 0x510,
     CMSG_REDIRECTION_AUTH_PROOF                         = 0x0E4C,    // 3660 - 4.0.6.13529
 
@@ -60,35 +60,35 @@ enum ClientOpcodes
     /***********************************************************/
     CMSG_BATTLEFIELD_LIST                               = 0x0093,    // 147   - 4.0.6.13623
     CMSG_BATTLEFIELD_JOIN                               = 0x23E,
-    CMSG_BATTLEFIELD_STATUS                             = 0x2D3,     //
-    CMSG_BATTLEFIELD_PORT                               = 0x2D5,     //
-    CMSG_BATTLEMASTER_HELLO                             = 0x2D7,     //
-    CMSG_LEAVE_BATTLEFIELD                              = 0x2E1,     //
-    CMSG_BATTLEMASTER_JOIN_ARENA                        = 0x358,     //
-    CMSG_BATTLEFIELD_MGR_ENTRY_INVITE_RESPONSE          = 0x4DF,     //
+    CMSG_BATTLEFIELD_STATUS                             = 0x2D3,
+    CMSG_BATTLEFIELD_PORT                               = 0x2D5,
+    CMSG_BATTLEMASTER_HELLO                             = 0x2D7,
+    CMSG_LEAVE_BATTLEFIELD                              = 0x2E1,
+    CMSG_BATTLEMASTER_JOIN_ARENA                        = 0x358,
+    CMSG_BATTLEFIELD_MGR_ENTRY_INVITE_RESPONSE          = 0x4DF,
     CMSG_BATTLEFIELD_MGR_QUEUE_INVITE_RESPONSE          = 0x8108,    // 33032 - 4.0.6.13623
-    CMSG_BATTLEFIELD_MGR_QUEUE_REQUEST                  = 0x4E3,     //
+    CMSG_BATTLEFIELD_MGR_QUEUE_REQUEST                  = 0x4E3,
     CMSG_BATTLEFIELD_MGR_EXIT_REQUEST                   = 0x8580,    // 34176 - 4.0.6.13623
 
     /***********************************************************/
     /******************** CALENDAR OPCODES *********************/
     /***********************************************************/
-    CMSG_CALENDAR_GET_CALENDAR                          = 0x263,    // 65972 - 4.0.6.13623
-    CMSG_CALENDAR_GET_EVENT                             = 0x101B5,
-    CMSG_CALENDAR_GUILD_FILTER                          = 0x101B6,
-    CMSG_CALENDAR_ARENA_TEAM                            = 0x101B7,
+    CMSG_CALENDAR_GET_CALENDAR                          = 0x429,
+    CMSG_CALENDAR_GET_EVENT                             = 0x3580,    // 13696 - 4.0.6.13623
+    CMSG_CALENDAR_GUILD_FILTER                          = 0xADAC,    // 44460 - 4.0.6.13623
+    CMSG_CALENDAR_ARENA_TEAM                            = 0xE9AC,    // 59820 - 4.0.6.13623
     CMSG_CALENDAR_ADD_EVENT                             = 0xF488,    // 62600 - 4.0.6.13623
-    CMSG_CALENDAR_UPDATE_EVENT                          = 0x101B8,
-    CMSG_CALENDAR_REMOVE_EVENT                          = 0x4C5F,    // 19551 - 4.0.6.13623
-    CMSG_CALENDAR_COPY_EVENT                            = 0x101BA,
+    CMSG_CALENDAR_UPDATE_EVENT                          = 0xF084,    // 61572 - 4.0.6.13623
+    CMSG_CALENDAR_REMOVE_EVENT                          = 0x6C88,    // 27784 - 4.0.6.13623
+    CMSG_CALENDAR_COPY_EVENT                            = 0xBF84,    // 49028 - 4.0.6.13623
     CMSG_CALENDAR_EVENT_INVITE                          = 0xF6C4,    // 63172 - 4.0.6.13623
     CMSG_CALENDAR_EVENT_RSVP                            = 0x757F,    // 30079 - 4.0.6.13623
-    CMSG_CALENDAR_EVENT_REMOVE_INVITE                   = 0x101BD, 
-    CMSG_CALENDAR_EVENT_STATUS                          = 0x101BE, 
-    CMSG_CALENDAR_EVENT_MODERATOR_STATUS                = 0x101BF,
+    CMSG_CALENDAR_EVENT_REMOVE_INVITE                   = 0xEBCC,    // 60364 - 4.0.6.13623
+    CMSG_CALENDAR_EVENT_STATUS                          = 0xBC84,    // 48260 - 4.0.6.13623
+    CMSG_CALENDAR_EVENT_MODERATOR_STATUS                = 0xBDE4,    // 48612 - 4.0.6.13623
     CMSG_CALENDAR_COMPLAIN                              = 0x1E75,    // 7797  - 4.0.6.13623
     CMSG_CALENDAR_GET_NUM_PENDING                       = 0xEFAC,    // 61356 - 4.0.6.13623
-    CMSG_CALENDAR_CONTEXT_EVENT_SIGNUP                  = 0xDC74,    // - 4.0.3.13329
+    CMSG_CALENDAR_CONTEXT_EVENT_SIGNUP                  = 0xAEAC,    // 44716 - 4.0.6.13623
 
     /***********************************************************/
     /******************** CHARACTER OPCODES ********************/
@@ -157,7 +157,7 @@ enum ClientOpcodes
     CMSG_CHANNEL_SILENCE_VOICE                          = 0x0801,    // 2049  - 4.0.6.13623
     CMSG_CHANNEL_SILENCE_ALL                            = 0x0021,    // 33    - 4.0.6.13623
     CMSG_CHANNEL_UNSILENCE_VOICE                        = 0x002B,    // 43    - 4.0.6.13623
-    CMSG_CHANNEL_UNSILENCE_ALL                          = 0x0840,    // 2112 - 4.0.6.13623
+    CMSG_CHANNEL_UNSILENCE_ALL                          = 0x0840,    // 2112  - 4.0.6.13623
     CMSG_CHANNEL_DISPLAY_LIST                           = 0x0009,    // 9     - 4.0.6.13623
     CMSG_GET_CHANNEL_MEMBER_COUNT                       = 0x3D4,
     CMSG_SET_CHANNEL_WATCH                              = 0x7FE0,    // 32736 - 4.0.6.13623
@@ -508,7 +508,7 @@ enum ClientOpcodes
     CMSG_SET_PLAYER_DECLINED_NAMES                     = 0xADC0,    // 44480 - 4.0.6.13623
 
     // Player Achievement
-    CMSG_QUERY_INSPECT_ACHIEVEMENTS                    = 0x46B,
+    CMSG_QUERY_INSPECT_ACHIEVEMENTS                    = 0x28EC,    // 10476 - 4.0.6.13623
     CMSG_COMPLETE_ACHIEVEMENT_CHEAT                    = 0x46E,
     CMSG_SET_CRITERIA_CHEAT                            = 0x470,
     CMSG_CHECK_LOGIN_CRITERIA                          = 0x4A2,
@@ -528,15 +528,10 @@ enum ClientOpcodes
     CMSG_REFER_A_FRIEND                                 = 0x40E,
 
     // Player Dance
-    CMSG_SAVE_DANCE                                     = 0x449,
-    CMSG_PLAY_DANCE                                     = 0x44B,
-    CMSG_LOAD_DANCES                                    = 0x44D,
-    CMSG_STOP_DANCE                                     = 0x44E,
+    CMSG_PLAY_DANCE                                     = 0x2288,    // 8840  - 4.0.6.13623
+    CMSG_STOP_DANCE                                     = 0x3080,    // 12416 - 4.0.6.13623
     CMSG_SYNC_DANCE                                     = 0x450,
     CMSG_DANCE_QUERY                                    = 0x22A0,    // 8864  - 4.0.6.13623
-    CMSG_DELETE_DANCE                                   = 0x454,
-    CMSG_LEARN_DANCE_MOVE                               = 0x456,
-    CMSG_UNLEARN_DANCE_MOVE                             = 0x457,
 
     // Player Level
     CMSG_LEVEL_CHEAT                                    = 0x025,
@@ -618,7 +613,7 @@ enum ClientOpcodes
 
     // Player Mail
     CMSG_SEND_MAIL                                       = 0x2DEC,    // 11756 - 4.0.6.13623
-    CMSG_GET_MAIL_LIST                                   = 0xB284,    //
+    CMSG_GET_MAIL_LIST                                   = 0xB284,    // 45700 - 4.0.6.13623
     CMSG_MAIL_TAKE_MONEY                                 = 0xE8EC,    // 59628 - 4.0.6.13623
     CMSG_MAIL_TAKE_ITEM                                  = 0x62A8,    // 25256 - 4.0.6.13623
     CMSG_MAIL_MARK_AS_READ                               = 0xE8C0,    // 59584 - 4.0.6.13623
@@ -646,7 +641,7 @@ enum ClientOpcodes
     CMSG_PET_NAME_QUERY                                  = 0xF180,    // 61824 - 4.0.6.13623
     CMSG_GUILD_QUERY                                     = 0xAFC4,    // 44996 - 4.0.6.13623
     CMSG_ITEM_QUERY_SINGLE                               = 0x8588,    // 34184 - 4.0.6.13623
-    CMSG_ITEM_QUERY_MULTIPLE                             = 0x057,
+    CMSG_ITEM_QUERY_MULTIPLE                             = 0x0061,    // 97    - 4.0.6.13623
     CMSG_PAGE_TEXT_QUERY                                 = 0xAC8C,    // 44172 - 4.0.6.13623
     CMSG_QUEST_QUERY                                     = 0xEFE8,    // 61416 - 4.0.6.13623
     CMSG_GAMEOBJECT_QUERY                                = 0x72A0,    // 29344 - 4.0.6.13623
@@ -658,16 +653,12 @@ enum ClientOpcodes
     /***********************************************************/
     /********************* QUEST OPCODES ***********************/
     /***********************************************************/
-    CMSG_FLAG_QUEST                                      = 0x02A,
-    CMSG_FLAG_QUEST_FINISH                               = 0x02B,
-    CMSG_CLEAR_QUEST                                     = 0x02C,
     CMSG_QUESTLOG_SWAP_QUEST                             = 0x193,
     CMSG_QUESTLOG_REMOVE_QUEST                           = 0xEDA8,    // 60840 - 4.0.6.13623
     CMSG_QUEST_CONFIRM_ACCEPT                            = 0x6FCC,    // 28620 - 4.0.6.13623
     CMSG_PUSHQUESTTOPARTY                                = 0x29E8,    // 10728 - 4.0.6.13623
     CMSG_QUEST_POI_QUERY                                 = 0x7DE0,    // 32224 - 4.0.6.13623
-    CMSG_START_QUEST                                     = 0x489,
-    CMSG_QUERY_QUESTS_COMPLETED                          = 0x500,
+    CMSG_QUERY_QUESTS_COMPLETED                          = 0xECE8,    // 60648 - 4.0.6.13623
 
     // Questgiver
     CMSG_QUESTGIVER_STATUS_MULTIPLE_QUERY                = 0x2DAC,    // 11692 - 4.0.6.13623
@@ -702,7 +693,7 @@ enum ClientOpcodes
 
     // Spell Pet
     CMSG_PET_CAST_SPELL                                  = 0x2888,    // 10376 - 4.0.6.13623
-    CMSG_PET_SPELL_AUTOCAST                              = 0x2F3,
+    CMSG_PET_SPELL_AUTOCAST                              = 0xB6A4,    // 46756 - 4.0.6.13623
 
     /***********************************************************/
     /******************* TRANSPORT OPCODES *********************/
@@ -739,8 +730,6 @@ enum ClientOpcodes
     /***********************************************************/
     /****************** UNCATEGORZIED OPCODES ******************/
     /***********************************************************/
-    CMSG_BOOTME                                          = 0x001,
-    CMSG_DBLOOKUP                                        = 0x002,
     CMSG_ZONE_MAP                                        = 0x00A,
     CMSG_DEBUG_CHANGECELLZONE                            = 0x00C,
     CMSG_CREATEMONSTER                                   = 0x011,

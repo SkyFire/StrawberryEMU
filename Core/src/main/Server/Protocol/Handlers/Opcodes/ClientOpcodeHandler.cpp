@@ -541,15 +541,10 @@ void ClientOpcodeTable()
     CLIENTOPCODE(CMSG_REFER_A_FRIEND,                  STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleNULL );
 
     // Player Dance
-    CLIENTOPCODE(CMSG_SAVE_DANCE,                      STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleNULL );
     CLIENTOPCODE(CMSG_PLAY_DANCE,                      STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleNULL );
-    CLIENTOPCODE(CMSG_LOAD_DANCES,                     STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleNULL );
     CLIENTOPCODE(CMSG_STOP_DANCE,                      STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleNULL );
     CLIENTOPCODE(CMSG_SYNC_DANCE,                      STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleNULL );
     CLIENTOPCODE(CMSG_DANCE_QUERY,                     STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleNULL );
-    CLIENTOPCODE(CMSG_DELETE_DANCE,                    STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleNULL );
-    CLIENTOPCODE(CMSG_LEARN_DANCE_MOVE,                STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleNULL );
-    CLIENTOPCODE(CMSG_UNLEARN_DANCE_MOVE,              STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleNULL );
 
     // Player Level
     CLIENTOPCODE(CMSG_LEVEL_CHEAT,                     STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleNULL );
@@ -674,16 +669,11 @@ void ClientOpcodeTable()
     /***********************************************************/
     /********************* QUEST OPCODES ***********************/
     /***********************************************************/
-
-    CLIENTOPCODE(CMSG_FLAG_QUEST,                      STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleNULL );
-    CLIENTOPCODE(CMSG_FLAG_QUEST_FINISH,               STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleNULL );
-    CLIENTOPCODE(CMSG_CLEAR_QUEST,                     STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleNULL );
     CLIENTOPCODE(CMSG_QUESTLOG_SWAP_QUEST,             STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleQuestLogSwapQuest );
     CLIENTOPCODE(CMSG_QUESTLOG_REMOVE_QUEST,           STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleQuestLogRemoveQuest );
     CLIENTOPCODE(CMSG_QUEST_CONFIRM_ACCEPT,            STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleQuestConfirmAccept );
     CLIENTOPCODE(CMSG_PUSHQUESTTOPARTY,                STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandlePushQuestToParty );
     CLIENTOPCODE(CMSG_QUEST_POI_QUERY,                 STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleQuestPOIQuery );
-    CLIENTOPCODE(CMSG_START_QUEST,                     STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleNULL );
     CLIENTOPCODE(CMSG_QUERY_QUESTS_COMPLETED,          STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleQueryQuestsCompleted );
 
     // Questgiver
@@ -759,9 +749,6 @@ void ClientOpcodeTable()
     /***********************************************************/
     /****************** UNCATEGORZIED OPCODES ******************/
     /***********************************************************/
-
-    CLIENTOPCODE(CMSG_BOOTME,                            STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleNULL );
-    CLIENTOPCODE(CMSG_DBLOOKUP,                          STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleNULL );
     CLIENTOPCODE(CMSG_ZONE_MAP,                          STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleNULL );
     CLIENTOPCODE(CMSG_DEBUG_CHANGECELLZONE,              STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleNULL );
     CLIENTOPCODE(CMSG_CREATEMONSTER,                     STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleNULL );

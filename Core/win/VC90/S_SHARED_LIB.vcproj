@@ -67,7 +67,7 @@
 				DebugInformationFormat="3"
 				CallingConvention="0"
 				CompileAs="0"
-                ForcedIncludeFiles="..\..\src\shared\PCH\sharedPCH.h"
+				ForcedIncludeFiles="..\..\src\shared\PCH\sharedPCH.h"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -151,7 +151,7 @@
 				DebugInformationFormat="3"
 				CallingConvention="0"
 				CompileAs="0"
-                ForcedIncludeFiles="..\..\src\shared\PCH\sharedPCH.h"
+				ForcedIncludeFiles="..\..\src\shared\PCH\sharedPCH.h"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -234,7 +234,7 @@
 				DebugInformationFormat="3"
 				CallingConvention="0"
 				CompileAs="0"
-                ForcedIncludeFiles="..\..\src\shared\PCH\sharedPCH.h"
+				ForcedIncludeFiles="..\..\src\shared\PCH\sharedPCH.h"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -317,7 +317,7 @@
 				DebugInformationFormat="3"
 				CallingConvention="0"
 				CompileAs="0"
-                ForcedIncludeFiles="..\..\src\shared\PCH\sharedPCH.h"
+				ForcedIncludeFiles="..\..\src\shared\PCH\sharedPCH.h"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -357,518 +357,522 @@
 	<References>
 	</References>
 	<Files>
-        <Filter
+		<Filter
 			Name="Collision"
 			>
-            <File
+			<File
 				RelativePath="..\..\src\shared\Collision\BoundingIntervalHierarchy.cpp"
 				>
-            </File>
-            <File
+			</File>
+			<File
 				RelativePath="..\..\src\shared\Collision\BoundingIntervalHierarchy.h"
 				>
-            </File>
-            <File
+			</File>
+			<File
 				RelativePath="..\..\src\shared\Collision\VMapDefinitions.h"
 				>
-            </File>
-            <File
+			</File>
+			<File
 				RelativePath="..\..\src\shared\Collision\VMapTools.h"
 				>
-            </File>
-            <Filter
+			</File>
+			<Filter
 				Name="Management"
 				>
-                <File
+				<File
 					RelativePath="..\..\src\shared\Collision\Management\IVMapManager.h"
 					>
-                </File>
-                <File
+				</File>
+				<File
 					RelativePath="..\..\src\shared\Collision\Management\VMapFactory.cpp"
 					>
-                </File>
-                <File
+				</File>
+				<File
 					RelativePath="..\..\src\shared\Collision\Management\VMapFactory.h"
 					>
-                </File>
-                <File
+				</File>
+				<File
 					RelativePath="..\..\src\shared\Collision\Management\VMapManager2.cpp"
 					>
-                </File>
-                <File
+				</File>
+				<File
 					RelativePath="..\..\src\shared\Collision\Management\VMapManager2.h"
 					>
-                </File>
-            </Filter>
-            <Filter
+				</File>
+			</Filter>
+			<Filter
 				Name="Maps"
 				>
-                <File
+				<File
 					RelativePath="..\..\src\shared\Collision\Maps\MapTree.cpp"
 					>
-                </File>
-                <File
+				</File>
+				<File
 					RelativePath="..\..\src\shared\Collision\Maps\MapTree.h"
 					>
-                </File>
-                <File
+				</File>
+				<File
 					RelativePath="..\..\src\shared\Collision\Maps\TileAssembler.cpp"
 					>
-                </File>
-                <File
+				</File>
+				<File
 					RelativePath="..\..\src\shared\Collision\Maps\TileAssembler.h"
 					>
-                </File>
-            </Filter>
-            <Filter
+				</File>
+			</Filter>
+			<Filter
 				Name="Models"
 				>
-                <File
+				<File
 					RelativePath="..\..\src\shared\Collision\Models\ModelInstance.cpp"
 					>
-                </File>
-                <File
+				</File>
+				<File
 					RelativePath="..\..\src\shared\Collision\Models\ModelInstance.h"
 					>
-                </File>
-                <File
+				</File>
+				<File
 					RelativePath="..\..\src\shared\Collision\Models\WorldModel.cpp"
 					>
-                </File>
-                <File
+				</File>
+				<File
 					RelativePath="..\..\src\shared\Collision\Models\WorldModel.h"
 					>
-                </File>
-            </Filter>
-        </Filter>
-        <Filter
+				</File>
+			</Filter>
+		</Filter>
+		<Filter
 			Name="Configuration"
 			>
-            <File
+			<File
 				RelativePath="..\..\src\shared\Configuration\Config.cpp"
 				>
-            </File>
-            <File
+			</File>
+			<File
 				RelativePath="..\..\src\shared\Configuration\Config.h"
 				>
-            </File>
-        </Filter>
-        <Filter
+			</File>
+		</Filter>
+		<Filter
 			Name="Cryptography"
 			>
-            <File
+			<File
 				RelativePath="..\..\src\shared\Cryptography\ARC4.cpp"
 				>
-            </File>
-            <File
+			</File>
+			<File
 				RelativePath="..\..\src\shared\Cryptography\ARC4.h"
 				>
-            </File>
-            <File
+			</File>
+			<File
 				RelativePath="..\..\src\shared\Cryptography\BigNumber.cpp"
 				>
-            </File>
-            <File
+			</File>
+			<File
 				RelativePath="..\..\src\shared\Cryptography\BigNumber.h"
 				>
-            </File>
-            <File
+			</File>
+			<File
 				RelativePath="..\..\src\shared\Cryptography\HMACSHA1.cpp"
 				>
-            </File>
-            <File
+			</File>
+			<File
 				RelativePath="..\..\src\shared\Cryptography\HMACSHA1.h"
 				>
-            </File>
-            <File
+			</File>
+			<File
 				RelativePath="..\..\src\shared\Cryptography\SHA1.cpp"
 				>
-            </File>
-            <File
+			</File>
+			<File
 				RelativePath="..\..\src\shared\Cryptography\SHA1.h"
 				>
-            </File>
-            <Filter
+			</File>
+			<Filter
 				Name="Authentication"
 				>
-                <File
+				<File
 					RelativePath="..\..\src\shared\Cryptography\Authentication\AuthCrypt.cpp"
 					>
-                </File>
-                <File
+				</File>
+				<File
 					RelativePath="..\..\src\shared\Cryptography\Authentication\AuthCrypt.h"
 					>
-                </File>
-            </Filter>
-        </Filter>
-        <Filter
+				</File>
+			</Filter>
+		</Filter>
+		<Filter
 			Name="Database"
 			>
-            <File
+			<File
 				RelativePath="..\..\src\shared\Database\AdhocStatement.cpp"
 				>
-            </File>
-            <File
+			</File>
+			<File
 				RelativePath="..\..\src\shared\Database\AdhocStatement.h"
 				>
-            </File>
-            <File
+			</File>
+			<File
 				RelativePath="..\..\src\shared\Database\DatabaseEnv.h"
 				>
-            </File>
-            <File
+			</File>
+			<File
 				RelativePath="..\..\src\shared\Database\DatabaseWorker.h"
 				>
-            </File>
-            <File
+			</File>
+			<File
 				RelativePath="..\..\src\shared\Database\DatabaseWorkerPool.h"
 				>
-            </File>
-            <File
+			</File>
+			<File
 				RelativePath="..\..\src\shared\Database\Field.cpp"
 				>
-            </File>
-            <File
+			</File>
+			<File
 				RelativePath="..\..\src\shared\Database\Field.h"
 				>
-            </File>
-            <File
+			</File>
+			<File
 				RelativePath="..\..\src\shared\Database\MySQLConnection.cpp"
 				>
-            </File>
-            <File
+			</File>
+			<File
 				RelativePath="..\..\src\shared\Database\MySQLConnection.h"
 				>
-            </File>
-            <File
+			</File>
+			<File
 				RelativePath="..\..\src\shared\Database\MySQLThreading.h"
 				>
-            </File>
-            <File
+			</File>
+			<File
 				RelativePath="..\..\src\shared\Database\PreparedStatement.cpp"
 				>
-            </File>
-            <File
+			</File>
+			<File
 				RelativePath="..\..\src\shared\Database\PreparedStatement.h"
 				>
-            </File>
-            <File
+			</File>
+			<File
 				RelativePath="..\..\src\shared\Database\QueryHolder.cpp"
 				>
-            </File>
-            <File
+			</File>
+			<File
 				RelativePath="..\..\src\shared\Database\QueryHolder.h"
 				>
-            </File>
-            <File
+			</File>
+			<File
 				RelativePath="..\..\src\shared\Database\QueryResult.cpp"
 				>
-            </File>
-            <File
+			</File>
+			<File
 				RelativePath="..\..\src\shared\Database\QueryResult.h"
 				>
-            </File>
-            <File
-				RelativePath="..\..\src\shared\Database\SQLOperation.h"
-				>
-            </File>
-            <File
+			</File>
+			<File
 				RelativePath="..\..\src\shared\PCH\sharedPCH.cpp"
 				>
-                <FileConfiguration
-					Name="Debug|Win32"
-					>
-                    <Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="1"
-						PrecompiledHeaderThrough="..\..\src\shared\PCH\sharedPCH.h"
-					/>
-                </FileConfiguration>
-                <FileConfiguration
+				<FileConfiguration
 					Name="Release|Win32"
 					>
-                    <Tool
+					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="1"
 						PrecompiledHeaderThrough="..\..\src\shared\PCH\sharedPCH.h"
 					/>
-                </FileConfiguration>
-                <FileConfiguration
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="1"
+						PrecompiledHeaderThrough="..\..\src\shared\PCH\sharedPCH.h"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
 					Name="MinSizeRel|Win32"
 					>
-                    <Tool
+					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="1"
 						PrecompiledHeaderThrough="..\..\src\shared\PCH\sharedPCH.h"
 					/>
-                </FileConfiguration>
-                <FileConfiguration
+				</FileConfiguration>
+				<FileConfiguration
 					Name="RelWithDebInfo|Win32"
 					>
-                    <Tool
+					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="1"
 						PrecompiledHeaderThrough="..\..\src\shared\PCH\sharedPCH.h"
 					/>
-                </FileConfiguration>
-            </File>
-            <File
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\src\shared\Database\SQLOperation.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\shared\Database\SQLStorage.cpp"
 				>
-            </File>
-            <File
+			</File>
+			<File
 				RelativePath="..\..\src\shared\Database\SQLStorage.h"
 				>
-            </File>
-            <File
+			</File>
+			<File
 				RelativePath="..\..\src\shared\Database\SQLStorageImpl.h"
 				>
-            </File>
-            <File
+			</File>
+			<File
 				RelativePath="..\..\src\shared\Database\Transaction.cpp"
 				>
-            </File>
-            <File
+			</File>
+			<File
 				RelativePath="..\..\src\shared\Database\Transaction.h"
 				>
-            </File>
-            <Filter
+			</File>
+			<Filter
 				Name="Implementation"
 				>
-                <File
+				<File
 					RelativePath="..\..\src\shared\Database\Implementation\CharacterDatabase.cpp"
 					>
-                </File>
-                <File
+				</File>
+				<File
 					RelativePath="..\..\src\shared\Database\Implementation\CharacterDatabase.h"
 					>
-                </File>
-                <File
+				</File>
+				<File
 					RelativePath="..\..\src\shared\Database\Implementation\LoginDatabase.cpp"
 					>
-                </File>
-                <File
+				</File>
+				<File
 					RelativePath="..\..\src\shared\Database\Implementation\LoginDatabase.h"
 					>
-                </File>
-                <File
+				</File>
+				<File
 					RelativePath="..\..\src\shared\Database\Implementation\WorldDatabase.cpp"
 					>
-                </File>
-                <File
+				</File>
+				<File
 					RelativePath="..\..\src\shared\Database\Implementation\WorldDatabase.h"
 					>
-                </File>
-            </Filter>
-        </Filter>
-        <Filter
+				</File>
+			</Filter>
+		</Filter>
+		<Filter
 			Name="DataStores"
 			>
-            <File
+			<File
 				RelativePath="..\..\src\shared\DataStores\DB2FileLoader.cpp"
 				>
-            </File>
-            <File
+			</File>
+			<File
 				RelativePath="..\..\src\shared\DataStores\DB2FileLoader.h"
 				>
-            </File>
-            <File
+			</File>
+			<File
 				RelativePath="..\..\src\shared\DataStores\DB2Store.h"
 				>
-            </File>
-            <File
+			</File>
+			<File
 				RelativePath="..\..\src\shared\DataStores\DBCFileLoader.cpp"
 				>
-            </File>
-            <File
+			</File>
+			<File
 				RelativePath="..\..\src\shared\DataStores\DBCFileLoader.h"
 				>
-            </File>
-            <File
+			</File>
+			<File
 				RelativePath="..\..\src\shared\DataStores\DBCStore.h"
 				>
-            </File>
-        </Filter>
-        <Filter
+			</File>
+		</Filter>
+		<Filter
 			Name="Debugging"
 			>
-            <File
+			<File
 				RelativePath="..\..\src\shared\Debugging\Errors.h"
 				>
-            </File>
-            <File
+			</File>
+			<File
 				RelativePath="..\..\src\shared\Debugging\WheatyExceptionReport.cpp"
 				>
-            </File>
-            <File
+			</File>
+			<File
 				RelativePath="..\..\src\shared\Debugging\WheatyExceptionReport.h"
 				>
-            </File>
-        </Filter>
-        <Filter
+			</File>
+		</Filter>
+		<Filter
 			Name="Dynamic"
 			>
-            <File
+			<File
 				RelativePath="..\..\src\shared\Dynamic\FactoryHolder.h"
 				>
-            </File>
-            <File
+			</File>
+			<File
 				RelativePath="..\..\src\shared\Dynamic\LinkedList.h"
 				>
-            </File>
-            <File
+			</File>
+			<File
 				RelativePath="..\..\src\shared\Dynamic\ObjectRegistry.h"
 				>
-            </File>
-            <File
+			</File>
+			<File
 				RelativePath="..\..\src\shared\Dynamic\TypeContainer.h"
 				>
-            </File>
-            <File
+			</File>
+			<File
 				RelativePath="..\..\src\shared\Dynamic\TypeContainerFunctions.h"
 				>
-            </File>
-            <File
+			</File>
+			<File
 				RelativePath="..\..\src\shared\Dynamic\TypeContainerFunctionsPtr.h"
 				>
-            </File>
-            <File
+			</File>
+			<File
 				RelativePath="..\..\src\shared\Dynamic\TypeContainerVisitor.h"
 				>
-            </File>
-            <File
+			</File>
+			<File
 				RelativePath="..\..\src\shared\Dynamic\TypeList.h"
 				>
-            </File>
-            <File
+			</File>
+			<File
 				RelativePath="..\..\src\shared\Dynamic\UnorderedMap.h"
 				>
-            </File>
-            <Filter
+			</File>
+			<Filter
 				Name="LinkedReference"
 				>
-                <File
+				<File
 					RelativePath="..\..\src\shared\Dynamic\LinkedReference\Reference.h"
 					>
-                </File>
-                <File
+				</File>
+				<File
 					RelativePath="..\..\src\shared\Dynamic\LinkedReference\RefManager.h"
 					>
-                </File>
-            </Filter>
-        </Filter>
-        <Filter
+				</File>
+			</Filter>
+		</Filter>
+		<Filter
 			Name="Logging"
 			>
-            <File
+			<File
 				RelativePath="..\..\src\shared\Logging\Log.cpp"
 				>
-            </File>
-            <File
+			</File>
+			<File
 				RelativePath="..\..\src\shared\Logging\Log.h"
 				>
-            </File>
-        </Filter>
-        <Filter
+			</File>
+		</Filter>
+		<Filter
 			Name="Packets"
 			>
-            <File
+			<File
 				RelativePath="..\..\src\shared\Packets\ByteBuffer.h"
 				>
-            </File>
-            <File
+			</File>
+			<File
 				RelativePath="..\..\src\shared\Packets\WorldPacket.h"
 				>
-            </File>
-        </Filter>
-        <Filter
+			</File>
+		</Filter>
+		<Filter
 			Name="Threading"
 			>
-            <File
+			<File
 				RelativePath="..\..\src\shared\Threading\Callback.h"
 				>
-            </File>
-            <File
+			</File>
+			<File
 				RelativePath="..\..\src\shared\Threading\DelayExecutor.cpp"
 				>
-            </File>
-            <File
+			</File>
+			<File
 				RelativePath="..\..\src\shared\Threading\DelayExecutor.h"
 				>
-            </File>
-            <File
+			</File>
+			<File
 				RelativePath="..\..\src\shared\Threading\LockedQueue.h"
 				>
-            </File>
-            <File
+			</File>
+			<File
 				RelativePath="..\..\src\shared\Threading\Threading.cpp"
 				>
-            </File>
-            <File
+			</File>
+			<File
 				RelativePath="..\..\src\shared\Threading\Threading.h"
 				>
-            </File>
-        </Filter>
-        <Filter
+			</File>
+		</Filter>
+		<Filter
 			Name="Utilities"
 			>
-            <File
+			<File
 				RelativePath="..\..\src\shared\Utilities\ByteConverter.h"
 				>
-            </File>
-            <File
+			</File>
+			<File
 				RelativePath="..\..\src\shared\Utilities\EventProcessor.cpp"
 				>
-            </File>
-            <File
+			</File>
+			<File
 				RelativePath="..\..\src\shared\Utilities\EventProcessor.h"
 				>
-            </File>
-            <File
+			</File>
+			<File
 				RelativePath="..\..\src\shared\Utilities\ServiceWin32.cpp"
 				>
-            </File>
-            <File
+			</File>
+			<File
 				RelativePath="..\..\src\shared\Utilities\ServiceWin32.h"
 				>
-            </File>
-            <File
+			</File>
+			<File
 				RelativePath="..\..\src\shared\Utilities\SignalHandler.h"
 				>
-            </File>
-            <File
+			</File>
+			<File
 				RelativePath="..\..\src\shared\Utilities\Timer.h"
 				>
-            </File>
-            <File
+			</File>
+			<File
 				RelativePath="..\..\src\shared\Utilities\Util.cpp"
 				>
-            </File>
-            <File
+			</File>
+			<File
 				RelativePath="..\..\src\shared\Utilities\Util.h"
 				>
-            </File>
-        </Filter>
-        <File
+			</File>
+		</Filter>
+		<File
 			RelativePath="..\..\src\shared\Common.cpp"
 			>
-        </File>
-        <File
+		</File>
+		<File
 			RelativePath="..\..\src\shared\Common.h"
 			>
-        </File>
-        <File
+		</File>
+		<File
 			RelativePath="..\..\src\shared\CompilerDefs.h"
 			>
-        </File>
-        <File
+		</File>
+		<File
 			RelativePath="..\..\src\shared\Define.h"
 			>
-        </File>
-        <File
+		</File>
+		<File
+			RelativePath="..\..\src\shared\revision_nr.h"
+			>
+		</File>
+		<File
 			RelativePath="..\..\src\shared\SystemConfig.h"
 			>
-        </File>
+		</File>
 	</Files>
 	<Globals>
 	</Globals>

@@ -84,27 +84,27 @@ enum ServerOpcodes
     /***********************************************************/
     /******************** CALENDAR OPCODES *********************/
     /***********************************************************/
-    SMSG_CALENDAR_SEND_CALENDAR                          = 0x436,
-    SMSG_CALENDAR_SEND_EVENT                             = 0x437,
-    SMSG_CALENDAR_FILTER_GUILD                           = 0x438,
-    SMSG_CALENDAR_ARENA_TEAM                             = 0x439,
-    SMSG_CALENDAR_EVENT_INVITE                           = 0x43A,
-    SMSG_CALENDAR_EVENT_INVITE_REMOVED                   = 0x43B,
-    SMSG_CALENDAR_EVENT_STATUS                           = 0x43C,
+    SMSG_CALENDAR_SEND_CALENDAR                          = 0xB0A4,    // 45220 - 4.0.6.13623
+    SMSG_CALENDAR_SEND_EVENT                             = 0xFAA4,    // 64164 - 4.0.6.13623
+    SMSG_CALENDAR_FILTER_GUILD                           = 0x2FC4,    // 12228 - 4.0.6.13623
+    SMSG_CALENDAR_ARENA_TEAM                             = 0x21E0,    // 8672  - 4.0.6.13623
+    SMSG_CALENDAR_EVENT_INVITE                           = 0xA5A0,    // 42400 - 4.0.6.13623
+    SMSG_CALENDAR_EVENT_INVITE_REMOVED                   = 0xA9E0,    // 43488 - 4.0.6.13623
+    SMSG_CALENDAR_EVENT_STATUS                           = 0x7EC0,    // 32448 - 4.0.6.13623
     SMSG_CALENDAR_COMMAND_RESULT                         = 0xAD80,    // 44416 - 4.0.6.13623
-    SMSG_CALENDAR_RAID_LOCKOUT_ADDED                     = 0x43E,
-    SMSG_CALENDAR_RAID_LOCKOUT_REMOVED                   = 0x43F,
-    SMSG_CALENDAR_EVENT_INVITE_ALERT                     = 0x440,
-    SMSG_CALENDAR_EVENT_INVITE_REMOVED_ALERT             = 0x441,
-    SMSG_CALENDAR_EVENT_INVITE_STATUS_ALERT              = 0x442,
-    SMSG_CALENDAR_EVENT_REMOVED_ALERT                    = 0x443,
-    SMSG_CALENDAR_EVENT_UPDATED_ALERT                    = 0x444,
-    SMSG_CALENDAR_EVENT_MODERATOR_STATUS_ALERT           = 0x445,
-    SMSG_CALENDAR_SEND_NUM_PENDING                       = 0x448,
-    SMSG_CALENDAR_UPDATE_INVITE_LIST                     = 0x460,
-    SMSG_CALENDAR_UPDATE_INVITE_LIST2                    = 0x461,
-    SMSG_CALENDAR_UPDATE_INVITE_LIST3                    = 0x471,
-    SMSG_CALENDAR_ACTION_PENDING                         = 0x4BB,
+    SMSG_CALENDAR_RAID_LOCKOUT_ADDED                     = 0x2AE0,    // 10976 - 4.0.6.13623
+    SMSG_CALENDAR_RAID_LOCKOUT_REMOVED                   = 0xFCE0,    // 64736 - 4.0.6.13623
+    SMSG_CALENDAR_EVENT_INVITE_ALERT                     = 0xAFA8,    // 44968 - 4.0.6.13623
+    SMSG_CALENDAR_EVENT_INVITE_REMOVED_ALERT             = 0xFEE0,    // 65248 - 4.0.6.13623
+    SMSG_CALENDAR_EVENT_INVITE_STATUS_ALERT              = 0xF7C8,    // 63432 - 4.0.6.13623
+    SMSG_CALENDAR_EVENT_REMOVED_ALERT                    = 0x6288,    // 25224 - 4.0.6.13623
+    SMSG_CALENDAR_EVENT_UPDATED_ALERT                    = 0x29C0,    // 10688 - 4.0.6.13623
+    SMSG_CALENDAR_EVENT_MODERATOR_STATUS_ALERT           = 0xABC8,    // 43976 - 4.0.6.13623
+    SMSG_CALENDAR_SEND_NUM_PENDING                       = 0xA8E0,    // 43232 - 4.0.6.13623
+    SMSG_CALENDAR_UPDATE_INVITE_LIST                     = 0x71A0,    // 29088 - 4.0.6.13623
+    SMSG_CALENDAR_UPDATE_INVITE_LIST2                    = 0xEDC4,    // 60868 - 4.0.6.13623
+    SMSG_CALENDAR_UPDATE_INVITE_LIST3                    = 0xA2A0,    // 41632 - 4.0.6.13623
+    SMSG_CALENDAR_ACTION_PENDING                         = 0x7E8C,    // 32396 - 4.0.6.13623
 
     /***********************************************************/
     /******************** CHARACTER OPCODES ********************/
@@ -129,7 +129,7 @@ enum ServerOpcodes
     SMSG_CHAT_PLAYER_AMBIGUOUS                           = 0x32D,
     SMSG_EXPECTED_SPAM_RECORDS                           = 0x6084,    // 24708 - 4.0.6.13623
     SMSG_DEFENSE_MESSAGE                                 = 0x65EC,    // 26092 - 4.0.6.13623
-    SMSG_MOTD                                            = 0x33D,
+    SMSG_MOTD                                            = 0x77C0,    // 30656 - 4.0.6.13623
     SMSG_SERVER_INFO_RESPONSE                            = 0x4A1,
 
     // Channel
@@ -147,7 +147,7 @@ enum ServerOpcodes
     SMSG_SPELLBREAKLOG                                   = 0xBDAC,    // 48556 - 4.0.6.13623
     SMSG_SPELLHEALLOG                                    = 0x6E84,    // 28292 - 4.0.6.13623
     SMSG_SPELLENERGIZELOG                                = 0xF0EC,    // 61676 - 4.0.6.13623
-    SMSG_BREAK_TARGET                                    = 0x152,
+    SMSG_BREAK_TARGET                                    = 0x2488,    // 9352  - 4.0.6.13623
     SMSG_SPELLLOGMISS                                    = 0x24B,
     SMSG_SPELLLOGEXECUTE                                 = 0x24C,
     SMSG_DEBUGAURAPROC                                   = 0x24D,
@@ -349,7 +349,6 @@ enum ServerOpcodes
     /***********************************************************/
     /******************* LOGIN / OUT OPCODES *******************/
     /***********************************************************/
-    // Login
     // Logout
     SMSG_LOGOUT_RESPONSE                                 = 0xF788,    // 63368 - 4.0.6.13623
     SMSG_LOGOUT_COMPLETE                                 = 0xA0A4,    // 41124 - 4.0.6.13623
@@ -489,7 +488,7 @@ enum ServerOpcodes
     SMSG_ADDON_INFO                                      = 0xEA80,    // 60032 - 4.0.6.13623
     SMSG_GHOSTEE_GONE                                    = 0x326,
     SMSG_TITLE_EARNED                                    = 0x6C8C,    // 27788 - 4.0.6.13623
-    SMSG_UPDATE_COMBO_POINTS                             = 0x39D,
+    SMSG_UPDATE_COMBO_POINTS                             = 0x37A8,    // 14248 - 4.0.6.13623
     SMSG_CHEAT_PLAYER_LOOKUP                             = 0x3C4,
     SMSG_KICK_REASON                                     = 0xEAC8,    // 60104 - 4.0.6.13623
     SMSG_SET_PLAYER_DECLINED_NAMES_RESULT                = 0xBAAC,    // 47788 - 4.0.6.13623
@@ -499,12 +498,12 @@ enum ServerOpcodes
     SMSG_THREAT_CLEAR                                    = 0xFFC8,    // 65480 - 4.0.6.13623
 
     // Player Dance
-    SMSG_NOTIFY_DANCE                                    = 0x44A,
-    SMSG_PLAY_DANCE                                      = 0x44C,
-    SMSG_STOP_DANCE                                      = 0x44F,
-    SMSG_DANCE_QUERY_RESPONSE                            = 0x452,
-    SMSG_INVALIDATE_DANCE                                = 0x453,
-    SMSG_LEARNED_DANCE_MOVES                             = 0x455,
+    SMSG_NOTIFY_DANCE                                    = 0x3488,    // 13448 - 4.0.6.13623
+    SMSG_PLAY_DANCE                                      = 0xB4EC,    // 46316 - 4.0.6.13623
+    SMSG_STOP_DANCE                                      = 0xE0A8,    // 57512 - 4.0.6.13623
+    SMSG_DANCE_QUERY_RESPONSE                            = 0x31A8,    // 12712 - 4.0.6.13623
+    SMSG_INVALIDATE_DANCE                                = 0xBEE8,    // 48872 - 4.0.6.13623
+    SMSG_LEARNED_DANCE_MOVES                             = 0x6F80,    // 28544 - 4.0.6.13623
 
     // Player Achievement
     SMSG_ACHIEVEMENT_EARNED                              = 0xF5E4,    // 62948 - 4.0.6.13623
@@ -540,9 +539,9 @@ enum ServerOpcodes
     SMSG_PET_DISMISS_SOUND                               = 0xB7E0,    // 47072 - 4.0.6.13623
 
     // Player PVP / Honor / Arena
-    SMSG_PVP_CREDIT                                      = 0xA68C,    // 46636 - 4.0.6.13623
+    SMSG_PVP_CREDIT                                      = 0x37C8,    // 14280 - 4.0.6.13623
     SMSG_ARENA_TEAM_COMMAND_RESULT                       = 0x349,
-    SMSG_ARENA_TEAM_QUERY_RESPONSE                       = 0x34C,
+    SMSG_ARENA_TEAM_QUERY_RESPONSE                       = 0x3DE8,    // 15848 - 4.0.6.13623
     SMSG_ARENA_TEAM_ROSTER                               = 0xB4A8,    // 46248 - 4.0.6.13623
     SMSG_ARENA_TEAM_INVITE                               = 0x63A0,    // 25504 - 4.0.6.13623
     SMSG_ARENA_TEAM_EVENT                                = 0x74C4,    // 29892 - 4.0.6.13623
@@ -706,7 +705,6 @@ enum ServerOpcodes
     /***********************************************************/
     /****************** UNCATEGORZIED OPCODES ******************/
     /***********************************************************/
-    SMSG_DBLOOKUP                                        = 0x003,
     SMSG_QUERY_OBJECT_POSITION                           = 0x005,
     SMSG_QUERY_OBJECT_ROTATION                           = 0x007,
     SMSG_ZONE_MAP                                        = 0x00B,
@@ -739,7 +737,7 @@ enum ServerOpcodes
     SMSG_START_MIRROR_TIMER                              = 0xA68C,    // 42636 - 4.0.6.13623
     SMSG_PAUSE_MIRROR_TIMER                              = 0x21EC,    // 8684  - 4.0.6.13623
     SMSG_STOP_MIRROR_TIMER                               = 0xB4A8,    // 46248 - 4.0.6.13623
-    SMSG_PONG                                            = 0xB880,    // 47232 - 4.0.6.13623
+    SMSG_PONG                                            = 0xA01B,    // 40987 - 4.0.6.13623
     SMSG_INVALID_PROMOTION_CODE                          = 0x1E7,
     SMSG_RWHOIS                                          = 0x1FE,
     SMSG_UPDATE_ACCOUNT_DATA                             = 0xF7A0,    // 63392 - 4.0.6.13623
@@ -758,8 +756,8 @@ enum ServerOpcodes
     SMSG_DURABILITY_DAMAGE_DEATH                         = 0x2BD,
     SMSG_PLAY_SOUND                                      = 0x2EA8,    // 11944 - 4.0.6.13623
     SMSG_AREA_SPIRIT_HEALER_TIME                         = 0x2E4,
-    SMSG_WARDEN_DATA                                     = 0x2E6,
-    SMSG_INVALIDATE_PLAYER                               = 0x31C,
+    SMSG_WARDEN_DATA                                     = 0xF8A0,    // 63648 - 4.0.6.13623
+    SMSG_INVALIDATE_PLAYER                               = 0xA884,    // 43140 - 4.0.6.13623
     SMSG_LOTTERY_QUERY_RESULT_OBSOLETE                   = 0x335,
     SMSG_LOTTERY_RESULT_OBSOLETE                         = 0x337,
     SMSG_CHEAT_DUMP_ITEMS_DEBUG_ONLY_RESPONSE            = 0x39B,
@@ -827,8 +825,8 @@ enum ServerOpcodes
     SMSG_LOGIN_VERIFY_WORLD                              = 0x28C0,    // 10432 - 4.0.6.13623
     SMSG_INIT_WORLD_STATES                               = 0xF6E8,    // 63208 - 4.0.6.13623
     SMSG_UPDATE_WORLD_STATE                              = 0xF784,    // 63364 - 4.0.6.13623
-    SMSG_WEATHER                                         = 0x00,
-    SMSG_SET_PHASE_SHIFT                                 = 0x22ED,    // 8941 -  4.0.6.13623
+    SMSG_WEATHER                                         = 0x79A0,    // 31136 - 4.0.6.13623
+    SMSG_SET_PHASE_SHIFT                                 = 0x22ED,    // 8941  - 4.0.6.13623, WRONG!!!
     SMSG_WORLD_STATE_UI_TIMER_UPDATE                     = 0x698C,    // 27020 - 4.0.6.13623
 };
 

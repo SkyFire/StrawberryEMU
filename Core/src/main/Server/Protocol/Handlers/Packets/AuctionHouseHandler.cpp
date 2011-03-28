@@ -226,10 +226,10 @@ void WorldSession::HandleAuctionSellItem(WorldPacket & recv_data)
     AH->item_guidlow = GUID_LOPART(item);
     AH->item_template = it->GetEntry();
     AH->owner = pl->GetGUIDLow();
-    AH->startbid = bid;
+    AH->startbid = uint32(bid);
     AH->bidder = 0;
     AH->bid = 0;
-    AH->buyout = buyout;
+    AH->buyout = uint32(buyout);
     AH->expire_time = time(NULL) + auction_time;
     AH->deposit = deposit;
     AH->auctionHouseEntry = auctionHouseEntry;

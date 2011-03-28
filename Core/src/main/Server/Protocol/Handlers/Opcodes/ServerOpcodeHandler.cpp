@@ -36,9 +36,9 @@ void ServerOpcodeTable()
         DefineServerOpcode( i, "UNKNOWN",         STATUS_NEVER, PROCESS_INPLACE, &WorldSession::HandleNULL );
     }
 
-    /***********************************************************/
+    /*****************************************************************/
     /********************* ATTACK SERVEROPCODES **********************/
-    /***********************************************************/
+    /*****************************************************************/
 
     SERVEROPCODE(SMSG_ATTACKSTART,                            STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);     
     SERVEROPCODE(SMSG_ATTACKSTOP,                             STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
@@ -48,9 +48,9 @@ void ServerOpcodeTable()
     SERVEROPCODE(SMSG_ATTACKSWING_CANT_ATTACK,                STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
     SERVEROPCODE(SMSG_ATTACKERSTATEUPDATE,                    STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
 
-    /***********************************************************/
+    /*****************************************************************/
     /******************** AUCTION SERVEROPCODES **********************/
-    /***********************************************************/
+    /*****************************************************************/
 
     SERVEROPCODE(SMSG_AUCTION_COMMAND_RESULT,                 STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
     SERVEROPCODE(SMSG_AUCTION_LIST_RESULT,                    STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
@@ -61,9 +61,9 @@ void ServerOpcodeTable()
     SERVEROPCODE(SMSG_AUCTION_REMOVED_NOTIFICATION,           STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
     SERVEROPCODE(SMSG_AUCTION_LIST_PENDING_SALES,             STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
 
-    /***********************************************************/
+    /*****************************************************************/
     /***************** AUTHENTICATION SERVEROPCODES ******************/
-    /***********************************************************/
+    /*****************************************************************/
 
     SERVEROPCODE(SMSG_AUTH_SRP6_RESPONSE,                     STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
     SERVEROPCODE(SMSG_AUTH_CHALLENGE,                         STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
@@ -71,9 +71,9 @@ void ServerOpcodeTable()
     SERVEROPCODE(SMSG_REALM_SPLIT,                            STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
     SERVEROPCODE(SMSG_REDIRECT_CLIENT,                        STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
 
-    /***********************************************************/
+    /*****************************************************************/
     /******************* BATTLEFIELD SERVEROPCODES *******************/
-    /***********************************************************/
+    /*****************************************************************/
 
     SERVEROPCODE(SMSG_BATTLEFIELD_PORT_DENIED,                STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
     SERVEROPCODE(SMSG_BATTLEFIELD_MGR_ENTRY_INVITE,           STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
@@ -88,9 +88,9 @@ void ServerOpcodeTable()
     SERVEROPCODE(SMSG_BATTLEFIELD_LOSE_OBSOLETE,              STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
     SERVEROPCODE(SMSG_BATTLEFIELD_STATUS,                     STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
 
-    /***********************************************************/
+    /*****************************************************************/
     /********************* BINDING SERVEROPCODES *********************/
-    /***********************************************************/
+    /*****************************************************************/
 
     SERVEROPCODE(SMSG_BINDPOINTUPDATE,                        STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
     SERVEROPCODE(SMSG_BINDZONEREPLY,                          STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
@@ -98,9 +98,9 @@ void ServerOpcodeTable()
     SERVEROPCODE(SMSG_PLAYERBINDERROR,                        STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
     SERVEROPCODE(SMSG_BINDER_CONFIRM,                         STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
 
-    /***********************************************************/
+    /*****************************************************************/
     /******************** CALENDAR SERVEROPCODES *********************/
-    /***********************************************************/
+    /*****************************************************************/
 
     SERVEROPCODE(SMSG_CALENDAR_SEND_CALENDAR,                 STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
     SERVEROPCODE(SMSG_CALENDAR_SEND_EVENT,                    STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
@@ -124,9 +124,9 @@ void ServerOpcodeTable()
     SERVEROPCODE(SMSG_CALENDAR_UPDATE_INVITE_LIST3,           STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
     SERVEROPCODE(SMSG_CALENDAR_ACTION_PENDING,                STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
 
-    /***********************************************************/
+    /*****************************************************************/
     /******************** CHARACTER SERVEROPCODES ********************/
-    /***********************************************************/
+    /*****************************************************************/
 
     SERVEROPCODE(SMSG_CHAR_CREATE,                            STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
     SERVEROPCODE(SMSG_CHAR_ENUM,                              STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
@@ -138,9 +138,9 @@ void ServerOpcodeTable()
     SERVEROPCODE(SMSG_CHARACTER_PROFILE,                      STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
     SERVEROPCODE(SMSG_CHARACTER_PROFILE_REALM_CONNECTED,      STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
 
-    /***********************************************************/
+    /*****************************************************************/
     /********************** CHAT SERVEROPCODES ***********************/
-    /***********************************************************/
+    /*****************************************************************/
 
     SERVEROPCODE(SMSG_MESSAGECHAT,                            STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
     SERVEROPCODE(SMSG_CHAT_WRONG_FACTION,                     STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
@@ -158,9 +158,9 @@ void ServerOpcodeTable()
     SERVEROPCODE(SMSG_CHANNEL_MEMBER_COUNT,                   STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
     SERVEROPCODE(SMSG_AVAILABLE_VOICE_CHANNEL,                STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
 
-    /***********************************************************/
+    /*****************************************************************/
     /********************* COMBAT SERVEROPCODES **********************/
-    /***********************************************************/
+    /*****************************************************************/
 
     SERVEROPCODE(SMSG_CANCEL_COMBAT,                          STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
 
@@ -186,9 +186,9 @@ void ServerOpcodeTable()
     SERVEROPCODE(SMSG_PARTYKILLLOG,                           STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
     SERVEROPCODE(SMSG_ENVIRONMENTALDAMAGELOG,                 STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
 
-    /***********************************************************/
+    /*****************************************************************/
     /********************** DUEL SERVEROPCODES ***********************/
-    /***********************************************************/
+    /*****************************************************************/
 
     SERVEROPCODE(SMSG_DUEL_REQUESTED,                         STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
     SERVEROPCODE(SMSG_DUEL_OUTOFBOUNDS,                       STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
@@ -197,18 +197,18 @@ void ServerOpcodeTable()
     SERVEROPCODE(SMSG_DUEL_WINNER,                            STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
     SERVEROPCODE(SMSG_DUEL_COUNTDOWN,                         STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
 
-    /***********************************************************/
+    /*****************************************************************/
     /******************** FACTION SERVEROPCODES **********************/
-    /***********************************************************/
+    /*****************************************************************/
 
     SERVEROPCODE(SMSG_INITIALIZE_FACTIONS,                    STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
     SERVEROPCODE(SMSG_SET_FACTION_VISIBLE,                    STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
     SERVEROPCODE(SMSG_SET_FACTION_STANDING,                   STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
     SERVEROPCODE(SMSG_SET_FACTION_ATWAR,                      STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
 
-    /***********************************************************/
+    /*****************************************************************/
     /******************* GAMEMASTER SERVEROPCODES ********************/
-    /***********************************************************/
+    /*****************************************************************/
 
     SERVEROPCODE(SMSG_GM_PLAYER_INFO,                         STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleNULL      );
     SERVEROPCODE(SMSG_GM_MESSAGECHAT,                         STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
@@ -223,9 +223,9 @@ void ServerOpcodeTable()
     SERVEROPCODE(SMSG_GMTICKET_SYSTEMSTATUS,                  STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
     SERVEROPCODE(SMSG_GMTICKET_DELETETICKET,                  STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
 
-    /***********************************************************/
+    /*****************************************************************/
     /****************** (GAME)OBJECT SERVEROPCODES *******************/
-    /***********************************************************/
+    /*****************************************************************/
 
     SERVEROPCODE(SMSG_GAMEOBJECT_CUSTOM_ANIM,                 STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
     SERVEROPCODE(SMSG_GAMEOBJECT_PAGETEXT,                    STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
@@ -233,9 +233,9 @@ void ServerOpcodeTable()
     SERVEROPCODE(SMSG_GAMEOBJECT_RESET_STATE,                 STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
     SERVEROPCODE(SMSG_DUMP_OBJECTS_DATA,                      STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
 
-    /***********************************************************/
+    /*****************************************************************/
     /********************** GOSSIP SERVEROPCODES *********************/
-    /***********************************************************/
+    /*****************************************************************/
 
     // Gossip General
     SERVEROPCODE(SMSG_GOSSIP_MESSAGE,                         STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
@@ -254,9 +254,9 @@ void ServerOpcodeTable()
     SERVEROPCODE(SMSG_QUESTGIVER_QUEST_COMPLETE,              STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
     SERVEROPCODE(SMSG_QUESTGIVER_QUEST_FAILED,                STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
 
-    /***********************************************************/
+    /*****************************************************************/
     /********************** GROUP SERVEROPCODES **********************/
-    /***********************************************************/
+    /*****************************************************************/
 
     SERVEROPCODE(SMSG_GROUP_INVITE,                           STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
     SERVEROPCODE(SMSG_GROUP_CANCEL,                           STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
@@ -268,9 +268,9 @@ void ServerOpcodeTable()
     SERVEROPCODE(SMSG_REAL_GROUP_UPDATE,                      STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
     SERVEROPCODE(SMSG_GROUPACTION_THROTTLED,                  STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
 
-    /***********************************************************/
+    /*****************************************************************/
     /********************** GUILD SERVEROPCODES **********************/
-    /***********************************************************/
+    /*****************************************************************/
 
     SERVEROPCODE(SMSG_GUILD_INVITE,                           STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
     SERVEROPCODE(SMSG_GUILD_DECLINE,                          STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
@@ -295,9 +295,9 @@ void ServerOpcodeTable()
     SERVEROPCODE(SMSG_PETITION_QUERY_RESPONSE,                STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
     SERVEROPCODE(SMSG_OFFER_PETITION_ERROR,                   STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
 
-    /***********************************************************/
+    /*****************************************************************/
     /******************** INSTANCE SERVEROPCODES *********************/
-    /***********************************************************/
+    /*****************************************************************/
 
     SERVEROPCODE(SMSG_INSTANCE_LOCK_WARNING_QUERY,            STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
     SERVEROPCODE(SMSG_UPDATE_INSTANCE_ENCOUNTER_UNIT,         STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
@@ -344,9 +344,9 @@ void ServerOpcodeTable()
     SERVEROPCODE(SMSG_JOINED_BATTLEGROUND_QUEUE,              STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
     SERVEROPCODE(SMSG_BATTLEGROUND_INFO_THROTTLED,            STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
 
-    /***********************************************************/
+    /*****************************************************************/
     /********************** ITEM SERVEROPCODES ***********************/
-    /***********************************************************/
+    /*****************************************************************/
 
     SERVEROPCODE(SMSG_READ_ITEM_OK,                            STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
     SERVEROPCODE(SMSG_READ_ITEM_FAILED,                        STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
@@ -374,9 +374,9 @@ void ServerOpcodeTable()
     SERVEROPCODE(SMSG_BUY_ITEM,                                STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
     SERVEROPCODE(SMSG_BUY_FAILED,                              STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
 
-    /***********************************************************/
+    /*****************************************************************/
     /******************* LOGIN / OUT SERVEROPCODES *******************/
-    /***********************************************************/
+    /*****************************************************************/
 
     //Login
 
@@ -385,9 +385,9 @@ void ServerOpcodeTable()
     SERVEROPCODE(SMSG_LOGOUT_COMPLETE,                         STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
     SERVEROPCODE(SMSG_LOGOUT_CANCEL_ACK,                       STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
 
-    /***********************************************************/
+    /*****************************************************************/
     /********************** LOOT SERVEROPCODES ***********************/
-    /***********************************************************/
+    /*****************************************************************/
 
     SERVEROPCODE(SMSG_LOOT_RESPONSE,                           STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
     SERVEROPCODE(SMSG_LOOT_RELEASE_RESPONSE,                   STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
@@ -406,17 +406,17 @@ void ServerOpcodeTable()
     SERVEROPCODE(SMSG_LOOT_MASTER_LIST,                        STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
     SERVEROPCODE(SMSG_DYNAMIC_DROP_ROLL_RESULT,                STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
 
-    /***********************************************************/
+    /*****************************************************************/
     /********************** MAIL SERVEROPCODES ***********************/
-    /***********************************************************/
+    /*****************************************************************/
 
     SERVEROPCODE(SMSG_SEND_MAIL_RESULT,                        STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
     SERVEROPCODE(SMSG_MAIL_LIST_RESULT,                        STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
     SERVEROPCODE(SMSG_RECEIVED_MAIL,                           STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
     
-    /***********************************************************/
+    /*****************************************************************/
     /******************** MOVEMENT SERVEROPCODES *********************/
-    /***********************************************************/
+    /*****************************************************************/
 
     SERVEROPCODE(SMSG_MOVE_CHARACTER_CHEAT,                    STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleNULL      );
     SERVEROPCODE(SMSG_MOVE_WATER_WALK,                         STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
@@ -483,9 +483,9 @@ void ServerOpcodeTable()
     SERVEROPCODE(SMSG_SPLINE_MOVE_SET_FLYING,                  STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
     SERVEROPCODE(SMSG_SPLINE_MOVE_UNSET_FLYING,                STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
 
-    /***********************************************************/
+    /*****************************************************************/
     /********************* MOVIE SERVEROPCODES ***********************/
-    /***********************************************************/
+    /*****************************************************************/
 
      // Cinematic
     SERVEROPCODE(SMSG_TRIGGER_CINEMATIC,                       STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
@@ -494,9 +494,9 @@ void ServerOpcodeTable()
     SERVEROPCODE(SMSG_TRIGGER_MOVIE,                           STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
 
 
-    /***********************************************************/
+    /*****************************************************************/
     /****************** MOUNT / PET SERVEROPCODES ********************/
-    /***********************************************************/
+    /*****************************************************************/
 
     // Mount
     SERVEROPCODE(SMSG_MOUNTRESULT,                             STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
@@ -512,15 +512,15 @@ void ServerOpcodeTable()
     SERVEROPCODE(SMSG_PET_MODE,                                STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
     SERVEROPCODE(SMSG_PET_UPDATE_COMBO_POINTS,                 STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
 
-    /***********************************************************/
+    /*****************************************************************/
     /********************** MULTI SERVEROPCODES **********************/
-    /***********************************************************/
+    /*****************************************************************/
 
     SERVEROPCODE(SMSG_MULTIPLE_PACKETS,                        STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
 
-    /***********************************************************/
+    /*****************************************************************/
     /********************* PLAYER SERVEROPCODES **********************/
-    /***********************************************************/
+    /*****************************************************************/
 
     SERVEROPCODE(SMSG_PLAYER_DIFFICULTY_CHANGE,                STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
     SERVEROPCODE(SMSG_PLAYER_SKINNED,                          STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
@@ -623,9 +623,9 @@ void ServerOpcodeTable()
     // Player Vehicle
     SERVEROPCODE(SMSG_PLAYER_VEHICLE_DATA,                     STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
 
-    /***********************************************************/
+    /*****************************************************************/
     /********************* QUERY SERVEROPCODES ***********************/
-    /***********************************************************/
+    /*****************************************************************/
 
     SERVEROPCODE(SMSG_NAME_QUERY_RESPONSE,                     STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
     SERVEROPCODE(SMSG_PET_NAME_QUERY_RESPONSE,                 STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
@@ -642,9 +642,9 @@ void ServerOpcodeTable()
     SERVEROPCODE(SMSG_CORPSE_MAP_POSITION_QUERY_RESPONSE,      STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
     SERVEROPCODE(SMSG_QUERY_QUESTS_COMPLETED_RESPONSE,         STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
 
-    /***********************************************************/
+    /*****************************************************************/
     /********************* QUEST SERVEROPCODES ***********************/
-    /***********************************************************/
+    /*****************************************************************/
 
     SERVEROPCODE(SMSG_QUESTLOG_FULL,                           STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
     SERVEROPCODE(SMSG_QUEST_FORCE_REMOVED,                     STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
@@ -658,9 +658,9 @@ void ServerOpcodeTable()
     SERVEROPCODE(SMSG_QUESTUPDATE_ADD_ITEM,                    STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
     SERVEROPCODE(SMSG_QUESTUPDATE_ADD_PVP_KILL,                STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
 
-    /***********************************************************/
+    /*****************************************************************/
     /********************* SPELL SERVEROPCODES ***********************/
-    /***********************************************************/
+    /*****************************************************************/
 
     SERVEROPCODE(SMSG_INITIAL_SPELLS,                          STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
     SERVEROPCODE(SMSG_LEARNED_SPELL,                           STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
@@ -714,9 +714,9 @@ void ServerOpcodeTable()
     SERVEROPCODE(SMSG_AURA_UPDATE,                             STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
     SERVEROPCODE(SMSG_ON_CANCEL_EXPECTED_RIDE_VEHICLE_AURA,    STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
 
-    /***********************************************************/
+    /*****************************************************************/
     /******************* TRANSPORT SERVEROPCODES *********************/
-    /***********************************************************/
+    /*****************************************************************/
 
     // Transport Taxi
     SERVEROPCODE( SMSG_SHOWTAXINODES,                          STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
@@ -725,9 +725,9 @@ void ServerOpcodeTable()
     SERVEROPCODE( SMSG_NEW_TAXI_PATH,                          STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
     SERVEROPCODE( SMSG_MONSTER_MOVE_TRANSPORT,                 STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
 
-    /***********************************************************/
+    /*****************************************************************/
     /****************** TIME / SPEED SERVEROPCODES *******************/
-    /***********************************************************/
+    /*****************************************************************/
 
     // Time
     SERVEROPCODE(SMSG_LOGIN_SETTIMESPEED,                      STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
@@ -746,11 +746,10 @@ void ServerOpcodeTable()
     //Speed
     SERVEROPCODE(SMSG_GAMESPEED_SET,                           STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
 
-    /***********************************************************/
+    /*****************************************************************/
     /****************** UNCATEGORZIED SERVEROPCODES ******************/
-    /***********************************************************/
+    /*****************************************************************/
 
-    SERVEROPCODE(SMSG_DBLOOKUP,                                STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
     SERVEROPCODE(SMSG_QUERY_OBJECT_POSITION,                   STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
     SERVEROPCODE(SMSG_QUERY_OBJECT_ROTATION,                   STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
     SERVEROPCODE(SMSG_ZONE_MAP,                                STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
@@ -861,9 +860,9 @@ void ServerOpcodeTable()
     SERVEROPCODE(SMSG_COMSAT_DISCONNECT,                       STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
     SERVEROPCODE(SMSG_COMSAT_CONNECT_FAIL,                     STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
 
-    /***********************************************************/
+    /*****************************************************************/
     /********************** WORLD SERVEROPCODES **********************/
-    /***********************************************************/
+    /*****************************************************************/
 
     SERVEROPCODE(SMSG_NEW_WORLD,                               STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
     SERVEROPCODE(SMSG_UPDATE_OBJECT,                           STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
