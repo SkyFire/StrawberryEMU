@@ -576,7 +576,7 @@ const char *WorldSession::GetString(int32 entry) const
 
 void WorldSession::HandleNULL(WorldPacket& recvPacket)
 {
-    //sLog->outError("SESSION: received unhandled opcode %s (0x%.4X)", LookupOpcodeName(recvPacket.GetOpcode()), recvPacket.GetOpcode());
+    sLog->outDebug(LOG_FILTER_NETWORKIO, "SESSION: received unhandled opcode %s (0x%.4X)", LookupOpcodeName(recvPacket.GetOpcode()), recvPacket.GetOpcode());
 }
 
 void WorldSession::HandleEarlyProccess(WorldPacket& recvPacket)
