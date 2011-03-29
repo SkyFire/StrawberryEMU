@@ -145,10 +145,10 @@ src/shared/Database
 src/shared/Database/Implementation
 src/shared/Debugging
 src/server
-src/server/logon
-src/server/logon/Auth
-src/server/logon/Realms
-src/server/logon/Server
+src/server/realm
+src/server/realm/Auth
+src/server/realm/Realms
+src/server/realm/Server
 ${CMAKE_BINARY_DIR}
 ${MYSQL_INCLUDE_DIR} 
 ${POSTGRESQL_INCLUDE_DIR}
