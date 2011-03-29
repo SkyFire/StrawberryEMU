@@ -45,13 +45,13 @@ bool MapSessionFilter::Process(WorldPacket *packet)
     ClientServerOpcodeHandler const &clientServerOpHandle = clientServerOpcodeTable[packet->GetOpcode()];
 
     //let's check if our opcode can be really processed in Map::Update()
-    if (clientOpHandle.packetProcessing == PROCESS_INPLACE || serverOpHandle.packetProcessing == PROCESS_INPLACE ||
-        clientServerOpHandle.packetProcessing == PROCESS_INPLACE)
+    if ((clientOpHandle.packetProcessing == PROCESS_INPLACE) || (serverOpHandle.packetProcessing == PROCESS_INPLACE) ||
+        (clientServerOpHandle.packetProcessing == PROCESS_INPLACE))
         return true;
 
     //we do not process thread-unsafe packets
-    if (clientOpHandle.packetProcessing == PROCESS_THREADUNSAFE || serverOpHandle.packetProcessing == PROCESS_THREADUNSAFE ||
-        clientServerOpHandle.packetProcessing == PROCESS_THREADUNSAFE)
+    if ((clientOpHandle.packetProcessing == PROCESS_THREADUNSAFE) || (serverOpHandle.packetProcessing == PROCESS_THREADUNSAFE) ||
+        (clientServerOpHandle.packetProcessing == PROCESS_THREADUNSAFE))
         return false;
 
     Player *plr = m_pSession->GetPlayer();
@@ -71,13 +71,13 @@ bool WorldSessionFilter::Process(WorldPacket *packet)
     ClientServerOpcodeHandler const &clientServerOpHandle = clientServerOpcodeTable[packet->GetOpcode()];
 
     //check if packet handler is supposed to be safe
-    if (clientOpHandle.packetProcessing == PROCESS_INPLACE || serverOpHandle.packetProcessing == PROCESS_INPLACE ||
-        clientServerOpHandle.packetProcessing == PROCESS_INPLACE)
+    if ((clientOpHandle.packetProcessing == PROCESS_INPLACE) || (serverOpHandle.packetProcessing == PROCESS_INPLACE) ||
+        (clientServerOpHandle.packetProcessing == PROCESS_INPLACE))
         return true;
 
     //thread-unsafe packets should be processed in World::UpdateSessions()
-    if (clientOpHandle.packetProcessing == PROCESS_THREADUNSAFE || serverOpHandle.packetProcessing == PROCESS_THREADUNSAFE ||
-        clientServerOpHandle.packetProcessing == PROCESS_THREADUNSAFE)
+    if ((clientOpHandle.packetProcessing == PROCESS_THREADUNSAFE) || (serverOpHandle.packetProcessing == PROCESS_THREADUNSAFE) ||
+        (clientServerOpHandle.packetProcessing == PROCESS_THREADUNSAFE))
         return false;
 
     //no player attached? -> our client! ^^
@@ -225,6 +225,7 @@ bool WorldSession::Update(uint32 diff, PacketFilter& updater)
     WorldPacket *packet = NULL;
     while (m_Socket && !m_Socket->IsClosed() && _recvQueue.next(packet, updater))
     {
+        sLog->outString("SESSION: Received opcode 0x%.4X (%s)", packet->GetOpcode(), packet->GetOpcode() > 0xFFFF ?  "Unknown Opcode" : LookupOpcodeName(packet->GetOpcode()));
         if (packet->GetOpcode() >= NUM_MSG_TYPES)
         {
             sLog->outError("SESSION: received non-existed opcode %s (0x%.4X)", LookupOpcodeName(packet->GetOpcode()), packet->GetOpcode());
@@ -235,7 +236,7 @@ bool WorldSession::Update(uint32 diff, PacketFilter& updater)
             ClientOpcodeHandler &clientOpHandle = clientOpcodeTable[packet->GetOpcode()];
             ServerOpcodeHandler &serverOpHandle = serverOpcodeTable[packet->GetOpcode()];
             ClientServerOpcodeHandler &clientServerOpHandle = clientServerOpcodeTable[packet->GetOpcode()];
-            int allOpcodeHandler = clientOpHandle.status && serverOpHandle.status && clientServerOpHandle.status;
+            int allOpcodeHandler = (clientOpHandle.status && serverOpHandle.status && clientServerOpHandle.status);
             try
             {
                 switch (allOpcodeHandler)
@@ -303,8 +304,8 @@ bool WorldSession::Update(uint32 diff, PacketFilter& updater)
 
                         sScriptMgr->OnPacketReceive(m_Socket, WorldPacket(*packet));
                         (this->*clientOpHandle.handler)(*packet);
-                            (this->*clientServerOpHandle.handler)(*packet);
-                            (this->*serverOpHandle.handler)(*packet);
+                        (this->*clientServerOpHandle.handler)(*packet);
+                        (this->*serverOpHandle.handler)(*packet);
                         if (sLog->IsOutDebug() && packet->rpos() < packet->wpos())
                             LogUnprocessedTail(packet);
                         break;
