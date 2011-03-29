@@ -4383,6 +4383,10 @@ void SpellMgr::LoadSpellCustomAttr()
             modSpellEffect->Effect = 0;
             count++;
             break;
+        case 51590: // Toss Ice Boulder
+            spellTargetRes->MaxAffectedTargets = 1;
+            count++;
+            break;
         default:
             break;
         }

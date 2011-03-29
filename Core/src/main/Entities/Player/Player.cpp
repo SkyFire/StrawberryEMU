@@ -457,7 +457,7 @@ inline void KillRewarder::_InitGroupData()
                 }
         // 2.5. _isFullXP - flag identifying that for all group members victim is not gray,
         //      so 100% XP will be rewarded (50% otherwise).
-        _isFullXP = (_maxLevel == _maxNotGrayMember->getLevel());
+        _isFullXP = _maxNotGrayMember && (_maxLevel == _maxNotGrayMember->getLevel());
     }
     else
         _count = 1;
@@ -9993,6 +9993,11 @@ Item* Player::GetItemByGuid(uint64 guid) const
                 return pItem;
 
     for (uint8 i = KEYRING_SLOT_START; i < CURRENCYTOKEN_SLOT_END; ++i)
+        if (Item *pItem = GetItemByPos(INVENTORY_SLOT_BAG_0, i))
+            if (pItem->GetGUID() == guid)
+                return pItem;
+
+    for (int i = BANK_SLOT_ITEM_START; i < BANK_SLOT_ITEM_END; ++i)
         if (Item *pItem = GetItemByPos(INVENTORY_SLOT_BAG_0, i))
             if (pItem->GetGUID() == guid)
                 return pItem;

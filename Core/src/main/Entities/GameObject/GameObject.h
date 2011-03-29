@@ -517,6 +517,16 @@ struct GameObjectInfo
             default: return 0;
         }
     }
+
+    uint32 GetCooldown() const                              // Cooldown preventing goober and traps to cast spell
+    {
+        switch (type)
+        {
+            case GAMEOBJECT_TYPE_TRAP:        return trap.cooldown;
+            case GAMEOBJECT_TYPE_GOOBER:      return goober.cooldown;
+            default: return 0;
+        }
+    }
 };
 
 class OPvPCapturePoint;
