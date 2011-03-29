@@ -2261,26 +2261,12 @@ bool Player::TeleportTo(uint32 mapid, float x, float y, float z, float orientati
             if (!GetSession()->PlayerLogout())
             {
                 // send transfer packets
-                WorldPacket data(SMSG_TRANSFER_PENDING, (4 + 4 + 4));
+                WorldPacket data(SMSG_TRANSFER_PENDING, 4 + 4 + 4);
                 data << uint32(mapid);
                 if (m_transport)
                     data << m_transport->GetEntry() << GetMapId();
 
                 GetSession()->SendPacket(&data);
-                data.Initialize(SMSG_NEW_WORLD, 4 + 4 + (3 * 4));
-                if (m_transport)
-                {
-                    data << (uint32)mapid << (float)m_movementInfo.t_pos.m_orientation;
-                    data << m_movementInfo.t_pos.PositionXYZStream();
-                }
-                else
-                {
-                    data << (uint32)mapid << (float)orientation;
-                    data << (float)x << (float)y << (float)z;
-                }
-
-                GetSession()->SendPacket(&data);
-                SendSavedInstances();
             }
 
             // remove from old map now
@@ -2305,6 +2291,25 @@ bool Player::TeleportTo(uint32 mapid, float x, float y, float z, float orientati
             SetFallInformation(0, final_z);
             // if the player is saved before worldportack (at logout for example)
             // this will be used instead of the current location in SaveToDB
+
+            if (!GetSession()->PlayerLogout())
+            {
+                WorldPacket data(SMSG_NEW_WORLD, (4 + 4 + (3 * 4)));
+                data << uint32(mapid);
+                if (m_transport)
+                {
+                    data << (float)m_movementInfo.t_pos.m_orientation;
+                    data << m_movementInfo.t_pos.PositionXYZStream();
+                }
+                else
+                {
+                    data << (float)orientation;
+                    data << m_teleport_dest.PositionXYZStream();
+                }
+
+                GetSession()->SendPacket(&data);
+                SendSavedInstances();
+            }
 
             // move packet sent by client always after far teleport
             // code for finish transfer to new map called in WorldSession::HandleMoveWorldportAckOpcode at client packet
@@ -18433,7 +18438,7 @@ void Player::_SaveAuras(SQLTransaction& trans)
 
         int32 damage[MAX_SPELL_EFFECTS];
         int32 baseDamage[MAX_SPELL_EFFECTS];
-        uint8 effMask = 0;
+        uint16 effMask = 0;
         uint8 recalculateMask = 0;
         for (uint8 i = 0; i < MAX_SPELL_EFFECTS; ++i)
         {
@@ -18452,7 +18457,7 @@ void Player::_SaveAuras(SQLTransaction& trans)
             }
         }
 
-        trans->PAppend("INSERT INTO character_aura (guid,caster_guid,item_guid,spell,effect_mask,recalculate_mask,stackcount,amount0,amount1,amount2,base_amount0,base_amount1,base_amount2,maxduration,remaintime,remaincharges) "
+        trans->PAppend("REPLACE INTO character_aura (guid,caster_guid,item_guid,spell,effect_mask,recalculate_mask,stackcount,amount0,amount1,amount2,base_amount0,base_amount1,base_amount2,maxduration,remaintime,remaincharges) "
             "VALUES ('%u', '" UI64FMTD "', '%u', '%u', '%u', '%u', '%u', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%u')",
             GetGUIDLow(), itr->second->GetCasterGUID(), itr->second->GetCastItemGUID(), itr->second->GetId(), effMask, recalculateMask,
             itr->second->GetStackAmount(), damage[0], damage[1], damage[2], baseDamage[0], baseDamage[1], baseDamage[2],
