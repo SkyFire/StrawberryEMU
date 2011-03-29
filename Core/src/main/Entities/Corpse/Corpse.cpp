@@ -190,7 +190,7 @@ bool Corpse::LoadFromDB(uint32 guid, Field *fields)
         m_isWorldObject = true;
 
     uint32 instanceid  = fields[13].GetUInt32();
-    uint32 phaseMask   = fields[14].GetUInt8();
+    uint32 phaseMask   = fields[14].GetUInt16();
 
     // place
     SetLocationInstanceId(instanceid);
