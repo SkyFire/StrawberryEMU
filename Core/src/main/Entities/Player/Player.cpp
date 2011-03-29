@@ -21597,6 +21597,9 @@ void Player::learnQuestRewardedSpells(Quest const* quest)
 
     // prevent learn non first rank unknown profession and second specialization for same profession)
     SpellEffectEntry const* spellEffect = spellInfo->GetSpellEffect(EFFECT_0);
+    if (!spellEffect)
+        return;
+
     uint32 learned_0 = spellEffect ? spellEffect->EffectTriggerSpell : 0;
     if (sSpellMgr->GetSpellRank(learned_0) > 1 && !HasSpell(learned_0))
     {
@@ -21617,6 +21620,9 @@ void Player::learnQuestRewardedSpells(Quest const* quest)
             // specialization
             SpellEffectEntry const* learnedSpellEffect0 = learnedInfo->GetSpellEffect(EFFECT_0);
             SpellEffectEntry const* learnedSpellEffect1 = learnedInfo->GetSpellEffect(EFFECT_1);
+            if (!learnedSpellEffect0 || learnedSpellEffect1)
+                continue;
+
             if (learnedSpellEffect0 && learnedSpellEffect0->Effect == SPELL_EFFECT_TRADE_SKILL && learnedSpellEffect1 && learnedSpellEffect1->Effect == 0)
             {
                 // search other specialization for same prof

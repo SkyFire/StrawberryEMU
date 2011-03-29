@@ -7664,6 +7664,8 @@ bool Unit::HandleDummyAuraProc(Unit *pVictim, uint32 damage, AuraEffect* trigger
     }
 
     SpellEffectEntry const* spellEffect = dummySpell->GetSpellEffect(SpellEffIndex(triggeredByAura->GetEffIndex()));
+    if (!spellEffect)
+        return false;
 
     // if not handled by custom case, get triggered spell from dummySpell proto
     if (!triggered_spell_id)
@@ -10576,6 +10578,8 @@ uint32 Unit::SpellDamageBonus(Unit *pVictim, SpellEntry const *spellProto, uint3
                     }
 
                     SpellEffectEntry const* spellEffect = spellProto->GetSpellEffect(SpellEffIndex(x));
+                    if (!spellEffect)
+                        return false;
 
                     int32 DotTicks = 6;
                     if (spellEffect->EffectAmplitude != 0)
@@ -11137,6 +11141,8 @@ uint32 Unit::SpellHealingBonus(Unit *pVictim, SpellEntry const *spellProto, uint
                     }
 
                     SpellEffectEntry const* spellEffect = spellProto->GetSpellEffect(SpellEffIndex(x));
+                    if (!spellEffect)
+                        return false;
 
                     int32 DotTicks = 6;
                     if (spellEffect->EffectAmplitude != 0)
@@ -11262,6 +11268,9 @@ int32 Unit::SpellBaseHealingBonus(SpellSchoolMask schoolMask)
         for (AuraEffectList::const_iterator i = mHealingDoneOfStatPercent.begin(); i != mHealingDoneOfStatPercent.end(); ++i)
         {
             SpellEffectEntry const* spellEffect = (*i)->GetSpellProto()->GetSpellEffect(SpellEffIndex((*i)->GetEffIndex()));
+            if (!spellEffect)
+                return false;
+
             // stat used dependent from misc value (stat index)
             Stats usedStat = Stats(spellEffect->EffectMiscValue);
             AdvertisedBenefit += int32(CalculatePctN(GetStat(usedStat), (*i)->GetAmount()));
@@ -12921,6 +12930,9 @@ int32 Unit::ModSpellDuration(SpellEntry const* spellProto, Unit const* target, i
                 sSpellMgr->IsSpellMemberOfSpellGroup(spellProto->Id, SPELL_GROUP_ELIXIR_GUARDIAN)))
             {
                 SpellEffectEntry const* spellEffect = spellProto->GetSpellEffect(SpellEffIndex(EFFECT_0));
+                if (!spellEffect)
+                    return false;
+
                 if (target->HasAura(53042) && target->HasSpell(spellEffect->EffectTriggerSpell))
                     duration *= 2;
             }
