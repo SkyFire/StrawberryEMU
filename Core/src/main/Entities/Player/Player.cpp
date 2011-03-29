@@ -21620,7 +21620,7 @@ void Player::learnQuestRewardedSpells(Quest const* quest)
             // specialization
             SpellEffectEntry const* learnedSpellEffect0 = learnedInfo->GetSpellEffect(EFFECT_0);
             SpellEffectEntry const* learnedSpellEffect1 = learnedInfo->GetSpellEffect(EFFECT_1);
-            if (!learnedSpellEffect0 || learnedSpellEffect1)
+            if (!learnedSpellEffect0 || !learnedSpellEffect1)
                 continue;
 
             if (learnedSpellEffect0 && learnedSpellEffect0->Effect == SPELL_EFFECT_TRADE_SKILL && learnedSpellEffect1 && learnedSpellEffect1->Effect == 0)

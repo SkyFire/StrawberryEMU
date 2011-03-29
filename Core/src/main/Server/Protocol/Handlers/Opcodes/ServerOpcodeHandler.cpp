@@ -874,7 +874,4 @@ void ServerOpcodeTable()
     SERVEROPCODE(SMSG_WEATHER,                                 STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
     SERVEROPCODE(SMSG_SET_PHASE_SHIFT,                         STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
     SERVEROPCODE(SMSG_WORLD_STATE_UI_TIMER_UPDATE,             STATUS_NEVER,     PROCESS_INPLACE,      &WorldSession::HandleServerSide);
-     
 };
-
-
