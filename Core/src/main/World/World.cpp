@@ -1452,7 +1452,7 @@ void World::SetInitialWorldSettings()
     sSpellMgr->LoadSpellPetAuras();
 
     sLog->outString("Loading spell extra attributes...");
-    //sSpellMgr->LoadSpellCustomAttr();
+    sSpellMgr->LoadSpellCustomAttr();
 
     sLog->outString("Loading Spell target coordinates...");
     sSpellMgr->LoadSpellTargetPositions();

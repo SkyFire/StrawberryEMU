@@ -13500,7 +13500,12 @@ uint32 Unit::GetCreatePowers(Powers power) const
     // POWER_FOCUS and POWER_HAPPINESS only have hunter pet
     switch (power)
     {
-        case POWER_MANA:      return GetCreateMana();
+        
+      case POWER_MANA:
+            if (getClass() == CLASS_HUNTER || getClass() == CLASS_WARRIOR || getClass() == CLASS_ROGUE || getClass() == CLASS_DEATH_KNIGHT)
+                return false;
+            else
+                return GetCreateMana();
         case POWER_RAGE:      return 1000;
         case POWER_FOCUS:     return (GetTypeId() == TYPEID_PLAYER || !((Creature const*)this)->isPet() || ((Pet const*)this)->getPetType() != HUNTER_PET ? 0 : 100);
         case POWER_ENERGY:    return 100;

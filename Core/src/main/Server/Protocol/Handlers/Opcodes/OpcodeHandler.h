@@ -32,39 +32,20 @@ enum PacketProcessing
 
 enum SessionStatus
 {
-    STATUS_AUTHED                       = 0x0,              // Player is authenticated but not in World.
-    STATUS_LOGGEDIN                     = 0x1,              // Player is in World.
-    STATUS_TRANSFER                     = 0x2,              // Player is in World and on a transport / teleport.
-    STATUS_LOGGEDIN_OR_RECENTLY_LOGGOUT = 0x3,              // Player logged out.
+    STATUS_AUTHED                       = 0x0,              // Player is authenticated but not in World. ONLY CMSG!
+    STATUS_LOGGEDIN                     = 0x1,              // Player is in World. ONLY MSG and CMSG!
+    STATUS_TRANSFER                     = 0x2,              // Player is in World and on a transport / teleport. ONLY MSG!
+    STATUS_LOGGEDIN_OR_RECENTLY_LOGGOUT = 0x3,              // Player logged out. ONLY CMSG!
     STATUS_NEVER                        = 0x4,              // Client Opcode not used or Server Opcode.
-    STATUS_UNHANDLED                    = 0x5               // Unknown Opcode.
+    STATUS_UNHANDLED                    = 0x5               // Unknown Opcode. NOT USED!!!
 };
-
-struct OpcodeHandler
-{
-    char const* name;
-    SessionStatus status;
-    PacketProcessing packetProcessing;
-    void (WorldSession::*handler)(WorldPacket& recvPacket);
-};
-
-extern OpcodeHandler opcodeTable[NUM_MSG_TYPES];
-
-static void DefineOpcode(int opcode, const char* name, SessionStatus status, PacketProcessing packetProcessing, void (WorldSession::*handler)(WorldPacket& recvPacket))
-{
-    opcodeTable[opcode].name = name;
-    opcodeTable[opcode].status = status;
-    opcodeTable[opcode].packetProcessing = packetProcessing;
-    opcodeTable[opcode].handler = handler;
-}
-#define OPCODE(name, status, packetProcessing, handler) DefineOpcode(name, #name, status, packetProcessing, handler)
 
 inline const char* LookupOpcodeName(uint32 opcodeValue)
 {
     if (opcodeValue >= NUM_MSG_TYPES)
         return "Received to big opcode: " + opcodeValue;
 
-    return opcodeTable[opcodeValue].name;
+    return "";//clientOpcodeTable[opcodeValue].name && clientServerOpcodeTable[opcodeValue].name && serverOpcodeTable[opcodeValue].name;
 }
 
 #endif

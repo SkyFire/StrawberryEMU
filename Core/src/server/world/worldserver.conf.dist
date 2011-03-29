@@ -20,10 +20,10 @@
 #        *.Connection:
 #            Description: Connection settings for the characters database.
 #            Default:     CharDB.Connection = "127.0.0.1;3306;strawberry;strawberry;CharDB"
-#    LogonDB
+#    RealmDB
 #        *.Connection:
 #            Description: Connection settings for the logon / realm database.
-#            Default:     LogonDB.Connection = "127.0.0.1;3306;strawberry;strawberry;LogonDB"
+#            Default:     RealmDB.Connection = "127.0.0.1;3306;strawberry;strawberry;RealmDB"
 #    WorldDB
 #        *.Connection:
 #            Description: Connection settings for the world / main database.
@@ -35,9 +35,9 @@ CharDB.Connection     = "127.0.0.1;3306;strawberry;strawberry;CharDB"
 CharDB.ASynchThreads  = 1
 CharDB.Connections    = 1
 
-LogonDB.Connection    = "127.0.0.1;3306;strawberry;strawberry;LogonDB"
-LogonDB.ASynchThreads = 1
-LogonDB.Connections   = 1
+RealmDB.Connection    = "127.0.0.1;3306;strawberry;strawberry;RealmDB"
+RealmDB.ASynchThreads = 1
+RealmDB.Connections   = 1
 
 WorldDB.Connection    = "127.0.0.1;3306;strawberry;strawberry;WorldDB"
 WorldDB.ASynchThreads = 1
@@ -103,7 +103,7 @@ BindIP = "0.0.0.0"
 #        Default:     0  - (Selected by OS)
 #                     1+ - (Bit mask value of selected processors)
 
-UseProcessors = 0
+UseProcessors = 4
 
 #
 #    ProcessPriority
@@ -847,8 +847,7 @@ DeclinedNames = 0
 #    Expansion
 #        Description: Allow server to use content from expansions. Checks for expansion-related
 #                     map files, client compatibility and class/race character creation.
-#        Default:     3 - (Expansion 3)
-#                     2 - (Expansion 2)
+#        Default:     2 - (Expansion 2)
 #                     1 - (Expansion 1)
 #                     0 - (Disabled, Ignore and disable expansion content (maps, races, classes)
 
@@ -979,16 +978,16 @@ SkipCinematics = 0
 #        Description: Maximum level that can be reached by players.
 #        Important:   Levels beyond 100 are not recommended at all.
 #        Range:       1-255
-#        Default:     85
+#        Default:     80
 
-MaxPlayerLevel = 85
+MaxPlayerLevel = 80
 
 #
 #    MinDualSpecLevel
 #        Description: Level requirement for Dual Talent Specialization
-#        Default:     30
+#        Default:     40
 
-MinDualSpecLevel = 30
+MinDualSpecLevel = 40
 
 #
 #    StartPlayerLevel
@@ -1332,6 +1331,15 @@ AllowTickets = 1
 #                     1 - (Enabled, Experimental as of still being in development)
 
 DungeonFinder.Enable = 1
+
+#
+#   DBC.EnforceItemAttributes
+#        Description: Disallow overriding item attributes stored in DBC files with values from the
+#                     database.
+#        Default:     1 - (Enabled, Enforce DBC values)
+#                     0 - (Disabled, Use database values)
+
+DBC.EnforceItemAttributes = 1
 
 #
 #   AccountInstancesPerHour

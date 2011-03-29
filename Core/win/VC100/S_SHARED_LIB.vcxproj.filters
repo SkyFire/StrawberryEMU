@@ -2,55 +2,55 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="Collision">
-      <UniqueIdentifier>{723c35c7-1437-454f-b453-de2d2e29365e}</UniqueIdentifier>
+      <UniqueIdentifier>{e9453041-06cc-4663-90fd-019701a3ba24}</UniqueIdentifier>
     </Filter>
     <Filter Include="Collision\Management">
-      <UniqueIdentifier>{a7389dad-dae2-4a5f-931f-c4cffda4c40c}</UniqueIdentifier>
+      <UniqueIdentifier>{99760fec-6f9f-425a-9d42-d1c081bf01a2}</UniqueIdentifier>
     </Filter>
     <Filter Include="Collision\Maps">
-      <UniqueIdentifier>{d1d9c822-c518-409c-b986-1c1804da82eb}</UniqueIdentifier>
+      <UniqueIdentifier>{08ebe17f-e835-45d9-ac63-fc36cbe00de0}</UniqueIdentifier>
     </Filter>
     <Filter Include="Collision\Models">
-      <UniqueIdentifier>{5fbaf307-a6b4-406c-a8b0-31a426bf4d26}</UniqueIdentifier>
+      <UniqueIdentifier>{1d455987-d165-436d-aba4-04fafa2a0952}</UniqueIdentifier>
     </Filter>
     <Filter Include="Configuration">
-      <UniqueIdentifier>{a8dd8f74-86aa-417c-874f-3a82c2daeef9}</UniqueIdentifier>
+      <UniqueIdentifier>{6318e4e9-528e-4d48-af39-4585f4619c82}</UniqueIdentifier>
     </Filter>
     <Filter Include="Cryptography">
-      <UniqueIdentifier>{51beb87d-f4dc-424f-8e01-d3441c059710}</UniqueIdentifier>
+      <UniqueIdentifier>{b001a3cc-eb6a-49a7-aa70-30385bcb012e}</UniqueIdentifier>
     </Filter>
     <Filter Include="Cryptography\Authentication">
-      <UniqueIdentifier>{22964a58-23f6-4793-88a0-322869e0897d}</UniqueIdentifier>
+      <UniqueIdentifier>{e610872f-3983-47b8-a9fd-f83742de2150}</UniqueIdentifier>
     </Filter>
     <Filter Include="Database">
-      <UniqueIdentifier>{f0d5b49e-1ac9-4d16-b3e1-50febffe3576}</UniqueIdentifier>
+      <UniqueIdentifier>{c6e23f8d-9e77-46a3-b7e1-24feaf9aad1e}</UniqueIdentifier>
     </Filter>
     <Filter Include="Database\Implementation">
-      <UniqueIdentifier>{a8db9f1d-981a-4807-ada1-3fb9537b5864}</UniqueIdentifier>
+      <UniqueIdentifier>{00e0a8eb-c65e-4a65-ad6c-3bceb528adf1}</UniqueIdentifier>
     </Filter>
     <Filter Include="DataStores">
-      <UniqueIdentifier>{f88dd78d-d6bd-49f0-8c25-f38f3b1b1a46}</UniqueIdentifier>
+      <UniqueIdentifier>{2ee317e4-bb9a-41f4-b883-f771c52f5498}</UniqueIdentifier>
     </Filter>
     <Filter Include="Debugging">
-      <UniqueIdentifier>{e780944b-59e0-4ddb-9570-442177277748}</UniqueIdentifier>
+      <UniqueIdentifier>{92cf7d7d-0a66-4f0c-9a34-f7476481564a}</UniqueIdentifier>
     </Filter>
     <Filter Include="Dynamic">
-      <UniqueIdentifier>{36b220a1-e5be-41f5-a61b-9c3c7d86d621}</UniqueIdentifier>
+      <UniqueIdentifier>{30dddf72-6ff5-42ab-aac4-3dbd7915b03a}</UniqueIdentifier>
     </Filter>
     <Filter Include="Dynamic\LinkedReference">
-      <UniqueIdentifier>{d1ffbdb0-8d66-4ac6-a75a-466ab29192c7}</UniqueIdentifier>
+      <UniqueIdentifier>{0f1e235a-2fd4-42e2-bbd4-e0775c38a58b}</UniqueIdentifier>
     </Filter>
     <Filter Include="Logging">
-      <UniqueIdentifier>{a7b51734-35f2-4a98-a339-c62cbcc7dd90}</UniqueIdentifier>
+      <UniqueIdentifier>{41da6cd3-1229-4934-979d-999058237c07}</UniqueIdentifier>
     </Filter>
     <Filter Include="Packets">
-      <UniqueIdentifier>{eb9b5fac-14c4-4485-9cab-4f8da4f77ff2}</UniqueIdentifier>
+      <UniqueIdentifier>{9f92b04c-ac75-42d9-8b6d-e07c2cfd7375}</UniqueIdentifier>
     </Filter>
     <Filter Include="Threading">
-      <UniqueIdentifier>{cae6ab26-b507-4d77-8854-fffed6305772}</UniqueIdentifier>
+      <UniqueIdentifier>{20befe48-eec8-4c18-a866-17a0c0664870}</UniqueIdentifier>
     </Filter>
     <Filter Include="Utilities">
-      <UniqueIdentifier>{631a351a-e079-4c09-a5ea-7635c3527d6e}</UniqueIdentifier>
+      <UniqueIdentifier>{0a60ea90-5d29-4bef-bb9f-2fc3d91f9814}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -129,9 +129,6 @@
     <ClCompile Include="..\..\src\shared\Database\Implementation\WorldDatabase.cpp">
       <Filter>Database\Implementation</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\shared\DataStores\DB2FileLoader.cpp">
-      <Filter>DataStores</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\shared\DataStores\DBCFileLoader.cpp">
       <Filter>DataStores</Filter>
     </ClCompile>
@@ -157,6 +154,9 @@
       <Filter>Utilities</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\shared\Common.cpp" />
+    <ClCompile Include="..\..\src\shared\DataStores\DB2FileLoader.cpp">
+      <Filter>DataStores</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\shared\Collision\BoundingIntervalHierarchy.h">
@@ -258,12 +258,6 @@
     <ClInclude Include="..\..\src\shared\Database\Implementation\WorldDatabase.h">
       <Filter>Database\Implementation</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\shared\DataStores\DB2FileLoader.h">
-      <Filter>DataStores</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\shared\DataStores\DB2Store.h">
-      <Filter>DataStores</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\shared\DataStores\DBCFileLoader.h">
       <Filter>DataStores</Filter>
     </ClInclude>
@@ -352,6 +346,12 @@
     <ClInclude Include="..\..\src\shared\CompilerDefs.h" />
     <ClInclude Include="..\..\src\shared\Define.h" />
     <ClInclude Include="..\..\src\shared\SystemConfig.h" />
+    <ClInclude Include="..\..\src\shared\DataStores\DB2FileLoader.h">
+      <Filter>DataStores</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\shared\DataStores\DB2Store.h">
+      <Filter>DataStores</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\src\shared\revision_nr.h" />
   </ItemGroup>
 </Project>

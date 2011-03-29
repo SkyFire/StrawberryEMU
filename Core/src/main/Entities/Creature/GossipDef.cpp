@@ -440,7 +440,7 @@ void PlayerMenu::SendQuestGiverQuestDetails(Quest const *pQuest, uint64 npcGUID,
         }
     }
 
-    WorldPacket data(SMSG_QUESTGIVER_QUEST_DETAILS, 100);   // guess size
+    WorldPacket data(SMSG_QUESTGIVER_QUEST_DETAILS, 150);   // guess size
     data << uint64(npcGUID);
     data << uint64(0);                                      // wotlk, something todo with quest sharing?
     data << uint32(pQuest->GetQuestId());
@@ -563,7 +563,7 @@ void PlayerMenu::SendQuestQueryResponse(Quest const *pQuest)
         }
     }
 
-    WorldPacket data(SMSG_QUEST_QUERY_RESPONSE, 100);     // guess size
+    WorldPacket data(SMSG_QUEST_QUERY_RESPONSE, 220);     // guess size
 
     data << uint32(pQuest->GetQuestId());                   // quest id
     data << uint32(pQuest->GetQuestMethod());               // Accepted values: 0, 1 or 2. 0 == IsAutoComplete() (skip objectives/details)
@@ -716,7 +716,7 @@ void PlayerMenu::SendQuestGiverOfferReward(Quest const* pQuest, uint64 npcGUID, 
         }
     }
 
-    WorldPacket data(SMSG_QUESTGIVER_OFFER_REWARD, 50);   // guess size
+    WorldPacket data(SMSG_QUESTGIVER_OFFER_REWARD, 120);   // guess size
 
     data << uint64(npcGUID);
     data << uint32(pQuest->GetQuestId());
@@ -843,7 +843,7 @@ void PlayerMenu::SendQuestGiverRequestItems(Quest const *pQuest, uint64 npcGUID,
         return;
     }
 
-    WorldPacket data(SMSG_QUESTGIVER_REQUEST_ITEMS, 50);  // guess size
+    WorldPacket data(SMSG_QUESTGIVER_REQUEST_ITEMS, 60);  // guess size
     data << uint64(npcGUID);
     data << uint32(pQuest->GetQuestId());
     data << Title;

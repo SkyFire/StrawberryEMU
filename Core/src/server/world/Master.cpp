@@ -425,14 +425,14 @@ bool Master::_StartDB()
     }
 
     ///- Get login database info from configuration file
-    dbstring = sConfig->GetStringDefault("LogonDB.Connection", "");
+    dbstring = sConfig->GetStringDefault("RealmDB.Connection", "");
     if (dbstring.empty())
     {
         sLog->outError("Login database not specified in configuration file");
         return false;
     }
 
-    async_threads = sConfig->GetIntDefault("LogonDB.ASynchThreads", 1);
+    async_threads = sConfig->GetIntDefault("RealmDB.ASynchThreads", 1);
     if (async_threads < 1 || async_threads > 32)
     {
         sLog->outError("Login database: invalid number of asynchron threads specified. "
@@ -440,7 +440,7 @@ bool Master::_StartDB()
         return false;
     }
 
-    connections = sConfig->GetIntDefault("LogonDB.Connections", 1);
+    connections = sConfig->GetIntDefault("RealmDB.Connections", 1);
 
     ///- Initialise the login database
     if (!LoginDatabase.Open(dbstring, async_threads, connections))

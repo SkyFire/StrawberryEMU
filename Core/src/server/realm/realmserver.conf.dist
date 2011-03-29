@@ -16,16 +16,15 @@
 #            Description: Amount of MySQL connections to the MySQL server.
 #            Default:     1
 #
-#    LogonDB
+#    RealmDB
 #        *.Connection:
 #            Description: Connection settings for the logon / realm database.
-#            Default:     LogonDB.Connection = "127.0.0.1;3306;strawberry;strawberry;LogonDB"
+#            Default:     RealmDB.Connection = "127.0.0.1;3306;strawberry;strawberry;RealmDB"
 #
 ###################################################################################################
-
-LogonDB.Connection    = "127.0.0.1;3306;strawberry;strawberry;LogonDB"
-LogonDB.ASynchThreads = 1
-LogonDB.Connections   = 1
+RealmDB.Connection    = "127.0.0.1;3306;strawberry;strawberry;RealmDB"
+RealmDB.ASynchThreads = 1
+RealmDB.Connections   = 1
 
 ###############################################################################
 # CONNECTION SETTINGS
