@@ -11269,7 +11269,7 @@ int32 Unit::SpellBaseHealingBonus(SpellSchoolMask schoolMask)
         {
             SpellEffectEntry const* spellEffect = (*i)->GetSpellProto()->GetSpellEffect(SpellEffIndex((*i)->GetEffIndex()));
             if (!spellEffect)
-                return false;
+                continue;
 
             // stat used dependent from misc value (stat index)
             Stats usedStat = Stats(spellEffect->EffectMiscValue);
