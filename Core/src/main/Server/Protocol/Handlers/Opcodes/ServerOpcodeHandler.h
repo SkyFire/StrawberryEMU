@@ -826,7 +826,7 @@ enum ServerOpcodes
     SMSG_INIT_WORLD_STATES                               = 0xF6E8,    // 63208 - 4.0.6.13623
     SMSG_UPDATE_WORLD_STATE                              = 0xF784,    // 63364 - 4.0.6.13623
     SMSG_WEATHER                                         = 0x79A0,    // 31136 - 4.0.6.13623
-    SMSG_SET_PHASE_SHIFT                                 = 0x22ED,    // 8941  - 4.0.6.13623, WRONG!!!
+    SMSG_SET_PHASE_SHIFT                                 = 0x044C,    // 1100  - 4.0.6.13623
     SMSG_WORLD_STATE_UI_TIMER_UPDATE                     = 0x698C,    // 27020 - 4.0.6.13623
 };
 
