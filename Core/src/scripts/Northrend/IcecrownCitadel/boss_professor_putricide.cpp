@@ -18,7 +18,6 @@
 #include "ObjectMgr.h"
 #include "ScriptMgr.h"
 #include "ScriptedCreature.h"
-#include "SpellScript.h"
 #include "SpellAuraEffects.h"
 #include "Group.h"
 #include "Spell.h"
@@ -189,14 +188,6 @@ class boss_professor_putricide : public CreatureScript
                 baseSpeed(creature->GetSpeedRate(MOVE_RUN)), experimentState(EXPERIMENT_STATE_OOZE)
             {
                 phase = PHASE_NONE;
-            }
-
-            void InitializeAI()
-            {
-                if (!instance || static_cast<InstanceMap*>(me->GetMap())->GetScriptId() != GetScriptId(ICCScriptName))
-                    me->IsAIEnabled = false;
-                else if (!me->isDead())
-                    Reset();
             }
 
             void Reset()
@@ -691,7 +682,7 @@ class boss_professor_putricide : public CreatureScript
 
         CreatureAI* GetAI(Creature* creature) const
         {
-            return new boss_professor_putricideAI(creature);
+            return GetIcecrownCitadelAI<boss_professor_putricideAI>(creature);
         }
 };
 
@@ -752,7 +743,7 @@ class npc_volatile_ooze : public CreatureScript
 
         CreatureAI* GetAI(Creature* creature) const
         {
-            return new npc_volatile_oozeAI(creature);
+            return GetIcecrownCitadelAI<npc_volatile_oozeAI>(creature);
         }
 };
 
@@ -870,7 +861,11 @@ class spell_putricide_slime_puddle : public SpellScriptLoader
                     if (Aura* size = caster->GetAura(70347))
                         radiusMod += size->GetStackAmount();
 
-                    uint32 triggerSpellId = NULL;//spellEffect->EffectTriggerSpell;
+                    SpellEffectEntry const* spellEffect = GetSpellProto()->GetSpellEffect(SpellEffIndex(aurEff->GetEffIndex()));
+                    if (!spellEffect)
+                        return;
+
+                    uint32 triggerSpellId = spellEffect->EffectTriggerSpell;
                     caster->CastCustomSpell(triggerSpellId, SPELLVALUE_RADIUS_MOD, radiusMod*100, caster, true);
                 }
             }
@@ -903,10 +898,6 @@ class spell_putricide_unstable_experiment : public SpellScriptLoader
                     return;
 
                 uint32 stage = GetCaster()->ToCreature()->AI()->GetData(DATA_EXPERIMENT_STAGE);
-
-                SpellEffectEntry const* spellEffect = GetSpellInfo()->GetSpellEffect(SpellEffIndex(stage));
-                if (!spellEffect)
-                    return;
                 Creature* target = NULL;
                 std::list<Creature*> creList;
                 GetCreatureListWithEntryInGrid(creList, GetCaster(), NPC_ABOMINATION_WING_MAD_SCIENTIST_STALKER, 100.0f);
@@ -920,7 +911,11 @@ class spell_putricide_unstable_experiment : public SpellScriptLoader
                         break;
                 }
 
-                GetCaster()->CastSpell(target, uint32(spellEffect->EffectBasePoints + 1), true, NULL, NULL, GetCaster()->GetGUID());
+                SpellEffectEntry const* spellEffect = GetSpellInfo()->GetSpellEffect(SpellEffIndex(stage+1));
+                if (!spellEffect)
+                    return;
+
+                GetCaster()->CastSpell(target, uint32(spellEffect->EffectBasePoints), true, NULL, NULL, GetCaster()->GetGUID());
             }
 
             void Register()
@@ -949,7 +944,11 @@ class spell_putricide_ooze_summon : public SpellScriptLoader
                 PreventDefaultAction();
                 if (Unit* caster = GetCaster())
                 {
-                    uint32 triggerSpellId = NULL;//spellEffect->EffectTriggerSpell;
+                    SpellEffectEntry const* spellEffect = GetSpellProto()->GetSpellEffect(SpellEffIndex(aurEff->GetEffIndex()));
+                    if (!spellEffect)
+                        return;
+
+                    uint32 triggerSpellId = spellEffect->EffectTriggerSpell;
                     float x, y, z;
                     GetTarget()->GetPosition(x, y, z);
                     z = GetTarget()->GetMap()->GetHeight(x, y, z, true, 25.0f);
@@ -1155,7 +1154,11 @@ class spell_putricide_mutated_plague : public SpellScriptLoader
                 if (!caster)
                     return;
 
-                uint32 triggerSpell = NULL;//spellEffect->EffectTriggerSpell;
+                SpellEffectEntry const* spellEffect = GetSpellProto()->GetSpellEffect(SpellEffIndex(aurEff->GetEffIndex()));
+                if (!spellEffect)
+                    return;
+
+                uint32 triggerSpell = spellEffect->EffectTriggerSpell;
                 SpellEntry const* spell = sSpellStore.LookupEntry(triggerSpell);
                 spell = sSpellMgr->GetSpellForDifficultyFromSpell(spell, caster);
 
@@ -1338,8 +1341,12 @@ class spell_putricide_mutated_transformation : public SpellScriptLoader
                     return;
                 }
 
-                uint32 entry = uint32(GetSpellInfo()->GetEffectMiscValue(effIndex));
-                SummonPropertiesEntry const* properties = sSummonPropertiesStore.LookupEntry(uint32(GetSpellInfo()->GetEffectMiscValueB(effIndex)));
+                SpellEffectEntry const* spellEffect = GetSpellInfo()->GetSpellEffect(SpellEffIndex(effIndex));
+                if (!spellEffect)
+                    return;
+
+                uint32 entry = uint32(spellEffect->EffectMiscValue);
+                SummonPropertiesEntry const* properties = sSummonPropertiesStore.LookupEntry(uint32(spellEffect->EffectMiscValueB));
                 uint32 duration = uint32(GetSpellDuration(GetSpellInfo()));
 
                 Position pos;
@@ -1440,8 +1447,7 @@ class spell_stinky_precious_decimate : public SpellScriptLoader
                 if (GetHitUnit()->GetHealthPct() > float(GetEffectValue()))
                 {
                     uint32 newHealth = GetHitUnit()->GetMaxHealth() * uint32(GetEffectValue()) / 100;
-                    if (GetHitUnit()->GetMaxHealth() >= newHealth)
-                        GetHitUnit()->SetHealth(newHealth);
+                    GetHitUnit()->SetHealth(newHealth);
                 }
             }
 

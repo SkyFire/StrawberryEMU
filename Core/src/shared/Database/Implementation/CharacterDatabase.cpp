@@ -228,5 +228,15 @@ bool CharacterDatabaseConnection::Open()
     // Instance saves
     PrepareStatement(CHAR_ADD_INSTANCE_SAVE, "INSERT INTO instance (id,map,resettime,difficulty,completedEncounters,data) VALUES (?, ?, ?, ?, ?, ?)");
     PrepareStatement(CHAR_UPDATE_INSTANCE_DATA, "UPDATE instance SET completedEncounters=?, data=? WHERE id=?");
+
+    // Game event saves
+    PrepareStatement(CHAR_DEL_GAME_EVENT_SAVE, "DELETE FROM game_event_save WHERE eventEntry = ?");
+    PrepareStatement(CHAR_ADD_GAME_EVENT_SAVE, "INSERT INTO game_event_save (eventEntry, state, next_start) VALUES (?, ? , ?)");
+
+    // Game event condition saves
+    PrepareStatement(CHAR_DEL_ALL_GAME_EVENT_CONDITION_SAVE, "DELETE FROM game_event_condition_save WHERE eventEntry = ?");
+    PrepareStatement(CHAR_DEL_GAME_EVENT_CONDITION_SAVE, "DELETE FROM game_event_condition_save WHERE eventEntry = ? AND condition_id = ?");
+    PrepareStatement(CHAR_ADD_GAME_EVENT_CONDITION_SAVE, "INSERT INTO game_event_condition_save (eventEntry, condition_id, done) VALUES (?, ?, ?)");
+
     return true;
 }

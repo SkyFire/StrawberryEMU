@@ -18,7 +18,6 @@
 #include "ObjectMgr.h"
 #include "ScriptMgr.h"
 #include "ScriptedCreature.h"
-#include "SpellScript.h"
 #include "SpellAuraEffects.h"
 #include "icecrown_citadel.h"
 
@@ -922,8 +921,8 @@ class npc_sindragosa_trash : public CreatureScript
             }
 
         private:
-            InstanceScript* instance;
             EventMap events;
+            InstanceScript* instance;
             uint32 frostwyrmId;
             bool isTaunted; // Frostwing Whelp only
         };
@@ -1011,7 +1010,7 @@ class spell_sindragosa_unchained_magic : public SpellScriptLoader
             void FilterTargets(std::list<Unit*>& unitList)
             {
                 unitList.remove_if(UnchainedMagicTargetSelector());
-                uint32 maxSize = GetCaster()->GetMap()->GetSpawnMode() & 1 ? 5 : 2;
+                uint32 maxSize = uint32(GetCaster()->GetMap()->GetSpawnMode() & 1 ? 5 : 2);
                 if (unitList.size() > maxSize)
                     Strawberry::RandomResizeList(unitList, maxSize);
             }
@@ -1418,40 +1417,6 @@ class spell_frostwarden_handler_focus_fire : public SpellScriptLoader
         }
 };
 
-class spell_trigger_spell_from_caster : public SpellScriptLoader
-{
-    public:
-        spell_trigger_spell_from_caster(char const* scriptName, uint32 _triggerId) : SpellScriptLoader(scriptName), triggerId(_triggerId) { }
-
-        class spell_trigger_spell_from_caster_SpellScript : public SpellScript
-        {
-            PrepareSpellScript(spell_trigger_spell_from_caster_SpellScript);
-
-        public:
-            spell_trigger_spell_from_caster_SpellScript(uint32 _triggerId) : SpellScript(), triggerId(_triggerId) { }
-
-            void HandleTrigger()
-            {
-                GetCaster()->CastSpell(GetHitUnit(), triggerId, true);
-            }
-
-            void Register()
-            {
-                AfterHit += SpellHitFn(spell_trigger_spell_from_caster_SpellScript::HandleTrigger);
-            }
-
-            uint32 triggerId;
-        };
-
-        SpellScript* GetSpellScript() const
-        {
-            return new spell_trigger_spell_from_caster_SpellScript(triggerId);
-        }
-
-    private:
-        uint32 triggerId;
-};
-
 class at_sindragosa_lair : public AreaTriggerScript
 {
     public:
@@ -1471,6 +1436,9 @@ class at_sindragosa_lair : public AreaTriggerScript
 
                 if (!instance->GetData(DATA_SINDRAGOSA_FROSTWYRMS) && instance->GetBossState(DATA_SINDRAGOSA) != DONE)
                 {
+                    if (player->GetMap()->IsHeroic() && !instance->GetData(DATA_HEROIC_ATTEMPTS))
+                        return true;
+
                     player->GetMap()->LoadGrid(SindragosaSpawnPos.GetPositionX(), SindragosaSpawnPos.GetPositionY());
                     if (Creature* sindragosa = player->GetMap()->SummonCreature(NPC_SINDRAGOSA, SindragosaSpawnPos))
                     {

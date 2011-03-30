@@ -444,7 +444,7 @@ class spell_ulduar_stone_grip_cast_target : public SpellScriptLoader
                     return;
 
                 plr->CastSpell(GetTargetUnit(), spellEffect->EffectTriggerSpell, true);     // Don't send m_originalCasterGUID param here or underlying
-                PreventHitEffect(i);                                                              // AureEffect::HandleAuraControlVehicle will fail on caster == target
+                PreventHitEffect(i);                                                                   // AureEffect::HandleAuraControlVehicle will fail on caster == target
             }
 
             void Register()
@@ -526,7 +526,7 @@ public:
             pos.m_positionZ = 448.8f;
             pos.m_orientation = M_PI;
             GetHitPlayer()->DestroyForNearbyPlayers();
-            GetHitPlayer()->_ExitVehicle(&pos);
+            GetHitPlayer()->ExitVehicle(&pos);
             GetHitPlayer()->UpdateObjectVisibility(false);
         }
 

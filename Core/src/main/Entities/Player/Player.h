@@ -1181,6 +1181,7 @@ class Player : public Unit, public GridObject<Player>
         Item* GetItemByGuid(uint64 guid) const;
         Item* GetItemByEntry(uint32 entry) const;
         Item* GetItemByPos(uint16 pos) const;
+        Bag*  GetBagByPos(uint8 slot) const;
         Item* GetItemByPos(uint8 bag, uint8 slot) const;
         inline Item* GetUseableItemByPos(uint8 bag, uint8 slot) const //Does additional check for disarmed weapons
         {
