@@ -28,7 +28,7 @@
 #endif
 
 // Name of the Core
-#define _PACKAGENAME "StrawberryCore "
+#define _PACKAGENAME "StrawberryCore PTR (4.1.0) "
 
 // For revision output in console
 #define _FULLVERSION _PACKAGENAME "\n" "Revision: " REVISION_NR

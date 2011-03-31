@@ -139,7 +139,7 @@ CREATE TABLE `realmlist` (
   `timezone` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `allowedSecurityLevel` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `population` float unsigned NOT NULL DEFAULT '0',
-  `gamebuild` int(11) unsigned NOT NULL DEFAULT '13623',
+  `gamebuild` int(11) unsigned NOT NULL DEFAULT '13812',
   PRIMARY KEY (`id`),
   UNIQUE KEY `idx_name` (`name`)
 ) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='Realm System';
@@ -147,7 +147,7 @@ CREATE TABLE `realmlist` (
 -- ----------------------------
 -- Records of realmlist
 -- ----------------------------
-INSERT INTO realmlist VALUES ('1', 'Strawberry-Pr0jcts', '127.0.0.1', '8085', '1', '0', '1', '0', '0', '13623');
+INSERT INTO realmlist VALUES ('1', 'Strawberry-Pr0jcts', '127.0.0.1', '8085', '1', '0', '1', '0', '0', '13812');
 
 -- ----------------------------
 -- Table structure for `uptime`

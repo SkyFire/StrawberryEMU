@@ -65,7 +65,7 @@ enum LoginResult
     LOGIN_LOCKED_ENFORCED                        = 0x10,
 };
 
-#define POST_BC_ACCEPTED_CLIENT_BUILD            {13623, 0}
+#define POST_BC_ACCEPTED_CLIENT_BUILD            {13812, 0}
 #define PRE_BC_ACCEPTED_CLIENT_BUILD             {5875, 6005, 0}
 
 enum ExpansionFlags
