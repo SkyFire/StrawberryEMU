@@ -445,7 +445,7 @@ void PlayerMenu::SendQuestGiverQuestDetails(Quest const *pQuest, uint64 npcGUID,
         }
     }
 
-    WorldPacket data(SMSG_QUESTGIVER_QUEST_DETAILS, 1200);   // guess size
+    WorldPacket data(SMSG_QUESTGIVER_QUEST_DETAILS, 200);   // guess size
     data << uint64(npcGUID);
     data << uint64(0);                                      // wotlk, something todo with quest sharing?
     data << uint32(pQuest->GetQuestId());
@@ -573,7 +573,7 @@ void PlayerMenu::SendQuestQueryResponse(Quest const *pQuest)
         }
     }
 
-    WorldPacket data(SMSG_QUEST_QUERY_RESPONSE, 1200);     // guess size
+    WorldPacket data(SMSG_QUEST_QUERY_RESPONSE, 250);     // guess size
 
     data << uint32(pQuest->GetQuestId());                   // quest id
     data << uint32(pQuest->GetQuestMethod());               // Accepted values: 0, 1 or 2. 0 == IsAutoComplete() (skip objectives/details)
