@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2011 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2008-2010 TrinityCore <http://www.trinitycore.org/>
  * Copyright (C) 2005-2008  MaNGOS <http://getmangos.com/>
  *
  * This program is free software; you can redistribute it and/or modify it
@@ -22,6 +22,7 @@
 */
 
 #include "WorldSocketMgr.h"
+#include "OpcodeHandler.h"
 
 #include <ace/ACE.h>
 #include <ace/Log_Msg.h>
@@ -210,16 +211,15 @@ class ReactorRunnable : protected ACE_Task_Base
         ACE_Thread_Mutex m_NewSockets_Lock;
 };
 
-WorldSocketMgr::WorldSocketMgr() : m_NetThreads(0), m_NetThreadsCount(0), m_SockOutKBuff(-1), 
-                                   m_SockOutUBuff(65536), m_UseNoDelay(true), m_Acceptor (0)
+WorldSocketMgr::WorldSocketMgr() :
+    m_NetThreads(0),
+    m_NetThreadsCount(0),
+    m_SockOutKBuff(-1),
+    m_SockOutUBuff(65536),
+    m_UseNoDelay(true),
+    m_Acceptor (0)
 {
-    ServerOpcodeTable();
-    ClientOpcodeTable();
-    ClientServerOpcodeTable();
-    // Not used
-    //CompressedOpcodeTable();
-    // Used in 4.x.x
-    //SpecialOpcodeTable();
+    InitOpcodeTable();
 }
 
 WorldSocketMgr::~WorldSocketMgr()

@@ -47,8 +47,9 @@ enum HighGuid
     HIGHGUID_DYNAMICOBJECT  = 0xF100,                       // blizz F100
     HIGHGUID_CORPSE         = 0xF101,                       // blizz F100
     HIGHGUID_MO_TRANSPORT   = 0x1FC0,                       // blizz 1FC0 (for GAMEOBJECT_TYPE_MO_TRANSPORT)
+    HIGHGUID_INSTANCE       = 0x1F42,                       // blizz 1F42/1F44/1F44/1F47
     HIGHGUID_GROUP          = 0x1F50,
-    HIGHGUID_GUILD          = 0x1FF6,
+    HIGHGUID_GUILD          = 0x1FF0,
 };
 
 #define IS_EMPTY_GUID(Guid)          (Guid == 0)

@@ -411,7 +411,7 @@ void PlayerMenu::SendQuestGiverQuestList(QEmote eEmote, const std::string& Title
     sLog->outDebug(LOG_FILTER_NETWORKIO, "WORLD: Sent SMSG_QUESTGIVER_QUEST_LIST NPC Guid=%u", GUID_LOPART(npcGUID));
 }
 
-void PlayerMenu::SendQuestGiverStatus(uint8 questStatus, uint64 npcGUID)
+void PlayerMenu::SendQuestGiverStatus(uint32 questStatus, uint64 npcGUID)
 {
     WorldPacket data(SMSG_QUESTGIVER_STATUS, 12);
     data << uint64(npcGUID);
@@ -423,10 +423,14 @@ void PlayerMenu::SendQuestGiverStatus(uint8 questStatus, uint64 npcGUID)
 
 void PlayerMenu::SendQuestGiverQuestDetails(Quest const *pQuest, uint64 npcGUID, bool ActivateAccept)
 {
-    std::string Title            = pQuest->GetTitle();
-    std::string Details          = pQuest->GetDetails();
-    std::string Objectives       = pQuest->GetObjectives();
-    std::string EndText          = pQuest->GetEndText();
+    std::string Title                   = pQuest->GetTitle();
+    std::string Details                 = pQuest->GetDetails();
+    std::string Objectives              = pQuest->GetObjectives();
+    std::string QuestGiverPortraitText  = pQuest->GetQuestGiverPortraitText();
+    std::string QuestGiverPortraitUnk   = pQuest->GetQuestGiverPortraitUnk();
+    std::string QuestTurnInPortraitText = pQuest->GetQuestTurnInPortraitText();
+    std::string QuestTurnInPortraitUnk  = pQuest->GetQuestTurnInPortraitUnk();
+    std::string EndText                 = pQuest->GetEndText();
 
     int loc_idx = pSession->GetSessionDbLocaleIndex();
     if (loc_idx >= 0)
@@ -440,17 +444,17 @@ void PlayerMenu::SendQuestGiverQuestDetails(Quest const *pQuest, uint64 npcGUID,
         }
     }
 
-    WorldPacket data(SMSG_QUESTGIVER_QUEST_DETAILS, 150);   // guess size
+    WorldPacket data(SMSG_QUESTGIVER_QUEST_DETAILS, 1200);   // guess size
     data << uint64(npcGUID);
     data << uint64(0);                                      // wotlk, something todo with quest sharing?
     data << uint32(pQuest->GetQuestId());
     data << Title;
     data << Details;
     data << Objectives;
-    data << pQuest->GetQuestGiverPortraitText();
-    data << pQuest->GetQuestGiverPortraitUnk();
-    data << pQuest->GetQuestTurnInPortraitText();
-    data << pQuest->GetQuestTurnInPortraitUnk();
+    data << QuestGiverPortraitText;
+    data << QuestGiverPortraitUnk;
+    data << QuestTurnInPortraitText;
+    data << QuestTurnInPortraitUnk;
     data << uint32(0);
     data << uint32(0);
     data << uint8(ActivateAccept ? 1 : 0);                  // auto finish
@@ -544,7 +548,12 @@ void PlayerMenu::SendQuestQueryResponse(Quest const *pQuest)
     Objectives = pQuest->GetObjectives();
     EndText = pQuest->GetEndText();
     CompletedText = pQuest->GetCompletedText();
-    for (int i=0; i<QUEST_OBJECTIVES_COUNT; ++i)
+    std::string QuestGiverPortraitText  = pQuest->GetQuestGiverPortraitText();
+    std::string QuestGiverPortraitUnk   = pQuest->GetQuestGiverPortraitUnk();
+    std::string QuestTurnInPortraitText = pQuest->GetQuestTurnInPortraitText();
+    std::string QuestTurnInPortraitUnk  = pQuest->GetQuestTurnInPortraitUnk();
+
+    for (int i = 0; i < QUEST_OBJECTIVES_COUNT; ++i)
         ObjectiveText[i]=pQuest->ObjectiveText[i];
 
     int loc_idx = pSession->GetSessionDbLocaleIndex();
@@ -563,7 +572,7 @@ void PlayerMenu::SendQuestQueryResponse(Quest const *pQuest)
         }
     }
 
-    WorldPacket data(SMSG_QUEST_QUERY_RESPONSE, 220);     // guess size
+    WorldPacket data(SMSG_QUEST_QUERY_RESPONSE, 1200);     // guess size
 
     data << uint32(pQuest->GetQuestId());                   // quest id
     data << uint32(pQuest->GetQuestMethod());               // Accepted values: 0, 1 or 2. 0 == IsAutoComplete() (skip objectives/details)
@@ -594,6 +603,7 @@ void PlayerMenu::SendQuestQueryResponse(Quest const *pQuest)
 
     // rewarded honor points
     data << Strawberry::Honor::hk_honor_at_level(pSession->GetPlayer()->getLevel(), pQuest->GetRewHonorMultiplier());
+    data << uint32(0);                                      // unk
     data << float(0);                                       // new reward honor (multipled by ~62 at client side)
     data << uint32(pQuest->GetSrcItemId());                 // source item id
     data << uint32(pQuest->GetFlags() & 0xFFFF);            // quest flags
@@ -688,13 +698,13 @@ void PlayerMenu::SendQuestQueryResponse(Quest const *pQuest)
         data << uint32(pQuest->ReqCurrencyCount[iI]);
     }
 
-    data << pQuest->GetQuestGiverPortraitText();
-    data << pQuest->GetQuestGiverPortraitUnk();
-    data << pQuest->GetQuestTurnInPortraitText();
-    data << pQuest->GetQuestTurnInPortraitUnk();
+    data << QuestGiverPortraitText;
+    data << QuestGiverPortraitUnk;
+    data << QuestTurnInPortraitText;
+    data << QuestTurnInPortraitUnk;
 
-    data << uint32(pQuest->GetSoundId());
-    data << uint32(pQuest->GetSoundId2());
+    data << int32(pQuest->GetSoundId());
+    data << int32(pQuest->GetSoundId2());
 
     pSession->SendPacket(&data);
     sLog->outDebug(LOG_FILTER_NETWORKIO, "WORLD: Sent SMSG_QUEST_QUERY_RESPONSE questid = %u", pQuest->GetQuestId());

@@ -7,15 +7,7 @@
 #include "ObjectDefines.h"
 #include "SQLStorage.h"
 #include "SharedDefines.h"
-/* Opcode Handler includes */
 #include "OpcodeHandler.h"
-#include "ClientOpcodeHandler.h"
-#include "ClientServerOpcodeHandler.h"
-// Not used
-//#include "CompressedOpcodeHandler.h"
-#include "ServerOpcodeHandler.h"
-// Used in 4.x.x
-//#include "SpecialOpcodeHandler.h"
 
 // Scripts
 #include "ScriptMgr.h"

@@ -264,7 +264,7 @@ SpellScaling::SpellScaling(uint8 playerLevel_, const SpellEntry * spellEntry_)
 {
     playerLevel = playerLevel_;
     spellEntry = spellEntry_;
-    for(int i = 0; i < 3; i++)
+    for(int i = 0; i < MAX_SPELL_EFFECTS; i++)
     {
         avg[i] = 0.f;
         min[i] = 0.f;
@@ -274,54 +274,54 @@ SpellScaling::SpellScaling(uint8 playerLevel_, const SpellEntry * spellEntry_)
     cast = 0;
     canScale = false;
 
-    SpellScalingEntry const* spellScalling = spellEntry->GetSpellScaling();
-    if (!spellScalling)
+    SpellScalingEntry const* spellScaling = spellEntry->GetSpellScaling();
+    if(!spellEntry->SpellScalingId)
         return;
 
-    if (!spellEntry->SpellScalingId)
+    if(!spellScaling || !spellScaling->Id)
         return;
 
-    float base_coef = spellScalling->unkMult;
-    uint8 base_level = spellScalling->unkLevel;
+    float base_coef = spellScaling->base_coef;
+    uint8 base_level = spellScaling->base_level_coef;
 
-    int32 ct_min = spellScalling->castTimeMin;
-    int32 ct_max = spellScalling->castTimeMax;
-    uint8 ct_level = spellScalling->castScalingMaxLevel;
+    int32 ct_min = spellScaling->castTimeMin;
+    int32 ct_max = spellScaling->castTimeMax;
+    uint8 ct_level = spellScaling->castScalingMaxLevel;
 
-    int8 class_ = spellScalling->playerClass;
+    int8 class_ = spellScaling->playerClass;
 
     float gtCoef = GetGtSpellScalingValue(class_, playerLevel_);
 
-    if (gtCoef == -1.0f)
+    if(gtCoef == -1.0f)
         return;
 
-    gtCoef *= (std::min(playerLevel,base_level) + (base_coef * std::max(0,playerLevel-base_level))) / playerLevel;
+    gtCoef *= (std::min(playerLevel, base_level) + (base_coef * std::max(0, playerLevel - base_level))) / playerLevel;
 
     //cast time
     cast = 0;
-    if (ct_max > 0 && playerLevel_ > 1)
-        cast = ct_min + (((playerLevel-1) * (ct_max-ct_min)) / (ct_level - 1));
+    if(ct_max > 0 && playerLevel_ > 1)
+        cast = ct_min+(((playerLevel - 1) * (ct_max - ct_min)) / (ct_level - 1));
     else
         cast = ct_min;
 
-    if (cast > ct_max)
+    if(cast > ct_max)
         cast = ct_max;
 
     //effects
-    for (uint8 effIndex = 0; effIndex < 3; effIndex++)
+    for(uint8 effIndex = 0; effIndex < MAX_SPELL_EFFECTS; effIndex++)
     {
-        float mult = spellScalling->coeff1[effIndex];
-        float randommult = spellScalling->coeff2[effIndex];
-        float othermult = spellScalling->coeff3[effIndex];
+        float mult = spellScaling->coefMultiplier[effIndex];
+        float randommult = spellScaling->coefRandomMultiplier[effIndex];
+        float othermult = spellScaling->coefUnknow[effIndex];
 
         avg[effIndex] = mult * gtCoef;
-        if (ct_max > 0)
+        if(ct_max > 0)
             avg[effIndex] *= float(cast) / float(ct_max);
 
-        min[effIndex] = roundf(avg[effIndex])-std::floor(avg[effIndex]*randommult/2);
-        max[effIndex] = roundf(avg[effIndex])+std::floor(avg[effIndex]*randommult/2);
-        pts[effIndex] = roundf(othermult*gtCoef);
-        avg[effIndex] = std::max((float)ceil(mult),roundf(avg[effIndex]));
+        min[effIndex] = roundf(avg[effIndex]) - std::floor(avg[effIndex] * randommult / 2);
+        max[effIndex] = roundf(avg[effIndex]) + std::floor(avg[effIndex] * randommult / 2);
+        pts[effIndex] = roundf(othermult * gtCoef);
+        avg[effIndex] = std::max((float)ceil(mult), roundf(avg[effIndex]));
     }
 
     canScale = true;

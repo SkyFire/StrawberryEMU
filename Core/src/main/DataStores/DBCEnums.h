@@ -243,8 +243,11 @@ enum AchievementCriteriaTypes
     // 131 unused
     // 132 Earn a battleground rating of X.
     // 133 Create and purchase a guild crest.
-    // 0..133 => 134 criteria types total
-    ACHIEVEMENT_CRITERIA_TYPE_TOTAL = 134,
+    // 134 Complete X quests in a guild.
+    // 135 Get X honorable kills in a guild.
+    // 136 Kill X critters in a guild.
+    // 0..136 => 137 criteria types total
+    ACHIEVEMENT_CRITERIA_TYPE_TOTAL = 137,
 };
 
 enum AchievementCriteriaMoreReqType
@@ -447,6 +450,11 @@ enum SummonPropFlags
     SUMMON_PROP_FLAG_UNK12           = 0x0800,              // 30 spells in 3.0.3, no idea
     SUMMON_PROP_FLAG_UNK13           = 0x1000,              // 8 spells in 3.0.3, siege vehicle
     SUMMON_PROP_FLAG_UNK14           = 0x2000,              // 2 spells in 3.0.3, escort?
+};
+
+enum CurrencyTypes
+{
+    CURRENCY_TYPE_CONQUEST_POINTS   = 390,
 };
 
 #endif

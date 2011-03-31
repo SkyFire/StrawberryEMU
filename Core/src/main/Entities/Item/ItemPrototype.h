@@ -162,7 +162,7 @@ enum ItemFieldFlags
     ITEM_FLAG_UNK1          = 0x00000002, // ?
     ITEM_FLAG_UNLOCKED      = 0x00000004, // Item had lock but can be opened now
     ITEM_FLAG_WRAPPED       = 0x00000008, // Item is wrapped and contains another item
-    ITEM_FLAG_UNK2          = 0x00000010, // ?
+    ITEM_FLAG_DEPRECATED    = 0x00000010, // ?
     ITEM_FLAG_UNK3          = 0x00000020, // ?
     ITEM_FLAG_UNK4          = 0x00000040, // ?
     ITEM_FLAG_UNK5          = 0x00000080, // ?
@@ -228,10 +228,12 @@ enum SocketColor
     SOCKET_COLOR_META                           = 1,
     SOCKET_COLOR_RED                            = 2,
     SOCKET_COLOR_YELLOW                         = 4,
-    SOCKET_COLOR_BLUE                           = 8
+    SOCKET_COLOR_BLUE                           = 8,
+    SOCKET_COLOR_HYDRAULIC                      = 16,
+    SOCKET_COLOR_COGWHEEL                       = 32,
 };
 
-#define SOCKET_COLOR_ALL (SOCKET_COLOR_META | SOCKET_COLOR_RED | SOCKET_COLOR_YELLOW | SOCKET_COLOR_BLUE)
+#define SOCKET_COLOR_ALL (SOCKET_COLOR_META | SOCKET_COLOR_RED | SOCKET_COLOR_YELLOW | SOCKET_COLOR_BLUE | SOCKET_COLOR_HYDRAULIC | SOCKET_COLOR_COGWHEEL)
 
 enum InventoryType
 {

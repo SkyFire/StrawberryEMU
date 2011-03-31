@@ -345,10 +345,7 @@
     <ClCompile Include="..\..\src\main\Scripting\ScriptMgr.cpp" />
     <ClCompile Include="..\..\src\main\Scripting\ScriptSystem.cpp" />
     <ClCompile Include="..\..\src\main\Server\Logs\WorldLog.cpp" />
-    <ClCompile Include="..\..\src\main\Server\Protocol\Handlers\Opcodes\ClientOpcodeHandler.cpp" />
-    <ClCompile Include="..\..\src\main\Server\Protocol\Handlers\Opcodes\ClientServerOpcodeHandler.cpp" />
     <ClCompile Include="..\..\src\main\Server\Protocol\Handlers\Opcodes\OpcodeHandler.cpp" />
-    <ClCompile Include="..\..\src\main\Server\Protocol\Handlers\Opcodes\ServerOpcodeHandler.cpp" />
     <ClCompile Include="..\..\src\main\Server\Protocol\Handlers\Packets\AddonHandler.cpp" />
     <ClCompile Include="..\..\src\main\Server\Protocol\Handlers\Packets\ArenaTeamHandler.cpp" />
     <ClCompile Include="..\..\src\main\Server\Protocol\Handlers\Packets\AuctionHouseHandler.cpp" />
@@ -1109,10 +1106,7 @@
     <ClInclude Include="..\..\src\main\Scripting\ScriptMgr.h" />
     <ClInclude Include="..\..\src\main\Scripting\ScriptSystem.h" />
     <ClInclude Include="..\..\src\main\Server\Logs\WorldLog.h" />
-    <ClInclude Include="..\..\src\main\Server\Protocol\Handlers\Opcodes\ClientOpcodeHandler.h" />
-    <ClInclude Include="..\..\src\main\Server\Protocol\Handlers\Opcodes\ClientServerOpcodeHandler.h" />
     <ClInclude Include="..\..\src\main\Server\Protocol\Handlers\Opcodes\OpcodeHandler.h" />
-    <ClInclude Include="..\..\src\main\Server\Protocol\Handlers\Opcodes\ServerOpcodeHandler.h" />
     <ClInclude Include="..\..\src\main\Server\Protocol\Handlers\Packets\AddonHandler.h" />
     <ClInclude Include="..\..\src\main\Server\Protocol\Handlers\Packets\NPCHandler.h" />
     <ClInclude Include="..\..\src\main\Server\Sessions\WorldSession.h" />

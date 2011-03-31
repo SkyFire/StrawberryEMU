@@ -189,6 +189,7 @@ void WorldSession::SendTrainerList(uint64 guid, const std::string& strTitle)
             continue;
 
         TrainerSpellState state = _player->GetTrainerSpellState(tSpell);
+        SpellChainNode const* chain_node = sSpellMgr->GetSpellChainNode(tSpell->learnedSpell[1]);
 
         data << uint32(tSpell->spell);                      // learned spell (or cast-spell in profession case)
         data << uint8(state);
@@ -201,8 +202,8 @@ void WorldSession::SendTrainerList(uint64 guid, const std::string& strTitle)
         data << uint32(tSpell->reqSkill);
         data << uint32(tSpell->reqSkillValue);
         data << uint32(0);                                  // 4.0.3
-        data << uint32(0);                                  // 4.0.3
-        data << uint32(0);                                  // 4.0.3
+        data << uint32(!tSpell->IsCastable() && chain_node ? (chain_node->prev ? chain_node->prev : chain_node->first) : 0);
+        data << uint32(!tSpell->IsCastable() && chain_node && chain_node->prev ? chain_node->first : 0);
         data << uint32(0);                                  // 4.0.3
         //prev + req or req + 0
         uint8 maxReq = 0;

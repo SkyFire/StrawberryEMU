@@ -260,19 +260,19 @@ int WorldSocket::open (void *a)
     m_Address = remote_addr.get_host_addr();
 
     // Send startup packet.
-    WorldPacket packet (SMSG_AUTH_CHALLENGE, 37);
+    WorldPacket packet (SMSG_AUTH_CHALLENGE, (4 * 4 + (1 + 4) + 4 * 4));
 
-    BigNumber seed1;
-    seed1.SetRand(16 * 8);
-    packet.append(seed1.AsByteArray(16), 16);               // new encryption seeds
-    
+    packet << uint32(0);
+    packet << uint32(5);
+    packet << uint32(7);
+    packet << uint32(3);
     packet << uint8(1);
     packet << uint32(m_Seed);
+    packet << uint32(2);
+    packet << uint32(1);
+    packet << uint32(6);
+    packet << uint32(4);
 
-    BigNumber seed2;
-    seed2.SetRand(16 * 8);
-    packet.append(seed2.AsByteArray(16), 16);               // new encryption seeds
-    
     if (SendPacket(packet) == -1)
         return -1;
 
@@ -777,7 +777,7 @@ int WorldSocket::HandleAuthSession (WorldPacket& recvPacket)
     std::string accountName;
     LocaleConstant locale;
     SHA1Hash sha1;
-    BigNumber v, s, g, N, K;
+    BigNumber g, N, K;
     WorldPacket packet;
 
     recvPacket.read(digest, 7);
@@ -797,17 +797,9 @@ int WorldSocket::HandleAuthSession (WorldPacket& recvPacket)
     recvPacket >> clientSeed;
     recvPacket.read(digest, 2);
 
-    recvPacket >> m_addonSize;
-    uint8 * tableauAddon = new uint8[m_addonSize];
-    WorldPacket packetAddon;
-    for(uint32 i = 0; i < m_addonSize; i++)
-    {
-        uint8 ByteSize = 0;
-        recvPacket >> ByteSize;
-        tableauAddon[i] = ByteSize;
-        packetAddon << ByteSize;
-    }
-    delete tableauAddon;
+    recvPacket >> m_addonSize;                            // addon data size
+    size_t addonInfoPos = recvPacket.rpos();
+    recvPacket.rpos(recvPacket.rpos() + m_addonSize);     // skip it
 
     recvPacket >> accountName;
     
@@ -870,19 +862,6 @@ int WorldSocket::HandleAuthSession (WorldPacket& recvPacket)
     N.SetHexStr ("894B645E89E1535BBDAD5B8B290650530801B18EBFBF5E8FAB3C82872A3E9BB7");
     g.SetDword (7);
 
-    v.SetHexStr(fields[4].GetCString());
-    s.SetHexStr (fields[5].GetCString());
-
-    const char* sStr = s.AsHexStr();                       //Must be freed by OPENSSL_free()
-    const char* vStr = v.AsHexStr();                       //Must be freed by OPENSSL_free()
-
-    sLog->outStaticDebug ("WorldSocket::HandleAuthSession: (s,v) check s: %s v: %s",
-                sStr,
-                vStr);
-
-    OPENSSL_free ((void*) sStr);
-    OPENSSL_free ((void*) vStr);
-
     ///- Re-check ip locking (same check as in realmd).
     if (fields[3].GetUInt8() == 1) // if ip is locked
     {
@@ -903,7 +882,7 @@ int WorldSocket::HandleAuthSession (WorldPacket& recvPacket)
         security = SEC_ADMINISTRATOR;
         */
 
-    K.SetHexStr (fields[1].GetCString());
+    K.SetHexStr(fields[1].GetCString());
 
     time_t mutetime = time_t (fields[7].GetUInt64());
 
@@ -975,18 +954,6 @@ int WorldSocket::HandleAuthSession (WorldPacket& recvPacket)
     sha.UpdateBigNumbers(&K, NULL);
     sha.Finalize();
 
-    // ToDo: Fix digest.
-    /*if (memcmp(sha.GetDigest(), digest, 20))
-    {
-        packet.Initialize (SMSG_AUTH_RESPONSE, 1);
-        packet << uint8 (AUTH_FAILED);
-
-        SendPacket (packet);
-
-        sLog->outError ("WorldSocket::HandleAuthSession: Sent Auth Response (authentification failed).");
-        return -1;
-    }*/
-
     std::string address = GetRemoteAddress();
 
     sLog->outStaticDebug ("WorldSocket::HandleAuthSession: Client '%s' authenticated successfully from %s.",
@@ -1010,8 +977,8 @@ int WorldSocket::HandleAuthSession (WorldPacket& recvPacket)
 
     m_Session->LoadGlobalAccountData();
     m_Session->LoadTutorialsData();
-    packetAddon.rpos(0);
-    m_Session->ReadAddonsInfo(packetAddon);
+    recvPacket.rpos(addonInfoPos);
+    m_Session->ReadAddonsInfo(recvPacket);
 
     // Sleep this Network thread for
     uint32 sleepTime = sWorld->getIntConfig(CONFIG_SESSION_ADD_DELAY);

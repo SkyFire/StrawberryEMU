@@ -3162,7 +3162,6 @@ void Unit::_AddAura(UnitAura * aura, Unit * caster)
                 aura->ModStackAmount(foundAura->GetStackAmount());
 
             // Update periodic timers from the previous aura
-            // ToDo: FIX CRASH!!!
             for (uint8 i = 0; i < MAX_SPELL_EFFECTS; ++i)
             {
                 AuraEffect *existingEff = foundAura->GetEffect(i);
@@ -7664,8 +7663,6 @@ bool Unit::HandleDummyAuraProc(Unit *pVictim, uint32 damage, AuraEffect* trigger
     }
 
     SpellEffectEntry const* spellEffect = dummySpell->GetSpellEffect(SpellEffIndex(triggeredByAura->GetEffIndex()));
-    if (!spellEffect)
-        return false;
 
     // if not handled by custom case, get triggered spell from dummySpell proto
     if (!triggered_spell_id)
@@ -10578,8 +10575,6 @@ uint32 Unit::SpellDamageBonus(Unit *pVictim, SpellEntry const *spellProto, uint3
                     }
 
                     SpellEffectEntry const* spellEffect = spellProto->GetSpellEffect(SpellEffIndex(x));
-                    if (!spellEffect)
-                        return false;
 
                     int32 DotTicks = 6;
                     if (spellEffect->EffectAmplitude != 0)
@@ -11141,8 +11136,6 @@ uint32 Unit::SpellHealingBonus(Unit *pVictim, SpellEntry const *spellProto, uint
                     }
 
                     SpellEffectEntry const* spellEffect = spellProto->GetSpellEffect(SpellEffIndex(x));
-                    if (!spellEffect)
-                        return false;
 
                     int32 DotTicks = 6;
                     if (spellEffect->EffectAmplitude != 0)
@@ -12930,8 +12923,6 @@ int32 Unit::ModSpellDuration(SpellEntry const* spellProto, Unit const* target, i
                 sSpellMgr->IsSpellMemberOfSpellGroup(spellProto->Id, SPELL_GROUP_ELIXIR_GUARDIAN)))
             {
                 SpellEffectEntry const* spellEffect = spellProto->GetSpellEffect(SpellEffIndex(EFFECT_0));
-                if (!spellEffect)
-                    return false;
 
                 if (target->HasAura(53042) && target->HasSpell(spellEffect->EffectTriggerSpell))
                     duration *= 2;
@@ -13453,9 +13444,12 @@ void Unit::SetPower(Powers power, uint32 val)
 
     SetStatInt32Value(UNIT_FIELD_POWER1 + power, val);
 
+    if (!IsInWorld())
+        return;
+
     WorldPacket data(SMSG_POWER_UPDATE);
     data.append(GetPackGUID());
-	data << uint32(1);  // count of updates. uint8 and uint32 for each
+	data << uint32(1);                     // count
     data << uint8(power);
     data << uint32(val);
     SendMessageToSet(&data, GetTypeId() == TYPEID_PLAYER ? true : false);
@@ -13514,18 +13508,33 @@ uint32 Unit::GetCreatePowers(Powers power) const
     switch (power)
     {
         
-      case POWER_MANA:
+        case POWER_MANA:
             if (getClass() == CLASS_HUNTER || getClass() == CLASS_WARRIOR || getClass() == CLASS_ROGUE || getClass() == CLASS_DEATH_KNIGHT)
                 return false;
             else
                 return GetCreateMana();
-        case POWER_RAGE:      return 1000;
-        case POWER_FOCUS:     return (GetTypeId() == TYPEID_PLAYER || !((Creature const*)this)->isPet() || ((Pet const*)this)->getPetType() != HUNTER_PET ? 0 : 100);
-        case POWER_ENERGY:    return 100;
-        case POWER_HAPPINESS: return (GetTypeId() == TYPEID_PLAYER || !((Creature const*)this)->isPet() || ((Pet const*)this)->getPetType() != HUNTER_PET ? 0 : 1050000);
-        case POWER_RUNIC_POWER: return 1000;
-        case POWER_RUNE:      return 0;
-        case POWER_HEALTH:    return 0;
+        case POWER_RAGE:
+            return 1000;
+        case POWER_FOCUS:
+            return (GetTypeId() == TYPEID_PLAYER || !((Creature const*)this)->isPet() || ((Pet const*)this)->getPetType() != HUNTER_PET ? 0 : 100);
+        case POWER_ENERGY:
+            return 100;
+        case POWER_HAPPINESS:
+            return (GetTypeId() == TYPEID_PLAYER || !((Creature const*)this)->isPet() || ((Pet const*)this)->getPetType() != HUNTER_PET ? 0 : 1050000);
+        case POWER_RUNIC_POWER:
+            return (GetTypeId() == TYPEID_PLAYER && ((Player const*)this)->getClass() == CLASS_DEATH_KNIGHT ? 1000 : 0);
+        case POWER_RUNE:
+            return (GetTypeId() == TYPEID_PLAYER && ((Player const*)this)->getClass() == CLASS_DEATH_KNIGHT ? 8 : 0);
+        case POWER_HEALTH:
+            return 0;
+        case POWER_SOUL_SHARDS:
+            return 0;
+        case POWER_ECLIPSE:
+            return 0;
+        case POWER_HOLY:
+            return 0;
+        case POWER_HOLY_POWER:
+            return 0;
         default:
             break;
     }

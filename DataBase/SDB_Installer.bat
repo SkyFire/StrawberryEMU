@@ -25,7 +25,7 @@ if %svr%. == . set svr=localhost
 set /p user=What is your MySQL user name?          [strawberry]	    : 
 if %user%. == . set user=strawberry
 set /p pass=What is your MySQL password?           [strawberry]	    : 
-if %pass%. == . set pass=strawberry
+if %pass%. == . set pass= 
 set /p port=What is your MySQL port?               [3306]           : 
 if %port%. == . set port=3306
 set /p wdb=What is your World database name?       [WorldDB]        : 

@@ -1,6 +1,8 @@
 /*
  * Copyright (C) 2010-2011 Strawberry-Pr0jcts <http://www.strawberry-pr0jcts.com/>
- * Copyright (C) 2008-2011 TrinityCore <http://www.trinitycore.org/>
+ *
+ * Copyright (C) 2008-2010 TrinityCore <http://www.trinitycore.org/>
+ *
  * Copyright (C) 2005-2009 MaNGOS <http://getmangos.com/>
  *
  * This program is free software; you can redistribute it and/or modify it
@@ -17,10 +19,15 @@
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+/** \file
+    \ingroup u2w
+*/
+
 #include "WorldSocket.h"                                    // must be first to make ACE happy with ACE includes in it
 #include "Common.h"
 #include "DatabaseEnv.h"
 #include "Log.h"
+#include "OpcodeHandler.h"
 #include "WorldPacket.h"
 #include "WorldSession.h"
 #include "Player.h"
@@ -40,18 +47,14 @@
 
 bool MapSessionFilter::Process(WorldPacket *packet)
 {
-    ClientOpcodeHandler const &clientOpHandle = clientOpcodeTable[packet->GetOpcode()];
-    ServerOpcodeHandler const &serverOpHandle = serverOpcodeTable[packet->GetOpcode()];
-    ClientServerOpcodeHandler const &clientServerOpHandle = clientServerOpcodeTable[packet->GetOpcode()];
+    OpcodeHandler const &opHandle = opcodeTable[packet->GetOpcode()];
 
     //let's check if our opcode can be really processed in Map::Update()
-    if ((clientOpHandle.packetProcessing == PROCESS_INPLACE) || (serverOpHandle.packetProcessing == PROCESS_INPLACE) ||
-        (clientServerOpHandle.packetProcessing == PROCESS_INPLACE))
+    if (opHandle.packetProcessing == PROCESS_INPLACE)
         return true;
 
     //we do not process thread-unsafe packets
-    if ((clientOpHandle.packetProcessing == PROCESS_THREADUNSAFE) || (serverOpHandle.packetProcessing == PROCESS_THREADUNSAFE) ||
-        (clientServerOpHandle.packetProcessing == PROCESS_THREADUNSAFE))
+    if (opHandle.packetProcessing == PROCESS_THREADUNSAFE)
         return false;
 
     Player *plr = m_pSession->GetPlayer();
@@ -66,19 +69,14 @@ bool MapSessionFilter::Process(WorldPacket *packet)
 //OR packet handler is not thread-safe!
 bool WorldSessionFilter::Process(WorldPacket *packet)
 {
-    ClientOpcodeHandler const &clientOpHandle = clientOpcodeTable[packet->GetOpcode()];
-    ServerOpcodeHandler const &serverOpHandle = serverOpcodeTable[packet->GetOpcode()];
-    ClientServerOpcodeHandler const &clientServerOpHandle = clientServerOpcodeTable[packet->GetOpcode()];
-
+    OpcodeHandler const &opHandle = opcodeTable[packet->GetOpcode()];
     //check if packet handler is supposed to be safe
-    if ((clientOpHandle.packetProcessing == PROCESS_INPLACE) || (serverOpHandle.packetProcessing == PROCESS_INPLACE) ||
-        (clientServerOpHandle.packetProcessing == PROCESS_INPLACE))
+    if (opHandle.packetProcessing == PROCESS_INPLACE)
         return true;
 
     //thread-unsafe packets should be processed in World::UpdateSessions()
-    if ((clientOpHandle.packetProcessing == PROCESS_THREADUNSAFE) || (serverOpHandle.packetProcessing == PROCESS_THREADUNSAFE) ||
-        (clientServerOpHandle.packetProcessing == PROCESS_THREADUNSAFE))
-        return false;
+    if (opHandle.packetProcessing == PROCESS_THREADUNSAFE)
+        return true;
 
     //no player attached? -> our client! ^^
     Player *plr = m_pSession->GetPlayer();
@@ -197,7 +195,7 @@ void WorldSession::QueuePacket(WorldPacket *new_packet)
 void WorldSession::LogUnexpectedOpcode(WorldPacket *packet, const char* status, const char *reason)
 {
     sLog->outError("SESSION (account: %u, guidlow: %u, char: %s): received unexpected opcode %s (0x%.4X, status: %s) %s",
-        GetAccountId(), m_GUIDLow, _player ? _player->GetName() : "<none>",
+        GetAccountId(), m_GUIDLow, _player ? _player->GetName() : "<none>", 
         LookupOpcodeName(packet->GetOpcode()), packet->GetOpcode(), status, reason);
 }
 
@@ -233,13 +231,10 @@ bool WorldSession::Update(uint32 diff, PacketFilter& updater)
         }
         else
         {
-            ClientOpcodeHandler &clientOpHandle = clientOpcodeTable[packet->GetOpcode()];
-            ServerOpcodeHandler &serverOpHandle = serverOpcodeTable[packet->GetOpcode()];
-            ClientServerOpcodeHandler &clientServerOpHandle = clientServerOpcodeTable[packet->GetOpcode()];
-            int allOpcodeHandler = (clientOpHandle.status && serverOpHandle.status && clientServerOpHandle.status);
+            OpcodeHandler &opHandle = opcodeTable[packet->GetOpcode()];
             try
             {
-                switch (allOpcodeHandler)
+                switch (opHandle.status)
                 {
                     case STATUS_LOGGEDIN:
                         if (!_player)
@@ -251,9 +246,7 @@ bool WorldSession::Update(uint32 diff, PacketFilter& updater)
                         else if (_player->IsInWorld())
                         {
                             sScriptMgr->OnPacketReceive(m_Socket, WorldPacket(*packet));
-                            (this->*clientOpHandle.handler)(*packet);
-                            (this->*clientServerOpHandle.handler)(*packet);
-                            (this->*serverOpHandle.handler)(*packet);
+                            (this->*opHandle.handler)(*packet);
                             if (sLog->IsOutDebug() && packet->rpos() < packet->wpos())
                                 LogUnprocessedTail(packet);
                         }
@@ -267,9 +260,7 @@ bool WorldSession::Update(uint32 diff, PacketFilter& updater)
                         {
                             // not expected _player or must checked in packet hanlder
                             sScriptMgr->OnPacketReceive(m_Socket, WorldPacket(*packet));
-                            (this->*clientOpHandle.handler)(*packet);
-                            (this->*clientServerOpHandle.handler)(*packet);
-                            (this->*serverOpHandle.handler)(*packet);
+                            (this->*opHandle.handler)(*packet);
                             if (sLog->IsOutDebug() && packet->rpos() < packet->wpos())
                                 LogUnprocessedTail(packet);
                         }
@@ -282,9 +273,7 @@ bool WorldSession::Update(uint32 diff, PacketFilter& updater)
                         else
                         {
                             sScriptMgr->OnPacketReceive(m_Socket, WorldPacket(*packet));
-                            (this->*clientOpHandle.handler)(*packet);
-                            (this->*clientServerOpHandle.handler)(*packet);
-                            (this->*serverOpHandle.handler)(*packet);
+                            (this->*opHandle.handler)(*packet);
                             if (sLog->IsOutDebug() && packet->rpos() < packet->wpos())
                                 LogUnprocessedTail(packet);
                         }
@@ -303,9 +292,7 @@ bool WorldSession::Update(uint32 diff, PacketFilter& updater)
                             m_playerRecentlyLogout = false;
 
                         sScriptMgr->OnPacketReceive(m_Socket, WorldPacket(*packet));
-                        (this->*clientOpHandle.handler)(*packet);
-                        (this->*clientServerOpHandle.handler)(*packet);
-                        (this->*serverOpHandle.handler)(*packet);
+                        (this->*opHandle.handler)(*packet);
                         if (sLog->IsOutDebug() && packet->rpos() < packet->wpos())
                             LogUnprocessedTail(packet);
                         break;
@@ -314,13 +301,11 @@ bool WorldSession::Update(uint32 diff, PacketFilter& updater)
                             GetAccountId(), m_GUIDLow, _player ? _player->GetName() : "<none>",
                             LookupOpcodeName(packet->GetOpcode()), packet->GetOpcode());
                         break;
-                    // NOT USED!!!
-                    /*
                     case STATUS_UNHANDLED:
                         sLog->outDebug(LOG_FILTER_NETWORKIO, "SESSION (account: %u, guidlow: %u, char: %s): received not handled opcode %s (0x%.4X)",
                             GetAccountId(), m_GUIDLow, _player ? _player->GetName() : "<none>",
                             LookupOpcodeName(packet->GetOpcode()), packet->GetOpcode());
-                        break;*/
+                        break;
                 }
             }
             catch(ByteBufferException &)
@@ -577,7 +562,7 @@ const char *WorldSession::GetString(int32 entry) const
 
 void WorldSession::HandleNULL(WorldPacket& recvPacket)
 {
-    sLog->outDebug(LOG_FILTER_NETWORKIO, "SESSION: received unhandled opcode %s (0x%.4X)", LookupOpcodeName(recvPacket.GetOpcode()), recvPacket.GetOpcode());
+    sLog->outError("SESSION: received unhandled opcode %s (0x%.4X)", LookupOpcodeName(recvPacket.GetOpcode()), recvPacket.GetOpcode());
 }
 
 void WorldSession::HandleEarlyProccess(WorldPacket& recvPacket)
@@ -615,7 +600,7 @@ void WorldSession::SendAuthWaitQue(uint32 position)
 
 void WorldSession::LoadGlobalAccountData()
 {
-    PreparedStatement* stmt = CharacterDatabase.GetPreparedStatement(CHAR_LOAD_ACCOUNT_DATA);
+    PreparedStatement *stmt = CharacterDatabase.GetPreparedStatement(CHAR_LOAD_ACCOUNT_DATA);
     stmt->setUInt32(0, GetAccountId());
     LoadAccountData(CharacterDatabase.Query(stmt), GLOBAL_CACHE_MASK);
 }
@@ -653,8 +638,6 @@ void WorldSession::LoadAccountData(PreparedQueryResult result, uint32 mask)
 
 void WorldSession::SetAccountData(AccountDataType type, time_t time_, std::string data)
 {
-    uint32 id = 0;
-    uint32 index = 0;
     if ((1 << type) & GLOBAL_CACHE_MASK)
     {
         uint32 acc = GetAccountId();
@@ -707,12 +690,12 @@ void WorldSession::LoadTutorialsData()
         do
         {
             Field *fields = result->Fetch();
+
             for (int iI = 0; iI < MAX_CHARACTER_TUTORIAL_VALUES; ++iI)
                 m_Tutorials[iI] = fields[iI].GetUInt32();
         }
         while (result->NextRow());
     }
-
     m_TutorialsChanged = false;
 }
 
@@ -739,7 +722,7 @@ void WorldSession::SaveTutorialsData(SQLTransaction &trans)
 
     if (Rows)
         trans->PAppend("UPDATE character_tutorial SET tut0='%u', tut1='%u', tut2='%u', tut3='%u', tut4='%u', tut5='%u', tut6='%u', tut7='%u' WHERE account = '%u'",
-           m_Tutorials[0], m_Tutorials[1], m_Tutorials[2], m_Tutorials[3], m_Tutorials[4], m_Tutorials[5], m_Tutorials[6], m_Tutorials[7], GetAccountId());
+            m_Tutorials[0], m_Tutorials[1], m_Tutorials[2], m_Tutorials[3], m_Tutorials[4], m_Tutorials[5], m_Tutorials[6], m_Tutorials[7], GetAccountId());
     else
         trans->PAppend("INSERT INTO character_tutorial (account, tut0, tut1, tut2, tut3, tut4, tut5, tut6, tut7) VALUES ('%u', '%u', '%u', '%u', '%u', '%u', '%u', '%u', '%u')", GetAccountId(), m_Tutorials[0], m_Tutorials[1], m_Tutorials[2], m_Tutorials[3], m_Tutorials[4], m_Tutorials[5], m_Tutorials[6], m_Tutorials[7]);
 
@@ -995,7 +978,7 @@ void WorldSession::ProcessQueryCallbacks()
         if (m_nameQueryCallbacks.next_readable(lResult, &timeout) != 1)
            break;
 
-        if (lResult.ready())
+        if (lResult.ready()) 
         {
             lResult.get(result);
             SendNameQueryOpcodeFromDBCallBack(result);

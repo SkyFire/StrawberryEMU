@@ -790,16 +790,16 @@ struct CreatureTypeEntry
 
 struct CurrencyTypesEntry
 {
-    //uint32    ID;                                         // 0        not used
+    uint32    ID;                                         // 0        not used
     //uint32    Category;                                   // 1        may be category
     //DBCString name;                                       // 2
     //DBCString iconName;                                   // 3
-    //uint32                                                // 4
-    //uint32                                                // 5
-    //uint32                                                // 6
-    //uint32                                                // 7
-    //uint32                                                // 8
-    //uint32                                                // 9
+    ///uint32 unk4;                                          // 4        all 0
+    //uint32 unk5;                                          // 5        archaeology-related (?)
+    //uint32 unk6;                                          // 6        archaeology-related (?)
+    uint32 TotalCap;                                        // 7
+    uint32 WeekCap;                                         // 8
+    //int32 unk9;                                           // 9
     //char* description;                                    // 10
 };
 
@@ -1011,6 +1011,12 @@ struct GtRegenMPPerSptEntry
     uint32 level;                                           // 0
     float  ratio;                                           // 1
 };
+struct gtSpellScaling
+{
+    uint32 level;
+    float coef;
+};
+
 
 /*NOT USED*/
 /*struct HolidayDescriptionsEntry
@@ -1069,6 +1075,32 @@ struct ItemBagFamilyEntry
     //DBCString name;                                       // 1     m_name_lang
 };
 
+struct ItemClassEntry
+{
+    //uint32 id;                                            // 0
+    uint32 Class;                                           // 1
+    //uint32 unk2;                                          // 2 looks like second class
+    //uint32 unk3;                                          // 3 1 for weapons
+    //DBCString name;                                       // 4
+};
+
+struct ItemCurrencyCostEntry
+{
+    //uint32 id;                                            // 0
+    uint32 itemid;                                          // 1
+};
+
+struct ItemDisenchantLootEntry
+{
+    uint32 id;                                              // 0
+    uint32 Class;                                           // 1
+    //uint32 unk0;                                          // 2
+    uint32 quality;                                         // 3
+    uint32 minItemLevel;                                    // 4
+    uint32 maxItemLevel;                                    // 5
+    uint32 requiredDisenchantSkill;                         // 6
+};
+
 struct ItemDisplayInfoEntry
 {
     uint32      ID;                                         // 0        m_ID
@@ -1112,21 +1144,22 @@ struct ItemDamageEntry
     uint32    Id2;                                            // 8 item level
 };
 
-#define MAX_ITEM_EXTENDED_COST_REQUIREMENTS 5
+#define MAX_ITEM_EXT_COST_ITEMS         5
+#define MAX_ITEM_EXT_COST_CURRENCIES    5
 
 struct ItemExtendedCostEntry
 {
-    uint32      ID;                                                 // 0 extended-cost entry id
-    uint32      reqhonorpoints;                                     // 1 required honor points
-    uint32      reqarenapoints;                                     // 2 required arena points
-    uint32      reqarenaslot;                                       // 3 arena slot restrctions (min slot value)
-    uint32      reqitem[MAX_ITEM_EXTENDED_COST_REQUIREMENTS];       // 4-8 required item id
-    uint32      reqitemcount[MAX_ITEM_EXTENDED_COST_REQUIREMENTS];  // 9-13 required count of 1st item
-    uint32      reqpersonalarenarating;                             // 14 required personal arena rating};
-    //uint32                                                        // 15
-    //uint32    someId[5];                                          // 16-20, may be currency id's
-    //uint32    someCount[5];                                       // 21-25
-    //uint32    something[5];                                       // 26-30
+    uint32      ID;                                                  // 0 extended-cost entry id
+    uint32      RequiredHonorPoints;                                 // 1 required honor points
+    uint32      RequiredArenaPoints;                                 // 2 required arena points
+    uint32      RequiredArenaSlot;                                   // 4 arena slot restrictions (min slot value)
+    uint32      RequiredItem[MAX_ITEM_EXT_COST_ITEMS];               // 5-8 required item id
+    uint32      RequiredItemCount[MAX_ITEM_EXT_COST_ITEMS];          // 9-13 required count of 1st item
+    uint32      RequiredPersonalArenaRating;                         // 14 required personal arena rating
+    //uint32                                                         // 15
+    uint32      RequiredCurrency[MAX_ITEM_EXT_COST_CURRENCIES];      // 16-20
+    uint32      RequiredCurrencyCount[MAX_ITEM_EXT_COST_CURRENCIES]; // 21-25
+    //uint32    something[5];                                        // 26-30
 };
 
 struct ItemLimitCategoryEntry
@@ -1640,11 +1673,11 @@ struct SpellScalingEntry
     uint32    castTimeMax;                                  // 2
     uint32    castScalingMaxLevel;                          // 3
     uint32    playerClass;                                  // 4 - (index * 100) + charLevel => gtSpellScaling.dbc
-    float     coeff1[3];                                    // 5-7
-    float     coeff2[3];                                    // 8-10
-    float     coeff3[3];                                    // 11-13
-    float     unkMult;                                      // 14 - some coefficient, mostly 1.0f
-    uint32    unkLevel;                                     // 15 - some level
+    float     coefMultiplier[3];                            // 5-7
+    float     coefRandomMultiplier[3];                      // 8-10
+    float     coefUnknow[3];                                // 11-13
+    float     base_coef;                                      // 14 - some coefficient, mostly 1.0f
+    uint32    base_level_coef;                                     // 15 - some level
 };
 
 // SpellShapeshift.dbc

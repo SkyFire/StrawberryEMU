@@ -124,9 +124,28 @@ struct SpellModifier
     Aura * const ownerAura;
 };
 
+enum PlayerCurrencyState
+{
+    PLAYERCURRENCY_UNCHANGED = 0,
+    PLAYERCURRENCY_CHANGED   = 1,
+    PLAYERCURRENCY_NEW       = 2,
+    PLAYERCURRENCY_REMOVED   = 3
+};
+
+struct PlayerCurrency
+{
+    PlayerCurrencyState state;
+    uint32 totalCount;
+    uint32 weekCount;
+};
+
 typedef UNORDERED_MAP<uint32, PlayerTalent*> PlayerTalentMap;
 typedef UNORDERED_MAP<uint32, PlayerSpell*> PlayerSpellMap;
 typedef std::list<SpellModifier*> SpellModList;
+
+#define PLAYER_CURRENCY_PRECISION   100
+typedef UNORDERED_MAP<uint32, PlayerCurrency> PlayerCurrenciesMap;
+
 
 struct SpellCooldown
 {
@@ -139,10 +158,9 @@ typedef UNORDERED_MAP<uint32 /*instanceId*/, time_t/*releaseTime*/> InstanceTime
 
 enum TrainerSpellState
 {
+    TRAINER_SPELL_GRAY  = 0,
     TRAINER_SPELL_GREEN = 1,
     TRAINER_SPELL_RED   = 2,
-    TRAINER_SPELL_GRAY  = 3,
-    TRAINER_SPELL_GREEN_DISABLED = 0                       // custom value, not send to client: formally green but learn not allowed
 };
 
 enum ActionButtonUpdateState
@@ -803,7 +821,8 @@ enum PlayerLoginQueryIndex
     PLAYER_LOGIN_QUERY_LOADTALENTBRANCHSPECS    = 30,
     PLAYER_LOGIN_QUERY_LOADQUESTSTATUSREW       = 31,
     PLAYER_LOGIN_QUERY_LOADINSTANCELOCKTIMES    = 32,
-    MAX_PLAYER_LOGIN_QUERY                      = 33
+    PLAYER_LOGIN_QUERY_LOADCURRENCY             = 33,
+    MAX_PLAYER_LOGIN_QUERY                      = 34
 };
 
 enum PlayerDelayedOperations
@@ -1247,6 +1266,10 @@ class Player : public Unit, public GridObject<Player>
 
         uint8 _CanTakeMoreSimilarItems(uint32 entry, uint32 count, Item* pItem, uint32* no_space_count = NULL) const;
         uint8 _CanStoreItem(uint8 bag, uint8 slot, ItemPosCountVec& dest, uint32 entry, uint32 count, Item *pItem = NULL, bool swap = false, uint32* no_space_count = NULL) const;
+
+        void SendCurrencies() const;
+        bool HasCurrency(uint32 id, uint32 count) const;
+        void ModifyCurrency(uint32 id, int32 count);
 
         void AddRefundReference(uint32 it);
         void DeleteRefundReference(uint32 it);
@@ -2502,6 +2525,7 @@ class Player : public Unit, public GridObject<Player>
         void _LoadGlyphs(PreparedQueryResult result);
         void _LoadTalents(PreparedQueryResult result);
         void _LoadTalentBranchSpecs(PreparedQueryResult result);
+        void _LoadCurrency(PreparedQueryResult result);
         void _LoadInstanceTimeRestrictions(PreparedQueryResult result);
 
         /*********************************************************/
@@ -2522,6 +2546,7 @@ class Player : public Unit, public GridObject<Player>
         void _SaveGlyphs(SQLTransaction& trans);
         void _SaveTalents(SQLTransaction& trans);
         void _SaveTalentBranchSpecs(SQLTransaction& trans);
+        void _SaveCurrency(SQLTransaction& trans);
         void _SaveStats(SQLTransaction& trans);
         void _SaveInstanceTimeRestrictions(SQLTransaction& trans);
 
@@ -2560,6 +2585,9 @@ class Player : public Unit, public GridObject<Player>
 
         Item* m_items[PLAYER_SLOTS_COUNT];
         uint32 m_currentBuybackSlot;
+
+        PlayerCurrenciesMap m_currencies;
+        uint32 _GetCurrencyWeekCap(const CurrencyTypesEntry* currency) const;
 
         std::vector<Item*> m_itemUpdateQueue;
         bool m_itemUpdateQueueBlocked;

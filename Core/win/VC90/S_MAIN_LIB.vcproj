@@ -1682,35 +1682,11 @@
 						Name="Opcodes"
 						>
 						<File
-							RelativePath="..\..\src\main\Server\Protocol\Handlers\Opcodes\ClientOpcodeHandler.cpp"
-							>
-						</File>
-						<File
-							RelativePath="..\..\src\main\Server\Protocol\Handlers\Opcodes\ClientOpcodeHandler.h"
-							>
-						</File>
-						<File
-							RelativePath="..\..\src\main\Server\Protocol\Handlers\Opcodes\ClientServerOpcodeHandler.cpp"
-							>
-						</File>
-						<File
-							RelativePath="..\..\src\main\Server\Protocol\Handlers\Opcodes\ClientServerOpcodeHandler.h"
-							>
-						</File>
-						<File
 							RelativePath="..\..\src\main\Server\Protocol\Handlers\Opcodes\OpcodeHandler.cpp"
 							>
 						</File>
 						<File
 							RelativePath="..\..\src\main\Server\Protocol\Handlers\Opcodes\OpcodeHandler.h"
-							>
-						</File>
-						<File
-							RelativePath="..\..\src\main\Server\Protocol\Handlers\Opcodes\ServerOpcodeHandler.cpp"
-							>
-						</File>
-						<File
-							RelativePath="..\..\src\main\Server\Protocol\Handlers\Opcodes\ServerOpcodeHandler.h"
 							>
 						</File>
 					</Filter>

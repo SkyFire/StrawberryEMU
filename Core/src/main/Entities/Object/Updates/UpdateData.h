@@ -25,17 +25,15 @@
 #include "ByteBuffer.h"
 class WorldPacket;
 
-enum OBJECT_UPDATE_TYPE
+enum ObjectUpdateType
 {
     UPDATETYPE_VALUES               = 0,
-    UPDATETYPE_MOVEMENT             = 0xFF,
     UPDATETYPE_CREATE_OBJECT        = 1,
     UPDATETYPE_CREATE_OBJECT2       = 2,
     UPDATETYPE_OUT_OF_RANGE_OBJECTS = 3,
-    UPDATETYPE_NEAR_OBJECTS         = 0xFF
 };
 
-enum OBJECT_UPDATE_FLAGS
+enum ObjectUpdateFlags
 {
     UPDATEFLAG_NONE         = 0x0000,
     UPDATEFLAG_SELF         = 0x0001,
@@ -56,7 +54,7 @@ enum OBJECT_UPDATE_FLAGS
 class UpdateData
 {
     public:
-        UpdateData();
+        UpdateData(uint16 map);
 
         void AddOutOfRangeGUID(std::set<uint64>& guids);
         void AddOutOfRangeGUID(const uint64 &guid);
@@ -66,9 +64,9 @@ class UpdateData
         void Clear();
 
         std::set<uint64> const& GetOutOfRangeGUIDs() const { return m_outOfRangeGUIDs; }
-        uint16 m_map;
 
     protected:
+        uint16 m_map;
         uint32 m_blockCount;
         std::set<uint64> m_outOfRangeGUIDs;
         ByteBuffer m_data;

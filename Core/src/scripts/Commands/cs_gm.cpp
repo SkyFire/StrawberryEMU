@@ -89,11 +89,11 @@ public:
         if (!*args)
             return false;
 
-        Player *target =  handler->getSelectedPlayer();
+        Player *target = handler->getSelectedPlayer();
         if (!target)
             target = handler->GetSession()->GetPlayer();
 
-        WorldPacket data(12);
+        WorldPacket data(4 + target->GetPackGUID().size());
         if (strncmp(args, "on", 3) == 0)
             data.SetOpcode(SMSG_MOVE_SET_CAN_FLY);
         else if (strncmp(args, "off", 4) == 0)

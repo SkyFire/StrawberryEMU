@@ -231,7 +231,7 @@ void Object::BuildCreateUpdateBlockForPlayer(UpdateData *data, Player *target) c
 void Object::SendUpdateToPlayer(Player* player)
 {
     // send create update to player
-    UpdateData upd;
+    UpdateData upd(player->GetMapId());
     WorldPacket packet;
 
     BuildCreateUpdateBlockForPlayer(&upd, player);
@@ -438,12 +438,10 @@ void Object::_BuildMovementUpdate(ByteBuffer * data, uint16 flags) const
     // 0x1000
     if (flags & UPDATEFLAG_UNK3)
     {
-        uint8 bytes = 0;
-        *data << bytes;
-        for(uint8 i = 0; i < bytes; i++)
-        {
+        uint8 count = 0;
+        *data << uint8(count);
+        for(uint8 i = 0; i < count; ++i)
             *data << uint32(0);
-        }
     }
 }
 
@@ -737,7 +735,7 @@ void Object::BuildFieldsUpdate(Player *pl, UpdateDataMapType &data_map) const
 
     if (iter == data_map.end())
     {
-        std::pair<UpdateDataMapType::iterator, bool> p = data_map.insert(UpdateDataMapType::value_type(pl, UpdateData()));
+        std::pair<UpdateDataMapType::iterator, bool> p = data_map.insert(UpdateDataMapType::value_type(pl, UpdateData(pl->GetMapId())));
         ASSERT(p.second);
         iter = p.first;
     }

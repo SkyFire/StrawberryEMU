@@ -233,7 +233,6 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket & recv_data)
         return;
     }
 
-    uint32 channelId;
     std::string to, channel, msg;
     bool ignoreChecks = false;
     switch (type)
@@ -263,7 +262,6 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket & recv_data)
         case CHAT_MSG_AFK:
         case CHAT_MSG_DND:
         {
-            recv_data >> channelId;
             recv_data >> msg;
             ignoreChecks = true;
         }

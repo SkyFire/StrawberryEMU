@@ -88,6 +88,7 @@ class BattlegroundMgr
 
         void InitAutomaticArenaPointDistribution();
         void DistributeArenaPoints();
+
         void ToggleArenaTesting();
         void ToggleTesting();
 
