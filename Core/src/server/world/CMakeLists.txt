@@ -43,8 +43,13 @@ INCLUDE_DIRECTORIES(
 ../../main/Grids
 ../../main/Globals
 ../../main/Spells/Auras
+../../main/Server/Logs
 ../../main/Server/Protocol/Handlers
+../../main/Server/Protocol/Opcodes
+../../main/Server/Protocol/Packets
 ../../main/Server/Protocol
+../../main/Server/Sessions
+../../main/Server/Sockets
 ../../main/Movement/Waypoints
 ../../main/Movement/MovementGenerators
 ../../main/Grids/Notifiers
