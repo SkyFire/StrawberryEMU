@@ -1016,9 +1016,9 @@ StartPlayerMoney = 0
 #
 #    MaxHonorPoints
 #        Description: Maximum honor points a character can have.
-#        Default:     75000
+#        Default:     4000
 
-MaxHonorPoints = 75000
+MaxHonorPoints = 4000
 
 #
 #    StartHonorPoints
