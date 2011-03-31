@@ -2,18 +2,19 @@
 Navicat MySQL Data Transfer
 
 Source Server         : Local
-Source Server Version : 50141
+Source Server Version : 50508
 Source Host           : localhost:3306
-Source Database       : CharDB
+Source Database       : chardb
 
 Target Server Type    : MYSQL
-Target Server Version : 50141
+Target Server Version : 50508
 File Encoding         : 65001
 
-Date: 2011-02-06 17:57:02
+Date: 2011-03-31 13:45:59
 */
 
 SET FOREIGN_KEY_CHECKS=0;
+
 -- ----------------------------
 -- Table structure for `account_data`
 -- ----------------------------
@@ -254,6 +255,7 @@ CREATE TABLE `characters` (
   `deleteInfos_Account` int(10) unsigned DEFAULT NULL,
   `deleteInfos_Name` varchar(12) DEFAULT NULL,
   `deleteDate` int(10) unsigned DEFAULT NULL,
+  `achievementPoints` int(11) unsigned NOT NULL,
   PRIMARY KEY (`guid`),
   KEY `idx_account` (`account`),
   KEY `idx_online` (`online`),
@@ -439,6 +441,22 @@ CREATE TABLE `character_branchspec` (
 
 -- ----------------------------
 -- Records of character_branchspec
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for `character_currency`
+-- ----------------------------
+DROP TABLE IF EXISTS `character_currency`;
+CREATE TABLE `character_currency` (
+  `guid` int(11) unsigned NOT NULL,
+  `currency` smallint(5) unsigned NOT NULL,
+  `count` smallint(5) unsigned NOT NULL,
+  `thisweek` smallint(5) unsigned NOT NULL,
+  PRIMARY KEY (`guid`,`currency`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of character_currency
 -- ----------------------------
 
 -- ----------------------------
@@ -946,10 +964,10 @@ CREATE TABLE `gameobject_respawn` (
 -- ----------------------------
 DROP TABLE IF EXISTS `game_event_condition_save`;
 CREATE TABLE `game_event_condition_save` (
-  `event_id` smallint(5) unsigned NOT NULL,
+  `eventEntry` tinyint(3) unsigned NOT NULL,
   `condition_id` int(10) unsigned NOT NULL DEFAULT '0',
   `done` float DEFAULT '0',
-  PRIMARY KEY (`event_id`,`condition_id`)
+  PRIMARY KEY (`eventEntry`,`condition_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -961,10 +979,10 @@ CREATE TABLE `game_event_condition_save` (
 -- ----------------------------
 DROP TABLE IF EXISTS `game_event_save`;
 CREATE TABLE `game_event_save` (
-  `event_id` smallint(5) unsigned NOT NULL,
+  `eventEntry` tinyint(3) unsigned NOT NULL,
   `state` tinyint(3) unsigned NOT NULL DEFAULT '1',
   `next_start` int(10) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`event_id`)
+  PRIMARY KEY (`eventEntry`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -1560,7 +1578,7 @@ CREATE TABLE `worldstates` (
 -- ----------------------------
 -- Records of worldstates
 -- ----------------------------
-INSERT INTO worldstates VALUES ('20001', '0', 'NextArenaPointDistributionTime');
-INSERT INTO worldstates VALUES ('20002', '0', 'NextWeeklyQuestResetTime');
-INSERT INTO worldstates VALUES ('20003', '0', 'NextBGRandomDailyResetTime');
-INSERT INTO worldstates VALUES ('20004', '0', 'cleaning_flags');
+INSERT INTO `worldstates` VALUES ('20001', '0', 'NextArenaPointDistributionTime');
+INSERT INTO `worldstates` VALUES ('20002', '0', 'NextWeeklyQuestResetTime');
+INSERT INTO `worldstates` VALUES ('20003', '0', 'NextBGRandomDailyResetTime');
+INSERT INTO `worldstates` VALUES ('20004', '0', 'cleaning_flags');

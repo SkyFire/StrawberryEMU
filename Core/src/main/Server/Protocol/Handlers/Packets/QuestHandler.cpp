@@ -277,7 +277,7 @@ void WorldSession::HandleQuestQueryOpcode(WorldPacket & recv_data)
 
     uint32 quest;
     recv_data >> quest;
-    sLog->outDebug(LOG_FILTER_NETWORKIO, "WORLD: Received CMSG_QUEST_QUERY quest = %u",q uest);
+    sLog->outDebug(LOG_FILTER_NETWORKIO, "WORLD: Received CMSG_QUEST_QUERY quest = %u", quest);
 
     Quest const *pQuest = sObjectMgr->GetQuestTemplate(quest);
     if (pQuest)
