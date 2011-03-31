@@ -32,6 +32,7 @@
 #include "GridNotifiersImpl.h"
 #include "Language.h"
 #include "Log.h"
+#include "OpcodeHandler.h"
 #include "Player.h"
 #include "UpdateMask.h"
 #include "SpellMgr.h"

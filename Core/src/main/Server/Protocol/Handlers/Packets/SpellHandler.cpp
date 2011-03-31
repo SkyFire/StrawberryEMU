@@ -26,6 +26,7 @@
 #include "ObjectMgr.h"
 #include "SpellMgr.h"
 #include "Log.h"
+#include "OpcodeHandler.h"
 #include "Spell.h"
 #include "Totem.h"
 #include "TemporarySummon.h"

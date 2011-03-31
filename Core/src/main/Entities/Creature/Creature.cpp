@@ -31,6 +31,7 @@
 #include "Player.h"
 #include "PoolMgr.h"
 #include "Log.h"
+#include "OpcodeHandler.h"
 #include "LootMgr.h"
 #include "MapManager.h"
 #include "CreatureAI.h"

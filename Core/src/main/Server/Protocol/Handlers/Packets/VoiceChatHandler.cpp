@@ -23,6 +23,7 @@
 #include "WorldPacket.h"
 #include "WorldSession.h"
 #include "Log.h"
+#include "OpcodeHandler.h"
 
 void WorldSession::HandleVoiceSessionEnableOpcode(WorldPacket & recv_data)
 {

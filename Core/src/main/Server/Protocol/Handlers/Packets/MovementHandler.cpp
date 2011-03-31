@@ -23,6 +23,7 @@
 #include "WorldPacket.h"
 #include "WorldSession.h"
 #include "Log.h"
+#include "OpcodeHandler.h"
 #include "Corpse.h"
 #include "Player.h"
 #include "SpellAuras.h"

@@ -26,7 +26,7 @@
 #include "WorldPacket.h"
 #include "WorldSession.h"
 #include "DatabaseEnv.h"
-
+#include "OpcodeHandler.h"
 #include "CellImpl.h"
 #include "Chat.h"
 #include "ChannelMgr.h"

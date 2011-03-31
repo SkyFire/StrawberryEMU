@@ -23,6 +23,7 @@
 #include "DatabaseEnv.h"
 #include "World.h"
 #include "Player.h"
+#include "OpcodeHandler.h"
 #include "Chat.h"
 #include "ObjectAccessor.h"
 #include "Language.h"

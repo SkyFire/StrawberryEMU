@@ -24,7 +24,7 @@
 #include "World.h"
 #include "WorldPacket.h"
 #include "WorldSession.h"
-
+#include "OpcodeHandler.h"
 #include "AuctionHouseMgr.h"
 #include "Log.h"
 #include "UpdateMask.h"

@@ -22,6 +22,7 @@
 #include "Common.h"
 #include "WorldPacket.h"
 #include "Log.h"
+#include "OpcodeHandler.h"
 #include "Corpse.h"
 #include "GameObject.h"
 #include "Player.h"

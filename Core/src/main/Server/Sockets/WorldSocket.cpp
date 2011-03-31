@@ -32,7 +32,7 @@
 
 #include "WorldSocket.h"
 #include "Common.h"
-
+#include "OpcodeHandler.h"
 #include "Util.h"
 #include "World.h"
 #include "WorldPacket.h"

@@ -29,6 +29,7 @@
 #include "Player.h"
 #include "AccountMgr.h"
 #include "Chat.h"
+#include "OpcodeHandler.h"
 #include "Log.h"
 #include "MapManager.h"
 #include "ObjectAccessor.h"

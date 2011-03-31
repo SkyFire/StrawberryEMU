@@ -25,6 +25,7 @@
 #include "World.h"
 #include "ObjectAccessor.h"
 #include "Log.h"
+#include "OpcodeHandler.h"
 #include "Player.h"
 #include "Item.h"
 #include "Spell.h"

@@ -29,6 +29,7 @@
 #include "UpdateMask.h"
 #include "WorldPacket.h"
 #include "World.h"
+#include "OpcodeHandler.h"
 #include "DatabaseEnv.h"
 #include "LootMgr.h"
 #include "GridNotifiers.h"

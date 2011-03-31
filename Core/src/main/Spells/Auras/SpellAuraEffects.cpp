@@ -22,6 +22,7 @@
 #include "Common.h"
 #include "WorldPacket.h"
 #include "Log.h"
+#include "OpcodeHandler.h"
 #include "ObjectMgr.h"
 #include "SpellMgr.h"
 #include "Player.h"

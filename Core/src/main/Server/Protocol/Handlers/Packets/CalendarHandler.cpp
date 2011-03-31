@@ -22,7 +22,7 @@
 #include "Common.h"
 #include "WorldPacket.h"
 #include "WorldSession.h"
-
+#include "OpcodeHandler.h"
 #include "InstanceSaveMgr.h"
 #include "Log.h"
 #include "Player.h"

@@ -23,6 +23,7 @@
 #include "WorldPacket.h"
 #include "WorldSession.h"
 #include "Log.h"
+#include "OpcodeHandler.h"
 #include "UpdateData.h"
 #include "Player.h"
 

@@ -19,15 +19,12 @@
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/** \file
-    \ingroup world
-*/
-
 #include "Common.h"
 #include "DatabaseEnv.h"
 #include "Config.h"
 #include "SystemConfig.h"
 #include "Log.h"
+#include "OpcodeHandler.h"
 #include "WorldSession.h"
 #include "WorldPacket.h"
 #include "Player.h"

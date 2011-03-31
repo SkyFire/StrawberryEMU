@@ -22,6 +22,7 @@
 #include "Common.h"
 #include "Corpse.h"
 #include "Player.h"
+#include "OpcodeHandler.h"
 #include "UpdateMask.h"
 #include "ObjectAccessor.h"
 #include "DatabaseEnv.h"

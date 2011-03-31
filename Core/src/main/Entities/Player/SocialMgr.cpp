@@ -20,10 +20,10 @@
  */
 
 #include "SocialMgr.h"
-
 #include "DatabaseEnv.h"
 #include "WorldPacket.h"
 #include "Player.h"
+#include "OpcodeHandler.h"
 #include "ObjectMgr.h"
 #include "World.h"
 #include "Util.h"

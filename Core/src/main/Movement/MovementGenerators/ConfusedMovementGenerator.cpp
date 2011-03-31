@@ -21,6 +21,7 @@
 
 #include "Creature.h"
 #include "MapManager.h"
+#include "OpcodeHandler.h"
 #include "ConfusedMovementGenerator.h"
 #include "DestinationHolderImp.h"
 #include "VMapFactory.h"

@@ -30,6 +30,7 @@
 #include "PlayerDump.h"
 #include "SpellMgr.h"
 #include "Player.h"
+#include "OpcodeHandler.h"
 #include "GameObject.h"
 #include "Chat.h"
 #include "Log.h"

@@ -19,6 +19,7 @@
 #include "WorldPacket.h"
 #include "DBCStores.h"
 #include "Player.h"
+#include "OpcodeHandler.h"
 #include "Group.h"
 #include "LFGMgr.h"
 #include "ObjectMgr.h"

@@ -22,6 +22,7 @@
 #include "Common.h"
 #include "UpdateMask.h"
 #include "World.h"
+#include "OpcodeHandler.h"
 #include "ObjectAccessor.h"
 #include "DatabaseEnv.h"
 #include "GridNotifiers.h"

@@ -23,6 +23,7 @@
 #include "SharedDefines.h"
 #include "WorldPacket.h"
 #include "Log.h"
+#include "OpcodeHandler.h"
 #include "World.h"
 #include "Object.h"
 #include "Creature.h"

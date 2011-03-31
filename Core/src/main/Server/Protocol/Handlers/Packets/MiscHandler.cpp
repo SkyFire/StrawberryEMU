@@ -24,6 +24,7 @@
 #include "DatabaseEnv.h"
 #include "WorldPacket.h"
 #include "Log.h"
+#include "OpcodeHandler.h"
 #include "Player.h"
 #include "GossipDef.h"
 #include "World.h"

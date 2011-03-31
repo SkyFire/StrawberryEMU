@@ -21,6 +21,7 @@
 
 #include "zlib.h"
 #include "AddonHandler.h"
+#include "OpcodeHandler.h"
 #include "DatabaseEnv.h"
 #include "Log.h"
 

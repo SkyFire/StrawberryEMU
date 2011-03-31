@@ -21,7 +21,7 @@
 
 #include "ObjectAccessor.h"
 #include "ObjectMgr.h"
-
+#include "OpcodeHandler.h"
 #include "Player.h"
 #include "Creature.h"
 #include "GameObject.h"

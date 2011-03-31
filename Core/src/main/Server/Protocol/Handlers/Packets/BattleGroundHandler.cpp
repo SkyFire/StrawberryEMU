@@ -24,7 +24,7 @@
 #include "ObjectMgr.h"
 #include "WorldPacket.h"
 #include "WorldSession.h"
-
+#include "OpcodeHandler.h"
 #include "ArenaTeam.h"
 #include "BattlegroundMgr.h"
 #include "BattlegroundWS.h"

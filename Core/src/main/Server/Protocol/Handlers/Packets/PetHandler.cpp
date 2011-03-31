@@ -25,6 +25,7 @@
 #include "ObjectMgr.h"
 #include "SpellMgr.h"
 #include "Log.h"
+#include "OpcodeHandler.h"
 #include "Spell.h"
 #include "ObjectAccessor.h"
 #include "CreatureAI.h"

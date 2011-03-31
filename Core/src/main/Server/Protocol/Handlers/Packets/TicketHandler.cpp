@@ -20,6 +20,7 @@
  */
 
 #include "Language.h"
+#include "OpcodeHandler.h"
 #include "WorldPacket.h"
 #include "Common.h"
 #include "ObjectMgr.h"

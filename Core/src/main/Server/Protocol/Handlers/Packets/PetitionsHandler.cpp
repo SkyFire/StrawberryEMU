@@ -26,6 +26,7 @@
 #include "World.h"
 #include "ObjectMgr.h"
 #include "Log.h"
+#include "OpcodeHandler.h"
 #include "Guild.h"
 #include "ArenaTeam.h"
 #include "GossipDef.h"

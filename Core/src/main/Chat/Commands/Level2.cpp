@@ -27,6 +27,7 @@
 #include "Item.h"
 #include "GameObject.h"
 #include "Chat.h"
+#include "OpcodeHandler.h"
 #include "MapManager.h"
 #include "Language.h"
 #include "World.h"

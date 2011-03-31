@@ -25,6 +25,7 @@
 #include "WorldPacket.h"
 #include "WorldSession.h"
 #include "Log.h"
+#include "OpcodeHandler.h"
 #include "ObjectMgr.h"
 #include "SpellMgr.h"
 #include "Player.h"
