@@ -18,7 +18,6 @@
 #include "ObjectMgr.h"
 #include "ScriptMgr.h"
 #include "ScriptedCreature.h"
-#include "SpellScript.h"
 #include "SpellAuras.h"
 #include "icecrown_citadel.h"
 
@@ -74,7 +73,6 @@ enum Events
     EVENT_MORTAL_WOUND      = 5,
 
     EVENT_STICKY_OOZE       = 6,
-    EVENT_UNSTABLE_DESPAWN  = 7,
 };
 
 class boss_rotface : public CreatureScript
@@ -88,14 +86,6 @@ class boss_rotface : public CreatureScript
             {
                 infectionStage = 0;
                 infectionCooldown = 14000;
-            }
-
-            void InitializeAI()
-            {
-                if (!instance || static_cast<InstanceMap*>(me->GetMap())->GetScriptId() != GetScriptId(ICCScriptName))
-                    me->IsAIEnabled = false;
-                else if (!me->isDead())
-                    Reset();
             }
 
             void Reset()
@@ -234,12 +224,12 @@ class boss_rotface : public CreatureScript
 
         private:
             uint32 infectionCooldown;
-            uint8 infectionStage;
+            uint32 infectionStage;
         };
 
         CreatureAI* GetAI(Creature* creature) const
         {
-            return new boss_rotfaceAI(creature);
+            return GetIcecrownCitadelAI<boss_rotfaceAI>(creature);
         }
 };
 
@@ -289,7 +279,7 @@ class npc_little_ooze : public CreatureScript
 
         CreatureAI* GetAI(Creature* creature) const
         {
-            return new npc_little_oozeAI(creature);
+            return GetIcecrownCitadelAI<npc_little_oozeAI>(creature);
         }
 };
 
@@ -300,7 +290,7 @@ class npc_big_ooze : public CreatureScript
 
         struct npc_big_oozeAI : public ScriptedAI
         {
-            npc_big_oozeAI(Creature* creature) : ScriptedAI(creature)
+            npc_big_oozeAI(Creature* creature) : ScriptedAI(creature), instance(creature->GetInstanceScript())
             {
             }
 
@@ -313,16 +303,14 @@ class npc_big_ooze : public CreatureScript
                 DoCast(me, SPELL_GREEN_ABOMINATION_HITTIN__YA_PROC, true);
                 events.ScheduleEvent(EVENT_STICKY_OOZE, 5000);
                 // register in Rotface's summons - not summoned with Rotface as owner
-                if (InstanceScript* instance = me->GetInstanceScript())
-                    if (Creature* rotface = Unit::GetCreature(*me, instance->GetData64(DATA_ROTFACE)))
-                        rotface->AI()->JustSummoned(me);
+                if (Creature* rotface = Unit::GetCreature(*me, instance->GetData64(DATA_ROTFACE)))
+                    rotface->AI()->JustSummoned(me);
             }
 
             void JustDied(Unit* /*killer*/)
             {
-                if (InstanceScript* instance = me->GetInstanceScript())
-                    if (Creature* rotface = Unit::GetCreature(*me, instance->GetData64(DATA_ROTFACE)))
-                        rotface->AI()->SummonedCreatureDespawn(me);
+                if (Creature* rotface = Unit::GetCreature(*me, instance->GetData64(DATA_ROTFACE)))
+                    rotface->AI()->SummonedCreatureDespawn(me);
                 me->DespawnOrUnsummon();
             }
 
@@ -330,13 +318,6 @@ class npc_big_ooze : public CreatureScript
             {
                 if (action == EVENT_STICKY_OOZE)
                     events.CancelEvent(EVENT_STICKY_OOZE);
-                else if (action == EVENT_UNSTABLE_DESPAWN)
-                {
-                    me->RemoveAllAuras();
-                    me->SetVisible(false);
-                    events.Reset();
-                    events.ScheduleEvent(EVENT_UNSTABLE_DESPAWN, 60000);
-                }
             }
 
             void UpdateAI(const uint32 diff)
@@ -353,10 +334,6 @@ class npc_big_ooze : public CreatureScript
                         case EVENT_STICKY_OOZE:
                             DoCastVictim(SPELL_STICKY_OOZE);
                             events.ScheduleEvent(EVENT_STICKY_OOZE, 15000);
-                            break;
-                        case EVENT_UNSTABLE_DESPAWN:
-                            me->Kill(me);
-                            break;
                         default:
                             break;
                     }
@@ -368,11 +345,12 @@ class npc_big_ooze : public CreatureScript
 
         private:
             EventMap events;
+            InstanceScript* instance;
         };
 
         CreatureAI* GetAI(Creature* creature) const
         {
-            return new npc_big_oozeAI(creature);
+            return GetIcecrownCitadelAI<npc_big_oozeAI>(creature);
         }
 };
 
@@ -427,8 +405,7 @@ class npc_precious_icc : public CreatureScript
 
             void JustDied(Unit* /*who*/)
             {
-                uint64 rotfaceGUID = instance ? instance->GetData64(DATA_ROTFACE) : 0;
-                if (Creature* rotface = Unit::GetCreature(*me, rotfaceGUID))
+                if (Creature* rotface = Unit::GetCreature(*me, instance->GetData64(DATA_ROTFACE)))
                     if (rotface->isAlive())
                         rotface->AI()->Talk(SAY_PRECIOUS_DIES);
             }
@@ -440,7 +417,7 @@ class npc_precious_icc : public CreatureScript
 
         CreatureAI* GetAI(Creature* creature) const
         {
-            return new npc_precious_iccAI(creature);
+            return GetIcecrownCitadelAI<npc_precious_iccAI>(creature);
         }
 };
 
@@ -711,7 +688,9 @@ class spell_rotface_unstable_ooze_explosion_suicide : public SpellScriptLoader
                 if (target->GetTypeId() != TYPEID_UNIT)
                     return;
 
-                target->ToCreature()->AI()->DoAction(EVENT_UNSTABLE_DESPAWN);
+                target->RemoveAllAuras();
+                target->SetVisible(false);
+                target->ToCreature()->DespawnOrUnsummon(60000);
             }
 
             void Register()

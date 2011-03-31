@@ -18,7 +18,6 @@
 #include "ObjectMgr.h"
 #include "ScriptMgr.h"
 #include "ScriptedCreature.h"
-#include "SpellScript.h"
 #include "SpellAuraEffects.h"
 #include "icecrown_citadel.h"
 
@@ -26,42 +25,42 @@
 //* Deprogramming                (DONE)
 //* Securing the Ramparts        (DONE)
 //* Residue Rendezvous           (DONE)
-//* Blood Quickening                    // AreaTrigger 5729 starts the timer, pulling BQ before it runs out means success
+//* Blood Quickening             (DONE)
 //* Respite for a Tormented Soul
 
 enum Texts
 {
     // Highlord Tirion Fordring (at Light's Hammer)
-    SAY_TIRION_INTRO_1          = 0,
-    SAY_TIRION_INTRO_2          = 1,
-    SAY_TIRION_INTRO_3          = 2,
-    SAY_TIRION_INTRO_4          = 3,
-    SAY_TIRION_INTRO_H_5        = 4,
-    SAY_TIRION_INTRO_A_5        = 5,
+    SAY_TIRION_INTRO_1              = 0,
+    SAY_TIRION_INTRO_2              = 1,
+    SAY_TIRION_INTRO_3              = 2,
+    SAY_TIRION_INTRO_4              = 3,
+    SAY_TIRION_INTRO_H_5            = 4,
+    SAY_TIRION_INTRO_A_5            = 5,
 
     // The Lich King (at Light's Hammer)
-    SAY_LK_INTRO_1              = 0,
-    SAY_LK_INTRO_2              = 1,
-    SAY_LK_INTRO_3              = 2,
-    SAY_LK_INTRO_4              = 3,
-    SAY_LK_INTRO_5              = 4,
+    SAY_LK_INTRO_1                  = 0,
+    SAY_LK_INTRO_2                  = 1,
+    SAY_LK_INTRO_3                  = 2,
+    SAY_LK_INTRO_4                  = 3,
+    SAY_LK_INTRO_5                  = 4,
 
     // Highlord Bolvar Fordragon (at Light's Hammer)
-    SAY_BOLVAR_INTRO_1          = 0,
+    SAY_BOLVAR_INTRO_1              = 0,
 
     // High Overlord Saurfang (at Light's Hammer)
-    SAY_SAURFANG_INTRO_1        = 15,
-    SAY_SAURFANG_INTRO_2        = 16,
-    SAY_SAURFANG_INTRO_3        = 17,
-    SAY_SAURFANG_INTRO_4        = 18,
+    SAY_SAURFANG_INTRO_1            = 15,
+    SAY_SAURFANG_INTRO_2            = 16,
+    SAY_SAURFANG_INTRO_3            = 17,
+    SAY_SAURFANG_INTRO_4            = 18,
 
     // Muradin Bronzebeard (at Light's Hammer)
-    SAY_MURADIN_INTRO_1         = 13,
-    SAY_MURADIN_INTRO_2         = 14,
-    SAY_MURADIN_INTRO_3         = 15,
+    SAY_MURADIN_INTRO_1             = 13,
+    SAY_MURADIN_INTRO_2             = 14,
+    SAY_MURADIN_INTRO_3             = 15,
 
     // Rotting Frost Giant
-    EMOTE_DEATH_PLAGUE_WARNING  = 0,
+    EMOTE_DEATH_PLAGUE_WARNING      = 0,
 };
 
 enum Spells
@@ -153,9 +152,6 @@ class npc_highlord_tirion_fordring_lh : public CreatureScript
             // of The Damned SAI
             void SetData(uint32 type, uint32 data)
             {
-                if (!instance)
-                    return;
-
                 if (type == DATA_DAMNED_KILLS && data == 1)
                 {
                     if (++_damnedKills == 2)
@@ -339,7 +335,7 @@ class npc_highlord_tirion_fordring_lh : public CreatureScript
 
         CreatureAI* GetAI(Creature* creature) const
         {
-            return new npc_highlord_tirion_fordringAI(creature);
+            return GetIcecrownCitadelAI<npc_highlord_tirion_fordringAI>(creature);
         }
 };
 
@@ -367,7 +363,7 @@ class npc_rotting_frost_giant : public CreatureScript
                 events.Reset();
             }
 
-            void UpdateAI(const uint32 diff)
+            void UpdateAI(uint32 const diff)
             {
                 if (!UpdateVictim())
                     return;
@@ -411,7 +407,7 @@ class npc_rotting_frost_giant : public CreatureScript
 
         CreatureAI* GetAI(Creature* creature) const
         {
-            return new npc_rotting_frost_giantAI(creature);
+            return GetIcecrownCitadelAI<npc_rotting_frost_giantAI>(creature);
         }
 };
 
@@ -426,7 +422,7 @@ class npc_frost_freeze_trap : public CreatureScript
             {
             }
 
-            void DoAction(const int32 action)
+            void DoAction(int32 const action)
             {
                 switch (action)
                 {
@@ -443,7 +439,7 @@ class npc_frost_freeze_trap : public CreatureScript
                 }
             }
 
-            void UpdateAI(const uint32 diff)
+            void UpdateAI(uint32 const diff)
             {
                 events.Update(diff);
 
@@ -460,7 +456,7 @@ class npc_frost_freeze_trap : public CreatureScript
 
         CreatureAI* GetAI(Creature* creature) const
         {
-            return new npc_frost_freeze_trapAI(creature);
+            return GetIcecrownCitadelAI<npc_frost_freeze_trapAI>(creature);
         }
 };
 
@@ -644,6 +640,20 @@ class at_icc_shutdown_traps : public AreaTriggerScript
         }
 };
 
+class at_icc_start_blood_quickening : public AreaTriggerScript
+{
+    public:
+        at_icc_start_blood_quickening() : AreaTriggerScript("at_icc_start_blood_quickening") { }
+
+        bool OnTrigger(Player* player, AreaTriggerEntry const* /*areaTrigger*/)
+        {
+            if (InstanceScript* instance = player->GetInstanceScript())
+                if (instance->GetData(DATA_BLOOD_QUICKENING_STATE) == NOT_STARTED)
+                    instance->SetData(DATA_BLOOD_QUICKENING_STATE, IN_PROGRESS);
+            return true;
+        }
+};
+
 void AddSC_icecrown_citadel()
 {
     new npc_highlord_tirion_fordring_lh();
@@ -654,4 +664,5 @@ void AddSC_icecrown_citadel()
     new spell_icc_harvest_blight_specimen();
     new at_icc_saurfang_portal();
     new at_icc_shutdown_traps();
+    new at_icc_start_blood_quickening();
 }
