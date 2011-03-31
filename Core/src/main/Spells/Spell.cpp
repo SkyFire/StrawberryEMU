@@ -1433,8 +1433,7 @@ SpellMissInfo Spell::DoSpellHitOnUnit(Unit *unit, const uint32 effectMask, bool 
     if (m_caster != unit)
     {
         // Recheck  UNIT_FLAG_NON_ATTACKABLE for delayed spells
-        if (m_spellInfo->speed > 0.0f &&
-            unit->HasFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE) &&
+        if (m_spellInfo->speed > 0.0f && unit->HasFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE) &&
             unit->GetCharmerOrOwnerGUID() != m_caster->GetGUID())
         {
             return SPELL_MISS_EVADE;
@@ -1489,8 +1488,8 @@ SpellMissInfo Spell::DoSpellHitOnUnit(Unit *unit, const uint32 effectMask, bool 
         if (!spellEffect)
             continue;
 
-        if (effectMask & (1<<i) && IsUnitOwnedAuraEffect(spellEffect->Effect))
-            aura_effmask |= 1<<i;
+        if (effectMask & (1 << i) && IsUnitOwnedAuraEffect(spellEffect->Effect))
+            aura_effmask |= 1 << i;
     }
 
     if (aura_effmask)
@@ -1505,12 +1504,13 @@ SpellMissInfo Spell::DoSpellHitOnUnit(Unit *unit, const uint32 effectMask, bool 
             ASSERT(aurSpellInfo);
             for (uint8 i = 0; i < MAX_SPELL_EFFECTS; ++i)
             {
-                SpellEffectEntry const* spellEffect = aurSpellInfo->GetSpellEffect(SpellEffIndex(i));
-                if (!spellEffect)
+                SpellEffectEntry const* spellEffect_m = m_spellInfo->GetSpellEffect(SpellEffIndex(i));
+                SpellEffectEntry const* spellEffect_a = aurSpellInfo->GetSpellEffect(SpellEffIndex(i));
+                if (!spellEffect_m || !spellEffect_a)
                     continue;
 
-                basePoints[i] = spellEffect->EffectBasePoints;
-                if (spellEffect->Effect != spellEffect->Effect)
+                basePoints[i] = spellEffect_a->EffectBasePoints;
+                if (spellEffect_m->Effect != spellEffect_a->Effect)
                 {
                     aurSpellInfo = m_spellInfo;
                     break;
@@ -1565,8 +1565,8 @@ SpellMissInfo Spell::DoSpellHitOnUnit(Unit *unit, const uint32 effectMask, bool 
 
     for (uint32 effectNumber = 0; effectNumber < MAX_SPELL_EFFECTS; ++effectNumber)
     {
-        if (effectMask & (1<<effectNumber))
-            HandleEffects(unit,NULL,NULL,effectNumber);
+        if (effectMask & (1 << effectNumber))
+            HandleEffects(unit, NULL, NULL, effectNumber);
     }
 
     return SPELL_MISS_NONE;

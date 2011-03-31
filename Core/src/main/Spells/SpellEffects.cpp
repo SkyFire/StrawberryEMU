@@ -243,12 +243,12 @@ pEffect SpellEffects[TOTAL_SPELL_EFFECTS]=
     &Spell::EffectNULL,                                     //174
 };
 
-void Spell::EffectNULL(SpellEffectEntry const* /*effIndex*/)
+void Spell::EffectNULL(SpellEffectEntry const* /*effect*/)
 {
     sLog->outDebug(LOG_FILTER_SPELLS_AURAS, "WORLD: Spell Effect DUMMY");
 }
 
-void Spell::EffectUnused(SpellEffectEntry const* /*effIndex*/)
+void Spell::EffectUnused(SpellEffectEntry const* /*effect*/)
 {
     // NOT USED BY ANY SPELL OR USELESS OR IMPLEMENTED IN DIFFERENT WAY IN STRAWBERRY
 }
@@ -276,7 +276,7 @@ void Spell::EffectResurrectNew(SpellEffectEntry const* effect)
     SendResurrectRequest(pTarget);
 }
 
-void Spell::EffectInstaKill(SpellEffectEntry const* /*effIndex*/)
+void Spell::EffectInstaKill(SpellEffectEntry const* /*effect*/)
 {
     if (!unitTarget || !unitTarget->isAlive())
         return;
@@ -331,7 +331,7 @@ void Spell::EffectEnvirinmentalDMG(SpellEffectEntry const* effect)
         m_caster->ToPlayer()->EnvironmentalDamage(DAMAGE_FIRE, damage);
 }
 
-void Spell::EffectSchoolDMG(SpellEffectEntry const* /*effIndex*/)
+void Spell::EffectSchoolDMG(SpellEffectEntry const* /*effect*/)
 {
 }
 
@@ -1955,7 +1955,7 @@ void Spell::CalculateJumpSpeeds(uint8 i, float dist, float & speedXY, float & sp
     speedXY = dist * 10.0f / speedZ;
 }
 
-void Spell::EffectTeleportUnits(SpellEffectEntry const* /*effIndex*/)
+void Spell::EffectTeleportUnits(SpellEffectEntry const* /*effect*/)
 {
     if (!unitTarget || unitTarget->isInFlight())
         return;
@@ -2245,11 +2245,11 @@ void Spell::EffectPowerBurn(SpellEffectEntry const* effect)
     m_damage += newDamage;
 }
 
-void Spell::EffectHeal(SpellEffectEntry const* /*effIndex*/)
+void Spell::EffectHeal(SpellEffectEntry const* /*effect*/)
 {
 }
 
-void Spell::SpellDamageHeal(SpellEffectEntry const* /*effIndex*/)
+void Spell::SpellDamageHeal(SpellEffectEntry const* /*effect*/)
 {
     SpellClassOptionsEntry const* classOptions = m_spellInfo->GetSpellClassOptions();
 
@@ -2366,7 +2366,7 @@ void Spell::SpellDamageHeal(SpellEffectEntry const* /*effIndex*/)
     }
 }
 
-void Spell::EffectHealPct(SpellEffectEntry const* /*effIndex*/)
+void Spell::EffectHealPct(SpellEffectEntry const* /*effect*/)
 {
     if (!unitTarget || !unitTarget->isAlive() || damage < 0)
         return;
@@ -2382,7 +2382,7 @@ void Spell::EffectHealPct(SpellEffectEntry const* /*effIndex*/)
     m_healing += m_originalCaster->SpellHealingBonus(unitTarget, m_spellInfo, unitTarget->CountPctFromMaxHealth(damage), HEAL);
 }
 
-void Spell::EffectHealMechanical(SpellEffectEntry const* /*effIndex*/)
+void Spell::EffectHealMechanical(SpellEffectEntry const* /*effect*/)
 {
     if (!unitTarget || !unitTarget->isAlive() || damage < 0)
         return;
@@ -2565,7 +2565,7 @@ void Spell::EffectCreateItem2(SpellEffectEntry const* effect)
     // TODO: ExecuteLogEffectCreateItem(i, m_spellInfo->EffectItemType[i]);
 }
 
-void Spell::EffectCreateRandomItem(SpellEffectEntry const* /*effIndex*/)
+void Spell::EffectCreateRandomItem(SpellEffectEntry const* /*effect*/)
 {
     if (m_caster->GetTypeId() != TYPEID_PLAYER)
         return;
@@ -3000,7 +3000,7 @@ void Spell::EffectSummonChangeItem(SpellEffectEntry const* effect)
     delete pNewItem;
 }
 
-void Spell::EffectProficiency(SpellEffectEntry const* /*effIndex*/)
+void Spell::EffectProficiency(SpellEffectEntry const* /*effect*/)
 {
     SpellEquippedItemsEntry const* spellEquip = m_spellInfo->GetSpellEquippedItems();
 
@@ -3365,20 +3365,20 @@ void Spell::EffectDispel(SpellEffectEntry const* effect)
     }
 }
 
-void Spell::EffectDualWield(SpellEffectEntry const* /*effIndex*/)
+void Spell::EffectDualWield(SpellEffectEntry const* /*effect*/)
 {
     unitTarget->SetCanDualWield(true);
     if (unitTarget->GetTypeId() == TYPEID_UNIT)
         unitTarget->ToCreature()->UpdateDamagePhysical(OFF_ATTACK);
 }
 
-void Spell::EffectPull(SpellEffectEntry const* /*effIndex*/)
+void Spell::EffectPull(SpellEffectEntry const* /*effect*/)
 {
     // TODO: create a proper pull towards distract spell center for distract
     sLog->outDebug(LOG_FILTER_SPELLS_AURAS, "WORLD: Spell Effect DUMMY");
 }
 
-void Spell::EffectDistract(SpellEffectEntry const* /*effIndex*/)
+void Spell::EffectDistract(SpellEffectEntry const* /*effect*/)
 {
     // Check for possible target
     if (!unitTarget || unitTarget->isInCombat())
@@ -3405,7 +3405,7 @@ void Spell::EffectDistract(SpellEffectEntry const* /*effIndex*/)
     }
 }
 
-void Spell::EffectPickPocket(SpellEffectEntry const* /*effIndex*/)
+void Spell::EffectPickPocket(SpellEffectEntry const* /*effect*/)
 {
     if (m_caster->GetTypeId() != TYPEID_PLAYER)
         return;
@@ -3766,7 +3766,7 @@ void Spell::EffectEnchantItemTmp(SpellEffectEntry const* effect)
     item_owner->ApplyEnchantment(itemTarget, TEMP_ENCHANTMENT_SLOT, true);
 }
 
-void Spell::EffectTameCreature(SpellEffectEntry const* /*effIndex*/)
+void Spell::EffectTameCreature(SpellEffectEntry const* /*effect*/)
 {
     if (m_caster->GetPetGUID())
         return;
@@ -3922,7 +3922,7 @@ void Spell::EffectLearnPetSpell(SpellEffectEntry const* effect)
     _player->PetSpellInitialize();
 }
 
-void Spell::EffectTaunt(SpellEffectEntry const* /*effIndex*/)
+void Spell::EffectTaunt(SpellEffectEntry const* /*effect*/)
 {
     if (!unitTarget)
         return;
@@ -3964,7 +3964,7 @@ void Spell::EffectTaunt(SpellEffectEntry const* /*effIndex*/)
         unitTarget->ToCreature()->AI()->AttackStart(m_caster);
 }
 
-void Spell::EffectWeaponDmg(SpellEffectEntry const* /*effIndex*/)
+void Spell::EffectWeaponDmg(SpellEffectEntry const* /*effect*/)
 {
 }
 
@@ -4002,7 +4002,7 @@ void Spell::SpellDamageWeaponDmg(SpellEffectEntry const* effect)
 
     SpellClassOptionsEntry const* classOptions = m_spellInfo->GetSpellClassOptions();
 
-    switch (m_spellInfo->GetSpellFamilyName())
+    switch (classOptions->SpellFamilyName)
     {
         case SPELLFAMILY_GENERIC:
         {
@@ -4226,9 +4226,15 @@ void Spell::SpellDamageWeaponDmg(SpellEffectEntry const* effect)
         switch (m_attackType)
         {
             default:
-            case BASE_ATTACK:   unitMod = UNIT_MOD_DAMAGE_MAINHAND; break;
-            case OFF_ATTACK:    unitMod = UNIT_MOD_DAMAGE_OFFHAND;  break;
-            case RANGED_ATTACK: unitMod = UNIT_MOD_DAMAGE_RANGED;   break;
+            case BASE_ATTACK:
+                unitMod = UNIT_MOD_DAMAGE_MAINHAND;
+                break;
+            case OFF_ATTACK:
+                unitMod = UNIT_MOD_DAMAGE_OFFHAND;
+                break;
+            case RANGED_ATTACK:
+                unitMod = UNIT_MOD_DAMAGE_RANGED;
+                break;
         }
 
         float weapon_total_pct = 1.0f;
@@ -4280,7 +4286,7 @@ void Spell::SpellDamageWeaponDmg(SpellEffectEntry const* effect)
     m_damage += eff_damage;
 }
 
-void Spell::EffectThreat(SpellEffectEntry const* /*effIndex*/)
+void Spell::EffectThreat(SpellEffectEntry const* /*effect*/)
 {
     if (!unitTarget || !unitTarget->isAlive() || !m_caster->isAlive())
         return;
@@ -4291,7 +4297,7 @@ void Spell::EffectThreat(SpellEffectEntry const* /*effIndex*/)
     unitTarget->AddThreat(m_caster, float(damage));
 }
 
-void Spell::EffectHealMaxHealth(SpellEffectEntry const* /*effIndex*/)
+void Spell::EffectHealMaxHealth(SpellEffectEntry const* /*effect*/)
 {
     if (!unitTarget || !unitTarget->isAlive())
         return;
@@ -4503,11 +4509,15 @@ void Spell::EffectScriptEffect(SpellEffectEntry const* effect)
                     uint32 spell_id = 0;
                     switch(urand(1, 5))
                     {
-                    case 1:  spell_id = 8854; break;
-                    default: spell_id = 8855; break;
+                        case 1:
+                            spell_id = 8854;
+                            break;
+                        default:
+                            spell_id = 8855;
+                            break;
                     }
 
-                    m_caster->CastSpell(m_caster,spell_id,true,NULL);
+                    m_caster->CastSpell(m_caster, spell_id, true, NULL);
                     return;
                 }
                 // Brittle Armor - need remove one 24575 Brittle Armor aura
@@ -4575,12 +4585,15 @@ void Spell::EffectScriptEffect(SpellEffectEntry const* effect)
                         case 1:
                         case 2:
                         case 3:
-                            item = 23584; break;            // Loch Modan Lager
+                            item = 23584;
+                            break;            // Loch Modan Lager
                         case 4:
                         case 5:
-                            item = 23585; break;            // Stouthammer Lite
+                            item = 23585;
+                            break;            // Stouthammer Lite
                         case 6:
-                            item = 23586; break;            // Aerie Peak Pale Ale
+                            item = 23586;
+                            break;            // Aerie Peak Pale Ale
                     }
                     if (item)
                         DoCreateItem(0,item);
@@ -4640,22 +4653,28 @@ void Spell::EffectScriptEffect(SpellEffectEntry const* effect)
 
                     switch(unitTarget->ToPlayer()->GetBaseSkillValue(SKILL_RIDING))
                     {
-                    case 75: unitTarget->CastSpell(unitTarget, 51621, true); break;
-                    case 150: unitTarget->CastSpell(unitTarget, 48024, true); break;
-                    case 225:
+                        case 75:
+                            unitTarget->CastSpell(unitTarget, 51621, true);
+                            break;
+                        case 150:
+                            unitTarget->CastSpell(unitTarget, 48024, true);
+                            break;
+                        case 225:
                         {
                             if (canFly)
                                 unitTarget->CastSpell(unitTarget, 51617, true);
                             else
                                 unitTarget->CastSpell(unitTarget, 48024, true);
-                        }break;
-                    case 300:
+                        }
+                        break;
+                        case 300:
                         {
                             if (canFly)
                                 unitTarget->CastSpell(unitTarget, 48023, true);
                             else
                                 unitTarget->CastSpell(unitTarget, 48024, true);
-                        }break;
+                        }
+                        break;
                     }
                     return;
                 }
@@ -4685,22 +4704,28 @@ void Spell::EffectScriptEffect(SpellEffectEntry const* effect)
 
                     switch(unitTarget->ToPlayer()->GetBaseSkillValue(SKILL_RIDING))
                     {
-                    case 75: unitTarget->CastSpell(unitTarget, 42680, true); break;
-                    case 150: unitTarget->CastSpell(unitTarget, 42683, true); break;
-                    case 225:
+                        case 75:
+                            unitTarget->CastSpell(unitTarget, 42680, true);
+                            break;
+                        case 150:
+                            unitTarget->CastSpell(unitTarget, 42683, true);
+                            break;
+                        case 225:
                         {
                             if (canFly)
                                 unitTarget->CastSpell(unitTarget, 42667, true);
                             else
                                 unitTarget->CastSpell(unitTarget, 42683, true);
-                        }break;
-                    case 300:
+                        }
+                        break;
+                        case 300:
                         {
                             if (canFly)
                                 unitTarget->CastSpell(unitTarget, 42668, true);
                             else
                                 unitTarget->CastSpell(unitTarget, 42683, true);
-                        }break;
+                        }
+                        break;
                     }
                     return;
                 }
@@ -4717,7 +4742,8 @@ void Spell::EffectScriptEffect(SpellEffectEntry const* effect)
                     while (bag) // 256 = 0 due to var type
                     {
                         item = m_caster->ToPlayer()->GetItemByPos(bag, slot);
-                        if (item && item->GetEntry() == 38587) break;
+                        if (item && item->GetEntry() == 38587)
+                            break;
                         ++slot;
                         if (slot == 39)
                         {
@@ -4727,8 +4753,8 @@ void Spell::EffectScriptEffect(SpellEffectEntry const* effect)
                     }
                     if (bag)
                     {
-                        if (m_caster->ToPlayer()->GetItemByPos(bag,slot)->GetCount() == 1) m_caster->ToPlayer()->RemoveItem(bag,slot,true);
-                        else m_caster->ToPlayer()->GetItemByPos(bag,slot)->SetCount(m_caster->ToPlayer()->GetItemByPos(bag,slot)->GetCount()-1);
+                        if (m_caster->ToPlayer()->GetItemByPos(bag,slot)->GetCount() == 1) m_caster->ToPlayer()->RemoveItem(bag, slot, true);
+                        else m_caster->ToPlayer()->GetItemByPos(bag,slot)->SetCount(m_caster->ToPlayer()->GetItemByPos(bag, slot)->GetCount() - 1);
                         // Spell 42518 (Braufest - Gratisprobe des Braufest herstellen)
                         m_caster->CastSpell(m_caster, 42518, true);
                         return;
@@ -4755,10 +4781,18 @@ void Spell::EffectScriptEffect(SpellEffectEntry const* effect)
                     uint32 spellId = 0;
                     switch(rand() % 4)
                     {
-                        case 0: spellId = 46740; break;
-                        case 1: spellId = 46739; break;
-                        case 2: spellId = 46738; break;
-                        case 3: spellId = 46736; break;
+                        case 0:
+                            spellId = 46740;
+                            break;
+                        case 1:
+                            spellId = 46739;
+                            break;
+                        case 2:
+                            spellId = 46738;
+                            break;
+                        case 3:
+                            spellId = 46736;
+                            break;
                     }
                     unitTarget->CastSpell(unitTarget, spellId, true);
                     break;
@@ -4815,27 +4849,68 @@ void Spell::EffectScriptEffect(SpellEffectEntry const* effect)
                     uint32 iTmpSpellId = 0;
                     switch (unitTarget->GetDisplayId())
                     {
-                        case 25369: iTmpSpellId = 51552; break; // bloodelf female
-                        case 25373: iTmpSpellId = 51551; break; // bloodelf male
-                        case 25363: iTmpSpellId = 51542; break; // draenei female
-                        case 25357: iTmpSpellId = 51541; break; // draenei male
-                        case 25361: iTmpSpellId = 51537; break; // dwarf female
-                        case 25356: iTmpSpellId = 51538; break; // dwarf male
-                        case 25372: iTmpSpellId = 51550; break; // forsaken female
-                        case 25367: iTmpSpellId = 51549; break; // forsaken male
-                        case 25362: iTmpSpellId = 51540; break; // gnome female
-                        case 25359: iTmpSpellId = 51539; break; // gnome male
-                        case 25355: iTmpSpellId = 51534; break; // human female
-                        case 25354: iTmpSpellId = 51520; break; // human male
-                        case 25360: iTmpSpellId = 51536; break; // nightelf female
-                        case 25358: iTmpSpellId = 51535; break; // nightelf male
-                        case 25368: iTmpSpellId = 51544; break; // orc female
-                        case 25364: iTmpSpellId = 51543; break; // orc male
-                        case 25371: iTmpSpellId = 51548; break; // tauren female
-                        case 25366: iTmpSpellId = 51547; break; // tauren male
-                        case 25370: iTmpSpellId = 51545; break; // troll female
-                        case 25365: iTmpSpellId = 51546; break; // troll male
-                        default: return;
+                        case 25369:
+                            iTmpSpellId = 51552;
+                            break; // bloodelf female
+                        case 25373:
+                            iTmpSpellId = 51551;
+                            break; // bloodelf male
+                        case 25363:
+                            iTmpSpellId = 51542;
+                            break; // draenei female
+                        case 25357:
+                            iTmpSpellId = 51541;
+                            break; // draenei male
+                        case 25361:
+                            iTmpSpellId = 51537;
+                            break; // dwarf female
+                        case 25356:
+                            iTmpSpellId = 51538;
+                            break; // dwarf male
+                        case 25372:
+                            iTmpSpellId = 51550; 
+                           break; // forsaken female
+                        case 25367:
+                            iTmpSpellId = 51549;
+                            break; // forsaken male
+                        case 25362:
+                            iTmpSpellId = 51540;
+                            break; // gnome female
+                        case 25359:
+                            iTmpSpellId = 51539;
+                            break; // gnome male
+                        case 25355:
+                            iTmpSpellId = 51534;
+                            break; // human female
+                        case 25354:
+                            iTmpSpellId = 51520;
+                            break; // human male
+                        case 25360:
+                            iTmpSpellId = 51536;
+                            break; // nightelf female
+                        case 25358:
+                            iTmpSpellId = 51535;
+                            break; // nightelf male
+                        case 25368:
+                            iTmpSpellId = 51544;
+                            break; // orc female
+                        case 25364:
+                            iTmpSpellId = 51543;
+                            break; // orc male
+                        case 25371:
+                            iTmpSpellId = 51548;
+                            break; // tauren female
+                        case 25366:
+                            iTmpSpellId = 51547;
+                            break; // tauren male
+                        case 25370:
+                            iTmpSpellId = 51545;
+                            break; // troll female
+                        case 25365:
+                            iTmpSpellId = 51546;
+                            break; // troll male
+                        default:
+                            return;
                     }
 
                     unitTarget->CastSpell(unitTarget, iTmpSpellId, true);
@@ -5479,7 +5554,7 @@ void Spell::EffectScriptEffect(SpellEffectEntry const* effect)
     m_caster->GetMap()->ScriptsStart(sSpellScripts, uint32(m_spellInfo->Id | (EFFECT_0 << 24)), m_caster, unitTarget);
 }
 
-void Spell::EffectSanctuary(SpellEffectEntry const* /*effIndex*/)
+void Spell::EffectSanctuary(SpellEffectEntry const* /*effect*/)
 {
     SpellClassOptionsEntry const* classOptions = m_spellInfo->GetSpellClassOptions();
     if (!unitTarget)
@@ -5510,7 +5585,7 @@ void Spell::EffectSanctuary(SpellEffectEntry const* /*effIndex*/)
     }
 }
 
-void Spell::EffectAddComboPoints(SpellEffectEntry const* /*effIndex*/)
+void Spell::EffectAddComboPoints(SpellEffectEntry const* /*effect*/)
 {
     if (!unitTarget)
         return;
@@ -5616,7 +5691,7 @@ void Spell::EffectDuel(SpellEffectEntry const* effect)
     sScriptMgr->OnPlayerDuelRequest(target, caster);
 }
 
-void Spell::EffectStuck(SpellEffectEntry const* /*effIndex*/)
+void Spell::EffectStuck(SpellEffectEntry const* /*effect*/)
 {
     if (!unitTarget || unitTarget->GetTypeId() != TYPEID_PLAYER)
         return;
@@ -5644,7 +5719,7 @@ void Spell::EffectStuck(SpellEffectEntry const* /*effIndex*/)
     spell.SendSpellCooldown();
 }
 
-void Spell::EffectSummonPlayer(SpellEffectEntry const* /*effIndex*/)
+void Spell::EffectSummonPlayer(SpellEffectEntry const* /*effect*/)
 {
     if (!unitTarget || unitTarget->GetTypeId() != TYPEID_PLAYER)
         return;
@@ -5771,7 +5846,7 @@ void Spell::EffectEnchantHeldItem(SpellEffectEntry const* effect)
     }
 }
 
-void Spell::EffectDisEnchant(SpellEffectEntry const* /*effIndex*/)
+void Spell::EffectDisEnchant(SpellEffectEntry const* /*effect*/)
 {
     if (m_caster->GetTypeId() != TYPEID_PLAYER)
         return;
@@ -5787,7 +5862,7 @@ void Spell::EffectDisEnchant(SpellEffectEntry const* /*effIndex*/)
     // item will be removed at disenchanting end
 }
 
-void Spell::EffectInebriate(SpellEffectEntry const* /*effIndex*/)
+void Spell::EffectInebriate(SpellEffectEntry const* /*effect*/)
 {
     if (!unitTarget || unitTarget->GetTypeId() != TYPEID_PLAYER)
         return;
@@ -5978,19 +6053,19 @@ void Spell::EffectAddExtraAttacks(SpellEffectEntry const* effect)
     ExecuteLogEffectExtraAttacks(0, unitTarget->getVictim(), damage);
 }
 
-void Spell::EffectParry(SpellEffectEntry const* /*effIndex*/)
+void Spell::EffectParry(SpellEffectEntry const* /*effect*/)
 {
     if (unitTarget && unitTarget->GetTypeId() == TYPEID_PLAYER)
         unitTarget->ToPlayer()->SetCanParry(true);
 }
 
-void Spell::EffectBlock(SpellEffectEntry const* /*effIndex*/)
+void Spell::EffectBlock(SpellEffectEntry const* /*effect*/)
 {
     if (unitTarget && unitTarget->GetTypeId() == TYPEID_PLAYER)
         unitTarget->ToPlayer()->SetCanBlock(true);
 }
 
-void Spell::EffectLeap(SpellEffectEntry const* /*effIndex*/)
+void Spell::EffectLeap(SpellEffectEntry const* /*effect*/)
 {
     if (unitTarget->isInFlight())
         return;
@@ -6047,7 +6122,7 @@ void Spell::EffectQuestComplete(SpellEffectEntry const* effect)
     }
 }
 
-void Spell::EffectForceDeselect(SpellEffectEntry const* /*effIndex*/)
+void Spell::EffectForceDeselect(SpellEffectEntry const* /*effect*/)
 {
     WorldPacket data(SMSG_CLEAR_TARGET, 8);
     data << uint64(m_caster->GetGUID());
@@ -6091,7 +6166,7 @@ void Spell::EffectSelfResurrect(SpellEffectEntry const* effect)
     plr->SpawnCorpseBones();
 }
 
-void Spell::EffectSkinning(SpellEffectEntry const* /*effIndex*/)
+void Spell::EffectSkinning(SpellEffectEntry const* /*effect*/)
 {
     if (unitTarget->GetTypeId() != TYPEID_UNIT)
         return;
@@ -6114,7 +6189,7 @@ void Spell::EffectSkinning(SpellEffectEntry const* /*effIndex*/)
     m_caster->ToPlayer()->UpdateGatherSkill(skill, skillValue, reqValue, creature->isElite() ? 2 : 1);
 }
 
-void Spell::EffectCharge(SpellEffectEntry const* /*effIndex*/)
+void Spell::EffectCharge(SpellEffectEntry const* /*effect*/)
 {
     Unit *target = m_targets.getUnitTarget();
     if (!target)
@@ -6129,7 +6204,7 @@ void Spell::EffectCharge(SpellEffectEntry const* /*effIndex*/)
         m_caster->Attack(target, true);
 }
 
-void Spell::EffectChargeDest(SpellEffectEntry const* /*effIndex*/)
+void Spell::EffectChargeDest(SpellEffectEntry const* /*effect*/)
 {
     if (m_targets.HasDst())
     {
@@ -6305,7 +6380,7 @@ void Spell::EffectDispelMechanic(SpellEffectEntry const* effect)
     }
 }
 
-void Spell::EffectSummonDeadPet(SpellEffectEntry const* /*effIndex*/)
+void Spell::EffectSummonDeadPet(SpellEffectEntry const* /*effect*/)
 {
     if (m_caster->GetTypeId() != TYPEID_PLAYER)
         return;
@@ -6333,7 +6408,7 @@ void Spell::EffectSummonDeadPet(SpellEffectEntry const* /*effIndex*/)
     pet->SavePetToDB(PET_SAVE_AS_CURRENT);
 }
 
-void Spell::EffectDestroyAllTotems(SpellEffectEntry const* /*effIndex*/)
+void Spell::EffectDestroyAllTotems(SpellEffectEntry const* /*effect*/)
 {
     int32 mana = 0;
     for (uint8 slot = SUMMON_SLOT_TOTEM; slot < MAX_TOTEM_SLOT; ++slot)
@@ -6412,7 +6487,7 @@ void Spell::EffectDurabilityDamagePCT(SpellEffectEntry const* effect)
         unitTarget->ToPlayer()->DurabilityLoss(item, float(damage) / 100.0f);
 }
 
-void Spell::EffectModifyThreatPercent(SpellEffectEntry const* /*effIndex*/)
+void Spell::EffectModifyThreatPercent(SpellEffectEntry const* /*effect*/)
 {
     if (!unitTarget)
         return;
@@ -6562,7 +6637,7 @@ void Spell::EffectTransmitted(SpellEffectEntry const* effect)
     }
 }
 
-void Spell::EffectProspecting(SpellEffectEntry const* /*effIndex*/)
+void Spell::EffectProspecting(SpellEffectEntry const* /*effect*/)
 {
     if (m_caster->GetTypeId() != TYPEID_PLAYER)
         return;
@@ -6584,7 +6659,7 @@ void Spell::EffectProspecting(SpellEffectEntry const* /*effIndex*/)
     m_caster->ToPlayer()->SendLoot(itemTarget->GetGUID(), LOOT_PROSPECTING);
 }
 
-void Spell::EffectMilling(SpellEffectEntry const* /*effIndex*/)
+void Spell::EffectMilling(SpellEffectEntry const* /*effect*/)
 {
     if (m_caster->GetTypeId() != TYPEID_PLAYER)
         return;
@@ -6606,7 +6681,7 @@ void Spell::EffectMilling(SpellEffectEntry const* /*effIndex*/)
     m_caster->ToPlayer()->SendLoot(itemTarget->GetGUID(), LOOT_MILLING);
 }
 
-void Spell::EffectSkill(SpellEffectEntry const* /*effIndex*/)
+void Spell::EffectSkill(SpellEffectEntry const* /*effect*/)
 {
     sLog->outDebug(LOG_FILTER_SPELLS_AURAS, "WORLD: SkillEFFECT");
 }
@@ -6615,7 +6690,7 @@ void Spell::EffectSkill(SpellEffectEntry const* /*effIndex*/)
    If we would handle the resurrection here, the spiritguide would instantly disappear as the
    player revives, and so we wouldn't see the spirit heal visual effect on the npc.
    This is why we use a half sec delay between the visual effect and the resurrection itself */
-void Spell::EffectSpiritHeal(SpellEffectEntry const* /*effIndex*/)
+void Spell::EffectSpiritHeal(SpellEffectEntry const* /*effect*/)
 {
     /*
     if (!unitTarget || unitTarget->isAlive())
@@ -6633,7 +6708,7 @@ void Spell::EffectSpiritHeal(SpellEffectEntry const* /*effIndex*/)
 }
 
 // remove insignia spell effect
-void Spell::EffectSkinPlayerCorpse(SpellEffectEntry const* /*effIndex*/)
+void Spell::EffectSkinPlayerCorpse(SpellEffectEntry const* /*effect*/)
 {
     sLog->outDebug(LOG_FILTER_SPELLS_AURAS, "Effect: SkinPlayerCorpse");
     if ((m_caster->GetTypeId() != TYPEID_PLAYER) || (unitTarget->GetTypeId() != TYPEID_PLAYER) || (unitTarget->isAlive()))
@@ -6863,19 +6938,19 @@ void Spell::EffectDiscoverTaxi(SpellEffectEntry const* effect)
         unitTarget->ToPlayer()->GetSession()->SendDiscoverNewTaxiNode(nodeid);
 }
 
-void Spell::EffectTitanGrip(SpellEffectEntry const* /*effIndex*/)
+void Spell::EffectTitanGrip(SpellEffectEntry const* /*effect*/)
 {
     if (unitTarget && unitTarget->GetTypeId() == TYPEID_PLAYER)
         unitTarget->ToPlayer()->SetCanTitanGrip(true);
 }
 
-void Spell::EffectRedirectThreat(SpellEffectEntry const* /*effIndex*/)
+void Spell::EffectRedirectThreat(SpellEffectEntry const* /*effect*/)
 {
     if (unitTarget)
         m_caster->SetReducedThreatPercent((uint32)damage, unitTarget->GetGUID());
 }
 
-void Spell::EffectWMODamage(SpellEffectEntry const* /*effIndex*/)
+void Spell::EffectWMODamage(SpellEffectEntry const* /*effect*/)
 {
     if (gameObjTarget && gameObjTarget->GetGoType() == GAMEOBJECT_TYPE_DESTRUCTIBLE_BUILDING)
     {
@@ -6908,7 +6983,7 @@ void Spell::EffectWMODamage(SpellEffectEntry const* /*effIndex*/)
     }
 }
 
-void Spell::EffectWMORepair(SpellEffectEntry const* /*effIndex*/)
+void Spell::EffectWMORepair(SpellEffectEntry const* /*effect*/)
 {
     if (gameObjTarget && gameObjTarget->GetGoType() == GAMEOBJECT_TYPE_DESTRUCTIBLE_BUILDING)
         gameObjTarget->Rebuild();
@@ -7056,7 +7131,7 @@ void Spell::GetSummonPosition(uint32 i, Position &pos, float radius, uint32 coun
     }
 }
 
-void Spell::EffectRenamePet(SpellEffectEntry const* /*effIndex*/)
+void Spell::EffectRenamePet(SpellEffectEntry const* /*effect*/)
 {
     if (!unitTarget || unitTarget->GetTypeId() != TYPEID_UNIT ||
         !unitTarget->ToCreature()->isPet() || ((Pet*)unitTarget)->getPetType() != HUNTER_PET)
@@ -7083,7 +7158,7 @@ void Spell::EffectPlayMusic(SpellEffectEntry const* effect)
     unitTarget->ToPlayer()->GetSession()->SendPacket(&data);
 }
 
-void Spell::EffectSpecCount(SpellEffectEntry const* /*effIndex*/)
+void Spell::EffectSpecCount(SpellEffectEntry const* /*effect*/)
 {
     if (!unitTarget || unitTarget->GetTypeId() != TYPEID_PLAYER)
         return;
@@ -7091,7 +7166,7 @@ void Spell::EffectSpecCount(SpellEffectEntry const* /*effIndex*/)
     unitTarget->ToPlayer()->UpdateSpecCount(damage);
 }
 
-void Spell::EffectActivateSpec(SpellEffectEntry const* /*effIndex*/)
+void Spell::EffectActivateSpec(SpellEffectEntry const* /*effect*/)
 {
     if (!unitTarget || unitTarget->GetTypeId() != TYPEID_PLAYER)
         return;

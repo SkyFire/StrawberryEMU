@@ -20,7 +20,7 @@ INCLUDE_DIRECTORIES(
 ../../../dep/g3dlite/include
 ../../../dep/g3dlite
 )
-SET (logonserver_SRCS
+SET (realmserver_SRCS
 Auth/AuthCodes.cpp
 Auth/AuthCodes.h
 Main.cpp
@@ -33,27 +33,27 @@ Server/RealmSocket.cpp
 Server/RealmSocket.h
 )
 
-SET(logonserver_LINK_FLAGS "")
+SET(realmserver_LINK_FLAGS "")
 
-add_executable(logonserver ${logonserver_SRCS})
+add_executable(realmserver ${realmserver_SRCS})
 add_definitions(
--D_LOGON_CONFIG_FILE='"${CONF_DIR}/LogonServer.conf"'
+-D_LOGON_CONFIG_FILE='"${CONF_DIR}/RealmServer.conf"'
 )
 IF (DO_MYSQL)
-   SET(logonserver_LINK_FLAGS "-pthread ${logonserver_LINK_FLAGS}")
+   SET(realmserver_LINK_FLAGS "-pthread ${realmserver_LINK_FLAGS}")
 ENDIF(DO_MYSQL)
 IF (DO_POSTGRESQL)
-   SET(logonserver_LINK_FLAGS "-pthread ${logonserver_LINK_FLAGS}")
+   SET(realmserver_LINK_FLAGS "-pthread ${realmserver_LINK_FLAGS}")
 ENDIF(DO_POSTGRESQL)
 
 IF (CMAKE_SYSTEM_NAME MATCHES "Darwin")
-   SET(logonserver_LINK_FLAGS "-framework Carbon ${logonserver_LINK_FLAGS}")
+   SET(realmserver_LINK_FLAGS "-framework Carbon ${realmserver_LINK_FLAGS}")
 ENDIF (CMAKE_SYSTEM_NAME MATCHES "Darwin")
 
-SET_TARGET_PROPERTIES(logonserver PROPERTIES LINK_FLAGS "${logonserver_LINK_FLAGS}")
+SET_TARGET_PROPERTIES(realmserver PROPERTIES LINK_FLAGS "${realmserver_LINK_FLAGS}")
 
 target_link_libraries(
-logonserver
+realmserver
 shared
 ${SSLLIB}
 ${MYSQL_LIBRARIES}
@@ -62,4 +62,4 @@ ${OSX_LIBS}
 ${ACE_LIBRARY}
 )
 
-install(TARGETS logonserver DESTINATION bin)
+install(TARGETS realmserver DESTINATION bin)

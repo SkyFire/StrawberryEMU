@@ -2015,13 +2015,14 @@ int32 SpellMgr::CalculateSpellEffectAmount(SpellEntry const * spellEntry, uint8 
         // roll in a range <1;EffectDieSides> as of patch 3.3.3
         switch(randomPoints)
         {
-            case 0: break;
-            case 1: basePoints += 1; break;                     // range 1..1
+            case 0:
+                break;
+            case 1:
+                basePoints += 1;
+                break;                     // range 1..1
             default:
                 // range can have positive (1..rand) and negative (rand..1) values, so order its for irand
-                int32 randvalue = (randomPoints >= 1)
-                    ? irand(1, randomPoints)
-                    : irand(randomPoints, 1);
+                int32 randvalue = (randomPoints >= 1) ? irand(1, randomPoints) : irand(randomPoints, 1);
 
             basePoints += randvalue;
             break;
@@ -2073,7 +2074,7 @@ int32 SpellMgr::CalculateSpellEffectBaseAmount(int32 value, SpellEntry const * s
 {
     SpellEffectEntry const* spellEffect = spellEntry->GetSpellEffect(SpellEffIndex(effIndex));
     if (!spellEffect)
-        return 0;
+        return value;
 
     if (spellEffect->EffectDieSides == 0)
         return value;
@@ -2085,7 +2086,7 @@ float SpellMgr::CalculateSpellEffectValueMultiplier(SpellEntry const * spellEntr
 {
     SpellEffectEntry const* spellEffect = spellEntry->GetSpellEffect(SpellEffIndex(effIndex));
     if (!spellEffect)
-        return 0.0f;
+        return 1.0f;
 
     float multiplier = spellEffect->EffectMultipleValue;
 
@@ -2099,7 +2100,7 @@ float SpellMgr::CalculateSpellEffectDamageMultiplier(SpellEntry const * spellEnt
 {
     SpellEffectEntry const* spellEffect = spellEntry->GetSpellEffect(SpellEffIndex(effIndex));
     if (!spellEffect)
-        return 0.0f;
+        return 1.0f;
 
     float multiplier = spellEffect->DmgMultiplier;
 

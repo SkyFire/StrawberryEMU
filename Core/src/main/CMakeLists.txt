@@ -221,6 +221,7 @@ Scripting/MapScripts.cpp
 Scripting/ScriptLoader.cpp
 Scripting/ScriptMgr.cpp
 Scripting/ScriptSystem.cpp
+Server/Protocol/Opcodes/OpcodeHandler.cpp
 Server/Protocol/Handlers/Packets/AddonHandler.cpp
 Server/Protocol/Handlers/Packets/ArenaTeamHandler.cpp
 Server/Protocol/Handlers/Packets/AuctionHouseHandler.cpp
@@ -252,10 +253,6 @@ Server/Protocol/Handlers/Packets/TicketHandler.cpp
 Server/Protocol/Handlers/Packets/TradeHandler.cpp
 Server/Protocol/Handlers/Packets/VehicleHandler.cpp
 Server/Protocol/Handlers/Packets/VoiceChatHandler.cpp
-Server/Protocol/Opcodes/ClientOpcodeHandler.cpp
-Server/Protocol/Opcodes/ClientServerOpcodeHandler.cpp
-Server/Protocol/Opcodes/OpcodeHandler.cpp
-Server/Protocol/Opcodes/ServerOpcodeHandler.cpp
 Server/Logs/WorldLog.cpp
 Server/Sessions/WorldSession.cpp
 Server/Sockets/WorldSocket.cpp
@@ -426,12 +423,9 @@ Reputation/ReputationMgr.h
 Scripting/ScriptLoader.h
 Scripting/ScriptMgr.h
 Scripting/ScriptSystem.h
+Server/Protocol/Opcodes/OpcodeHandler.h
 Server/Protocol/Handlers/Packets/AddonHandler.h
 Server/Protocol/Handlers/Packets/NPCHandler.h
-Server/Protocol/Opcodes/ClientOpcodeHandler.h
-Server/Protocol/Opcodes/ClientServerOpcodeHandler.h
-Server/Protocol/Opcodes/OpcodeHandler.h
-Server/Protocol/Opcodes/ServerOpcodeHandler.h
 Server/Logs/WorldLog.h
 Server/Sockets/WorldSocket.h
 Server/Sockets/WorldSocketMgr.h
