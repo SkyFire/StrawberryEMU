@@ -45,8 +45,8 @@ INCLUDE_DIRECTORIES(
 ../../main/Spells/Auras
 ../../main/Server/Logs
 ../../main/Server/Protocol/Handlers
-../../main/Server/Protocol/Opcodes
-../../main/Server/Protocol/Packets
+../../main/Server/Protocol/Handlers/Opcodes
+../../main/Server/Protocol/Handlers/Packets
 ../../main/Server/Protocol
 ../../main/Server/Sessions
 ../../main/Server/Sockets
