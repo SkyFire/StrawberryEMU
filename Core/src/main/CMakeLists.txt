@@ -221,7 +221,7 @@ Scripting/MapScripts.cpp
 Scripting/ScriptLoader.cpp
 Scripting/ScriptMgr.cpp
 Scripting/ScriptSystem.cpp
-Server/Protocol/Opcodes/OpcodeHandler.cpp
+Server/Protocol/Handlers//Opcodes/OpcodeHandler.cpp
 Server/Protocol/Handlers/Packets/AddonHandler.cpp
 Server/Protocol/Handlers/Packets/ArenaTeamHandler.cpp
 Server/Protocol/Handlers/Packets/AuctionHouseHandler.cpp
@@ -423,7 +423,7 @@ Reputation/ReputationMgr.h
 Scripting/ScriptLoader.h
 Scripting/ScriptMgr.h
 Scripting/ScriptSystem.h
-Server/Protocol/Opcodes/OpcodeHandler.h
+Server/Protocol/Handlers//Opcodes/OpcodeHandler.h
 Server/Protocol/Handlers/Packets/AddonHandler.h
 Server/Protocol/Handlers/Packets/NPCHandler.h
 Server/Logs/WorldLog.h
