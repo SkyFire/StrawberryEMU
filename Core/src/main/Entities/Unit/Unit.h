@@ -35,6 +35,7 @@
 #include "MotionMaster.h"
 #include "DBCStructure.h"
 #include "Path.h"
+#include "OpcodeHandler.h"
 #include "WorldPacket.h"
 #include "Timer.h"
 #include <list>
