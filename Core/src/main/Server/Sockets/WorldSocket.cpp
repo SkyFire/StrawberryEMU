@@ -260,8 +260,7 @@ int WorldSocket::open (void *a)
     m_Address = remote_addr.get_host_addr();
 
     // Send startup packet.
-    WorldPacket packet (SMSG_AUTH_CHALLENGE, ((4 * 4) + 4 + 4 + 1 + (3 * 4)));
-    uint8 connection = 1;
+    WorldPacket packet (SMSG_AUTH_CHALLENGE, 37);
 
     packet << uint32(4);
     packet << uint32(0);
@@ -269,7 +268,7 @@ int WorldSocket::open (void *a)
     packet << uint32(5);
     packet << uint32(m_Seed);
     packet << uint32(2);
-    packet << uint8(connection);
+    packet << uint8(1);
     packet << uint32(3);
     packet << uint32(1);
     packet << uint32(7);
@@ -781,25 +780,26 @@ int WorldSocket::HandleAuthSession (WorldPacket& recvPacket)
     BigNumber g, N, K;
     WorldPacket packet;
 
+    recvPacket.read_skip<uint8>();
     recvPacket >> clientBuild;
-    recvPacket.read_skip<uint32>();
-    recvPacket.read(digest, 11);
+	recvPacket.read_skip<uint32>();
+    recvPacket.read_skip<uint8>();
+    recvPacket.read(digest, 10);
     recvPacket.read_skip<uint32>();
     recvPacket.read_skip<uint64>();
     recvPacket.read(digest, 2);
-    recvPacket.read_skip<uint32>();
+    recvPacket >> clientSeed;
     recvPacket.read_skip<uint32>();
     recvPacket.read_skip<uint8>();
     recvPacket.read(digest, 6);
-    recvPacket >> clientSeed;
+    recvPacket.read_skip<uint32>();
     recvPacket.read(digest, 2);
 
-    recvPacket >> m_addonSize;                            // addon data size
+    recvPacket >> m_addonSize;
     size_t addonInfoPos = recvPacket.rpos();
     recvPacket.rpos(recvPacket.rpos() + m_addonSize);     // skip it
-
     recvPacket >> accountName;
-    
+
     if (sWorld->IsClosed())
     {
         packet.Initialize(SMSG_AUTH_RESPONSE, 1);
@@ -879,7 +879,7 @@ int WorldSocket::HandleAuthSession (WorldPacket& recvPacket)
         security = SEC_ADMINISTRATOR;
         */
 
-    K.SetHexStr(fields[1].GetCString());
+    K.SetHexStr (fields[1].GetCString());
 
     time_t mutetime = time_t (fields[7].GetUInt64());
 
