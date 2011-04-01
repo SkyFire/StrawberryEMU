@@ -1074,7 +1074,9 @@ enum SpellCastResult
     SPELL_FAILED_IN_COMBAT_RES_LIMIT_REACHED = 198,
     SPELL_FAILED_NOT_IN_ARENA = 199,
     SPELL_FAILED_TARGET_NOT_GROUNDED = 200,
-    SPELL_FAILED_UNKNOWN = 201,                             // default
+    SPELL_FAILED_EXCEEDED_WEEKLY_USAGE = 201,
+    SPELL_FAILED_NOT_IN_LFG_DUNGEON = 202,
+    SPELL_FAILED_UNKNOWN = 203,                             // default
 
     SPELL_CAST_OK = 255 // custom value, don't must be send to client
 };

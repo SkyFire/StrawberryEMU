@@ -132,7 +132,8 @@ enum eUnitFields
     UNIT_FIELD_MAXHEALTHMODIFIER                        = OBJECT_END + 0x9D,
     UNIT_FIELD_HOVERHEIGHT                              = OBJECT_END + 0x9E,
     UNIT_FIELD_MAXITEMLEVEL                             = OBJECT_END + 0x9F,
-    UNIT_END                                            = OBJECT_END + 0xA0
+    UNIT_FIELD_PADDING                                  = OBJECT_END + 0xA0,
+    UNIT_END                                            = OBJECT_END + 0xA1
 };
 
 enum eItemFields
