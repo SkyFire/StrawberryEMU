@@ -249,7 +249,7 @@ enum Opcodes
     /***********************************************************/
     CMSG_GOSSIP_HELLO                                   = 0x74C8,    // 29896 - 4.0.6.13623
     CMSG_GOSSIP_SELECT_OPTION                           = 0xFF88,    // 65416 - 4.0.6.13623
-    CMSG_NPC_TEXT_QUERY                                 = 0xA2EC,    // 41708 - 4.0.6.13623
+    CMSG_NPC_TEXT_QUERY                                 = 0x6664,    // 26212 - 4.1.0.13812
     CMSG_BATTLEMASTER_JOIN                              = 0x2EE,
 
     // Gossip Questgiver
@@ -324,7 +324,7 @@ enum Opcodes
     CMSG_PETITION_SIGN                                  = 0x1C0,
     CMSG_OFFER_PETITION                                 = 0x1C3,
     CMSG_TURN_IN_PETITION                               = 0x1C4,
-    CMSG_PETITION_QUERY                                 = 0xB1AC,    // 45484 - 4.0.6.13623
+    CMSG_PETITION_QUERY                                 = 0xE470,    // 58480 - 4.1.0.13812
 
     // Guild Party
     CMSG_REQUEST_PARTY_MEMBER_STATS                     = 0x70C8,    // 28872 - 4.0.6.13623
@@ -539,7 +539,7 @@ enum Opcodes
     CMSG_PLAY_DANCE                                     = 0x2288,    // 8840  - 4.0.6.13623
     CMSG_STOP_DANCE                                     = 0x3080,    // 12416 - 4.0.6.13623
     CMSG_SYNC_DANCE                                     = 0x450,
-    CMSG_DANCE_QUERY                                    = 0x22A0,    // 8864  - 4.0.6.13623
+    CMSG_DANCE_QUERY                                    = 0x3E40,    // 15936 - 4.1.0.13812
 
     // Player Level
     CMSG_LEVEL_CHEAT                                    = 0x025,
@@ -571,7 +571,7 @@ enum Opcodes
 
     // Player Arena
     CMSG_ARENA_TEAM_CREATE                              = 0x348,
-    CMSG_ARENA_TEAM_QUERY                               = 0xB9C8,    // 47560 - 4.0.6.13623
+    CMSG_ARENA_TEAM_QUERY                               = 0xD466,    // 54374 - 4.1.0.13812
     CMSG_ARENA_TEAM_ROSTER                              = 0x34D,
     CMSG_ARENA_TEAM_INVITE                              = 0xE9CC,    // 59852 - 4.0.6.13623
     CMSG_ARENA_TEAM_ACCEPT                              = 0x61AC,    // 25004 - 4.0.6.13623
@@ -645,16 +645,16 @@ enum Opcodes
     /***********************************************************/
     /********************* QUERY OPCODES ***********************/
     /***********************************************************/
-    CMSG_NAME_QUERY                                      = 0x7AAC,    // 31404 - 4.0.6.13623
-    CMSG_PET_NAME_QUERY                                  = 0xF180,    // 61824 - 4.0.6.13623
-    CMSG_GUILD_QUERY                                     = 0xAFC4,    // 44996 - 4.0.6.13623
+    CMSG_NAME_QUERY                                      = 0xCE64,    // 52836 - 4.1.0.13812
+    CMSG_PET_NAME_QUERY                                  = 0xD776,    // 55158 - 4.1.0.13812
+    CMSG_GUILD_QUERY                                     = 0x6D74,    // 28020 - 4.1.0.13812
     CMSG_ITEM_QUERY_SINGLE                               = 0x8588,    // 34184 - 4.0.6.13623
     CMSG_ITEM_QUERY_MULTIPLE                             = 0x0061,    // 97    - 4.0.6.13623
-    CMSG_PAGE_TEXT_QUERY                                 = 0xAC8C,    // 44172 - 4.0.6.13623
-    CMSG_QUEST_QUERY                                     = 0xEFE8,    // 61416 - 4.0.6.13623
-    CMSG_GAMEOBJECT_QUERY                                = 0x72A0,    // 29344 - 4.0.6.13623
-    CMSG_CREATURE_QUERY                                  = 0x268C,    // 9868  - 4.0.6.13623
-    CMSG_ITEM_TEXT_QUERY                                 = 0xF280,    // 62080 - 4.0.6.13623
+    CMSG_PAGE_TEXT_QUERY                                 = 0xFC42,    // 64578 - 4.1.0.13812
+    CMSG_QUEST_QUERY                                     = 0x1F76,    // 8054  - 4.1.0.13812
+    CMSG_GAMEOBJECT_QUERY                                = 0xEF72,    // 61298 - 4.1.0.13812
+    CMSG_CREATURE_QUERY                                  = 0xC474,    // 50292 - 4.1.0.13812
+    CMSG_ITEM_TEXT_QUERY                                 = 0xCF76,    // 53110 - 4.1.0.13812
     CMSG_ITEM_NAME_QUERY                                 = 0x2C4,
     CMSG_CORPSE_MAP_POSITION_QUERY                       = 0x23CC,    // 9164  - 4.0.6.13623
 
