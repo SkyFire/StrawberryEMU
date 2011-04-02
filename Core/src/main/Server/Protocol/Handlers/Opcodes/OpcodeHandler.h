@@ -377,7 +377,7 @@ enum Opcodes
     CMSG_WRAP_ITEM                                      = 0x1D3,  
     CMSG_SET_DURABILITY_CHEAT                           = 0x287,
     CMSG_BUYBACK_ITEM                                   = 0xA4C4,    // 42180 - 4.0.6.13623
-    CMSG_REPAIR_ITEM                                    = 0x2A8,
+    CMSG_REPAIR_ITEM                                    = 0x39E4,    // 14820 - 4.0.6.13623
     CMSG_SHOWING_HELM                                   = 0xB7C0,    // 47040 - 4.0.6.13623
     CMSG_SHOWING_CLOAK                                  = 0x7AA4,    // 31396 - 4.0.6.13623
     CMSG_SOCKET_GEMS                                    = 0x347,

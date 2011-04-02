@@ -224,7 +224,11 @@ bool WorldSession::Update(uint32 diff, PacketFilter& updater)
     WorldPacket *packet = NULL;
     while (m_Socket && !m_Socket->IsClosed() && _recvQueue.next(packet, updater))
     {
-        sLog->outString("SESSION: Received opcode 0x%.4X (%s)", packet->GetOpcode(), packet->GetOpcode() > 0xFFFF ?  "Unknown Opcode" : LookupOpcodeName(packet->GetOpcode()));
+        // Show recieved opcodes only in debug mode
+        #ifdef STRAWBERRY_DEBUG
+            sLog->outString("SESSION: Received opcode 0x%.4X (%s)", packet->GetOpcode(), packet->GetOpcode() > 0xFFFF ?  "Unknown Opcode" : LookupOpcodeName(packet->GetOpcode()));
+        #endif
+
         if (packet->GetOpcode() >= NUM_MSG_TYPES)
         {
             sLog->outError("SESSION: received non-existed opcode %s (0x%.4X)", LookupOpcodeName(packet->GetOpcode()), packet->GetOpcode());
