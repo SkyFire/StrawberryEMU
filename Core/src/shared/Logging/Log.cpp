@@ -24,8 +24,8 @@
 #include "Configuration/Config.h"
 #include "Util.h"
 
-#include "Implementation/LoginDatabase.h" // For logging
-extern LoginDatabaseWorkerPool LoginDatabase;
+#include "Implementation/RealmDB.h" // For logging
+extern RealmDBWorkerPool RealmDB;
 
 #include <stdarg.h>
 #include <stdio.h>
@@ -362,9 +362,9 @@ void Log::outDB(LogTypes type, const char * str)
     std::string new_str(str);
     if (new_str.empty())
         return;
-    LoginDatabase.escape_string(new_str);
+    RealmDB.escape_string(new_str);
 
-    LoginDatabase.PExecute("INSERT INTO logs (time, realm, type, string) "
+    RealmDB.PExecute("INSERT INTO logs (time, realm, type, string) "
         "VALUES (" UI64FMTD ", %u, %u, '%s');", uint64(time(0)), realm, type, new_str.c_str());
 }
 

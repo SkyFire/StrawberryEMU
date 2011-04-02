@@ -45,9 +45,9 @@ Cryptography/HMACSHA1.cpp
 Cryptography/SHA1.cpp
 Database/AdhocStatement.cpp
 Database/Field.cpp
-Database/Implementation/CharacterDatabase.cpp
-Database/Implementation/LoginDatabase.cpp
-Database/Implementation/WorldDatabase.cpp
+Database/Implementation/CharDB.cpp
+Database/Implementation/RealmDB.cpp
+Database/Implementation/WorldDB.cpp
 Database/MySQLConnection.cpp
 Database/PreparedStatement.cpp
 Database/QueryHolder.cpp
@@ -87,9 +87,9 @@ Database/DatabaseEnv.h
 Database/DatabaseWorker.h
 Database/DatabaseWorkerPool.h
 Database/Field.h
-Database/Implementation/CharacterDatabase.h
-Database/Implementation/LoginDatabase.h
-Database/Implementation/WorldDatabase.h
+Database/Implementation/CharDB.h
+Database/Implementation/RealmDB.h
+Database/Implementation/WorldDB.h
 Database/MySQLConnection.h
 Database/MySQLThreading.h
 Database/PreparedStatement.h

@@ -259,18 +259,18 @@ void WorldSession::HandleGMSurveySubmit(WorldPacket& recv_data)
         os << uint32(nextSurveyID) << " ";
         os << subSurveyId << ", ";
         os << uint16(rank) << ", '";
-        CharacterDatabase.escape_string(comment);
+        CharDB.escape_string(comment);
         os << comment << "');";
-        CharacterDatabase.PExecute(os.str().c_str());
+        CharDB.PExecute(os.str().c_str());
     }
 
     std::string comment; // just a guess
     recv_data >> comment;
-    CharacterDatabase.escape_string(comment);
+    CharDB.escape_string(comment);
     ss << "'" << comment << "', ";
     ss << int64(time_t(NULL)) << ");";
 
-    CharacterDatabase.PExecute(ss.str().c_str());
+    CharDB.PExecute(ss.str().c_str());
 }
 
 void WorldSession::HandleReportLag(WorldPacket& recv_data)
@@ -295,7 +295,7 @@ void WorldSession::HandleReportLag(WorldPacket& recv_data)
     os << y << ", ";
     os << z << ");";
 
-    CharacterDatabase.Execute(os.str().c_str());
+    CharDB.Execute(os.str().c_str());
 }
 
 void WorldSession::HandleGMResponseResolve(WorldPacket& /*recvPacket*/)

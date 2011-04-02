@@ -53,7 +53,7 @@ void TicketMgr::LoadGMTickets()
     m_GMticketid = 0;
     m_openTickets = 0;
 
-    QueryResult result = CharacterDatabase.Query("SELECT guid, playerGuid, name, message, createtime, map, posX, posY, posZ, timestamp, closed,"
+    QueryResult result = CharDB.Query("SELECT guid, playerGuid, name, message, createtime, map, posX, posY, posZ, timestamp, closed,"
                                                  "assignedto, comment, completed, escalated, viewed FROM gm_tickets");
 
     if (!result)
@@ -93,7 +93,7 @@ void TicketMgr::LoadGMTickets()
         m_GMTicketList.push_back(ticket);
     } while (result->NextRow());
 
-    result = CharacterDatabase.Query("SELECT MAX(guid) from gm_tickets");
+    result = CharDB.Query("SELECT MAX(guid) from gm_tickets");
 
     if (result)
     {
@@ -110,7 +110,7 @@ void TicketMgr::LoadGMSurveys()
     uint32 oldMSTime = getMSTime();
 
     // we don't actually load anything into memory here as there's no reason to
-    QueryResult result = CharacterDatabase.Query("SELECT MAX(surveyid) FROM gm_surveys");
+    QueryResult result = CharDB.Query("SELECT MAX(surveyid) FROM gm_surveys");
     if (result)
     {
         Field *fields = result->Fetch();
@@ -138,9 +138,9 @@ void TicketMgr::AddOrUpdateGMTicket(GM_Ticket &ticket, bool create)
 void TicketMgr::_AddOrUpdateGMTicket(GM_Ticket &ticket)
 {
     std::string msg(ticket.message), name(ticket.name), comment(ticket.comment);
-    CharacterDatabase.escape_string(msg);
-    CharacterDatabase.escape_string(name);
-    CharacterDatabase.escape_string(comment);
+    CharDB.escape_string(msg);
+    CharDB.escape_string(name);
+    CharDB.escape_string(comment);
     std::ostringstream ss;
     ss << "REPLACE INTO gm_tickets (guid, playerGuid, name, message, createtime, map, posX, posY, posZ, timestamp, closed, assignedto, comment, completed, escalated, viewed) VALUES (";
     ss << ticket.guid << ", ";
@@ -160,9 +160,9 @@ void TicketMgr::_AddOrUpdateGMTicket(GM_Ticket &ticket)
     ss << uint32(ticket.escalated) << ", ";
     ss << (ticket.viewed ? 1 : 0) << ");";
 
-    SQLTransaction trans = CharacterDatabase.BeginTransaction();
+    SQLTransaction trans = CharDB.BeginTransaction();
     trans->Append(ss.str().c_str());
-    CharacterDatabase.CommitTransaction(trans);
+    CharDB.CommitTransaction(trans);
 }
 
 void TicketMgr::RemoveGMTicket(GM_Ticket *ticket, int64 source, bool permanently)
@@ -172,7 +172,7 @@ void TicketMgr::RemoveGMTicket(GM_Ticket *ticket, int64 source, bool permanently
         {
             if (permanently)
             {
-                CharacterDatabase.PExecute("DELETE FROM gm_tickets WHERE guid = '%u'", ticket->guid);
+                CharDB.PExecute("DELETE FROM gm_tickets WHERE guid = '%u'", ticket->guid);
                 i = m_GMTicketList.erase(i);
                 ticket = NULL;
                 return;

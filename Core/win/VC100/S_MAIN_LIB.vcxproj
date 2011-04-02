@@ -64,27 +64,19 @@
     <_ProjectFileVersion>10.0.40219.1</_ProjectFileVersion>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\main_$(Platform)_$(Configuration)\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\main_$(Platform)_$(Configuration)\</IntDir>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">main</TargetName>
-    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.lib</TargetExt>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\main_$(Platform)_$(Configuration)\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\main_$(Platform)_$(Configuration)\</IntDir>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|X64'">main</TargetName>
-    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|X64'">.lib</TargetExt>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\main_$(Platform)_$(Configuration)\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\main_$(Platform)_$(Configuration)\</IntDir>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">main</TargetName>
-    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.lib</TargetExt>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\main_$(Platform)_$(Configuration)\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\main_$(Platform)_$(Configuration)\</IntDir>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|X64'">main</TargetName>
-    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|X64'">.lib</TargetExt>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <AdditionalOptions>/MP /Zm200 %(AdditionalOptions)</AdditionalOptions>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>..\..\src;..\..\src\main\Achievements;..\..\src\main\Battlegrounds\Zones;..\..\src\main\AI\SmartScripts;..\..\src\main\AI\ScriptedAI;..\..\src\main\AI\EventAI;..\..\src\main\AI\CoreAI;..\..\src\main\World;..\..\src\main\Weather;..\..\src\main\Tools;..\..\src\main\Tickets;..\..\src\main\Texts;..\..\src\main\Spells;..\..\src\main\Skills;..\..\src\main\Server;..\..\src\main\Scripting;..\..\src\main\Reputation;..\..\src\main\Quests;..\..\src\main\Pools;..\..\src\main\PCH;..\..\src\main\OutdoorPvP;..\..\src\main\Movement;..\..\src\main\Miscellaneous;..\..\src\main\Maps;..\..\src\main\Mails;..\..\src\main\Loot;..\..\src\main\Instances;..\..\src\main\Guilds;..\..\src\main\Groups;..\..\src\main\Grids;..\..\src\main\Globals;..\..\src\main\Spells\Auras;..\..\src\main\Server\Protocol\Handlers\Packets;..\..\src\main\Server\Protocol\Handlers\Opcodes;..\..\src\main\Server\Protocol\Handlers;..\..\src\main\Server\Sockets;..\..\src\main\Server\Sessions;..\..\src\main\Server\Logs;..\..\src\main\Server\Protocol;..\..\src\main\Movement\Waypoints;..\..\src\main\Movement\MovementGenerators;..\..\src\main\Grids\Notifiers;..\..\src\main\Grids\Cells;..\..\src\main\Entities\Object\Updates;..\..\src\main\Entities\Item\Container;..\..\src\main\Entities\Vehicle;..\..\src\main\Entities\Unit;..\..\src\main\Entities\Transport;..\..\src\main\Entities\Totem;..\..\src\main\Entities\Player;..\..\src\main\Entities\Pet;..\..\src\main\Entities\Object;..\..\src\main\Entities\Item;..\..\src\main\Entities\GameObject;..\..\src\main\Entities\DynamicObject;..\..\src\main\Entities\Creature;..\..\src\main\Entities\Corpse;..\..\src\main\Events;..\..\src\main\Entities;..\..\src\main\DungeonFinding;..\..\src\main\DataStores;..\..\src\main\Conditions;..\..\src\main\Combat;..\..\src\main\Chat\Commands;..\..\src\main\Chat\Channels;..\..\src\main\Chat;..\..\src\main\Calendar;..\..\src\main\Battlegrounds;..\..\src\main\AuctionHouse\AuctionHouseBot;..\..\src\main\AuctionHouse;..\..\src\main\AI;..\..\src\main\Addons;..\..\src\main\Accounts;..\..\dep;..\..\dep\mysql;..\..\dep\mysql\include;..\..\dep\zlib;..\..\dep\mysql\extra\yassl\include;..\..\src\shared;..\..\src\shared\Collision;..\..\src\shared\Collision\Management;..\..\src\shared\Collision\Maps;..\..\src\shared\Collision\Models;..\..\src\shared\Collision\PCH;..\..\src\shared\Configuration;..\..\src\shared\Cryptography;..\..\src\shared\Cryptography\Authentication;..\..\src\shared\DataStores;..\..\src\shared\Database;..\..\src\shared\Dynamic;..\..\src\shared\Dynamic\LinkedReference;..\..\src\shared\Logging;..\..\src\shared\Packets;..\..\src\shared\Threading;..\..\src\shared\Utilities;..\..\src\scripts;..\..\src\scripts\PCH;..\..\src\server;..\..\dep\acelite;..\..\dep\mysqllite\include;..\..\dep\mysqllite\extra\yassl\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_DEBUG;STRAWBERRY_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;STRAWBERRY_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>false</StringPooling>
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -92,7 +84,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <PrecompiledHeader>Use</PrecompiledHeader>
-      <PrecompiledHeaderFile>PCH.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile>..\..\src\main\PCH\PCH.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile>.\main_$(Platform)_$(Configuration)\main.pch</PrecompiledHeaderOutputFile>
       <AssemblerListingLocation>.\main_$(Platform)_$(Configuration)\</AssemblerListingLocation>
       <ObjectFileName>.\main_$(Platform)_$(Configuration)\</ObjectFileName>
@@ -192,7 +184,7 @@
       <AdditionalOptions>/MP /bigobj /Zm200 %(AdditionalOptions)</AdditionalOptions>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
       <AdditionalIncludeDirectories>..\..\src;..\..\src\main\Achievements;..\..\src\main\Battlegrounds\Zones;..\..\src\main\AI\SmartScripts;..\..\src\main\AI\ScriptedAI;..\..\src\main\AI\EventAI;..\..\src\main\AI\CoreAI;..\..\src\main\World;..\..\src\main\Weather;..\..\src\main\Tools;..\..\src\main\Tickets;..\..\src\main\Texts;..\..\src\main\Spells;..\..\src\main\Skills;..\..\src\main\Server;..\..\src\main\Scripting;..\..\src\main\Reputation;..\..\src\main\Quests;..\..\src\main\Pools;..\..\src\main\PCH;..\..\src\main\OutdoorPvP;..\..\src\main\Movement;..\..\src\main\Miscellaneous;..\..\src\main\Maps;..\..\src\main\Mails;..\..\src\main\Loot;..\..\src\main\Instances;..\..\src\main\Guilds;..\..\src\main\Groups;..\..\src\main\Grids;..\..\src\main\Globals;..\..\src\main\Spells\Auras;..\..\src\main\Server\Protocol\Handlers\Packets;..\..\src\main\Server\Protocol\Handlers\Opcodes;..\..\src\main\Server\Protocol\Handlers;..\..\src\main\Server\Sockets;..\..\src\main\Server\Sessions;..\..\src\main\Server\Logs;..\..\src\main\Server\Protocol;..\..\src\main\Movement\Waypoints;..\..\src\main\Movement\MovementGenerators;..\..\src\main\Grids\Notifiers;..\..\src\main\Grids\Cells;..\..\src\main\Entities\Object\Updates;..\..\src\main\Entities\Item\Container;..\..\src\main\Entities\Vehicle;..\..\src\main\Entities\Unit;..\..\src\main\Entities\Transport;..\..\src\main\Entities\Totem;..\..\src\main\Entities\Player;..\..\src\main\Entities\Pet;..\..\src\main\Entities\Object;..\..\src\main\Entities\Item;..\..\src\main\Entities\GameObject;..\..\src\main\Entities\DynamicObject;..\..\src\main\Entities\Creature;..\..\src\main\Entities\Corpse;..\..\src\main\Events;..\..\src\main\Entities;..\..\src\main\DungeonFinding;..\..\src\main\DataStores;..\..\src\main\Conditions;..\..\src\main\Combat;..\..\src\main\Chat\Commands;..\..\src\main\Chat\Channels;..\..\src\main\Chat;..\..\src\main\Calendar;..\..\src\main\Battlegrounds;..\..\src\main\AuctionHouse\AuctionHouseBot;..\..\src\main\AuctionHouse;..\..\src\main\AI;..\..\src\main\Addons;..\..\src\main\Accounts;..\..\dep;..\..\dep\mysql;..\..\dep\mysql\include;..\..\dep\zlib;..\..\dep\mysql\extra\yassl\include;..\..\src\shared;..\..\src\shared\Collision;..\..\src\shared\Collision\Management;..\..\src\shared\Collision\Maps;..\..\src\shared\Collision\Models;..\..\src\shared\Collision\PCH;..\..\src\shared\Configuration;..\..\src\shared\Cryptography;..\..\src\shared\Cryptography\Authentication;..\..\src\shared\DataStores;..\..\src\shared\Database;..\..\src\shared\Dynamic;..\..\src\shared\Dynamic\LinkedReference;..\..\src\shared\Logging;..\..\src\shared\Packets;..\..\src\shared\Threading;..\..\src\shared\Utilities;..\..\src\scripts;..\..\src\scripts\PCH;..\..\src\server;..\..\dep\acelite;..\..\dep\mysqllite\include;..\..\dep\mysqllite\extra\yassl\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;_SECURE_SCL=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;_CRT_NONSTDC_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_SECURE_SCL=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -216,7 +208,6 @@
       <Culture>0x0409</Culture>
     </ResourceCompile>
     <Lib>
-      <AdditionalDependencies>.\shared__$(Platform)_$(Configuration)\shared.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>.\main_$(Platform)_$(Configuration)\main.lib</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
     </Lib>

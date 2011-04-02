@@ -722,9 +722,9 @@ private:
     }
     inline void _DeleteMemberFromDB(uint32 lowguid) const
     {
-        PreparedStatement* stmt = CharacterDatabase.GetPreparedStatement(CHAR_DEL_GUILD_MEMBER);
+        PreparedStatement* stmt = CharDB.GetPreparedStatement(CHAR_DEL_GUILD_MEMBER);
         stmt->setUInt32(0, lowguid);
-        CharacterDatabase.Execute(stmt);
+        CharDB.Execute(stmt);
     }
 
     // Creates log holders (either when loading or when creating guild)

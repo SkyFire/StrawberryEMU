@@ -469,7 +469,7 @@ ChatCommand * ChatHandler::getCommandTable()
                 added += appendCommandTable(commandTableCache + added, *it);
         }
 
-        QueryResult result = WorldDatabase.Query("SELECT name,security,help FROM command");
+        QueryResult result = WorldDB.Query("SELECT name,security,help FROM command");
         if (result)
         {
             do

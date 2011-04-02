@@ -820,11 +820,11 @@ int WorldSocket::HandleAuthSession (WorldPacket& recvPacket)
 
     // Get the account information from the realmd database
     std::string safe_account = accountName; // Duplicate, else will screw the SHA hash verification below
-    LoginDatabase.escape_string (safe_account);
+    RealmDB.escape_string (safe_account);
     // No SQL injection, username escaped.
 
     QueryResult result =
-          LoginDatabase.PQuery ("SELECT "
+          RealmDB.PQuery ("SELECT "
                                 "id, "                      //0
                                 "sessionkey, "              //1
                                 "last_ip, "                 //2
@@ -894,7 +894,7 @@ int WorldSocket::HandleAuthSession (WorldPacket& recvPacket)
 
     // Checks gmlevel per Realm
     result =
-        LoginDatabase.PQuery ("SELECT "
+        RealmDB.PQuery ("SELECT "
                               "RealmID, "            //0
                               "gmlevel "             //1
                               "FROM account_access "
@@ -912,7 +912,7 @@ int WorldSocket::HandleAuthSession (WorldPacket& recvPacket)
 
     // Re-check account ban (same check as in realmd)
     QueryResult banresult =
-          LoginDatabase.PQuery ("SELECT 1 FROM account_banned WHERE id = %u AND active = 1 "
+          RealmDB.PQuery ("SELECT 1 FROM account_banned WHERE id = %u AND active = 1 "
                                 "UNION "
                                 "SELECT 1 FROM ip_banned WHERE ip = '%s'",
                                 id, GetRemoteAddress().c_str());
@@ -962,9 +962,9 @@ int WorldSocket::HandleAuthSession (WorldPacket& recvPacket)
 
     // Update the last_ip in the database
     // No SQL injection, username escaped.
-    LoginDatabase.escape_string (address);
+    RealmDB.escape_string (address);
 
-    LoginDatabase.PExecute ("UPDATE account "
+    RealmDB.PExecute ("UPDATE account "
                             "SET last_ip = '%s' "
                             "WHERE username = '%s'",
                             address.c_str(),

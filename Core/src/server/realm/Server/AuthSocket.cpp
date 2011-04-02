@@ -285,11 +285,11 @@ void AuthSocket::_SetVSFields(const std::string& rI)
     v_hex = v.AsHexStr();
     s_hex = s.AsHexStr();
 
-    PreparedStatement* stmt = LoginDatabase.GetPreparedStatement(LOGIN_SET_VS);
+    PreparedStatement* stmt = RealmDB.GetPreparedStatement(LOGIN_SET_VS);
     stmt->setString(0, v_hex);
     stmt->setString(1, s_hex);
     stmt->setString(2, _login);
-    LoginDatabase.Execute(stmt);
+    RealmDB.Execute(stmt);
 
     OPENSSL_free((void*)v_hex);
     OPENSSL_free((void*)s_hex);
@@ -350,12 +350,12 @@ bool AuthSocket::_HandleLogonChallenge()
     pkt << (uint8)0x00;
 
     // Verify that this IP is not in the ip_banned table
-    LoginDatabase.Execute(LoginDatabase.GetPreparedStatement(LOGIN_SET_EXPIREDIPBANS));
+    RealmDB.Execute(RealmDB.GetPreparedStatement(LOGIN_SET_EXPIREDIPBANS));
 
     const std::string& ip_address = socket().get_remote_address();
-    PreparedStatement *stmt = LoginDatabase.GetPreparedStatement(LOGIN_GET_IPBANNED);
+    PreparedStatement *stmt = RealmDB.GetPreparedStatement(LOGIN_GET_IPBANNED);
     stmt->setString(0, ip_address);
-    PreparedQueryResult result = LoginDatabase.Query(stmt);
+    PreparedQueryResult result = RealmDB.Query(stmt);
     if (result)
     {
         pkt << (uint8)WOW_FAIL_BANNED;
@@ -365,10 +365,10 @@ bool AuthSocket::_HandleLogonChallenge()
     {
         // Get the account details from the account table
         // No SQL injection (prepared statement)
-        stmt = LoginDatabase.GetPreparedStatement(LOGIN_GET_LOGONCHALLENGE);
+        stmt = RealmDB.GetPreparedStatement(LOGIN_GET_LOGONCHALLENGE);
         stmt->setString(0, _login);
 
-        PreparedQueryResult res2 = LoginDatabase.Query(stmt);
+        PreparedQueryResult res2 = RealmDB.Query(stmt);
         if (res2)
         {
             Field* fields = res2->Fetch();
@@ -395,12 +395,12 @@ bool AuthSocket::_HandleLogonChallenge()
             if (!locked)
             {
                 //set expired bans to inactive
-                LoginDatabase.Execute(LoginDatabase.GetPreparedStatement(LOGIN_SET_EXPIREDACCBANS));
+                RealmDB.Execute(RealmDB.GetPreparedStatement(LOGIN_SET_EXPIREDACCBANS));
 
                 // If the account is banned, reject the logon attempt
-                stmt = LoginDatabase.GetPreparedStatement(LOGIN_GET_ACCBANNED);
+                stmt = RealmDB.GetPreparedStatement(LOGIN_GET_ACCBANNED);
                 stmt->setUInt32(0, fields[1].GetUInt32());
-                PreparedQueryResult banresult = LoginDatabase.Query(stmt);
+                PreparedQueryResult banresult = RealmDB.Query(stmt);
                 if (banresult)
                 {
                     if ((*banresult)[0].GetUInt64() == (*banresult)[1].GetUInt64())
@@ -598,12 +598,12 @@ bool AuthSocket::_HandleLogonProof()
         // No SQL injection (escaped user name) and IP address as received by socket
         const char *K_hex = K.AsHexStr();
 
-        PreparedStatement *stmt = LoginDatabase.GetPreparedStatement(LOGIN_SET_LOGONPROOF);
+        PreparedStatement *stmt = RealmDB.GetPreparedStatement(LOGIN_SET_LOGONPROOF);
         stmt->setString(0, K_hex);
         stmt->setString(1, socket().get_remote_address().c_str());
         stmt->setUInt32(2, GetLocaleByName(_localizationName));
         stmt->setString(3, _login);
-        LoginDatabase.Execute(stmt);
+        RealmDB.Execute(stmt);
 
         OPENSSL_free((void*)K_hex);
 
@@ -646,14 +646,14 @@ bool AuthSocket::_HandleLogonProof()
         if (MaxWrongPassCount > 0)
         {
             //Increment number of failed logins by one and if it reaches the limit temporarily ban that account or IP
-            PreparedStatement *stmt = LoginDatabase.GetPreparedStatement(LOGIN_SET_FAILEDLOGINS);
+            PreparedStatement *stmt = RealmDB.GetPreparedStatement(LOGIN_SET_FAILEDLOGINS);
             stmt->setString(0, _login);
-            LoginDatabase.Execute(stmt);
+            RealmDB.Execute(stmt);
 
-            stmt = LoginDatabase.GetPreparedStatement(LOGIN_GET_FAILEDLOGINS);
+            stmt = RealmDB.GetPreparedStatement(LOGIN_GET_FAILEDLOGINS);
             stmt->setString(0, _login);
 
-            if (PreparedQueryResult loginfail = LoginDatabase.Query(stmt))
+            if (PreparedQueryResult loginfail = RealmDB.Query(stmt))
             {
                 uint32 failed_logins = (*loginfail)[1].GetUInt32();
 
@@ -665,20 +665,20 @@ bool AuthSocket::_HandleLogonProof()
                     if (WrongPassBanType)
                     {
                         uint32 acc_id = (*loginfail)[0].GetUInt32();
-                        stmt = LoginDatabase.GetPreparedStatement(LOGIN_SET_ACCAUTOBANNED);
+                        stmt = RealmDB.GetPreparedStatement(LOGIN_SET_ACCAUTOBANNED);
                         stmt->setUInt32(0, acc_id);
                         stmt->setUInt32(1, WrongPassBanTime);
-                        LoginDatabase.Execute(stmt);
+                        RealmDB.Execute(stmt);
 
                         sLog->outBasic("[AuthChallenge] account %s got banned for '%u' seconds because it failed to authenticate '%u' times",
                             _login.c_str(), WrongPassBanTime, failed_logins);
                     }
                     else
                     {
-                        stmt = LoginDatabase.GetPreparedStatement(LOGIN_SET_IPAUTOBANNED);
+                        stmt = RealmDB.GetPreparedStatement(LOGIN_SET_IPAUTOBANNED);
                         stmt->setString(0, socket().get_remote_address());
                         stmt->setUInt32(1, WrongPassBanTime);
-                        LoginDatabase.Execute(stmt);
+                        RealmDB.Execute(stmt);
 
                         sLog->outBasic("[AuthChallenge] IP %s got banned for '%u' seconds because account %s failed to authenticate '%u' times", socket().get_remote_address().c_str(), WrongPassBanTime, _login.c_str(), failed_logins);
                     }
@@ -725,9 +725,9 @@ bool AuthSocket::_HandleReconnectChallenge()
 
     _login = (const char*)ch->I;
 
-    PreparedStatement* stmt = LoginDatabase.GetPreparedStatement(LOGIN_GET_SESSIONKEY);
+    PreparedStatement* stmt = RealmDB.GetPreparedStatement(LOGIN_GET_SESSIONKEY);
     stmt->setString(0, _login);
-    PreparedQueryResult result = LoginDatabase.Query(stmt);
+    PreparedQueryResult result = RealmDB.Query(stmt);
 
     // Stop if the account is not found
     if (!result)
@@ -809,9 +809,9 @@ bool AuthSocket::_HandleRealmList()
 
     // Get the user id (else close the connection)
     // No SQL injection (prepared statement)
-    PreparedStatement* stmt = LoginDatabase.GetPreparedStatement(LOGIN_GET_ACCIDBYNAME);
+    PreparedStatement* stmt = RealmDB.GetPreparedStatement(LOGIN_GET_ACCIDBYNAME);
     stmt->setString(0, _login);
-    PreparedQueryResult result = LoginDatabase.Query(stmt);
+    PreparedQueryResult result = RealmDB.Query(stmt);
     if (!result)
     {
         sLog->outError("[ERROR] user %s tried to login and we cannot find him in the database.", _login.c_str());
@@ -840,10 +840,10 @@ bool AuthSocket::_HandleRealmList()
         uint8 AmountOfCharacters;
 
         // No SQL injection. id of realm is controlled by the database.
-        stmt = LoginDatabase.GetPreparedStatement(LOGIN_GET_NUMCHARSONREALM);
+        stmt = RealmDB.GetPreparedStatement(LOGIN_GET_NUMCHARSONREALM);
         stmt->setUInt32(0, i->second.m_ID);
         stmt->setUInt32(1, id);
-        result = LoginDatabase.Query(stmt);
+        result = RealmDB.Query(stmt);
         if (result)
             AmountOfCharacters = (*result)[0].GetUInt8();
         else

@@ -226,8 +226,8 @@ bool ChatHandler::HandleAddItemCommand(const char *args)
         if (citemName && citemName[0])
         {
             std::string itemName = citemName+1;
-            WorldDatabase.escape_string(itemName);
-            QueryResult result = WorldDatabase.PQuery("SELECT entry FROM item_template WHERE name = '%s'", itemName.c_str());
+            WorldDB.escape_string(itemName);
+            QueryResult result = WorldDB.PQuery("SELECT entry FROM item_template WHERE name = '%s'", itemName.c_str());
             if (!result)
             {
                 PSendSysMessage(LANG_COMMAND_COULDNOTFIND, citemName+1);
@@ -422,11 +422,11 @@ bool ChatHandler::HandleListItemCommand(const char *args)
 
     // inventory case
     uint32 inv_count = 0;
-    result=CharacterDatabase.PQuery("SELECT COUNT(item_template) FROM character_inventory WHERE item_template='%u'",item_id);
+    result=CharDB.PQuery("SELECT COUNT(item_template) FROM character_inventory WHERE item_template='%u'",item_id);
     if (result)
         inv_count = (*result)[0].GetUInt32();
 
-    result=CharacterDatabase.PQuery(
+    result=CharDB.PQuery(
     //          0        1             2             3        4                  5
         "SELECT ci.item, cibag.slot AS bag, ci.slot, ci.guid, characters.account,characters.name "
         "FROM character_inventory AS ci LEFT JOIN character_inventory AS cibag ON (cibag.item=ci.bag),characters "
@@ -469,13 +469,13 @@ bool ChatHandler::HandleListItemCommand(const char *args)
 
     // mail case
     uint32 mail_count = 0;
-    result=CharacterDatabase.PQuery("SELECT COUNT(item_template) FROM mail_items WHERE item_template='%u'", item_id);
+    result=CharDB.PQuery("SELECT COUNT(item_template) FROM mail_items WHERE item_template='%u'", item_id);
     if (result)
         mail_count = (*result)[0].GetUInt32();
 
     if (count > 0)
     {
-        result=CharacterDatabase.PQuery(
+        result=CharDB.PQuery(
         //          0                     1            2              3               4            5               6
             "SELECT mail_items.item_guid, mail.sender, mail.receiver, char_s.account, char_s.name, char_r.account, char_r.name "
             "FROM mail,mail_items,characters as char_s,characters as char_r "
@@ -514,13 +514,13 @@ bool ChatHandler::HandleListItemCommand(const char *args)
 
     // auction case
     uint32 auc_count = 0;
-    result=CharacterDatabase.PQuery("SELECT COUNT(item_template) FROM auctionhouse WHERE item_template='%u'",item_id);
+    result=CharDB.PQuery("SELECT COUNT(item_template) FROM auctionhouse WHERE item_template='%u'",item_id);
     if (result)
         auc_count = (*result)[0].GetUInt32();
 
     if (count > 0)
     {
-        result=CharacterDatabase.PQuery(
+        result=CharDB.PQuery(
         //           0                      1                       2                   3
             "SELECT  auctionhouse.itemguid, auctionhouse.itemowner, characters.account, characters.name "
             "FROM auctionhouse,characters WHERE auctionhouse.item_template='%u' AND characters.guid = auctionhouse.itemowner LIMIT %u",
@@ -547,11 +547,11 @@ bool ChatHandler::HandleListItemCommand(const char *args)
 
     // guild bank case
     uint32 guild_count = 0;
-    result=CharacterDatabase.PQuery("SELECT COUNT(item_entry) FROM guild_bank_item WHERE item_entry='%u'",item_id);
+    result=CharDB.PQuery("SELECT COUNT(item_entry) FROM guild_bank_item WHERE item_entry='%u'",item_id);
     if (result)
         guild_count = (*result)[0].GetUInt32();
 
-    result=CharacterDatabase.PQuery(
+    result=CharDB.PQuery(
         //      0             1           2
         "SELECT gi.item_guid, gi.guildid, guild.name "
         "FROM guild_bank_item AS gi, guild WHERE gi.item_entry='%u' AND gi.guildid = guild.guildid LIMIT %u ",
@@ -626,18 +626,18 @@ bool ChatHandler::HandleListObjectCommand(const char *args)
     QueryResult result;
 
     uint32 obj_count = 0;
-    result=WorldDatabase.PQuery("SELECT COUNT(guid) FROM gameobject WHERE id='%u'",go_id);
+    result=WorldDB.PQuery("SELECT COUNT(guid) FROM gameobject WHERE id='%u'",go_id);
     if (result)
         obj_count = (*result)[0].GetUInt32();
 
     if (m_session)
     {
         Player* pl = m_session->GetPlayer();
-        result = WorldDatabase.PQuery("SELECT guid, position_x, position_y, position_z, map, id, (POW(position_x - '%f', 2) + POW(position_y - '%f', 2) + POW(position_z - '%f', 2)) AS order_ FROM gameobject WHERE id = '%u' ORDER BY order_ ASC LIMIT %u",
+        result = WorldDB.PQuery("SELECT guid, position_x, position_y, position_z, map, id, (POW(position_x - '%f', 2) + POW(position_y - '%f', 2) + POW(position_z - '%f', 2)) AS order_ FROM gameobject WHERE id = '%u' ORDER BY order_ ASC LIMIT %u",
             pl->GetPositionX(), pl->GetPositionY(), pl->GetPositionZ(),go_id,uint32(count));
     }
     else
-        result = WorldDatabase.PQuery("SELECT guid, position_x, position_y, position_z, map, id FROM gameobject WHERE id = '%u' LIMIT %u",
+        result = WorldDB.PQuery("SELECT guid, position_x, position_y, position_z, map, id FROM gameobject WHERE id = '%u' LIMIT %u",
             go_id,uint32(count));
 
     if (result)
@@ -698,18 +698,18 @@ bool ChatHandler::HandleListCreatureCommand(const char *args)
     QueryResult result;
 
     uint32 cr_count = 0;
-    result=WorldDatabase.PQuery("SELECT COUNT(guid) FROM creature WHERE id='%u'",cr_id);
+    result=WorldDB.PQuery("SELECT COUNT(guid) FROM creature WHERE id='%u'",cr_id);
     if (result)
         cr_count = (*result)[0].GetUInt32();
 
     if (m_session)
     {
         Player* pl = m_session->GetPlayer();
-        result = WorldDatabase.PQuery("SELECT guid, position_x, position_y, position_z, map, (POW(position_x - '%f', 2) + POW(position_y - '%f', 2) + POW(position_z - '%f', 2)) AS order_ FROM creature WHERE id = '%u' ORDER BY order_ ASC LIMIT %u",
+        result = WorldDB.PQuery("SELECT guid, position_x, position_y, position_z, map, (POW(position_x - '%f', 2) + POW(position_y - '%f', 2) + POW(position_z - '%f', 2)) AS order_ FROM creature WHERE id = '%u' ORDER BY order_ ASC LIMIT %u",
             pl->GetPositionX(), pl->GetPositionY(), pl->GetPositionZ(), cr_id,uint32(count));
     }
     else
-        result = WorldDatabase.PQuery("SELECT guid, position_x, position_y, position_z, map FROM creature WHERE id = '%u' LIMIT %u",
+        result = WorldDB.PQuery("SELECT guid, position_x, position_y, position_z, map FROM creature WHERE id = '%u' LIMIT %u",
             cr_id,uint32(count));
 
     if (result)
@@ -2205,7 +2205,7 @@ void ChatHandler::HandleCharacterLevel(Player* player, uint64 player_guid, uint3
     else
     {
         // update level and XP at level, all other will be updated at loading
-        CharacterDatabase.PExecute("UPDATE characters SET level = '%u', xp = 0 WHERE guid = '%u'", newlevel, GUID_LOPART(player_guid));
+        CharDB.PExecute("UPDATE characters SET level = '%u', xp = 0 WHERE guid = '%u'", newlevel, GUID_LOPART(player_guid));
     }
 }
 
@@ -2605,7 +2605,7 @@ bool ChatHandler::HandleResetSpellsCommand(const char * args)
     }
     else
     {
-        CharacterDatabase.PExecute("UPDATE characters SET at_login = at_login | '%u' WHERE guid = '%u'",uint32(AT_LOGIN_RESET_SPELLS), GUID_LOPART(target_guid));
+        CharDB.PExecute("UPDATE characters SET at_login = at_login | '%u' WHERE guid = '%u'",uint32(AT_LOGIN_RESET_SPELLS), GUID_LOPART(target_guid));
         PSendSysMessage(LANG_RESET_SPELLS_OFFLINE,target_name.c_str());
     }
 
@@ -2658,7 +2658,7 @@ bool ChatHandler::HandleResetTalentsCommand(const char * args)
     else if (target_guid)
     {
         uint32 at_flags = AT_LOGIN_NONE | AT_LOGIN_RESET_PET_TALENTS;
-        CharacterDatabase.PExecute("UPDATE characters SET at_login = at_login | '%u' WHERE guid = '%u'",at_flags, GUID_LOPART(target_guid));
+        CharDB.PExecute("UPDATE characters SET at_login = at_login | '%u' WHERE guid = '%u'",at_flags, GUID_LOPART(target_guid));
         std::string nameLink = playerLink(target_name);
         PSendSysMessage(LANG_RESET_TALENTS_OFFLINE,nameLink.c_str());
         return true;
@@ -2700,7 +2700,7 @@ bool ChatHandler::HandleResetAllCommand(const char * args)
         return false;
     }
 
-    CharacterDatabase.PExecute("UPDATE characters SET at_login = at_login | '%u' WHERE (at_login & '%u') = '0'",atLogin,atLogin);
+    CharDB.PExecute("UPDATE characters SET at_login = at_login | '%u' WHERE (at_login & '%u') = '0'",atLogin,atLogin);
 
     ACE_GUARD_RETURN(ACE_Thread_Mutex, guard, *HashMapHolder<Player>::GetLock(), true);
     HashMapHolder<Player>::MapType const& plist = sObjectAccessor->GetPlayers();
@@ -3117,9 +3117,9 @@ bool ChatHandler::HandleBanInfoCharacterCommand(const char *args)
 
     if (!target)
     {
-        PreparedStatement* stmt = CharacterDatabase.GetPreparedStatement(CHAR_GET_GUID_BY_NAME);
+        PreparedStatement* stmt = CharDB.GetPreparedStatement(CHAR_GET_GUID_BY_NAME);
         stmt->setString(0, name);
-        PreparedQueryResult resultCharacter = CharacterDatabase.Query(stmt);
+        PreparedQueryResult resultCharacter = CharDB.Query(stmt);
 
         if (!resultCharacter)
         {
@@ -3132,9 +3132,9 @@ bool ChatHandler::HandleBanInfoCharacterCommand(const char *args)
     else
         target_guid = target->GetGUIDLow();
 
-    PreparedStatement* stmt = CharacterDatabase.GetPreparedStatement(CHAR_GET_BANINFO);
+    PreparedStatement* stmt = CharDB.GetPreparedStatement(CHAR_GET_BANINFO);
     stmt->setUInt32(0, target_guid);
-    PreparedQueryResult result = CharacterDatabase.Query(stmt);
+    PreparedQueryResult result = CharDB.Query(stmt);
     if (!result)
         return true;
 
@@ -3158,7 +3158,7 @@ bool ChatHandler::HandleBanInfoCharacterCommand(const char *args)
 
 bool ChatHandler::HandleBanInfoHelper(uint32 accountid, char const* accountname)
 {
-    QueryResult result = LoginDatabase.PQuery("SELECT FROM_UNIXTIME(bandate), unbandate-bandate, active, unbandate,banreason,bannedby FROM account_banned WHERE id = '%u' ORDER BY bandate ASC",accountid);
+    QueryResult result = RealmDB.PQuery("SELECT FROM_UNIXTIME(bandate), unbandate-bandate, active, unbandate,banreason,bannedby FROM account_banned WHERE id = '%u' ORDER BY bandate ASC",accountid);
     if (!result)
     {
         PSendSysMessage(LANG_BANINFO_NOACCOUNTBAN, accountname);
@@ -3197,8 +3197,8 @@ bool ChatHandler::HandleBanInfoIPCommand(const char *args)
 
     std::string IP = cIP;
 
-    LoginDatabase.escape_string(IP);
-    QueryResult result = LoginDatabase.PQuery("SELECT ip, FROM_UNIXTIME(bandate), FROM_UNIXTIME(unbandate), unbandate-UNIX_TIMESTAMP(), banreason,bannedby,unbandate-bandate FROM ip_banned WHERE ip = '%s'",IP.c_str());
+    RealmDB.escape_string(IP);
+    QueryResult result = RealmDB.PQuery("SELECT ip, FROM_UNIXTIME(bandate), FROM_UNIXTIME(unbandate), unbandate-UNIX_TIMESTAMP(), banreason,bannedby,unbandate-bandate FROM ip_banned WHERE ip = '%s'",IP.c_str());
     if (!result)
     {
         PSendSysMessage(LANG_BANINFO_NOIP);
@@ -3224,9 +3224,9 @@ bool ChatHandler::HandleBanListCharacterCommand(const char *args)
         return false;
 
     std::string filter(cFilter);
-    PreparedStatement* stmt = CharacterDatabase.GetPreparedStatement(CHAR_GET_GUID_BY_NAME_FILTER);
+    PreparedStatement* stmt = CharDB.GetPreparedStatement(CHAR_GET_GUID_BY_NAME_FILTER);
     stmt->setString(0, filter.c_str());
-    PreparedQueryResult result = CharacterDatabase.Query(stmt);
+    PreparedQueryResult result = CharDB.Query(stmt);
     if (!result)
     {
         PSendSysMessage(LANG_BANLIST_NOCHARACTER);
@@ -3241,9 +3241,9 @@ bool ChatHandler::HandleBanListCharacterCommand(const char *args)
         do
         {
             Field* fields = result->Fetch();
-            PreparedStatement* stmt2 = CharacterDatabase.GetPreparedStatement(CHAR_GET_BANNED_NAME);
+            PreparedStatement* stmt2 = CharDB.GetPreparedStatement(CHAR_GET_BANNED_NAME);
             stmt2->setUInt32(0, fields[0].GetUInt32());
-            PreparedQueryResult banresult = CharacterDatabase.Query(stmt2);
+            PreparedQueryResult banresult = CharDB.Query(stmt2);
             if (banresult)
                 PSendSysMessage("%s", (*banresult)[0].GetCString());
         }
@@ -3263,9 +3263,9 @@ bool ChatHandler::HandleBanListCharacterCommand(const char *args)
 
             std::string char_name = fields[1].GetString();
 
-            PreparedStatement* stmt2 = CharacterDatabase.GetPreparedStatement(CHAR_GET_BANINFO_LIST);
+            PreparedStatement* stmt2 = CharDB.GetPreparedStatement(CHAR_GET_BANINFO_LIST);
             stmt2->setUInt32(0, fields[0].GetUInt32());
-            PreparedQueryResult banInfo = CharacterDatabase.Query(stmt2);
+            PreparedQueryResult banInfo = CharDB.Query(stmt2);
             if (banInfo)
             {
                 Field* banFields = banInfo->Fetch();
@@ -3302,22 +3302,22 @@ bool ChatHandler::HandleBanListCharacterCommand(const char *args)
 
 bool ChatHandler::HandleBanListAccountCommand(const char *args)
 {
-    LoginDatabase.Execute("DELETE FROM ip_banned WHERE unbandate <= UNIX_TIMESTAMP() AND unbandate<>bandate");
+    RealmDB.Execute("DELETE FROM ip_banned WHERE unbandate <= UNIX_TIMESTAMP() AND unbandate<>bandate");
 
     char* cFilter = strtok((char*)args, " ");
     std::string filter = cFilter ? cFilter : "";
-    LoginDatabase.escape_string(filter);
+    RealmDB.escape_string(filter);
 
     QueryResult result;
 
     if (filter.empty())
     {
-        result = LoginDatabase.Query("SELECT account.id, username FROM account, account_banned"
+        result = RealmDB.Query("SELECT account.id, username FROM account, account_banned"
             " WHERE account.id = account_banned.id AND active = 1 GROUP BY account.id");
     }
     else
     {
-        result = LoginDatabase.PQuery("SELECT account.id, username FROM account, account_banned"
+        result = RealmDB.PQuery("SELECT account.id, username FROM account, account_banned"
             " WHERE account.id = account_banned.id AND active = 1 AND username "_LIKE_" "_CONCAT3_("'%%'","'%s'","'%%'")" GROUP BY account.id",
             filter.c_str());
     }
@@ -3343,7 +3343,7 @@ bool ChatHandler::HandleBanListHelper(QueryResult result)
             Field* fields = result->Fetch();
             uint32 accountid = fields[0].GetUInt32();
 
-            QueryResult banresult = LoginDatabase.PQuery("SELECT account.username FROM account,account_banned WHERE account_banned.id='%u' AND account_banned.id=account.id",accountid);
+            QueryResult banresult = RealmDB.PQuery("SELECT account.username FROM account,account_banned WHERE account_banned.id='%u' AND account_banned.id=account.id",accountid);
             if (banresult)
             {
                 Field* fields2 = banresult->Fetch();
@@ -3373,7 +3373,7 @@ bool ChatHandler::HandleBanListHelper(QueryResult result)
                 sAccountMgr->GetName (account_id,account_name);
 
             // No SQL injection. id is uint32.
-            QueryResult banInfo = LoginDatabase.PQuery("SELECT bandate,unbandate,bannedby,banreason FROM account_banned WHERE id = %u ORDER BY unbandate", account_id);
+            QueryResult banInfo = RealmDB.PQuery("SELECT bandate,unbandate,bannedby,banreason FROM account_banned WHERE id = %u ORDER BY unbandate", account_id);
             if (banInfo)
             {
                 Field *fields2 = banInfo->Fetch();
@@ -3407,23 +3407,23 @@ bool ChatHandler::HandleBanListHelper(QueryResult result)
 
 bool ChatHandler::HandleBanListIPCommand(const char *args)
 {
-    LoginDatabase.Execute("DELETE FROM ip_banned WHERE unbandate <= UNIX_TIMESTAMP() AND unbandate<>bandate");
+    RealmDB.Execute("DELETE FROM ip_banned WHERE unbandate <= UNIX_TIMESTAMP() AND unbandate<>bandate");
 
     char* cFilter = strtok((char*)args, " ");
     std::string filter = cFilter ? cFilter : "";
-    LoginDatabase.escape_string(filter);
+    RealmDB.escape_string(filter);
 
     QueryResult result;
 
     if (filter.empty())
     {
-        result = LoginDatabase.Query ("SELECT ip,bandate,unbandate,bannedby,banreason FROM ip_banned"
+        result = RealmDB.Query ("SELECT ip,bandate,unbandate,bannedby,banreason FROM ip_banned"
             " WHERE (bandate=unbandate OR unbandate>UNIX_TIMESTAMP())"
             " ORDER BY unbandate");
     }
     else
     {
-        result = LoginDatabase.PQuery("SELECT ip,bandate,unbandate,bannedby,banreason FROM ip_banned"
+        result = RealmDB.PQuery("SELECT ip,bandate,unbandate,bannedby,banreason FROM ip_banned"
             " WHERE (bandate=unbandate OR unbandate>UNIX_TIMESTAMP()) AND ip "_LIKE_" "_CONCAT3_("'%%'","'%s'","'%%'")
             " ORDER BY unbandate",filter.c_str());
     }
@@ -4301,7 +4301,7 @@ bool ChatHandler::HandleSendItemsCommand(const char *args)
     // fill mail
     MailDraft draft(subject, text);
 
-    SQLTransaction trans = CharacterDatabase.BeginTransaction();
+    SQLTransaction trans = CharDB.BeginTransaction();
 
     for (ItemPairs::const_iterator itr = items.begin(); itr != items.end(); ++itr)
     {
@@ -4313,7 +4313,7 @@ bool ChatHandler::HandleSendItemsCommand(const char *args)
     }
 
     draft.SendMailTo(trans, MailReceiver(receiver,GUID_LOPART(receiver_guid)), sender);
-    CharacterDatabase.CommitTransaction(trans);
+    CharDB.CommitTransaction(trans);
 
     std::string nameLink = playerLink(receiver_name);
     PSendSysMessage(LANG_MAIL_SENT, nameLink.c_str());
@@ -4359,13 +4359,13 @@ bool ChatHandler::HandleSendMoneyCommand(const char *args)
     // from console show not existed sender
     MailSender sender(MAIL_NORMAL,m_session ? m_session->GetPlayer()->GetGUIDLow() : 0, MAIL_STATIONERY_GM);
 
-    SQLTransaction trans = CharacterDatabase.BeginTransaction();
+    SQLTransaction trans = CharDB.BeginTransaction();
 
     MailDraft(subject, text)
         .AddMoney(money)
         .SendMailTo(trans, MailReceiver(receiver,GUID_LOPART(receiver_guid)),sender);
 
-    CharacterDatabase.CommitTransaction(trans);
+    CharDB.CommitTransaction(trans);
 
     std::string nameLink = playerLink(receiver_name);
     PSendSysMessage(LANG_MAIL_SENT, nameLink.c_str());
@@ -4429,14 +4429,14 @@ bool ChatHandler::HandleChannelSetOwnership(const char *args)
     {
         if(chn)
             chn->SetOwnership(true);
-        CharacterDatabase.PExecute("UPDATE channels SET m_ownership = 1 WHERE m_name LIKE '%s'", channel);
+        CharDB.PExecute("UPDATE channels SET m_ownership = 1 WHERE m_name LIKE '%s'", channel);
         PSendSysMessage(LANG_CHANNEL_ENABLE_OWNERSHIP, channel);
     }
     else if (strcmp(argstr, "off") == 0)
     {
         if(chn)
             chn->SetOwnership(false);
-        CharacterDatabase.PExecute("UPDATE channels SET m_ownership = 0 WHERE m_name LIKE '%s'", channel);
+        CharDB.PExecute("UPDATE channels SET m_ownership = 0 WHERE m_name LIKE '%s'", channel);
         PSendSysMessage(LANG_CHANNEL_DISABLE_OWNERSHIP, channel);
     }
     else
@@ -4579,7 +4579,7 @@ bool ChatHandler::HandleUnFreezeCommand(const char *args)
         if (TargetName)
         {
             //check for offline players
-            QueryResult result = CharacterDatabase.PQuery("SELECT characters.guid FROM characters WHERE characters.name = '%s'",name.c_str());
+            QueryResult result = CharDB.PQuery("SELECT characters.guid FROM characters WHERE characters.name = '%s'",name.c_str());
             if (!result)
             {
                 SendSysMessage(LANG_COMMAND_FREEZE_WRONG);
@@ -4589,7 +4589,7 @@ bool ChatHandler::HandleUnFreezeCommand(const char *args)
             Field *fields=result->Fetch();
             uint64 pguid = fields[0].GetUInt64();
 
-            CharacterDatabase.PQuery("DELETE FROM character_aura WHERE character_aura.spell = 9454 AND character_aura.guid = '%u'",pguid);
+            CharDB.PQuery("DELETE FROM character_aura WHERE character_aura.spell = 9454 AND character_aura.guid = '%u'",pguid);
             PSendSysMessage(LANG_COMMAND_UNFREEZE,name.c_str());
             return true;
         }
@@ -4606,7 +4606,7 @@ bool ChatHandler::HandleUnFreezeCommand(const char *args)
 bool ChatHandler::HandleListFreezeCommand(const char * /*args*/)
 {
     //Get names from DB
-    QueryResult result = CharacterDatabase.Query("SELECT characters.name FROM characters LEFT JOIN character_aura ON (characters.guid = character_aura.guid) WHERE character_aura.spell = 9454");
+    QueryResult result = CharDB.Query("SELECT characters.name FROM characters LEFT JOIN character_aura ON (characters.guid = character_aura.guid) WHERE character_aura.spell = 9454");
     if (!result)
     {
         SendSysMessage(LANG_COMMAND_NO_FROZEN_PLAYERS);

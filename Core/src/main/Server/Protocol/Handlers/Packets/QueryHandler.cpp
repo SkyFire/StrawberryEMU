@@ -62,7 +62,7 @@ void WorldSession::SendNameQueryOpcode(Player *p)
 void WorldSession::SendNameQueryOpcodeFromDB(uint64 guid)
 {
     QueryResultFuture lFutureResult =
-        CharacterDatabase.AsyncPQuery(
+        CharDB.AsyncPQuery(
             !sWorld->getBoolConfig(CONFIG_DECLINED_NAMES_USED) ?
         //   ------- Query Without Declined Names --------
         //          0     1     2     3       4
@@ -80,7 +80,7 @@ void WorldSession::SendNameQueryOpcodeFromDB(uint64 guid)
 
     m_nameQueryCallbacks.insert(lFutureResult);
 
-// CharacterDatabase.AsyncPQuery(&WorldSession::SendNameQueryOpcodeFromDBCallBack, GetAccountId(),
+// CharDB.AsyncPQuery(&WorldSession::SendNameQueryOpcodeFromDBCallBack, GetAccountId(),
 }
 
 void WorldSession::SendNameQueryOpcodeFromDBCallBack(QueryResult result)

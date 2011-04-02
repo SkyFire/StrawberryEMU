@@ -82,7 +82,7 @@ public:
         }
 
         // No SQL injection
-        LoginDatabase.PExecute("UPDATE account SET expansion = '%d' WHERE id = '%u'", expansion, account_id);
+        RealmDB.PExecute("UPDATE account SET expansion = '%d' WHERE id = '%u'", expansion, account_id);
         handler->PSendSysMessage(LANG_ACCOUNT_ADDON, expansion);
         return true;
     }
@@ -191,7 +191,7 @@ public:
     static bool HandleAccountOnlineListCommand(ChatHandler* handler, const char* /*args*/)
     {
         ///- Get the list of accounts ID logged to the realm
-        QueryResult resultDB = CharacterDatabase.Query("SELECT name,account,map,zone FROM characters WHERE online > 0");
+        QueryResult resultDB = CharDB.Query("SELECT name,account,map,zone FROM characters WHERE online > 0");
         if (!resultDB)
         {
             handler->SendSysMessage(LANG_ACCOUNT_LIST_EMPTY);
@@ -213,7 +213,7 @@ public:
             ///- Get the username, last IP and GM level of each account
             // No SQL injection. account is uint32.
             QueryResult resultLogin =
-                LoginDatabase.PQuery("SELECT a.username, a.last_ip, aa.gmlevel, a.expansion "
+                RealmDB.PQuery("SELECT a.username, a.last_ip, aa.gmlevel, a.expansion "
                 "FROM account a "
                 "LEFT JOIN account_access aa "
                 "ON (a.id = aa.id) "
@@ -245,14 +245,14 @@ public:
         std::string argstr = (char*)args;
         if (argstr == "on")
         {
-            LoginDatabase.PExecute("UPDATE account SET locked = '1' WHERE id = '%d'",handler->GetSession()->GetAccountId());
+            RealmDB.PExecute("UPDATE account SET locked = '1' WHERE id = '%d'",handler->GetSession()->GetAccountId());
             handler->PSendSysMessage(LANG_COMMAND_ACCLOCKLOCKED);
             return true;
         }
 
         if (argstr == "off")
         {
-            LoginDatabase.PExecute("UPDATE account SET locked = '0' WHERE id = '%d'",handler->GetSession()->GetAccountId());
+            RealmDB.PExecute("UPDATE account SET locked = '0' WHERE id = '%d'",handler->GetSession()->GetAccountId());
             handler->PSendSysMessage(LANG_COMMAND_ACCLOCKUNLOCKED);
             return true;
         }
@@ -381,7 +381,7 @@ public:
             return false;
 
         // No SQL injection
-        LoginDatabase.PExecute("UPDATE account SET expansion = '%d' WHERE id = '%u'",expansion,account_id);
+        RealmDB.PExecute("UPDATE account SET expansion = '%d' WHERE id = '%u'",expansion,account_id);
         handler->PSendSysMessage(LANG_ACCOUNT_SETADDON,account_name.c_str(),account_id,expansion);
         return true;
     }
@@ -454,7 +454,7 @@ public:
         // Check and abort if the target gm has a higher rank on one of the realms and the new realm is -1
         if (gmRealmID == -1)
         {
-            QueryResult result = LoginDatabase.PQuery("SELECT * FROM account_access WHERE id = '%u' AND gmlevel > '%d'", targetAccountId, gm);
+            QueryResult result = RealmDB.PQuery("SELECT * FROM account_access WHERE id = '%u' AND gmlevel > '%d'", targetAccountId, gm);
             if (result)
             {
                 handler->SendSysMessage(LANG_YOURS_SECURITY_IS_LOW);
@@ -473,12 +473,12 @@ public:
 
         // If gmRealmID is -1, delete all values for the account id, else, insert values for the specific realmID
         if (gmRealmID == -1)
-            LoginDatabase.PExecute("DELETE FROM account_access WHERE id = '%u'", targetAccountId);
+            RealmDB.PExecute("DELETE FROM account_access WHERE id = '%u'", targetAccountId);
         else
-            LoginDatabase.PExecute("DELETE FROM account_access WHERE id = '%u' AND (RealmID = '%d' OR RealmID = '-1')", targetAccountId, realmID);
+            RealmDB.PExecute("DELETE FROM account_access WHERE id = '%u' AND (RealmID = '%d' OR RealmID = '-1')", targetAccountId, realmID);
 
         if (gm != 0)
-            LoginDatabase.PExecute("INSERT INTO account_access VALUES ('%u','%d','%d')", targetAccountId, gm, realmID);
+            RealmDB.PExecute("INSERT INTO account_access VALUES ('%u','%d','%d')", targetAccountId, gm, realmID);
         handler->PSendSysMessage(LANG_YOU_CHANGE_SECURITY, targetAccountName.c_str(), gm);
         return true;
     }

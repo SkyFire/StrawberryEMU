@@ -81,7 +81,7 @@ void LFGMgr::LoadRewards()
     m_RewardMap.clear();
 
     // ORDER BY is very important for GetRandomDungeonReward!
-    QueryResult result = WorldDatabase.Query("SELECT dungeonId, maxLevel, firstQuestId, firstMoneyVar, firstXPVar, otherQuestId, otherMoneyVar, otherXPVar FROM lfg_dungeon_rewards ORDER BY dungeonId, maxLevel ASC");
+    QueryResult result = WorldDB.Query("SELECT dungeonId, maxLevel, firstQuestId, firstMoneyVar, firstXPVar, otherQuestId, otherMoneyVar, otherXPVar FROM lfg_dungeon_rewards ORDER BY dungeonId, maxLevel ASC");
 
     if (!result)
     {

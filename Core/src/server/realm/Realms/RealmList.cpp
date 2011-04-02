@@ -73,8 +73,8 @@ void RealmList::UpdateRealms(bool init)
 {
     sLog->outDetail("Updating Realm List...");
 
-    PreparedStatement *stmt = LoginDatabase.GetPreparedStatement(LOGIN_GET_REALMLIST);
-    PreparedQueryResult result = LoginDatabase.Query(stmt);
+    PreparedStatement *stmt = RealmDB.GetPreparedStatement(LOGIN_GET_REALMLIST);
+    PreparedQueryResult result = RealmDB.Query(stmt);
 
     // Circle through results and add them to the realm map
     if (result)

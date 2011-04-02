@@ -770,8 +770,7 @@ Map::CreatureRelocation(Creature *creature, float x, float y, float z, float ang
     if (old_cell.DiffCell(new_cell) || old_cell.DiffGrid(new_cell))
     {
         #ifdef STRAWBERRY_DEBUG
-        if ((sLog->getLogFilter() & LOG_FILTER_CREATURE_MOVES) == 0)
-            sLog->outDebug("Creature (GUID: %u Entry: %u) added to moving list from grid[%u,%u]cell[%u,%u] to grid[%u,%u]cell[%u,%u].", creature->GetGUIDLow(), creature->GetEntry(), old_cell.GridX(), old_cell.GridY(), old_cell.CellX(), old_cell.CellY(), new_cell.GridX(), new_cell.GridY(), new_cell.CellX(), new_cell.CellY());
+            sLog->outDebug(LOG_FILTER_MAPS, "Creature (GUID: %u Entry: %u) added to moving list from grid[%u,%u]cell[%u,%u] to grid[%u,%u]cell[%u,%u].", creature->GetGUIDLow(), creature->GetEntry(), old_cell.GridX(), old_cell.GridY(), old_cell.CellX(), old_cell.CellY(), new_cell.GridX(), new_cell.GridY(), new_cell.CellX(), new_cell.CellY());
         #endif
         AddCreatureToMoveList(creature, x, y, z, ang);
         // in diffcell/diffgrid case notifiers called at finishing move creature in Map::MoveAllCreaturesInMoveList
@@ -823,8 +822,7 @@ void Map::MoveAllCreaturesInMoveList()
             {
                 // ... or unload (if respawn grid also not loaded)
                 #ifdef STRAWBERRY_DEBUG
-                if ((sLog->getLogFilter() & LOG_FILTER_CREATURE_MOVES) == 0)
-                    sLog->outDebug("Creature (GUID: %u Entry: %u) cannot be move to unloaded respawn grid.",c->GetGUIDLow(),c->GetEntry());
+                    sLog->outDebug(LOG_FILTER_MAPS, "Creature (GUID: %u Entry: %u) cannot be move to unloaded respawn grid.",c->GetGUIDLow(),c->GetEntry());
                 #endif
                 AddObjectToRemoveList(c);
             }
@@ -841,8 +839,7 @@ bool Map::CreatureCellRelocation(Creature *c, Cell new_cell)
         if (old_cell.DiffCell(new_cell))
         {
             #ifdef STRAWBERRY_DEBUG
-            if ((sLog->getLogFilter() & LOG_FILTER_CREATURE_MOVES) == 0)
-                sLog->outDebug("Creature (GUID: %u Entry: %u) moved in grid[%u,%u] from cell[%u,%u] to cell[%u,%u].", c->GetGUIDLow(), c->GetEntry(), old_cell.GridX(), old_cell.GridY(), old_cell.CellX(), old_cell.CellY(), new_cell.CellX(), new_cell.CellY());
+                sLog->outDebug(LOG_FILTER_MAPS, "Creature (GUID: %u Entry: %u) moved in grid[%u,%u] from cell[%u,%u] to cell[%u,%u].", c->GetGUIDLow(), c->GetEntry(), old_cell.GridX(), old_cell.GridY(), old_cell.CellX(), old_cell.CellY(), new_cell.CellX(), new_cell.CellY());
             #endif
 
             RemoveFromGrid(c,getNGrid(old_cell.GridX(), old_cell.GridY()),old_cell);
@@ -851,8 +848,7 @@ bool Map::CreatureCellRelocation(Creature *c, Cell new_cell)
         else
         {
             #ifdef STRAWBERRY_DEBUG
-            if ((sLog->getLogFilter() & LOG_FILTER_CREATURE_MOVES) == 0)
-                sLog->outDebug("Creature (GUID: %u Entry: %u) moved in same grid[%u,%u]cell[%u,%u].", c->GetGUIDLow(), c->GetEntry(), old_cell.GridX(), old_cell.GridY(), old_cell.CellX(), old_cell.CellY());
+                sLog->outDebug(LOG_FILTER_MAPS, "Creature (GUID: %u Entry: %u) moved in same grid[%u,%u]cell[%u,%u].", c->GetGUIDLow(), c->GetEntry(), old_cell.GridX(), old_cell.GridY(), old_cell.CellX(), old_cell.CellY());
             #endif
         }
 
@@ -865,8 +861,7 @@ bool Map::CreatureCellRelocation(Creature *c, Cell new_cell)
         EnsureGridLoadedAtEnter(new_cell);
 
         #ifdef STRAWBERRY_DEBUG
-        if ((sLog->getLogFilter() & LOG_FILTER_CREATURE_MOVES) == 0)
-            sLog->outDebug("Active creature (GUID: %u Entry: %u) moved from grid[%u,%u]cell[%u,%u] to grid[%u,%u]cell[%u,%u].", c->GetGUIDLow(), c->GetEntry(), old_cell.GridX(), old_cell.GridY(), old_cell.CellX(), old_cell.CellY(), new_cell.GridX(), new_cell.GridY(), new_cell.CellX(), new_cell.CellY());
+            sLog->outDebug(LOG_FILTER_MAPS, "Active creature (GUID: %u Entry: %u) moved from grid[%u,%u]cell[%u,%u] to grid[%u,%u]cell[%u,%u].", c->GetGUIDLow(), c->GetEntry(), old_cell.GridX(), old_cell.GridY(), old_cell.CellX(), old_cell.CellY(), new_cell.GridX(), new_cell.GridY(), new_cell.CellX(), new_cell.CellY());
         #endif
 
         RemoveFromGrid(c,getNGrid(old_cell.GridX(), old_cell.GridY()),old_cell);
@@ -879,8 +874,7 @@ bool Map::CreatureCellRelocation(Creature *c, Cell new_cell)
     if (loaded(GridPair(new_cell.GridX(), new_cell.GridY())))
     {
         #ifdef STRAWBERRY_DEBUG
-        if ((sLog->getLogFilter() & LOG_FILTER_CREATURE_MOVES) == 0)
-            sLog->outDebug("Creature (GUID: %u Entry: %u) moved from grid[%u,%u]cell[%u,%u] to grid[%u,%u]cell[%u,%u].", c->GetGUIDLow(), c->GetEntry(), old_cell.GridX(), old_cell.GridY(), old_cell.CellX(), old_cell.CellY(), new_cell.GridX(), new_cell.GridY(), new_cell.CellX(), new_cell.CellY());
+            sLog->outDebug(LOG_FILTER_MAPS, "Creature (GUID: %u Entry: %u) moved from grid[%u,%u]cell[%u,%u] to grid[%u,%u]cell[%u,%u].", c->GetGUIDLow(), c->GetEntry(), old_cell.GridX(), old_cell.GridY(), old_cell.CellX(), old_cell.CellY(), new_cell.GridX(), new_cell.GridY(), new_cell.CellX(), new_cell.CellY());
         #endif
 
         RemoveFromGrid(c,getNGrid(old_cell.GridX(), old_cell.GridY()),old_cell);
@@ -892,8 +886,7 @@ bool Map::CreatureCellRelocation(Creature *c, Cell new_cell)
 
     // fail to move: normal creature attempt move to unloaded grid
     #ifdef STRAWBERRY_DEBUG
-    if ((sLog->getLogFilter() & LOG_FILTER_CREATURE_MOVES) == 0)
-        sLog->outDebug("Creature (GUID: %u Entry: %u) attempted to move from grid[%u,%u]cell[%u,%u] to unloaded grid[%u,%u]cell[%u,%u].", c->GetGUIDLow(), c->GetEntry(), old_cell.GridX(), old_cell.GridY(), old_cell.CellX(), old_cell.CellY(), new_cell.GridX(), new_cell.GridY(), new_cell.CellX(), new_cell.CellY());
+        sLog->outDebug(LOG_FILTER_MAPS, "Creature (GUID: %u Entry: %u) attempted to move from grid[%u,%u]cell[%u,%u] to unloaded grid[%u,%u]cell[%u,%u].", c->GetGUIDLow(), c->GetEntry(), old_cell.GridX(), old_cell.GridY(), old_cell.CellX(), old_cell.CellY(), new_cell.GridX(), new_cell.GridY(), new_cell.CellX(), new_cell.CellY());
     #endif
     return false;
 }
@@ -910,8 +903,7 @@ bool Map::CreatureRespawnRelocation(Creature *c)
     c->GetMotionMaster()->Clear();
 
     #ifdef STRAWBERRY_DEBUG
-    if ((sLog->getLogFilter() & LOG_FILTER_CREATURE_MOVES) == 0)
-        sLog->outDebug("Creature (GUID: %u Entry: %u) moved from grid[%u,%u]cell[%u,%u] to respawn grid[%u,%u]cell[%u,%u].", c->GetGUIDLow(), c->GetEntry(), c->GetCurrentCell().GridX(), c->GetCurrentCell().GridY(), c->GetCurrentCell().CellX(), c->GetCurrentCell().CellY(), resp_cell.GridX(), resp_cell.GridY(), resp_cell.CellX(), resp_cell.CellY());
+        sLog->outDebug(LOG_FILTER_MAPS, "Creature (GUID: %u Entry: %u) moved from grid[%u,%u]cell[%u,%u] to respawn grid[%u,%u]cell[%u,%u].", c->GetGUIDLow(), c->GetEntry(), c->GetCurrentCell().GridX(), c->GetCurrentCell().GridY(), c->GetCurrentCell().CellX(), c->GetCurrentCell().CellY(), resp_cell.GridX(), resp_cell.GridY(), resp_cell.CellX(), resp_cell.CellY());
     #endif
 
     // teleport it to respawn point (like normal respawn if player see)
@@ -2425,7 +2417,7 @@ void InstanceMap::CreateInstanceData(bool load)
     if (load)
     {
         // TODO: make a global storage for this
-        QueryResult result = CharacterDatabase.PQuery("SELECT data, completedEncounters FROM instance WHERE map = '%u' AND id = '%u'", GetId(), i_InstanceId);
+        QueryResult result = CharDB.PQuery("SELECT data, completedEncounters FROM instance WHERE map = '%u' AND id = '%u'", GetId(), i_InstanceId);
         if (result)
         {
             Field* fields = result->Fetch();

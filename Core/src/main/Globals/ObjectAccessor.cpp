@@ -290,9 +290,9 @@ Corpse* ObjectAccessor::ConvertCorpseForPlayer(uint64 player_guid, bool /*insign
     //    map->Remove(corpse, false);
 
     // remove corpse from DB
-    SQLTransaction trans = CharacterDatabase.BeginTransaction();
+    SQLTransaction trans = CharDB.BeginTransaction();
     corpse->DeleteFromDB(trans);
-    CharacterDatabase.CommitTransaction(trans);
+    CharDB.CommitTransaction(trans);
 
     // we don't want bones to save some cpu.. :)
     delete corpse;

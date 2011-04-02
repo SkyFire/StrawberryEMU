@@ -119,7 +119,7 @@ void MailDraft::deleteIncludedItems(SQLTransaction& trans, bool inDB /*= false*/
 
         if (inDB)
         {
-            PreparedStatement* stmt = CharacterDatabase.GetPreparedStatement(CHAR_DEL_ITEM_INSTANCE);
+            PreparedStatement* stmt = CharDB.GetPreparedStatement(CHAR_DEL_ITEM_INSTANCE);
             stmt->setUInt32(0, item->GetGUIDLow());
             trans->Append(stmt);
         }
@@ -138,7 +138,7 @@ void MailDraft::SendReturnToSender(uint32 sender_acc, uint32 sender_guid, uint32
     if (!receiver)
         rc_account = sObjectMgr->GetPlayerAccountIdByGUID(MAKE_NEW_GUID(receiver_guid, 0, HIGHGUID_PLAYER));
 
-    SQLTransaction trans = CharacterDatabase.BeginTransaction();
+    SQLTransaction trans = CharDB.BeginTransaction();
 
     if (!receiver && !rc_account)                            // sender not exist
     {
@@ -169,7 +169,7 @@ void MailDraft::SendReturnToSender(uint32 sender_acc, uint32 sender_guid, uint32
 
     // will delete item or place to receiver mail list
     SendMailTo(trans,MailReceiver(receiver,receiver_guid), MailSender(MAIL_NORMAL, sender_guid), MAIL_CHECK_MASK_RETURNED, deliver_delay);
-    CharacterDatabase.CommitTransaction(trans);
+    CharDB.CommitTransaction(trans);
 }
 
 void MailDraft::SendMailTo(SQLTransaction& trans, MailReceiver const& receiver, MailSender const& sender, MailCheckMask checked, uint32 deliver_delay)
@@ -202,8 +202,8 @@ void MailDraft::SendMailTo(SQLTransaction& trans, MailReceiver const& receiver, 
     std::string safe_subject = GetSubject();
     std::string safe_body = GetBody();
 
-    CharacterDatabase.escape_string(safe_subject);
-    CharacterDatabase.escape_string(safe_body);
+    CharDB.escape_string(safe_subject);
+    CharDB.escape_string(safe_body);
 
     trans->PAppend("INSERT INTO mail (id,messageType,stationery,mailTemplateId,sender,receiver,subject,body,has_items,expire_time,deliver_time,money,cod,checked) "
         "VALUES ('%u', '%u', '%u', '%u', '%u', '%u', '%s', '%s', '%u', '" UI64FMTD "','" UI64FMTD "', '%u', '%u', '%d')",

@@ -21,19 +21,19 @@
 #include "DatabaseWorkerPool.h"
 #include "MySQLConnection.h"
 
-class LoginDatabaseConnection : public MySQLConnection
+class RealmDBConnection : public MySQLConnection
 {
     public:
         //- Constructors for sync and async connections
-        LoginDatabaseConnection(MySQLConnectionInfo& connInfo) : MySQLConnection(connInfo) {}
+        RealmDBConnection(MySQLConnectionInfo& connInfo) : MySQLConnection(connInfo) {}
 
         //- Loads databasetype specific prepared statements
         bool Open();
 };
 
-typedef DatabaseWorkerPool<LoginDatabaseConnection> LoginDatabaseWorkerPool;
+typedef DatabaseWorkerPool<RealmDBConnection> RealmDBWorkerPool;
 
-enum LoginDatabaseStatements
+enum RealmDBStatements
 {
     /*  Naming standard for defines:
         {DB}_{SET/DEL/ADD/REP}_{Summary of data changed}

@@ -2,16 +2,16 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="CommandLine">
-      <UniqueIdentifier>{73ac929c-aae7-453d-a922-0272961916ba}</UniqueIdentifier>
+      <UniqueIdentifier>{a6b74404-3bd6-49ce-8bd0-7a934c97d18e}</UniqueIdentifier>
     </Filter>
     <Filter Include="RA">
-      <UniqueIdentifier>{e5c5a6b9-8bd1-4d4f-be58-6bbedbdbf466}</UniqueIdentifier>
+      <UniqueIdentifier>{d137161a-3159-4aeb-b3cc-b9d950ddc013}</UniqueIdentifier>
     </Filter>
-    <Filter Include="SCSoap">
-      <UniqueIdentifier>{1dbb594c-2514-4183-9c28-bb1f259462e8}</UniqueIdentifier>
+    <Filter Include="Soap">
+      <UniqueIdentifier>{5fdb9950-a98f-470e-9c79-bb8430b89c8e}</UniqueIdentifier>
     </Filter>
     <Filter Include="WorldThread">
-      <UniqueIdentifier>{156791dc-591e-4d8d-945a-2684edc2c65b}</UniqueIdentifier>
+      <UniqueIdentifier>{221e039e-e11b-42b6-87f0-bfbc66b8c0dd}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -27,23 +27,23 @@
     <ClCompile Include="..\..\src\server\world\RA\RASocket.cpp">
       <Filter>RA</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\server\world\Soap\Soap.cpp">
+      <Filter>Soap</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\dep\gsoap\soapC.cpp">
-      <Filter>SCSoap</Filter>
+      <Filter>Soap</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dep\gsoap\soapServer.cpp">
-      <Filter>SCSoap</Filter>
+      <Filter>Soap</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dep\gsoap\stdsoap2.cpp">
-      <Filter>SCSoap</Filter>
+      <Filter>Soap</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\server\world\WorldThread\WorldRunnable.cpp">
       <Filter>WorldThread</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\server\world\Main.cpp" />
     <ClCompile Include="..\..\src\server\world\Master.cpp" />
-    <ClCompile Include="..\..\src\server\world\Soap\Soap.cpp">
-      <Filter>SCSoap</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\server\world\CommandLine\CliRunnable.h">
@@ -58,22 +58,22 @@
     <ClInclude Include="..\..\src\server\world\RA\SocketDefines.h">
       <Filter>RA</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\server\world\Soap\Soap.h">
+      <Filter>Soap</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\dep\gsoap\soapH.h">
-      <Filter>SCSoap</Filter>
+      <Filter>Soap</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dep\gsoap\soapStub.h">
-      <Filter>SCSoap</Filter>
+      <Filter>Soap</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dep\gsoap\stdsoap2.h">
-      <Filter>SCSoap</Filter>
+      <Filter>Soap</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\server\world\WorldThread\WorldRunnable.h">
       <Filter>WorldThread</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\server\world\Master.h" />
-    <ClInclude Include="..\..\src\server\world\Soap\Soap.h">
-      <Filter>SCSoap</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="..\..\src\server\world\world.rc" />

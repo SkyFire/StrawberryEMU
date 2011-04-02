@@ -444,7 +444,7 @@ void Item::SaveToDB(SQLTransaction& trans)
         case ITEM_NEW:
         {
             std::string text = m_text;
-            CharacterDatabase.escape_string(text);
+            CharDB.escape_string(text);
             std::ostringstream ss;
             ss << "REPLACE INTO item_instance (guid,owner_guid,creatorGuid,giftCreatorGuid,count,duration,charges,flags,enchantments,randomPropertyId,durability,playedTime,text) VALUES (";
             ss << guid << ",";
@@ -474,7 +474,7 @@ void Item::SaveToDB(SQLTransaction& trans)
         case ITEM_CHANGED:
         {
             std::string text = m_text;
-            CharacterDatabase.escape_string(text);
+            CharDB.escape_string(text);
             std::ostringstream ss;
             ss << "UPDATE item_instance SET owner_guid = " << GUID_LOPART(GetOwnerGUID());
             ss << ", creatorGuid = " << GUID_LOPART(GetUInt64Value(ITEM_FIELD_CREATOR));
@@ -506,7 +506,7 @@ void Item::SaveToDB(SQLTransaction& trans)
         }break;
         case ITEM_REMOVED:
         {
-            PreparedStatement* stmt = CharacterDatabase.GetPreparedStatement(CHAR_DEL_ITEM_INSTANCE);
+            PreparedStatement* stmt = CharDB.GetPreparedStatement(CHAR_DEL_ITEM_INSTANCE);
             stmt->setUInt32(0, guid);
             trans->Append(stmt);
             if (HasFlag(ITEM_FIELD_FLAGS, ITEM_FLAG_WRAPPED))
@@ -523,7 +523,7 @@ void Item::SaveToDB(SQLTransaction& trans)
 bool Item::LoadFromDB(uint32 guid, uint64 owner_guid, Field* fields, uint32 entry)
 {
     //                                                    0                1      2         3        4      5             6                 7           8           9    10
-    //result = CharacterDatabase.PQuery("SELECT creatorGuid, giftCreatorGuid, count, duration, charges, flags, enchantments, randomPropertyId, durability, playedTime, text FROM item_instance WHERE guid = '%u'", guid);
+    //result = CharDB.PQuery("SELECT creatorGuid, giftCreatorGuid, count, duration, charges, flags, enchantments, randomPropertyId, durability, playedTime, text FROM item_instance WHERE guid = '%u'", guid);
 
     // create item before any checks for store correct guid
     // and allow use "FSetState(ITEM_REMOVED); SaveToDB();" for deleting item from DB
@@ -596,7 +596,7 @@ bool Item::LoadFromDB(uint32 guid, uint64 owner_guid, Field* fields, uint32 entr
             << ", durability = " << GetUInt32Value(ITEM_FIELD_DURABILITY)
             << " WHERE guid = " << guid;
 
-        CharacterDatabase.Execute(ss.str().c_str());
+        CharDB.Execute(ss.str().c_str());
     }
 
     return true;
@@ -605,7 +605,7 @@ bool Item::LoadFromDB(uint32 guid, uint64 owner_guid, Field* fields, uint32 entr
 /*static*/
 void Item::DeleteFromDB(SQLTransaction& trans, uint32 itemGuid)
 {
-    PreparedStatement* stmt = CharacterDatabase.GetPreparedStatement(CHAR_DEL_ITEM_INSTANCE);
+    PreparedStatement* stmt = CharDB.GetPreparedStatement(CHAR_DEL_ITEM_INSTANCE);
     stmt->setUInt32(0, itemGuid);
     trans->Append(stmt);
 }
@@ -618,7 +618,7 @@ void Item::DeleteFromDB(SQLTransaction& trans)
 /*static*/
 void Item::DeleteFromInventoryDB(SQLTransaction& trans, uint32 itemGuid)
 {
-    PreparedStatement* stmt = CharacterDatabase.GetPreparedStatement(CHAR_DEL_INVENTORY_ITEM);
+    PreparedStatement* stmt = CharDB.GetPreparedStatement(CHAR_DEL_INVENTORY_ITEM);
     stmt->setUInt32(0, itemGuid);
     trans->Append(stmt);
 }
@@ -1261,16 +1261,16 @@ void Item::BuildUpdate(UpdateDataMapType& data_map)
 
 void Item::SaveRefundDataToDB()
 {
-    SQLTransaction trans = CharacterDatabase.BeginTransaction();
+    SQLTransaction trans = CharDB.BeginTransaction();
     trans->PAppend("DELETE FROM item_refund_instance WHERE item_guid = '%u'", GetGUIDLow());
     trans->PAppend("INSERT INTO item_refund_instance (`item_guid`,`player_guid`,`paidMoney`,`paidExtendedCost`)"
     " VALUES('%u','%u','%u','%u')", GetGUIDLow(), GetRefundRecipient(), GetPaidMoney(), GetPaidExtendedCost());
-    CharacterDatabase.CommitTransaction(trans);
+    CharDB.CommitTransaction(trans);
 }
 
 void Item::DeleteRefundDataFromDB()
 {
-    CharacterDatabase.PExecute("DELETE FROM item_refund_instance WHERE item_guid = '%u'", GetGUIDLow());
+    CharDB.PExecute("DELETE FROM item_refund_instance WHERE item_guid = '%u'", GetGUIDLow());
 }
 
 void Item::SetNotRefundable(Player *owner, bool changestate)
@@ -1346,9 +1346,9 @@ void Item::SetSoulboundTradeable(AllowedLooterSet* allowedLooters, Player* curre
 
         allowedGUIDs.clear();
         SetState(ITEM_CHANGED, currentOwner);
-        PreparedStatement* stmt = CharacterDatabase.GetPreparedStatement(CHAR_DEL_ITEM_BOP_TRADE);
+        PreparedStatement* stmt = CharDB.GetPreparedStatement(CHAR_DEL_ITEM_BOP_TRADE);
         stmt->setUInt32(0, GetGUIDLow());
-        CharacterDatabase.Execute(stmt);
+        CharDB.Execute(stmt);
     }
 }
 

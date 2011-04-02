@@ -112,6 +112,7 @@
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <AdditionalLibraryDirectories>..\..\dep\lib\$(Platform)_$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
+      <AssemblyDebug>false</AssemblyDebug>
       <ProgramDatabaseFile>
       </ProgramDatabaseFile>
       <GenerateMapFile>false</GenerateMapFile>
@@ -161,6 +162,7 @@ copy ..\..\src\server\realm\realmserver.conf.dist ..\..\bin\$(Platform)_$(Config
       <Culture>0x0409</Culture>
     </ResourceCompile>
     <Link>
+      <AdditionalOptions>/MACHINE:x64 %(AdditionalOptions)</AdditionalOptions>
       <AdditionalDependencies>libmySQL.lib;libeay32.lib;ws2_32.lib;winmm.lib;odbc32.lib;odbccp32.lib;advapi32.lib;dbghelp.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>..\..\bin\$(Platform)_$(Configuration)\RealmServer.exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
@@ -266,6 +268,7 @@ copy ..\..\src\server\realm\realmserver.conf.dist ..\..\bin\$(Platform)_$(Config
       <Culture>0x0409</Culture>
     </ResourceCompile>
     <Link>
+      <AdditionalOptions>/MACHINE:x64 %(AdditionalOptions)</AdditionalOptions>
       <AdditionalDependencies>libmySQL.lib;libeay32.lib;ws2_32.lib;winmm.lib;odbc32.lib;odbccp32.lib;advapi32.lib;dbghelp.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>..\..\bin\$(Platform)_$(Configuration)\RealmServer.exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
@@ -296,8 +299,12 @@ copy ..\..\src\server\realm\realmserver.conf.dist ..\..\bin\$(Platform)_$(Config
     <ClCompile Include="..\..\src\server\realm\PCH\realmPCH.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../../src/server/realm/PCH/realmPCH.h</PrecompiledHeaderFile>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../../src/server/realm/PCH/realmPCH.h</PrecompiledHeaderFile>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">../../src/server/realm/PCH/realmPCH.h</PrecompiledHeaderFile>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">../../src/server/realm/PCH/realmPCH.h</PrecompiledHeaderFile>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

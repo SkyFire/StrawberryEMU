@@ -79,7 +79,7 @@ void CreatureGroupManager::LoadCreatureFormations()
     CreatureGroupMap.clear();
 
     //Get group data
-    QueryResult result = WorldDatabase.Query("SELECT leaderGUID, memberGUID, dist, angle, groupAI FROM creature_formations ORDER BY leaderGUID");
+    QueryResult result = WorldDB.Query("SELECT leaderGUID, memberGUID, dist, angle, groupAI FROM creature_formations ORDER BY leaderGUID");
 
     if (!result)
     {
@@ -94,7 +94,7 @@ void CreatureGroupManager::LoadCreatureFormations()
 
     std::set<uint32> guidSet;
 
-    QueryResult guidResult = WorldDatabase.PQuery("SELECT guid FROM creature");
+    QueryResult guidResult = WorldDB.PQuery("SELECT guid FROM creature");
     if (guidResult)
     {
         do

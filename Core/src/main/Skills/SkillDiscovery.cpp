@@ -53,7 +53,7 @@ void LoadSkillDiscoveryTable()
     SkillDiscoveryStore.clear();                            // need for reload
 
     //                                                0        1         2              3
-    QueryResult result = WorldDatabase.Query("SELECT spellId, reqSpell, reqSkillValue, chance FROM skill_discovery_template");
+    QueryResult result = WorldDB.Query("SELECT spellId, reqSpell, reqSkillValue, chance FROM skill_discovery_template");
 
     if (!result)
     {

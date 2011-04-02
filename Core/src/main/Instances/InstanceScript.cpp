@@ -35,11 +35,11 @@ void InstanceScript::SaveToDB()
     if (data.empty())
         return;
 
-    PreparedStatement* stmt = CharacterDatabase.GetPreparedStatement(CHAR_UPDATE_INSTANCE_DATA);
+    PreparedStatement* stmt = CharDB.GetPreparedStatement(CHAR_UPDATE_INSTANCE_DATA);
     stmt->setUInt32(0, GetCompletedEncounterMask());
     stmt->setString(1, data);
     stmt->setUInt32(2, instance->GetInstanceId());
-    CharacterDatabase.Execute(stmt);
+    CharDB.Execute(stmt);
 }
 
 void InstanceScript::HandleGameObject(uint64 GUID, bool open, GameObject *go)

@@ -555,14 +555,14 @@ void WorldSession::HandleAddFriendOpcode(WorldPacket & recv_data)
     if (!normalizePlayerName(friendName))
         return;
 
-    CharacterDatabase.escape_string(friendName);            // prevent SQL injection - normal name don't must changed by this call
+    CharDB.escape_string(friendName);            // prevent SQL injection - normal name don't must changed by this call
 
     sLog->outDebug(LOG_FILTER_NETWORKIO, "WORLD: %s asked to add friend : '%s'",
         GetPlayer()->GetName(), friendName.c_str());
 
     m_addFriendCallback.SetParam(friendNote);
     m_addFriendCallback.SetFutureResult(
-        CharacterDatabase.AsyncPQuery("SELECT guid, race, account FROM characters WHERE name = '%s'", friendName.c_str())
+        CharDB.AsyncPQuery("SELECT guid, race, account FROM characters WHERE name = '%s'", friendName.c_str())
         );
 }
 
@@ -644,12 +644,12 @@ void WorldSession::HandleAddIgnoreOpcode(WorldPacket & recv_data)
     if (!normalizePlayerName(IgnoreName))
         return;
 
-    CharacterDatabase.escape_string(IgnoreName);            // prevent SQL injection - normal name don't must changed by this call
+    CharDB.escape_string(IgnoreName);            // prevent SQL injection - normal name don't must changed by this call
 
     sLog->outDebug(LOG_FILTER_NETWORKIO, "WORLD: %s asked to Ignore: '%s'",
         GetPlayer()->GetName(), IgnoreName.c_str());
 
-    m_addIgnoreCallback = CharacterDatabase.AsyncPQuery("SELECT guid FROM characters WHERE name = '%s'", IgnoreName.c_str());
+    m_addIgnoreCallback = CharDB.AsyncPQuery("SELECT guid FROM characters WHERE name = '%s'", IgnoreName.c_str());
 }
 
 void WorldSession::HandleAddIgnoreOpcodeCallBack(QueryResult result)
@@ -730,9 +730,9 @@ void WorldSession::HandleBugOpcode(WorldPacket & recv_data)
     sLog->outDebug(LOG_FILTER_NETWORKIO, "%s", type.c_str());
     sLog->outDebug(LOG_FILTER_NETWORKIO, "%s", content.c_str());
 
-    CharacterDatabase.escape_string(type);
-    CharacterDatabase.escape_string(content);
-    CharacterDatabase.PExecute ("INSERT INTO bugreport (type,content) VALUES('%s', '%s')", type.c_str(), content.c_str());
+    CharDB.escape_string(type);
+    CharDB.escape_string(content);
+    CharDB.PExecute ("INSERT INTO bugreport (type,content) VALUES('%s', '%s')", type.c_str(), content.c_str());
 }
 
 void WorldSession::HandleReclaimCorpseOpcode(WorldPacket &recv_data)
@@ -1334,7 +1334,7 @@ void WorldSession::HandleWhoisOpcode(WorldPacket& recv_data)
 
     uint32 accid = plr->GetSession()->GetAccountId();
 
-    QueryResult result = LoginDatabase.PQuery("SELECT username,email,last_ip FROM account WHERE id=%u", accid);
+    QueryResult result = RealmDB.PQuery("SELECT username,email,last_ip FROM account WHERE id=%u", accid);
     if (!result)
     {
         SendNotification(LANG_ACCOUNT_FOR_PLAYER_NOT_FOUND, charname.c_str());

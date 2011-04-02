@@ -84,10 +84,10 @@ bool ArenaTeam::Create(uint64 captainGuid, uint32 type, std::string ArenaTeamNam
     m_TeamId = sObjectMgr->GenerateArenaTeamId();
 
     // ArenaTeamName already assigned to ArenaTeam::name, use it to encode string for DB
-    CharacterDatabase.escape_string(ArenaTeamName);
+    CharDB.escape_string(ArenaTeamName);
 
-    SQLTransaction trans = CharacterDatabase.BeginTransaction();
-    // CharacterDatabase.PExecute("DELETE FROM arena_team WHERE arenateamid='%u'", m_TeamId); - MAX(arenateam)+1 not exist
+    SQLTransaction trans = CharDB.BeginTransaction();
+    // CharDB.PExecute("DELETE FROM arena_team WHERE arenateamid='%u'", m_TeamId); - MAX(arenateam)+1 not exist
     trans->PAppend("DELETE FROM arena_team_member WHERE arenateamid='%u'", m_TeamId);
     trans->PAppend("INSERT INTO arena_team (arenateamid,name,captainguid,type,BackgroundColor,EmblemStyle,EmblemColor,BorderStyle,BorderColor) "
         "VALUES('%u','%s','%u','%u','%u','%u','%u','%u','%u')",
@@ -95,7 +95,7 @@ bool ArenaTeam::Create(uint64 captainGuid, uint32 type, std::string ArenaTeamNam
     trans->PAppend("INSERT INTO arena_team_stats (arenateamid, rating, games, wins, played, wins2, rank) VALUES "
         "('%u', '%u', '%u', '%u', '%u', '%u', '%u')", m_TeamId, m_stats.rating, m_stats.games_week, m_stats.wins_week, m_stats.games_season, m_stats.wins_season, m_stats.rank);
 
-    CharacterDatabase.CommitTransaction(trans);
+    CharDB.CommitTransaction(trans);
 
     AddMember(m_CaptainGuid);
     sLog->outArena("New ArenaTeam created [Id: %u] [Type: %u] [Captain low GUID: %u]", GetId(), GetType(), captainLowGuid);
@@ -128,7 +128,7 @@ bool ArenaTeam::AddMember(const uint64& PlayerGuid)
     else
     {
         //                                                     0     1
-        QueryResult result = CharacterDatabase.PQuery("SELECT name, class FROM characters WHERE guid='%u'", GUID_LOPART(PlayerGuid));
+        QueryResult result = CharDB.PQuery("SELECT name, class FROM characters WHERE guid='%u'", GUID_LOPART(PlayerGuid));
         if (!result)
             return false;
 
@@ -153,7 +153,7 @@ bool ArenaTeam::AddMember(const uint64& PlayerGuid)
 
     sWorld->getIntConfig(CONFIG_ARENA_START_PERSONAL_RATING);
 
-    QueryResult result = CharacterDatabase.PQuery("SELECT matchmaker_rating FROM character_arena_stats WHERE guid='%u' AND slot='%u'", GUID_LOPART(PlayerGuid), GetSlot());
+    QueryResult result = CharDB.PQuery("SELECT matchmaker_rating FROM character_arena_stats WHERE guid='%u' AND slot='%u'", GUID_LOPART(PlayerGuid), GetSlot());
     if (result)
         plMMRating = (*result)[0].GetUInt32();
 
@@ -174,7 +174,7 @@ bool ArenaTeam::AddMember(const uint64& PlayerGuid)
 
     m_members.push_back(newmember);
 
-    CharacterDatabase.PExecute("INSERT INTO arena_team_member (arenateamid, guid) VALUES ('%u', '%u')", m_TeamId, GUID_LOPART(newmember.guid));
+    CharDB.PExecute("INSERT INTO arena_team_member (arenateamid, guid) VALUES ('%u', '%u')", m_TeamId, GUID_LOPART(newmember.guid));
 
     if (pl)
     {
@@ -234,7 +234,7 @@ bool ArenaTeam::LoadMembersFromDB(QueryResult arenaTeamMembersResult)
         {
             //there is in table arena_team_member record which doesn't have arenateamid in arena_team table, report error
             sLog->outErrorDb("ArenaTeam %u does not exist but it has record in arena_team_member table, deleting it!", arenaTeamId);
-            CharacterDatabase.PExecute("DELETE FROM arena_team_member WHERE arenateamid = '%u'", arenaTeamId);
+            CharDB.PExecute("DELETE FROM arena_team_member WHERE arenateamid = '%u'", arenaTeamId);
             continue;
         }
 
@@ -244,7 +244,7 @@ bool ArenaTeam::LoadMembersFromDB(QueryResult arenaTeamMembersResult)
 
         uint32 player_guid = fields[1].GetUInt32();
 
-        QueryResult result = CharacterDatabase.PQuery(
+        QueryResult result = CharDB.PQuery(
             "SELECT personal_rating, matchmaker_rating FROM character_arena_stats WHERE guid = '%u' AND slot = '%u'", player_guid, GetSlot());
 
         uint32 personalrating = 0;
@@ -302,7 +302,7 @@ void ArenaTeam::SetCaptain(const uint64& guid)
     m_CaptainGuid = guid;
 
     // update database
-    CharacterDatabase.PExecute("UPDATE arena_team SET captainguid = '%u' WHERE arenateamid = '%u'", GUID_LOPART(guid), GetId());
+    CharDB.PExecute("UPDATE arena_team SET captainguid = '%u' WHERE arenateamid = '%u'", GUID_LOPART(guid), GetId());
 
     // enable remove/promote buttons
     Player *newcaptain = sObjectMgr->GetPlayer(guid);
@@ -330,7 +330,7 @@ void ArenaTeam::DelMember(uint64 guid)
             player->SetArenaTeamInfoField(GetSlot(), ArenaTeamInfoType(i), 0);
         sLog->outArena("Player: %s [GUID: %u] left arena team type: %u [Id: %u].", player->GetName(), player->GetGUIDLow(), GetType(), GetId());
     }
-    CharacterDatabase.PExecute("DELETE FROM arena_team_member WHERE arenateamid = '%u' AND guid = '%u'", GetId(), GUID_LOPART(guid));
+    CharDB.PExecute("DELETE FROM arena_team_member WHERE arenateamid = '%u' AND guid = '%u'", GetId(), GUID_LOPART(guid));
 }
 
 void ArenaTeam::Disband(WorldSession *session)
@@ -348,11 +348,11 @@ void ArenaTeam::Disband(WorldSession *session)
         if (Player *player = session->GetPlayer())
             sLog->outArena("Player: %s [GUID: %u] disbanded arena team type: %u [Id: %u].", player->GetName(), player->GetGUIDLow(), GetType(), GetId());
 
-    SQLTransaction trans = CharacterDatabase.BeginTransaction();
+    SQLTransaction trans = CharDB.BeginTransaction();
     trans->PAppend("DELETE FROM arena_team WHERE arenateamid = '%u'", m_TeamId);
     trans->PAppend("DELETE FROM arena_team_member WHERE arenateamid = '%u'", m_TeamId); //< this should be alredy done by calling DelMember(memberGuids[j]); for each member
     trans->PAppend("DELETE FROM arena_team_stats WHERE arenateamid = '%u'", m_TeamId);
-    CharacterDatabase.CommitTransaction(trans);
+    CharDB.CommitTransaction(trans);
     sObjectMgr->RemoveArenaTeam(m_TeamId);
 }
 
@@ -460,7 +460,7 @@ void ArenaTeam::SetEmblem(uint32 backgroundColor, uint32 emblemStyle, uint32 emb
     m_BorderStyle = borderStyle;
     m_BorderColor = borderColor;
 
-    CharacterDatabase.PExecute("UPDATE arena_team SET BackgroundColor='%u', EmblemStyle='%u', EmblemColor='%u', BorderStyle='%u', BorderColor='%u' WHERE arenateamid='%u'", m_BackgroundColor, m_EmblemStyle, m_EmblemColor, m_BorderStyle, m_BorderColor, m_TeamId);
+    CharDB.PExecute("UPDATE arena_team SET BackgroundColor='%u', EmblemStyle='%u', EmblemColor='%u', BorderStyle='%u', BorderColor='%u' WHERE arenateamid='%u'", m_BackgroundColor, m_EmblemStyle, m_EmblemColor, m_BorderStyle, m_BorderColor, m_TeamId);
 }
 
 void ArenaTeam::SetStats(uint32 stat_type, uint32 value)
@@ -469,27 +469,27 @@ void ArenaTeam::SetStats(uint32 stat_type, uint32 value)
     {
         case STAT_TYPE_RATING:
             m_stats.rating = value;
-            CharacterDatabase.PExecute("UPDATE arena_team_stats SET rating = '%u' WHERE arenateamid = '%u'", value, GetId());
+            CharDB.PExecute("UPDATE arena_team_stats SET rating = '%u' WHERE arenateamid = '%u'", value, GetId());
             break;
         case STAT_TYPE_GAMES_WEEK:
             m_stats.games_week = value;
-            CharacterDatabase.PExecute("UPDATE arena_team_stats SET games = '%u' WHERE arenateamid = '%u'", value, GetId());
+            CharDB.PExecute("UPDATE arena_team_stats SET games = '%u' WHERE arenateamid = '%u'", value, GetId());
             break;
         case STAT_TYPE_WINS_WEEK:
             m_stats.wins_week = value;
-            CharacterDatabase.PExecute("UPDATE arena_team_stats SET wins = '%u' WHERE arenateamid = '%u'", value, GetId());
+            CharDB.PExecute("UPDATE arena_team_stats SET wins = '%u' WHERE arenateamid = '%u'", value, GetId());
             break;
         case STAT_TYPE_GAMES_SEASON:
             m_stats.games_season = value;
-            CharacterDatabase.PExecute("UPDATE arena_team_stats SET played = '%u' WHERE arenateamid = '%u'", value, GetId());
+            CharDB.PExecute("UPDATE arena_team_stats SET played = '%u' WHERE arenateamid = '%u'", value, GetId());
             break;
         case STAT_TYPE_WINS_SEASON:
             m_stats.wins_season = value;
-            CharacterDatabase.PExecute("UPDATE arena_team_stats SET wins2 = '%u' WHERE arenateamid = '%u'", value, GetId());
+            CharDB.PExecute("UPDATE arena_team_stats SET wins2 = '%u' WHERE arenateamid = '%u'", value, GetId());
             break;
         case STAT_TYPE_RANK:
             m_stats.rank = value;
-            CharacterDatabase.PExecute("UPDATE arena_team_stats SET rank = '%u' WHERE arenateamid = '%u'", value, GetId());
+            CharDB.PExecute("UPDATE arena_team_stats SET rank = '%u' WHERE arenateamid = '%u'", value, GetId());
             break;
         default:
             sLog->outError("unknown stat type in ArenaTeam::SetStats() %u", stat_type);
@@ -808,7 +808,7 @@ void ArenaTeam::UpdateArenaPointsHelper(std::map<uint32, uint32>& PlayerPoints)
         uint32 points_to_add = 0;
         if (itr->games_week >= min_plays)
             points_to_add = GetPoints(itr->personal_rating);
-        // OBSOLETE : CharacterDatabase.PExecute("UPDATE arena_team_member SET points_to_add = '%u' WHERE arenateamid = '%u' AND guid = '%u'", points_to_add, m_TeamId, itr->guid);
+        // OBSOLETE : CharDB.PExecute("UPDATE arena_team_member SET points_to_add = '%u' WHERE arenateamid = '%u' AND guid = '%u'", points_to_add, m_TeamId, itr->guid);
 
         std::map<uint32, uint32>::iterator plr_itr = PlayerPoints.find(GUID_LOPART(itr->guid));
         if (plr_itr != PlayerPoints.end())
@@ -826,14 +826,14 @@ void ArenaTeam::SaveToDB()
 {
     // save team and member stats to db
     // called after a match has ended, or when calculating arena_points
-    SQLTransaction trans = CharacterDatabase.BeginTransaction();
+    SQLTransaction trans = CharDB.BeginTransaction();
     trans->PAppend("UPDATE arena_team_stats SET rating = '%u',games = '%u',played = '%u',rank = '%u',wins = '%u',wins2 = '%u' WHERE arenateamid = '%u'", m_stats.rating, m_stats.games_week, m_stats.games_season, m_stats.rank, m_stats.wins_week, m_stats.wins_season, GetId());
     for (MemberList::const_iterator itr = m_members.begin(); itr !=  m_members.end(); ++itr)
     {
         trans->PAppend("UPDATE arena_team_member SET played_week = '%u', wons_week = '%u', played_season = '%u', wons_season = '%u' WHERE arenateamid = '%u' AND guid = '%u'", itr->games_week, itr->wins_week, itr->games_season, itr->wins_season, m_TeamId, GUID_LOPART(itr->guid));
         trans->PAppend("REPLACE INTO character_arena_stats (guid,slot,personal_rating,matchmaker_rating) VALUES ('%u', '%u', '%u', '%u')", GUID_LOPART(itr->guid), GetSlot(), itr->personal_rating, itr->matchmaker_rating);
     }
-    CharacterDatabase.CommitTransaction(trans);
+    CharDB.CommitTransaction(trans);
 }
 
 void ArenaTeam::FinishWeek()

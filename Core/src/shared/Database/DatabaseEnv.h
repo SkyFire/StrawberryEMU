@@ -37,13 +37,13 @@
 #define _CONCAT3_(A,B,C) "CONCAT( " A " , " B " , " C " )"
 #define _OFFSET_         "LIMIT %d,1"
 
-#include "Implementation/LoginDatabase.h"
-#include "Implementation/CharacterDatabase.h"
-#include "Implementation/WorldDatabase.h"
+#include "Implementation/RealmDB.h"
+#include "Implementation/CharDB.h"
+#include "Implementation/WorldDB.h"
 
-extern WorldDatabaseWorkerPool WorldDatabase;
-extern CharacterDatabaseWorkerPool CharacterDatabase;
-extern LoginDatabaseWorkerPool LoginDatabase;
+extern WorldDBWorkerPool WorldDB;
+extern CharDBWorkerPool CharDB;
+extern RealmDBWorkerPool RealmDB;
 
 #endif
 

@@ -131,7 +131,7 @@ public:
         {
             uint32 tguid = chr->GetTransport()->AddNPCPassenger(0, id, chr->GetTransOffsetX(), chr->GetTransOffsetY(), chr->GetTransOffsetZ(), chr->GetTransOffsetO());
             if (tguid > 0)
-                WorldDatabase.PQuery("INSERT INTO creature_transport (guid, npc_entry, transport_entry,  TransOffsetX, TransOffsetY, TransOffsetZ, TransOffsetO) values (%u, %u, %f, %f, %f, %f, %u)", tguid, id, chr->GetTransport()->GetEntry(), chr->GetTransOffsetX(), chr->GetTransOffsetY(), chr->GetTransOffsetZ(), chr->GetTransOffsetO());
+                WorldDB.PQuery("INSERT INTO creature_transport (guid, npc_entry, transport_entry,  TransOffsetX, TransOffsetY, TransOffsetZ, TransOffsetO) values (%u, %u, %f, %f, %f, %f, %u)", tguid, id, chr->GetTransport()->GetEntry(), chr->GetTransOffsetX(), chr->GetTransOffsetY(), chr->GetTransOffsetZ(), chr->GetTransOffsetO());
 
             return true;
         }
@@ -252,7 +252,7 @@ public:
         //WaypointMgr.AddLastNode(lowguid, player->GetPositionX(), player->GetPositionY(), player->GetPositionZ(), player->GetOrientation(), wait, 0);
 
         // update movement type
-        WorldDatabase.PExecute("UPDATE creature SET MovementType = '%u' WHERE guid = '%u'", WAYPOINT_MOTION_TYPE,lowguid);
+        WorldDB.PExecute("UPDATE creature SET MovementType = '%u' WHERE guid = '%u'", WAYPOINT_MOTION_TYPE,lowguid);
         if (pCreature && pCreature->GetWaypointPath())
         {
             pCreature->SetDefaultMovementType(WAYPOINT_MOTION_TYPE);
@@ -461,7 +461,7 @@ public:
         }
 
         // and DB
-        WorldDatabase.PExecute("UPDATE creature_template SET faction_A = '%u', faction_H = '%u' WHERE entry = '%u'", factionId, factionId, pCreature->GetEntry());
+        WorldDB.PExecute("UPDATE creature_template SET faction_A = '%u', faction_H = '%u' WHERE entry = '%u'", factionId, factionId, pCreature->GetEntry());
 
         return true;
     }
@@ -485,7 +485,7 @@ public:
 
         pCreature->SetUInt32Value(UNIT_NPC_FLAGS, npcFlags);
 
-        WorldDatabase.PExecute("UPDATE creature_template SET npcflag = '%u' WHERE entry = '%u'", npcFlags, pCreature->GetEntry());
+        WorldDB.PExecute("UPDATE creature_template SET npcflag = '%u' WHERE entry = '%u'", npcFlags, pCreature->GetEntry());
 
         handler->SendSysMessage(LANG_VALUE_SAVED_REJOIN);
 
@@ -633,7 +633,7 @@ public:
             }
         }
 
-        WorldDatabase.PExecute("UPDATE creature SET position_x = '%f', position_y = '%f', position_z = '%f', orientation = '%f' WHERE guid = '%u'", x, y, z, o, lowguid);
+        WorldDB.PExecute("UPDATE creature SET position_x = '%f', position_y = '%f', position_z = '%f', orientation = '%f' WHERE guid = '%u'", x, y, z, o, lowguid);
         handler->PSendSysMessage(LANG_COMMAND_CREATUREMOVED);
         return true;
     }
@@ -653,7 +653,7 @@ public:
 
         if (target->GetTransport())
             if (target->GetGUIDTransport())
-                WorldDatabase.PQuery("UPDATE creature_transport SET emote=%u WHERE transport_entry=%u AND guid=%u", emote, target->GetTransport()->GetEntry(), target->GetGUIDTransport());
+                WorldDB.PQuery("UPDATE creature_transport SET emote=%u WHERE transport_entry=%u AND guid=%u", emote, target->GetTransport()->GetEntry(), target->GetGUIDTransport());
 
         target->SetUInt32Value(UNIT_NPC_EMOTESTATE,emote);
 
@@ -896,7 +896,7 @@ public:
             pCreature->Respawn();
         }
 
-        WorldDatabase.PExecute("UPDATE creature SET spawndist=%f, MovementType=%i WHERE guid=%u",option,mtype,u_guidlow);
+        WorldDB.PExecute("UPDATE creature SET spawndist=%f, MovementType=%i WHERE guid=%u",option,mtype,u_guidlow);
         handler->PSendSysMessage(LANG_COMMAND_SPAWNDIST,option);
         return true;
     }
@@ -929,7 +929,7 @@ public:
         else
             return false;
 
-        WorldDatabase.PExecute("UPDATE creature SET spawntimesecs=%i WHERE guid=%u",i_stime,u_guidlow);
+        WorldDB.PExecute("UPDATE creature SET spawntimesecs=%i WHERE guid=%u",i_stime,u_guidlow);
         pCreature->SetRespawnDelay((uint32)i_stime);
         handler->PSendSysMessage(LANG_COMMAND_SPAWNTIME,i_stime);
 
@@ -1225,7 +1225,7 @@ public:
         CreatureGroupMap[lowguid] = group_member;
         pCreature->SearchFormation();
 
-        WorldDatabase.PExecute("INSERT INTO creature_formations (leaderGUID, memberGUID, dist, angle, groupAI) VALUES ('%u','%u','%f', '%f', '%u')",
+        WorldDB.PExecute("INSERT INTO creature_formations (leaderGUID, memberGUID, dist, angle, groupAI) VALUES ('%u','%u','%f', '%f', '%u')",
             leaderGUID, lowguid, group_member->follow_dist, group_member->follow_angle, group_member->groupAI);
 
         handler->PSendSysMessage("Creature %u added to formation with leader %u", lowguid, leaderGUID);

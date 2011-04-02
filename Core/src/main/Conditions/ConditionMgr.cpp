@@ -379,7 +379,7 @@ void ConditionMgr::LoadConditions(bool isReload)
     }
 
   
-    QueryResult result = WorldDatabase.Query("SELECT SourceTypeOrReferenceId, SourceGroup, SourceEntry, ElseGroup, ConditionTypeOrReference,"
+    QueryResult result = WorldDB.Query("SELECT SourceTypeOrReferenceId, SourceGroup, SourceEntry, ElseGroup, ConditionTypeOrReference,"
                                              " ConditionValue1, ConditionValue2, ConditionValue3, ErrorTextId, ScriptName FROM conditions");
 
     if (!result)

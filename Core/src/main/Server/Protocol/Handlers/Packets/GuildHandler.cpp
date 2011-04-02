@@ -46,11 +46,12 @@ void WorldSession::HandleGuildQueryOpcode(WorldPacket& recvPacket)
 {
     sLog->outDebug(LOG_FILTER_NETWORKIO, "WORLD: Received CMSG_GUILD_QUERY");
 
-    uint32 guildId;
+    uint64 guildId;
     recvPacket >> guildId;
     // Use received guild id to access guild method (not player's guild id)
-    if (Guild* pGuild = sObjectMgr->GetGuildById(guildId))
-        pGuild->HandleQuery(this);
+    uint32 lowGuildId = GUID_LOPART(guildId);
+    if (Guild *guild = sObjectMgr->GetGuildById(lowGuildId))
+        guild->HandleQuery(this);
     else
         Guild::SendCommandResult(this, GUILD_CREATE_S, ERR_GUILD_PLAYER_NOT_IN_GUILD);
 }

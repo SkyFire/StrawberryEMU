@@ -1485,7 +1485,6 @@ class SpellMgr
     public:
 
         // Loading data at server startup
-        void LoadSpellRanks();
         void LoadSpellRequired();
         void LoadSpellLearnSkills();
         void LoadSpellLearnSpells();

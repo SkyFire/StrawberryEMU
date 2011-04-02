@@ -187,16 +187,16 @@ void GameEventMgr::StopEvent(uint16 event_id, bool overwrite)
             for (itr = mGameEvent[event_id].conditions.begin(); itr != mGameEvent[event_id].conditions.end(); ++itr)
                 itr->second.done = 0;
 
-            SQLTransaction trans = CharacterDatabase.BeginTransaction();
-            PreparedStatement* stmt = CharacterDatabase.GetPreparedStatement(CHAR_DEL_ALL_GAME_EVENT_CONDITION_SAVE);
-            stmt->setUInt8(0, event_id);
+            SQLTransaction trans = CharDB.BeginTransaction();
+            PreparedStatement* stmt = CharDB.GetPreparedStatement(CHAR_DEL_ALL_GAME_EVENT_CONDITION_SAVE);
+            stmt->setUInt16(0, event_id);
             trans->Append(stmt);
 
-            stmt = CharacterDatabase.GetPreparedStatement(CHAR_DEL_GAME_EVENT_SAVE);
-            stmt->setUInt8(0, event_id);
+            stmt = CharDB.GetPreparedStatement(CHAR_DEL_GAME_EVENT_SAVE);
+            stmt->setUInt16(0, event_id);
             trans->Append(stmt);
 
-            CharacterDatabase.CommitTransaction(trans);
+            CharDB.CommitTransaction(trans);
         }
     }
 }
@@ -206,7 +206,7 @@ void GameEventMgr::LoadFromDB()
     {
         uint32 oldMSTime = getMSTime();
 
-        QueryResult result = WorldDatabase.Query("SELECT eventEntry,UNIX_TIMESTAMP(start_time),UNIX_TIMESTAMP(end_time),occurence,length,holiday,description,world_event FROM game_event");
+        QueryResult result = WorldDB.Query("SELECT eventEntry,UNIX_TIMESTAMP(start_time),UNIX_TIMESTAMP(end_time),occurence,length,holiday,description,world_event FROM game_event");
         if (!result)
         {
             mGameEvent.clear();
@@ -269,7 +269,7 @@ void GameEventMgr::LoadFromDB()
         uint32 oldMSTime = getMSTime();
 
         //                                                       0       1        2
-        QueryResult result = CharacterDatabase.Query("SELECT eventEntry, state, next_start FROM game_event_save");
+        QueryResult result = CharDB.Query("SELECT eventEntry, state, next_start FROM game_event_save");
 
         if (!result)
         {
@@ -315,7 +315,7 @@ void GameEventMgr::LoadFromDB()
     {
         uint32 oldMSTime = getMSTime();
 
-        QueryResult result = WorldDatabase.Query("SELECT eventEntry, prerequisite_event FROM game_event_prerequisite");
+        QueryResult result = WorldDB.Query("SELECT eventEntry, prerequisite_event FROM game_event_prerequisite");
         if (!result)
         {
             sLog->outString(">> Loaded 0 game event prerequisites in game events. DB table `game_event_prerequisite` is empty.");
@@ -367,7 +367,7 @@ void GameEventMgr::LoadFromDB()
         uint32 oldMSTime = getMSTime();
 
         //                                                       1                2
-        QueryResult result = WorldDatabase.Query("SELECT creature.guid, game_event_creature.eventEntry FROM creature"
+        QueryResult result = WorldDB.Query("SELECT creature.guid, game_event_creature.eventEntry FROM creature"
                                                   " JOIN game_event_creature ON creature.guid = game_event_creature.guid");
 
         if (!result)
@@ -410,7 +410,7 @@ void GameEventMgr::LoadFromDB()
         uint32 oldMSTime = getMSTime();
 
         //                                                      1                2
-        QueryResult result = WorldDatabase.Query("SELECT gameobject.guid, game_event_gameobject.eventEntry FROM gameobject"
+        QueryResult result = WorldDB.Query("SELECT gameobject.guid, game_event_gameobject.eventEntry FROM gameobject"
                                                  " JOIN game_event_gameobject ON gameobject.guid=game_event_gameobject.guid");
 
         if (!result)
@@ -453,7 +453,7 @@ void GameEventMgr::LoadFromDB()
         uint32 oldMSTime = getMSTime();
 
         //                                                       0                     1                              2                               3
-        QueryResult result = WorldDatabase.Query("SELECT creature.guid, game_event_model_equip.eventEntry, game_event_model_equip.modelid, game_event_model_equip.equipment_id "
+        QueryResult result = WorldDB.Query("SELECT creature.guid, game_event_model_equip.eventEntry, game_event_model_equip.modelid, game_event_model_equip.equipment_id "
             "FROM creature JOIN game_event_model_equip ON creature.guid=game_event_model_equip.guid");
 
         if (!result)
@@ -510,7 +510,7 @@ void GameEventMgr::LoadFromDB()
         uint32 oldMSTime = getMSTime();
 
         //                                               0     1      2
-        QueryResult result = WorldDatabase.Query("SELECT id, quest, eventEntry FROM game_event_creature_quest");
+        QueryResult result = WorldDB.Query("SELECT id, quest, eventEntry FROM game_event_creature_quest");
 
         if (!result)
         {
@@ -551,7 +551,7 @@ void GameEventMgr::LoadFromDB()
         uint32 oldMSTime = getMSTime();
 
         //                                               0     1      2
-        QueryResult result = WorldDatabase.Query("SELECT id, quest, eventEntry FROM game_event_gameobject_quest");
+        QueryResult result = WorldDB.Query("SELECT id, quest, eventEntry FROM game_event_gameobject_quest");
 
         if (!result)
         {
@@ -592,7 +592,7 @@ void GameEventMgr::LoadFromDB()
         uint32 oldMSTime = getMSTime();
 
         //                                                 0       1         2           3
-        QueryResult result = WorldDatabase.Query("SELECT quest, eventEntry, condition_id, num FROM game_event_quest_condition");
+        QueryResult result = WorldDB.Query("SELECT quest, eventEntry, condition_id, num FROM game_event_quest_condition");
 
         if (!result)
         {
@@ -635,7 +635,7 @@ void GameEventMgr::LoadFromDB()
         uint32 oldMSTime = getMSTime();
 
         //                                                  0          1            2             3                      4
-        QueryResult result = WorldDatabase.Query("SELECT eventEntry, condition_id, req_num, max_world_state_field, done_world_state_field FROM game_event_condition");
+        QueryResult result = WorldDB.Query("SELECT eventEntry, condition_id, req_num, max_world_state_field, done_world_state_field FROM game_event_condition");
 
         if (!result)
         {
@@ -677,7 +677,7 @@ void GameEventMgr::LoadFromDB()
         uint32 oldMSTime = getMSTime();
 
         //                                                      0           1         2
-        QueryResult result = CharacterDatabase.Query("SELECT eventEntry, condition_id, done FROM game_event_condition_save");
+        QueryResult result = CharDB.Query("SELECT eventEntry, condition_id, done FROM game_event_condition_save");
 
         if (!result)
         {
@@ -725,7 +725,7 @@ void GameEventMgr::LoadFromDB()
         uint32 oldMSTime = getMSTime();
 
         //                                                0       1        2
-        QueryResult result = WorldDatabase.Query("SELECT guid, eventEntry, npcflag FROM game_event_npcflag");
+        QueryResult result = WorldDB.Query("SELECT guid, eventEntry, npcflag FROM game_event_npcflag");
 
         if (!result)
         {
@@ -765,7 +765,7 @@ void GameEventMgr::LoadFromDB()
         uint32 oldMSTime = getMSTime();
 
         //                                                    0        1    2       3         4          5
-        QueryResult result = WorldDatabase.Query("SELECT eventEntry, guid, item, maxcount, incrtime, ExtendedCost FROM game_event_npc_vendor ORDER BY guid, slot ASC");
+        QueryResult result = WorldDB.Query("SELECT eventEntry, guid, item, maxcount, incrtime, ExtendedCost FROM game_event_npc_vendor ORDER BY guid, slot ASC");
 
         if (!result)
         {
@@ -831,7 +831,7 @@ void GameEventMgr::LoadFromDB()
         uint32 oldMSTime = getMSTime();
 
         //                                                   0         1
-        QueryResult result = WorldDatabase.Query("SELECT eventEntry, bgflag FROM game_event_battleground_holiday");
+        QueryResult result = WorldDB.Query("SELECT eventEntry, bgflag FROM game_event_battleground_holiday");
 
         if (!result)
         {
@@ -869,7 +869,7 @@ void GameEventMgr::LoadFromDB()
         uint32 oldMSTime = getMSTime();
 
         //                                                       1                       2
-        QueryResult result = WorldDatabase.Query("SELECT pool_template.entry, game_event_pool.eventEntry FROM pool_template"
+        QueryResult result = WorldDB.Query("SELECT pool_template.entry, game_event_pool.eventEntry FROM pool_template"
                                                   " JOIN game_event_pool ON pool_template.entry = game_event_pool.pool_entry");
 
         if (!result)
@@ -933,7 +933,7 @@ uint32 GameEventMgr::GetNPCFlag(Creature * cr)
 
 void GameEventMgr::Initialize()
 {
-    QueryResult result = WorldDatabase.Query("SELECT MAX(eventEntry) FROM game_event");
+    QueryResult result = WorldDB.Query("SELECT MAX(eventEntry) FROM game_event");
     if (result)
     {
         Field *fields = result->Fetch();
@@ -966,7 +966,7 @@ uint32 GameEventMgr::StartSystem()                           // return the next 
 
 void GameEventMgr::StartArenaSeason()
 {
-    QueryResult result = WorldDatabase.PQuery("SELECT eventEntry FROM game_event_arena_seasons WHERE season = '%i'",sWorld->getIntConfig(CONFIG_ARENA_SEASON_ID));
+    QueryResult result = WorldDB.PQuery("SELECT eventEntry FROM game_event_arena_seasons WHERE season = '%i'",sWorld->getIntConfig(CONFIG_ARENA_SEASON_ID));
 
     if (!result)
     {
@@ -1530,19 +1530,19 @@ void GameEventMgr::HandleQuestComplete(uint32 quest_id)
                 if (citr->second.done > citr->second.reqNum)
                     citr->second.done = citr->second.reqNum;
                 // save the change to db
-                SQLTransaction trans = CharacterDatabase.BeginTransaction();
+                SQLTransaction trans = CharDB.BeginTransaction();
 
-                PreparedStatement* stmt = CharacterDatabase.GetPreparedStatement(CHAR_DEL_GAME_EVENT_CONDITION_SAVE);
-                stmt->setUInt8(0, event_id);
+                PreparedStatement* stmt = CharDB.GetPreparedStatement(CHAR_DEL_GAME_EVENT_CONDITION_SAVE);
+                stmt->setUInt16(0, event_id);
                 stmt->setUInt32(1, condition);
                 trans->Append(stmt);
 
-                stmt = CharacterDatabase.GetPreparedStatement(CHAR_ADD_GAME_EVENT_CONDITION_SAVE);
-                stmt->setUInt8(0, event_id);
+                stmt = CharDB.GetPreparedStatement(CHAR_ADD_GAME_EVENT_CONDITION_SAVE);
+                stmt->setUInt16(0, event_id);
                 stmt->setUInt32(1, condition);
                 stmt->setFloat(2, citr->second.done);
                 trans->Append(stmt);
-                CharacterDatabase.CommitTransaction(trans);
+                CharDB.CommitTransaction(trans);
                 // check if all conditions are met, if so, update the event state
                 if (CheckOneGameEventConditions(event_id))
                 {
@@ -1575,19 +1575,19 @@ bool GameEventMgr::CheckOneGameEventConditions(uint16 event_id)
 
 void GameEventMgr::SaveWorldEventStateToDB(uint16 event_id)
 {
-    SQLTransaction trans = CharacterDatabase.BeginTransaction();
+    SQLTransaction trans = CharDB.BeginTransaction();
 
-    PreparedStatement* stmt = CharacterDatabase.GetPreparedStatement(CHAR_DEL_GAME_EVENT_SAVE);
-    stmt->setUInt8(0, event_id);
+    PreparedStatement* stmt = CharDB.GetPreparedStatement(CHAR_DEL_GAME_EVENT_SAVE);
+    stmt->setUInt16(0, event_id);
     trans->Append(stmt);
 
-    stmt = CharacterDatabase.GetPreparedStatement(CHAR_ADD_GAME_EVENT_SAVE);
-    stmt->setUInt8(0, event_id);
+    stmt = CharDB.GetPreparedStatement(CHAR_ADD_GAME_EVENT_SAVE);
+    stmt->setUInt16(0, event_id);
     stmt->setUInt8(1, mGameEvent[event_id].state);
     stmt->setUInt32(2, mGameEvent[event_id].nextstart ? uint32(mGameEvent[event_id].nextstart) : 0);
     trans->Append(stmt);
 
-    CharacterDatabase.CommitTransaction(trans);
+    CharDB.CommitTransaction(trans);
 }
 
 void GameEventMgr::SendWorldStateUpdate(Player * plr, uint16 event_id)

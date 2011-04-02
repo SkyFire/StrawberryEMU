@@ -38,7 +38,7 @@ void AddonMgr::LoadFromDB()
 {
     uint32 oldMSTime = getMSTime();
 
-    QueryResult result = CharacterDatabase.Query("SELECT name, crc FROM addons");
+    QueryResult result = CharDB.Query("SELECT name, crc FROM addons");
 
     if (!result)
     {
@@ -70,8 +70,8 @@ void AddonMgr::LoadFromDB()
 void AddonMgr::SaveAddon(AddonInfo const& addon)
 {
     std::string name = addon.Name;
-    CharacterDatabase.escape_string(name);
-    CharacterDatabase.PExecute("INSERT INTO addons (name, crc) VALUES ('%s', %u)", name.c_str(), addon.CRC);
+    CharDB.escape_string(name);
+    CharDB.PExecute("INSERT INTO addons (name, crc) VALUES ('%s', %u)", name.c_str(), addon.CRC);
 
     SavedAddon newAddon(addon.Name, addon.CRC);
     m_knownAddons.push_back(newAddon);

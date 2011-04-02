@@ -310,8 +310,8 @@ void AuctionHouseMgr::LoadAuctionItems()
     uint32 oldMSTime = getMSTime();
 
     // data needs to be at first place for Item::LoadFromDB
-    PreparedStatement* stmt = CharacterDatabase.GetPreparedStatement(CHAR_LOAD_AUCTION_ITEMS);
-    PreparedQueryResult result = CharacterDatabase.Query(stmt);
+    PreparedStatement* stmt = CharDB.GetPreparedStatement(CHAR_LOAD_AUCTION_ITEMS);
+    PreparedQueryResult result = CharDB.Query(stmt);
 
     if (!result)
     {
@@ -358,7 +358,7 @@ void AuctionHouseMgr::LoadAuctions()
 {
     uint32 oldMSTime = getMSTime();
 
-    QueryResult result = CharacterDatabase.Query("SELECT COUNT(*) FROM auctionhouse");
+    QueryResult result = CharDB.Query("SELECT COUNT(*) FROM auctionhouse");
     if (!result)
     {
         sLog->outString(">> Loaded 0 auctions. DB table `auctionhouse` is empty.");
@@ -376,7 +376,7 @@ void AuctionHouseMgr::LoadAuctions()
         return;
     }
 
-    result = CharacterDatabase.Query("SELECT id,auctioneerguid,itemguid,item_template,itemowner,buyoutprice,time,buyguid,lastbid,startbid,deposit FROM auctionhouse");
+    result = CharDB.Query("SELECT id,auctioneerguid,itemguid,item_template,itemowner,buyoutprice,time,buyguid,lastbid,startbid,deposit FROM auctionhouse");
     if (!result)
     {
         sLog->outString();
@@ -388,7 +388,7 @@ void AuctionHouseMgr::LoadAuctions()
 
     //- TODO: Get rid of horrible design so we don't have to use transaction here to statisfy
     //- function parameters.
-    SQLTransaction trans = CharacterDatabase.BeginTransaction();
+    SQLTransaction trans = CharDB.BeginTransaction();
 
     do
     {
@@ -450,7 +450,7 @@ void AuctionHouseMgr::LoadAuctions()
 
     } while (result->NextRow());
 
-    CharacterDatabase.CommitTransaction(trans);
+    CharDB.CommitTransaction(trans);
 
     sLog->outString(">> Loaded %u auctions in %u ms", count, GetMSTimeDiffToNow(oldMSTime));
     sLog->outString();   
@@ -548,7 +548,7 @@ void AuctionHouseObject::Update()
     if (AuctionsMap.empty())
         return;
 
-    QueryResult result = CharacterDatabase.PQuery("SELECT id FROM auctionhouse WHERE time <= %u ORDER BY TIME ASC", (uint32)curTime+60);
+    QueryResult result = CharDB.PQuery("SELECT id FROM auctionhouse WHERE time <= %u ORDER BY TIME ASC", (uint32)curTime+60);
 
     if (!result)
         return;
@@ -561,7 +561,7 @@ void AuctionHouseObject::Update()
         if (!auction)
             continue;
 
-        SQLTransaction trans = CharacterDatabase.BeginTransaction();
+        SQLTransaction trans = CharDB.BeginTransaction();
 
         ///- Either cancel the auction if there was no bidder
         if (auction->bidder == 0)
@@ -584,7 +584,7 @@ void AuctionHouseObject::Update()
 
         ///- In any case clear the auction
         auction->DeleteFromDB(trans);
-        CharacterDatabase.CommitTransaction(trans);
+        CharDB.CommitTransaction(trans);
 
         RemoveAuction(auction, item_template);
         sAuctionMgr->RemoveAItem(auction->item_guidlow);

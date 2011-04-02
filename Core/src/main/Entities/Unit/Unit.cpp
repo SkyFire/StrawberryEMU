@@ -1594,19 +1594,18 @@ uint32 Unit::CalcArmorReducedDamage(Unit* pVictim, const uint32 damage, SpellEnt
     if (armor < 0.0f)
         armor = 0.0f;
 
-    float levelModifier = getLevel();
-    if (levelModifier > 59)
-        levelModifier = levelModifier + (4.5f * (levelModifier - 59));
+    float armorReduction = armor / (armor + 85.f * getLevel() + 400.f);
+    if(getLevel() > 59)
+        armorReduction =   armor / (armor + 467.5f * getLevel() - 22167.5f);
+    if(getLevel() > 80)
+        armorReduction =   armor / (armor + 2167.5f * getLevel() - 158167.5f);
 
-    float tmpvalue = 0.1f * armor / (8.5f * levelModifier + 40);
-    tmpvalue = tmpvalue / (1.0f + tmpvalue);
+    if (armorReduction < 0.0f)
+        armorReduction = 0.0f;
+    if (armorReduction > 0.75f)
+        armorReduction = 0.75f;
 
-    if (tmpvalue < 0.0f)
-        tmpvalue = 0.0f;
-    if (tmpvalue > 0.75f)
-        tmpvalue = 0.75f;
-
-    newdamage = uint32(damage - (damage * tmpvalue));
+    newdamage = uint32(damage - (damage * armorReduction));
 
     return (newdamage > 1) ? newdamage : 1;
 }
@@ -2772,13 +2771,10 @@ float Unit::GetUnitCriticalChance(WeaponAttackType attackType, const Unit *pVict
     // reduce crit chance from Rating for players
     if (attackType != RANGED_ATTACK)
     {
-        ApplyResilience(pVictim, &crit, NULL, false, CR_CRIT_TAKEN_MELEE);
         // Glyph of barkskin
         if (pVictim->HasAura(63057) && pVictim->HasAura(22812))
             crit -= 25.0f;
     }
-    else
-        ApplyResilience(pVictim, &crit, NULL, false, CR_CRIT_TAKEN_RANGED);
 
     // Apply crit chance from defence skill
     crit += (int32(GetMaxSkillValueForLevel(pVictim)) - int32(pVictim->GetDefenseSkillValue(this))) * 0.04f;
@@ -13200,10 +13196,16 @@ bool Unit::HandleStatModifier(UnitMods unitMod, UnitModifierType modifierType, f
         case UNIT_MOD_STAT_AGILITY:
         case UNIT_MOD_STAT_STAMINA:
         case UNIT_MOD_STAT_INTELLECT:
-        case UNIT_MOD_STAT_SPIRIT:         UpdateStats(GetStatByAuraGroup(unitMod));  break;
+        case UNIT_MOD_STAT_SPIRIT:
+            UpdateStats(GetStatByAuraGroup(unitMod));
+            break;
 
-        case UNIT_MOD_ARMOR:               UpdateArmor();           break;
-        case UNIT_MOD_HEALTH:              UpdateMaxHealth();       break;
+        case UNIT_MOD_ARMOR:
+            UpdateArmor();
+            break;
+        case UNIT_MOD_HEALTH:
+            UpdateMaxHealth();
+            break;
 
         case UNIT_MOD_MANA:
         case UNIT_MOD_RAGE:
@@ -13211,21 +13213,36 @@ bool Unit::HandleStatModifier(UnitMods unitMod, UnitModifierType modifierType, f
         case UNIT_MOD_ENERGY:
         case UNIT_MOD_HAPPINESS:
         case UNIT_MOD_RUNE:
-        case UNIT_MOD_RUNIC_POWER:          UpdateMaxPower(GetPowerTypeByAuraGroup(unitMod));          break;
+        case UNIT_MOD_RUNIC_POWER:
+            UpdateMaxPower(GetPowerTypeByAuraGroup(unitMod));
+            break;
 
         case UNIT_MOD_RESISTANCE_HOLY:
         case UNIT_MOD_RESISTANCE_FIRE:
         case UNIT_MOD_RESISTANCE_NATURE:
         case UNIT_MOD_RESISTANCE_FROST:
         case UNIT_MOD_RESISTANCE_SHADOW:
-        case UNIT_MOD_RESISTANCE_ARCANE:   UpdateResistances(GetSpellSchoolByAuraGroup(unitMod));      break;
+        case UNIT_MOD_RESISTANCE_ARCANE:
+            UpdateResistances(GetSpellSchoolByAuraGroup(unitMod));
+            break;
 
-        case UNIT_MOD_ATTACK_POWER:        UpdateAttackPowerAndDamage();         break;
-        case UNIT_MOD_ATTACK_POWER_RANGED: UpdateAttackPowerAndDamage(true);     break;
-
-        case UNIT_MOD_DAMAGE_MAINHAND:     UpdateDamagePhysical(BASE_ATTACK);    break;
-        case UNIT_MOD_DAMAGE_OFFHAND:      UpdateDamagePhysical(OFF_ATTACK);     break;
-        case UNIT_MOD_DAMAGE_RANGED:       UpdateDamagePhysical(RANGED_ATTACK);  break;
+        case UNIT_MOD_ATTACK_POWER_POS:    
+        case UNIT_MOD_ATTACK_POWER_NEG:
+            UpdateAttackPowerAndDamage();
+            break;
+        case UNIT_MOD_ATTACK_POWER_RANGED_POS: 
+        case UNIT_MOD_ATTACK_POWER_RANGED_NEG:
+            UpdateAttackPowerAndDamage(true);
+            break;
+        case UNIT_MOD_DAMAGE_MAINHAND:
+            UpdateDamagePhysical(BASE_ATTACK);
+            break;
+        case UNIT_MOD_DAMAGE_OFFHAND:
+            UpdateDamagePhysical(OFF_ATTACK);
+            break;
+        case UNIT_MOD_DAMAGE_RANGED:
+            UpdateDamagePhysical(RANGED_ATTACK);
+            break;
 
         default:
             break;
@@ -13450,7 +13467,7 @@ void Unit::SetPower(Powers power, uint32 val)
 
     WorldPacket data(SMSG_POWER_UPDATE);
     data.append(GetPackGUID());
-	data << uint32(1);                     // count
+    data << uint32(1);                     // count
     data << uint8(power);
     data << uint32(val);
     SendMessageToSet(&data, GetTypeId() == TYPEID_PLAYER ? true : false);
@@ -16168,9 +16185,6 @@ void Unit::ApplyResilience(Unit const* victim, float* crit, int32* damage, bool 
     switch (type)
     {
         case CR_CRIT_TAKEN_MELEE:
-            // Crit chance reduction works against nonpets
-            if (crit)
-                *crit -= target->GetMeleeCritChanceReduction();
             if (source && damage)
             {
                 if (isCrit)
@@ -16179,9 +16193,6 @@ void Unit::ApplyResilience(Unit const* victim, float* crit, int32* damage, bool 
             }
             break;
         case CR_CRIT_TAKEN_RANGED:
-            // Crit chance reduction works against nonpets
-            if (crit)
-                *crit -= target->ToPlayer()->GetRangedCritChanceReduction();
             if (source && damage)
             {
                 if (isCrit)
@@ -16190,9 +16201,6 @@ void Unit::ApplyResilience(Unit const* victim, float* crit, int32* damage, bool 
             }
             break;
         case CR_CRIT_TAKEN_SPELL:
-            // Crit chance reduction works against nonpets
-            if (crit)
-                *crit -= target->GetSpellCritChanceReduction();
             if (source && damage)
             {
                 if (isCrit)

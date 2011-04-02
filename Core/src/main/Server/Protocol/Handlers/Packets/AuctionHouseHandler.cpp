@@ -240,12 +240,12 @@ void WorldSession::HandleAuctionSellItem(WorldPacket & recv_data)
 
     pl->MoveItemFromInventory(it->GetBagSlot(), it->GetSlot(), true);
 
-    SQLTransaction trans = CharacterDatabase.BeginTransaction();
+    SQLTransaction trans = CharDB.BeginTransaction();
     it->DeleteFromInventoryDB(trans);
     it->SaveToDB(trans);                                         // recursive and not have transaction guard into self, not in inventiory and can be save standalone
     AH->SaveToDB(trans);
     pl->SaveInventoryAndGoldToDB(trans);
-    CharacterDatabase.CommitTransaction(trans);
+    CharDB.CommitTransaction(trans);
 
     SendAuctionCommandResult(AH->Id, AUCTION_SELL_ITEM, AUCTION_OK);
 
@@ -315,7 +315,7 @@ void WorldSession::HandleAuctionPlaceBid(WorldPacket & recv_data)
         return;
     }
 
-    SQLTransaction trans = CharacterDatabase.BeginTransaction();
+    SQLTransaction trans = CharDB.BeginTransaction();
 
     if (price < auction->buyout || auction->buyout == 0)
     {
@@ -370,7 +370,7 @@ void WorldSession::HandleAuctionPlaceBid(WorldPacket & recv_data)
         auctionHouse->RemoveAuction(auction, item_template);
     }
     pl->SaveInventoryAndGoldToDB(trans);
-    CharacterDatabase.CommitTransaction(trans);
+    CharDB.CommitTransaction(trans);
 }
 
 //this void is called when auction_owner cancels his auction
@@ -398,7 +398,7 @@ void WorldSession::HandleAuctionRemoveItem(WorldPacket & recv_data)
     AuctionEntry *auction = auctionHouse->GetAuction(auctionId);
     Player *pl = GetPlayer();
 
-    SQLTransaction trans = CharacterDatabase.BeginTransaction();
+    SQLTransaction trans = CharDB.BeginTransaction();
     if (auction && auction->owner == pl->GetGUIDLow())
     {
         Item *pItem = sAuctionMgr->GetAItem(auction->item_guidlow);
@@ -444,7 +444,7 @@ void WorldSession::HandleAuctionRemoveItem(WorldPacket & recv_data)
 
     pl->SaveInventoryAndGoldToDB(trans);
     auction->DeleteFromDB(trans);
-    CharacterDatabase.CommitTransaction(trans);
+    CharDB.CommitTransaction(trans);
 
     uint32 item_template = auction->item_template;
     sAuctionMgr->RemoveAItem(auction->item_guidlow);

@@ -19,7 +19,7 @@
 #ifndef CHARACTERDATABASECLEANER_H
 #define CHARACTERDATABASECLEANER_H
 
-namespace CharacterDatabaseCleaner
+namespace CharDBCleaner
 {
     enum CleaningFlags
     {

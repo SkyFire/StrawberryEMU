@@ -21,19 +21,19 @@
 #include "DatabaseWorkerPool.h"
 #include "MySQLConnection.h"
 
-class CharacterDatabaseConnection : public MySQLConnection
+class CharDBConnection : public MySQLConnection
 {
     public:
         //- Constructors for sync and async connections
-        CharacterDatabaseConnection(MySQLConnectionInfo& connInfo) : MySQLConnection(connInfo) {}
+        CharDBConnection(MySQLConnectionInfo& connInfo) : MySQLConnection(connInfo) {}
 
         //- Loads databasetype specific prepared statements
         bool Open();
 };
 
-typedef DatabaseWorkerPool<CharacterDatabaseConnection> CharacterDatabaseWorkerPool;
+typedef DatabaseWorkerPool<CharDBConnection> CharDBWorkerPool;
 
-enum CharacterDatabaseStatements
+enum CharDBStatements
 {
     /*  Naming standard for defines:
         {DB}_{SET/DEL/ADD/REP}_{Summary of data changed}

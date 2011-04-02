@@ -969,7 +969,7 @@ struct GtBarberShopCostBaseEntry
     float   cost;                                           // 1
 };
 
-struct GtCombatRatingsEntry
+struct GtChanceToMeleeCritEntry
 {
     uint32 level;                                           // 0
     float  ratio;                                           // 1
@@ -981,7 +981,7 @@ struct GtChanceToMeleeCritBaseEntry
     float  base;                                            // 1
 };
 
-struct GtChanceToMeleeCritEntry
+struct GtChanceToSpellCritEntry
 {
     uint32 level;                                           // 0
     float  ratio;                                           // 1
@@ -993,10 +993,28 @@ struct GtChanceToSpellCritBaseEntry
     float  base;                                            // 1
 };
 
-struct GtChanceToSpellCritEntry
+struct GtCombatRatingsEntry
 {
     uint32 level;                                           // 0
     float  ratio;                                           // 1
+};
+
+struct GtNPCManaCostScaler
+{
+    uint32 level;                                          // 0
+    float ratio;                                           // 1
+};
+
+struct GtOCTClassCombatRatingScalar
+{
+    uint32 level;                                          // 0
+    float ratio;                                           // 1
+};
+
+struct GtOCTHpPerStamina
+{
+    uint32 level;                                          // 0
+    float ratio;                                           // 1
 };
 
 struct GtOCTRegenMPEntry
@@ -1005,18 +1023,23 @@ struct GtOCTRegenMPEntry
     float  ratio;                                           // 1
 };
 
-
 struct GtRegenMPPerSptEntry
 {
     uint32 level;                                           // 0
     float  ratio;                                           // 1
 };
+
+struct GtShieldBlockRegular
+{
+    uint32 level;                                           // 0
+    float  ratio;                                           // 1
+};
+
 struct gtSpellScaling
 {
     uint32 level;
     float coef;
 };
-
 
 /*NOT USED*/
 /*struct HolidayDescriptionsEntry
@@ -1986,7 +2009,7 @@ struct TalentTabEntry
     //DBCString internalname;                               // 6
     //DBCString description;                                // 7
     //uint32 rolesMask;                                     // 8 4.0.0
-    //uint32 spellIds[2];                                   // 9-10 passive mastery bonus spells?
+    uint32 masterySpell[2];                                 // 9-10 passive mastery bonus spells?
 };
 
 struct TalentTreePrimarySpellsEntry

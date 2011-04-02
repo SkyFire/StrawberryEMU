@@ -42,7 +42,7 @@ void OutdoorPvPMgr::InitOutdoorPvP()
     uint32 oldMSTime = getMSTime();
 
     //                                                       0       1
-    QueryResult result = WorldDatabase.Query("SELECT TypeId, ScriptName FROM outdoorpvp_template");
+    QueryResult result = WorldDB.Query("SELECT TypeId, ScriptName FROM outdoorpvp_template");
 
     if (!result)
     {

@@ -259,7 +259,7 @@ enum Opcodes
     CMSG_QUESTGIVER_QUEST_AUTOLAUNCH                    = 0x187,
     CMSG_QUESTGIVER_ACCEPT_QUEST                        = 0x20C4,    // 8388  - 4.0.6.13623
     CMSG_QUESTGIVER_COMPLETE_QUEST                      = 0xB5AC,    // 46508 - 4.0.6.13623
-    CMSG_QUESTGIVER_REQUEST_REWARD                      = 0x0E7D,    // 3709  - 4.0.6.13623
+    CMSG_QUESTGIVER_REQUEST_REWARD                      = 0x23A8,    // 9128  - 4.0.6.13623
     CMSG_QUESTGIVER_CHOOSE_REWARD                       = 0x6AC0,    // 27328 - 4.0.6.13623
     CMSG_QUESTGIVER_CANCEL                              = 0x61EC,    // 25068 - 4.0.6.13623
 
@@ -600,6 +600,7 @@ enum Opcodes
     CMSG_RECLAIM_CORPSE                                 = 0x7CC8,    // 31944 - 4.0.6.13623
     CMSG_GHOST                                          = 0x1E5,
     CMSG_HEARTH_AND_RESURRECT                           = 0x49C,
+    CMSG_RETURN_TO_GRAVEYARD                            = 0x0593,    // 1427  - 4.0.6.13623
 
     // Player Health / Power / Mana / ...
     CMSG_SET_RUNE_COUNT                                 = 0x458,
@@ -661,6 +662,7 @@ enum Opcodes
     /***********************************************************/
     /********************* QUEST OPCODES ***********************/
     /***********************************************************/
+    CMSG_START_QUEST                                     = 0x0613,    // 1555  - 4.0.6.13623
     CMSG_QUESTLOG_SWAP_QUEST                             = 0x193,
     CMSG_QUESTLOG_REMOVE_QUEST                           = 0xEDA8,    // 60840 - 4.0.6.13623
     CMSG_QUEST_CONFIRM_ACCEPT                            = 0x6FCC,    // 28620 - 4.0.6.13623
@@ -1190,12 +1192,12 @@ enum Opcodes
     SMSG_QUESTGIVER_STATUS                               = 0x7988,    // 31112 - 4.0.6.13623
     SMSG_QUESTGIVER_QUEST_LIST                           = 0x2B88,    // 11144 - 4.0.6.13623
     SMSG_QUESTGIVER_QUEST_DETAILS                        = 0x68A0,    // 26784 - 4.0.6.13623
-    SMSG_QUESTGIVER_REQUEST_ITEMS                        = 0x23A8,    // 9128  - 4.0.6.13623
+    SMSG_QUESTGIVER_REQUEST_ITEMS                        = 0x6EE0,    // 28384 - 4.0.6.13623
     SMSG_QUESTGIVER_OFFER_REWARD                         = 0x3FCC,    // 16332 - 4.0.6.13623
     SMSG_QUESTGIVER_QUEST_INVALID                        = 0x18F,
-    SMSG_QUESTGIVER_QUEST_COMPLETE                       = 0xF5C0,    // 62912 - 4.0.6.13623
+    SMSG_QUESTGIVER_QUEST_COMPLETE                       = 0x050E,    // 1294  - 4.0.6.13623
     SMSG_QUESTGIVER_QUEST_FAILED                         = 0xA084,    // 41092 - 4.0.6.13623
-    SMSG_QUESTGIVER_STATUS_MULTIPLE                      = 0x418,
+    SMSG_QUESTGIVER_STATUS_MULTIPLE                      = 0xF5C0,    // 62912 - 4.0.6.13623
 
     /***********************************************************/
     /********************** GROUP OPCODES **********************/
@@ -1293,7 +1295,7 @@ enum Opcodes
     SMSG_ITEM_PUSH_RESULT                                = 0xFBE8,    // 64488 - 4.0.6.13623
     SMSG_ITEM_REFUND_INFO_RESPONSE                       = 0x4B2,
     SMSG_ITEM_REFUND_RESULT                              = 0x4B5,
-    SMSG_UPDATE_ITEM_ENCHANTMENTS                        = 0x50B,
+    SMSG_UPDATE_ITEM_ENCHANTMENTS                        = 0x20E8,    // 8424  - 4.0.6.13623
 
     // Inventory / Trade
     SMSG_INVENTORY_CHANGE_FAILURE                        = 0xAFCC,    // 45004 - 4.0.6.13623
@@ -1369,7 +1371,7 @@ enum Opcodes
     SMSG_FORCE_WALK_SPEED_CHANGE                         = 0x68E8,    // 26856 - 4.0.6.13623
     SMSG_FORCE_SWIM_BACK_SPEED_CHANGE                    = 0x2DC,
     SMSG_FORCE_TURN_RATE_CHANGE                          = 0x2DE,
-    SMSG_FORCE_FLIGHT_SPEED_CHANGE                       = 0x381,
+    SMSG_FORCE_FLIGHT_SPEED_CHANGE                       = 0xE5CC,    // 58828 - 4.0.6.13623
     SMSG_FORCE_FLIGHT_BACK_SPEED_CHANGE                  = 0x383,
     SMSG_FORCE_UNK1_SPEED_CHANGE                         = 0x4CE,
     SMSG_FORCE_UNK2_SPEED_CHANGE                         = 0x4D0,
@@ -1384,8 +1386,8 @@ enum Opcodes
     SMSG_MOVE_UNSET_HOVER                                = 0x0F5,
     SMSG_MOVE_SET_FLIGHT                                 = 0x33E,
     SMSG_MOVE_UNSET_FLIGHT                               = 0x33F,
-    SMSG_MOVE_SET_CAN_FLY                                = 0x3084,    // 12420 - 4.0.6.13623
-    SMSG_MOVE_UNSET_CAN_FLY                              = 0x344,
+    SMSG_MOVE_SET_CAN_FLY                                = 0xBDA0,    // 48544 - 4.0.6.13623
+    SMSG_MOVE_UNSET_CAN_FLY                              = 0x3084,    // 12420 - 4.0.6.13623
 
     // Spline
     SMSG_SPLINE_MOVE_UNROOT                              = 0x304,
@@ -1666,7 +1668,7 @@ enum Opcodes
     SMSG_QUERY_TIME_RESPONSE                             = 0xF1AC,    // 61868 - 4.0.6.13623
     SMSG_TIME_SYNC_REQ                                   = 0xAA80,    // 43648 - 4.0.6.13623
     SMSG_ITEM_TIME_UPDATE                                = 0x26A4,    // 3677  - 4.0.6.13623
-    SMSG_ITEM_ENCHANT_TIME_UPDATE                        = 0x3B80,    // 14164 - 4.0.6a 13329
+    SMSG_ITEM_ENCHANT_TIME_UPDATE                        = 0x66A0,    // 26272 - 4.0.6.13623
     SMSG_ACCOUNT_DATA_TIMES                              = 0x7280,    // 29312 - 4.0.6.13623
     SMSG_PLAY_TIME_WARNING                               = 0x32EC,    // 13036 - 4.0.6.13623
     SMSG_GAMETIMEBIAS_SET                                = 0x314,

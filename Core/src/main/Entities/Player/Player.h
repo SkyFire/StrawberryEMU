@@ -1796,7 +1796,7 @@ class Player : public Unit, public GridObject<Player>
         void RemoveFromGroup(RemoveMethod method = GROUP_REMOVEMETHOD_DEFAULT) { RemoveFromGroup(GetGroup(),GetGUID(), method); }
         void SendUpdateToOutOfRangeGroupMembers();
 
-        void SetInGuild(uint32 GuildId) { m_guildId = GuildId; }
+        void SetInGuild(uint32 GuildId);
         void SetRank(uint8 rankId) { SetUInt32Value(PLAYER_GUILDRANK, rankId); }
         uint8 GetRank() { return uint8(GetUInt32Value(PLAYER_GUILDRANK)); }
         void SetGuildIdInvited(uint32 GuildId) { m_GuildIdInvited = GuildId; }
@@ -1850,6 +1850,7 @@ class Player : public Unit, public GridObject<Player>
         bool UpdateAllStats();
         void UpdateResistances(uint32 school);
         void UpdateArmor();
+        void UpdateSpellPower();
         void UpdateMaxHealth();
         void UpdateMaxPower(Powers power);
         void ApplyFeralAPBonus(int32 amount, bool apply);
@@ -1872,7 +1873,7 @@ class Player : public Unit, public GridObject<Player>
         float OCTRegenMPPerSpirit();
         float GetRatingCoefficient(CombatRating cr) const;
         float GetRatingBonusValue(CombatRating cr) const;
-        uint32 GetBaseSpellPowerBonus() { return m_baseSpellPower; }
+        uint32 GetBaseSpellPowerBonus() { return m_spellPowerFromIntellect + m_baseSpellPower; }
         int32 GetSpellPenetrationItemMod() const { return m_spellPenetrationItemMod; }
 
         float GetExpertiseDodgeOrParryReduction(WeaponAttackType attType) const;
@@ -2629,6 +2630,7 @@ class Player : public Unit, public GridObject<Player>
         float m_auraBaseMod[BASEMOD_END][MOD_END];
         int16 m_baseRatingValue[MAX_COMBAT_RATING];
         uint32 m_baseSpellPower;
+        uint32 m_spellPowerFromIntellect;
         uint32 m_baseFeralAP;
         uint32 m_baseManaRegen;
         uint32 m_baseHealthRegen;

@@ -3991,11 +3991,11 @@ void AuraEffect::HandleAuraAllowFlight(AuraApplication const * aurApp, uint8 mod
     if (Player *plr = target->m_movedPlayer)
     {
         // allow fly
-        WorldPacket data;
+        WorldPacket data(SMSG_MULTIPLE_PACKETS, 2 + 12);
         if (apply)
-            data.Initialize(SMSG_MOVE_SET_CAN_FLY, 12);
+            data << uint16(SMSG_MOVE_SET_CAN_FLY);
         else
-            data.Initialize(SMSG_MOVE_UNSET_CAN_FLY, 12);
+            data << uint16(SMSG_MOVE_UNSET_CAN_FLY);
         data.append(target->GetPackGUID());
         data << uint32(0);                                      // unk
         plr->SendDirectMessage(&data);
@@ -5464,7 +5464,10 @@ void AuraEffect::HandleAuraModAttackPower(AuraApplication const * aurApp, uint8 
 
     Unit * target = aurApp->GetTarget();
 
-    target->HandleStatModifier(UNIT_MOD_ATTACK_POWER, TOTAL_VALUE, float(GetAmount()), apply);
+    if(float(GetAmount()) > 0)
+        target->HandleStatModifier(UNIT_MOD_ATTACK_POWER_POS, TOTAL_VALUE, float(GetAmount()), apply);
+    else
+        target->HandleStatModifier(UNIT_MOD_ATTACK_POWER_NEG, TOTAL_VALUE, -float(GetAmount()), apply);
 }
 
 void AuraEffect::HandleAuraModRangedAttackPower(AuraApplication const * aurApp, uint8 mode, bool apply) const
@@ -5477,7 +5480,10 @@ void AuraEffect::HandleAuraModRangedAttackPower(AuraApplication const * aurApp, 
     if ((target->getClassMask() & CLASSMASK_WAND_USERS) != 0)
         return;
 
-    target->HandleStatModifier(UNIT_MOD_ATTACK_POWER_RANGED, TOTAL_VALUE, float(GetAmount()), apply);
+    if(float(GetAmount()) > 0)
+        target->HandleStatModifier(UNIT_MOD_ATTACK_POWER_RANGED_POS, TOTAL_VALUE, float(GetAmount()), apply);
+    else
+        target->HandleStatModifier(UNIT_MOD_ATTACK_POWER_RANGED_NEG, TOTAL_VALUE, -float(GetAmount()), apply);
 }
 
 void AuraEffect::HandleAuraModAttackPowerPercent(AuraApplication const * aurApp, uint8 mode, bool apply) const
@@ -5488,7 +5494,10 @@ void AuraEffect::HandleAuraModAttackPowerPercent(AuraApplication const * aurApp,
     Unit * target = aurApp->GetTarget();
 
     //UNIT_FIELD_ATTACK_POWER_MULTIPLIER = multiplier - 1
-    target->HandleStatModifier(UNIT_MOD_ATTACK_POWER, TOTAL_PCT, float(GetAmount()), apply);
+    if(float(GetAmount()) > 0)
+        target->HandleStatModifier(UNIT_MOD_ATTACK_POWER_POS, TOTAL_PCT, float(GetAmount()), apply);
+    else
+        target->HandleStatModifier(UNIT_MOD_ATTACK_POWER_NEG, TOTAL_PCT, -float(GetAmount()), apply);
 }
 
 void AuraEffect::HandleAuraModRangedAttackPowerPercent(AuraApplication const * aurApp, uint8 mode, bool apply) const
@@ -5502,7 +5511,10 @@ void AuraEffect::HandleAuraModRangedAttackPowerPercent(AuraApplication const * a
         return;
 
     //UNIT_FIELD_RANGED_ATTACK_POWER_MULTIPLIER = multiplier - 1
-    target->HandleStatModifier(UNIT_MOD_ATTACK_POWER_RANGED, TOTAL_PCT, float(GetAmount()), apply);
+    if(float(GetAmount()) > 0)
+        target->HandleStatModifier(UNIT_MOD_ATTACK_POWER_RANGED_POS, TOTAL_PCT, float(GetAmount()), apply);
+    else
+        target->HandleStatModifier(UNIT_MOD_ATTACK_POWER_RANGED_NEG, TOTAL_PCT, -float(GetAmount()), apply);
 }
 
 void AuraEffect::HandleAuraModRangedAttackPowerOfStatPercent(AuraApplication const * aurApp, uint8 mode, bool /*apply*/) const
@@ -5540,6 +5552,85 @@ void AuraEffect::HandleModDamageDone(AuraApplication const * aurApp, uint8 mode,
 {
     if (!(mode & (AURA_EFFECT_HANDLE_CHANGE_AMOUNT_MASK | AURA_EFFECT_HANDLE_STAT)))
         return;
+
+    Unit * target = aurApp->GetTarget();
+
+    // apply item specific bonuses for already equipped weapon
+    if (target->GetTypeId() == TYPEID_PLAYER)
+    {
+        for (int i = 0; i < MAX_ATTACK; ++i)
+            if (Item* pItem = target->ToPlayer()->GetWeaponForAttack(WeaponAttackType(i), true))
+                target->ToPlayer()->_ApplyWeaponDependentAuraDamageMod(pItem, WeaponAttackType(i), this, apply);
+    }
+
+    // GetMiscValue() is bitmask of spell schools
+    // 1 (0-bit) - normal school damage (SPELL_SCHOOL_MASK_NORMAL)
+    // 126 - full bitmask all magic damages (SPELL_SCHOOL_MASK_MAGIC) including wands
+    // 127 - full bitmask any damages
+    //
+    // mods must be applied base at equipped weapon class and subclass comparison
+    // with spell->EquippedItemClass and  EquippedItemSubClassMask and EquippedItemInventoryTypeMask
+    // GetMiscValue() comparison with item generated damage types
+
+    if ((GetMiscValue() & SPELL_SCHOOL_MASK_NORMAL) != 0)
+    {
+        // apply generic physical damage bonuses including wand case
+        if (GetSpellProto()->GetEquippedItemClass() == -1 || target->GetTypeId() != TYPEID_PLAYER)
+        {
+            target->HandleStatModifier(UNIT_MOD_DAMAGE_MAINHAND, TOTAL_VALUE, float(GetAmount()), apply);
+            target->HandleStatModifier(UNIT_MOD_DAMAGE_OFFHAND, TOTAL_VALUE, float(GetAmount()), apply);
+            target->HandleStatModifier(UNIT_MOD_DAMAGE_RANGED, TOTAL_VALUE, float(GetAmount()), apply);
+
+            if (target->GetTypeId() == TYPEID_PLAYER)
+            {
+                if (GetAmount() > 0)
+                    target->ApplyModUInt32Value(PLAYER_FIELD_MOD_DAMAGE_DONE_POS, GetAmount(),apply);
+                else
+                    target->ApplyModUInt32Value(PLAYER_FIELD_MOD_DAMAGE_DONE_NEG, -GetAmount(),apply);
+            }
+        }
+        else
+        {
+            // done in Player::_ApplyWeaponDependentAuraMods
+        }
+    }
+
+    // Skip non magic case for speedup
+    if ((GetMiscValue() & SPELL_SCHOOL_MASK_MAGIC) == 0)
+        return;
+
+    if (GetSpellProto()->GetEquippedItemClass() != -1)
+    {
+        // wand magic case (skip generic to all item spell bonuses)
+        // done in Player::_ApplyWeaponDependentAuraMods
+
+        // Skip item specific requirements for not wand magic damage
+        return;
+    }
+
+    // Magic damage modifiers implemented in Unit::SpellDamageBonus
+    // This information for client side use only
+    if (target->GetTypeId() == TYPEID_PLAYER)
+    {
+        if (GetAmount() > 0)
+        {
+            for (int i = SPELL_SCHOOL_HOLY; i < MAX_SPELL_SCHOOL; i++)
+            {
+                if ((GetMiscValue() & (1 << i)) != 0)
+                    target->ApplyModUInt32Value(PLAYER_FIELD_MOD_DAMAGE_DONE_POS+i, GetAmount(), apply);
+            }
+        }
+        else
+        {
+            for (int i = SPELL_SCHOOL_HOLY; i < MAX_SPELL_SCHOOL; i++)
+            {
+                if ((GetMiscValue() & (1 << i)) != 0)
+                    target->ApplyModUInt32Value(PLAYER_FIELD_MOD_DAMAGE_DONE_NEG + i, -GetAmount(), apply);
+            }
+        }
+        if (Guardian* pet = target->ToPlayer()->GetGuardianPet())
+            pet->UpdateAttackPowerAndDamage();
+    }
 }
 
 void AuraEffect::HandleModDamagePercentDone(AuraApplication const * aurApp, uint8 mode, bool apply) const
