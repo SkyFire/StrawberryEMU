@@ -4391,11 +4391,11 @@ void AuraEffect::HandleAuraModIncreaseFlightSpeed(AuraApplication const * aurApp
         {
             if (Player *plr = target->m_movedPlayer)
             {
-                WorldPacket data;
+                WorldPacket data(SMSG_MULTIPLE_PACKETS, 2 + 12);
                 if (apply)
-                    data.Initialize(SMSG_MOVE_SET_CAN_FLY, 12);
+                    data << uint16(SMSG_MOVE_SET_CAN_FLY);
                 else
-                    data.Initialize(SMSG_MOVE_UNSET_CAN_FLY, 12);
+                    data << uint16(SMSG_MOVE_SET_CAN_FLY);
                 data.append(plr->GetPackGUID());
                 data << uint32(0);                                      // unknown
                 plr->SendDirectMessage(&data);

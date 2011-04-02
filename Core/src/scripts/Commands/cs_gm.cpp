@@ -93,11 +93,11 @@ public:
         if (!target)
             target = handler->GetSession()->GetPlayer();
 
-        WorldPacket data(4 + target->GetPackGUID().size());
+        WorldPacket data(SMSG_MULTIPLE_PACKETS, (2 + 4 + target->GetPackGUID().size()));
         if (strncmp(args, "on", 3) == 0)
-            data.SetOpcode(SMSG_MOVE_SET_CAN_FLY);
+            data << uint16(SMSG_MOVE_SET_CAN_FLY);
         else if (strncmp(args, "off", 4) == 0)
-            data.SetOpcode(SMSG_MOVE_UNSET_CAN_FLY);
+            data << uint16(SMSG_MOVE_UNSET_CAN_FLY);
         else
         {
             handler->SendSysMessage(LANG_USE_BOL);
