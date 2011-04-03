@@ -3986,7 +3986,8 @@ void Spell::SpellDamageWeaponDmg(SpellEffectEntry const* effect)
             case SPELL_EFFECT_WEAPON_DAMAGE_NOSCHOOL:
             case SPELL_EFFECT_NORMALIZED_WEAPON_DMG:
             case SPELL_EFFECT_WEAPON_PERCENT_DAMAGE:
-                return;     // we must calculate only at last weapon effect
+                if (j < int(effect->EffectIndex)) // we must calculate only at last weapon effect
+                    return;
             break;
         }
     }
@@ -4201,14 +4202,14 @@ void Spell::SpellDamageWeaponDmg(SpellEffectEntry const* effect)
         {
             case SPELL_EFFECT_WEAPON_DAMAGE:
             case SPELL_EFFECT_WEAPON_DAMAGE_NOSCHOOL:
-                fixed_bonus += CalculateDamage(j, unitTarget);
+                fixed_bonus += CalculateDamage(SpellEffIndex(j), unitTarget);
                 break;
             case SPELL_EFFECT_NORMALIZED_WEAPON_DMG:
-                fixed_bonus += CalculateDamage(j, unitTarget);
+                fixed_bonus += CalculateDamage(SpellEffIndex(j), unitTarget);
                 normalized = true;
                 break;
             case SPELL_EFFECT_WEAPON_PERCENT_DAMAGE:
-                ApplyPctN(weaponDamagePercentMod, CalculateDamage(j, unitTarget));
+                ApplyPctN(weaponDamagePercentMod, CalculateDamage(SpellEffIndex(j), unitTarget));
                 break;
             default:
                 break;                                      // not weapon damage effect, just skip

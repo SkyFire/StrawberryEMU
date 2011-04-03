@@ -1942,7 +1942,7 @@ void Unit::CalcHealAbsorb(Unit *pVictim, const SpellEntry *healSpell, uint32 &he
     healAmount = RemainingHeal;
 }
 
-void Unit::AttackerStateUpdate (Unit *pVictim, WeaponAttackType attType, bool extra)
+void Unit::AttackerStateUpdate(Unit *pVictim, WeaponAttackType attType, bool extra)
 {
     if (HasUnitState(UNIT_STAT_CANNOT_AUTOATTACK) || HasFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_PACIFIED))
         return;
@@ -1989,7 +1989,7 @@ void Unit::AttackerStateUpdate (Unit *pVictim, WeaponAttackType attType, bool ex
                 GetGUIDLow(), pVictim->GetGUIDLow(), pVictim->GetTypeId(), damageInfo.damage, damageInfo.absorb, damageInfo.blocked_amount, damageInfo.resist);
     }
 
-    if(!extra && m_extraAttacks)
+    if (!extra && m_extraAttacks)
     {
         while(m_extraAttacks)
         {

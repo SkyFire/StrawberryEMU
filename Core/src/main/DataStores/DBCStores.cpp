@@ -410,7 +410,7 @@ void LoadDBCStores(const std::string& dataPath)
         exit(1);
     }
 
-    const uint32 DBCFilesCount = 115;
+    const uint32 DBCFilesCount = 118;
 
     StoreProblemList bad_dbc_files;
 
