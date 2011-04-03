@@ -1,1 +1,1 @@
-DROP TABLE `IF EXISTS spell_ranks`;
+DROP TABLE IF EXISTS `spell_ranks`;
