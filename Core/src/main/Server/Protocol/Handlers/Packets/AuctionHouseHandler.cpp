@@ -74,9 +74,9 @@ void WorldSession::SendAuctionHello(uint64 guid, Creature* unit)
 }
 
 //call this method when player bids, creates, or deletes auction
-void WorldSession::SendAuctionCommandResult(uint32 auctionId, uint32 Action, uint32 ErrorCode, uint32 bidError)
+void WorldSession::SendAuctionCommandResult(uint32 auctionId, uint32 Action, uint32 ErrorCode, uint64 bidError)
 {
-    WorldPacket data(SMSG_AUCTION_COMMAND_RESULT, 16);
+    WorldPacket data(SMSG_AUCTION_COMMAND_RESULT, 20);
     data << auctionId;
     data << Action;
     data << ErrorCode;
@@ -95,32 +95,44 @@ void WorldSession::SendAuctionBidderNotification(uint32 location, uint32 auction
     data << uint32(bidSum);
     data << uint32(diff);
     data << uint32(item_template);
-    data << uint32(0);
+    data << uint32(0);                // Something with item names?
     SendPacket(&data);
 }
 
 //this void causes on client to display: "Your auction sold"
 void WorldSession::SendAuctionOwnerNotification(AuctionEntry* auction)
 {
-    WorldPacket data(SMSG_AUCTION_OWNER_NOTIFICATION, (7*4));
+    WorldPacket data(SMSG_AUCTION_OWNER_NOTIFICATION, ((2 * 4) + (2 * 8) + (3 * 4)));
     data << auction->Id;
     data << auction->bid;
-    data << (uint32) 0;                                     //unk
-    data << (uint32) 0;                                     //unk
-    data << (uint32) 0;                                     //unk
+    data << uint32(0);                                     // unk
+    data << uint64(0);                                     // unk
     data << auction->item_template;
-    data << (uint32) 0;                                     //unk
+    data << uint32(0);                                     // Something with item names
+    data << float(0);                                      // unk
     SendPacket(&data);
 }
 
-//this void creates new auction and adds auction to some auctionhouse
+
+void WorldSession::SendAuctionRemovedNotification(AuctionEntry* auction)
+{
+    WorldPacket data(SMSG_AUCTION_REMOVED_NOTIFICATION, 12);
+    data << auction->Id;
+    data << auction->item_template;
+    data << uint32(0);                // Something with item names
+    SendPacket(&data);
+}
+
+
+// this void creates new auction and adds auction to some auctionhouse
 void WorldSession::HandleAuctionSellItem(WorldPacket & recv_data)
 {
     uint64 auctioneer, item;
     uint64 bid, buyout;
     uint32 etime, count;
+    uint32 unk = 1;
     recv_data >> auctioneer;                                // uint64
-    recv_data.read_skip<uint32>();                          // const 1?
+    recv_data >> unk;                                 // 1
     recv_data >> item;                                      // uint64
     recv_data >> count;                                     // 3.2.2, number of items being auctioned
     recv_data >> bid;                                       // uint64, 4.0.6
@@ -257,9 +269,10 @@ void WorldSession::HandleAuctionPlaceBid(WorldPacket & recv_data)
 {
     uint64 auctioneer;
     uint32 auctionId;
-    uint32 price;
+    uint64 price;
     recv_data >> auctioneer;
-    recv_data >> auctionId >> price;
+    recv_data >> auctionId;
+    recv_data >> price;
 
     if (!auctionId || !price)
         return;                                             //check for cheaters
@@ -482,10 +495,10 @@ void WorldSession::HandleAuctionListBidderItems(WorldPacket & recv_data)
 
     WorldPacket data(SMSG_AUCTION_BIDDER_LIST_RESULT, (4+4+4));
     Player *pl = GetPlayer();
-    data << (uint32) 0;                                     //add 0 as count
+    data << (uint32)0;                                     // add 0 as count
     uint32 count = 0;
     uint32 totalcount = 0;
-    while (outbiddedCount > 0)                             //add all data, which client requires
+    while (outbiddedCount > 0)                             // add all data, which client requires
     {
         --outbiddedCount;
         uint32 outbiddedAuctionId;
@@ -499,9 +512,9 @@ void WorldSession::HandleAuctionListBidderItems(WorldPacket & recv_data)
     }
 
     auctionHouse->BuildListBidderItems(data,pl,count,totalcount);
-    data.put<uint32>(0, count);                           // add count to placeholder
+    data.put<uint32>(0, count);                             // add count to placeholder
     data << totalcount;
-    data << (uint32)300;                                    //unk 2.3.0
+    data << (uint32)300;                                    // unk 2.3.0
     SendPacket(&data);
 }
 
@@ -533,7 +546,7 @@ void WorldSession::HandleAuctionListOwnerItems(WorldPacket & recv_data)
     uint32 count = 0;
     uint32 totalcount = 0;
 
-    auctionHouse->BuildListOwnerItems(data,_player,count,totalcount);
+    auctionHouse->BuildListOwnerItems(data, _player, count, totalcount);
     data.put<uint32>(0, count);
     data << (uint32) totalcount;
     data << (uint32) 0;
@@ -620,7 +633,7 @@ void WorldSession::HandleAuctionListPendingSales(WorldPacket & recv_data)
     {
         data << "";                                         // string
         data << "";                                         // string
-        data << uint32(0);
+        data << uint64(0);
         data << uint32(0);
         data << float(0);
     }*/

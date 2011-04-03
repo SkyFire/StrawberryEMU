@@ -88,6 +88,11 @@ void InitOpcodeTable()
     OPCODE(CMSG_BATTLEFIELD_MGR_QUEUE_REQUEST, STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleNULL            );
     OPCODE(CMSG_BATTLEFIELD_MGR_EXIT_REQUEST, STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleNULL             );
 
+    /*****************************************************************/
+    /*********************** BATTLEFIELD OPCODES *********************/
+    /*****************************************************************/
+    OPCODE(CMSG_REQUEST_RATED_BATTLEGROUND_INFO,       STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleNULL    );
+
     /***********************************************************/
     /******************** CALENDAR OPCODES *********************/
     /***********************************************************/
@@ -569,6 +574,7 @@ void InitOpcodeTable()
 
     // Player PVP / Honor / ...
     OPCODE(CMSG_DISABLE_PVP_CHEAT,               STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleNULL );
+    OPCODE(CMSG_REQUEST_PVP_OPTIONS_ENABLED,     STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleNULL );
     OPCODE(CMSG_TOGGLE_PVP,                      STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleTogglePvP );
     OPCODE(CMSG_SET_PVP_RANK_CHEAT,              STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleNULL );
     OPCODE(CMSG_ADD_PVP_MEDAL_CHEAT,             STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleNULL );
@@ -835,6 +841,7 @@ void InitOpcodeTable()
     OPCODE(CMSG_COMMENTATOR_EXIT_INSTANCE,         STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleNULL );
     OPCODE(CMSG_COMMENTATOR_INSTANCE_COMMAND,      STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleNULL );
     OPCODE(CMSG_COMMENTATOR_SKIRMISH_QUEUE_COMMAND, STATUS_NEVER,   PROCESS_INPLACE,      &WorldSession::HandleNULL );
+    OPCODE(CMSG_COMMENTATOR_START_WARGAME,         STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleNULL );
 
     // Vehicle
     OPCODE(CMSG_DISMISS_CONTROLLED_VEHICLE,        STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleDismissControlledVehicle );

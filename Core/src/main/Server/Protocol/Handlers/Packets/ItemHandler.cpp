@@ -310,7 +310,7 @@ void WorldSession::HandleItemQuerySingleOpcode(WorldPacket & recv_data)
         data << pProto->ItemId;
         data << pProto->Class;
         data << pProto->SubClass;
-        data << int32(pProto->Unk0);                        // New 2.0.3 - Exist in item-sparse file (4.0.1)
+        data << int32(pProto->Unk0);                               // New 2.0.3 - Exist in item-sparse file (4.0.1)
         data << Name;
         data << pProto->DisplayInfoID;
         data << pProto->Quality;

@@ -4728,7 +4728,7 @@ void Spell::HandleEffects(Unit *pUnitTarget, Item *pItemTarget, GameObject *pGOT
     itemTarget = pItemTarget;
     gameObjTarget = pGOTarget;
 
-    SpellEffectEntry const* spellEffect = m_spellInfo->GetSpellEffect(SpellEffIndex(SpellEffIndex(i)));
+    SpellEffectEntry const* spellEffect = m_spellInfo->GetSpellEffect(SpellEffIndex(i));
     if (!spellEffect)
         return;
 
