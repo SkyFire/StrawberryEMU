@@ -6976,7 +6976,7 @@ int32 Spell::CalculateDamageDone(Unit *unit, const uint32 effectMask, float * mu
     unitTarget = unit;
     for (uint32 i = 0; i < MAX_SPELL_EFFECTS; ++i)
     {
-        SpellEffectEntry const* spellEffect = m_spellInfo->GetSpellEffect(i);
+        SpellEffectEntry const* spellEffect = m_spellInfo->GetSpellEffect(SpellEffIndex(i));
         if (!spellEffect)
             continue;
 
