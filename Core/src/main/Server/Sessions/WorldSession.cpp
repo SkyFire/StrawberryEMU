@@ -224,10 +224,8 @@ bool WorldSession::Update(uint32 diff, PacketFilter& updater)
     WorldPacket *packet = NULL;
     while (m_Socket && !m_Socket->IsClosed() && _recvQueue.next(packet, updater))
     {
-        // Show recieved opcodes only in debug mode
-        #ifdef STRAWBERRY_DEBUG
-            sLog->outString("SESSION: Received opcode 0x%.4X (%s)", packet->GetOpcode(), packet->GetOpcode() > 0xFFFF ?  "Unknown Opcode" : LookupOpcodeName(packet->GetOpcode()));
-        #endif
+        // Show recieved opcodes only in debug mode (Show it always in PTR builds)
+        sLog->outString("SESSION: Received opcode 0x%.4X (%s)", packet->GetOpcode(), packet->GetOpcode() > 0xFFFF ?  "Unknown Opcode" : LookupOpcodeName(packet->GetOpcode()));
 
         if (packet->GetOpcode() >= NUM_MSG_TYPES)
         {
