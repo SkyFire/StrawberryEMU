@@ -15,9 +15,9 @@
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "WorldDatabase.h"
+#include "WorldDB.h"
 
-bool WorldDatabaseConnection::Open()
+bool WorldDBConnection::Open()
 {
     if (!MySQLConnection::Open())
         return false;

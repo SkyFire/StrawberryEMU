@@ -27,7 +27,7 @@
 void SystemMgr::LoadVersion()
 {
     //Get Version information
-    QueryResult Result = WorldDatabase.Query("SELECT script_version FROM version LIMIT 1");
+    QueryResult Result = WorldDB.Query("SELECT script_version FROM version LIMIT 1");
 
     if (Result)
     {
@@ -51,7 +51,7 @@ void SystemMgr::LoadScriptTexts()
     sLog->outString("SCR: Loading Script Texts additional data...");
     uint32 oldMSTime = getMSTime();
 
-    QueryResult result = WorldDatabase.Query("SELECT entry, sound, type, language, emote FROM script_texts");
+    QueryResult result = WorldDB.Query("SELECT entry, sound, type, language, emote FROM script_texts");
 
     if (!result)
     {
@@ -112,7 +112,7 @@ void SystemMgr::LoadScriptTextsCustom()
 
     sLog->outString("SCR: Loading Custom Texts additional data...");
 
-    QueryResult result = WorldDatabase.Query("SELECT entry, sound, type, language, emote FROM custom_texts");
+    QueryResult result = WorldDB.Query("SELECT entry, sound, type, language, emote FROM custom_texts");
 
     if (!result)
     {
@@ -176,13 +176,13 @@ void SystemMgr::LoadScriptWaypoints()
     uint64 uiCreatureCount = 0;
 
     // Load Waypoints
-    QueryResult result = WorldDatabase.Query("SELECT COUNT(entry) FROM script_waypoint GROUP BY entry");
+    QueryResult result = WorldDB.Query("SELECT COUNT(entry) FROM script_waypoint GROUP BY entry");
     if (result)
         uiCreatureCount = result->GetRowCount();
 
     sLog->outString("SCR: Loading Script Waypoints for " UI64FMTD " creature(s)...", uiCreatureCount);
 
-    result = WorldDatabase.Query("SELECT entry, pointid, location_x, location_y, location_z, waittime FROM script_waypoint ORDER BY pointid");
+    result = WorldDB.Query("SELECT entry, pointid, location_x, location_y, location_z, waittime FROM script_waypoint ORDER BY pointid");
 
     if (!result)
     {

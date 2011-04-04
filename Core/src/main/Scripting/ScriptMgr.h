@@ -674,7 +674,7 @@ class PlayerScript : public ScriptObject
         virtual void OnTalentsReset(Player* /*player*/, bool /*no_cost*/) { }
 
         // Called when a player's money is modified (before the modification is done)
-        virtual void OnMoneyChanged(Player* /*player*/, int32& /*amount*/) { }
+        virtual void OnMoneyChanged(Player* /*player*/, int64& /*amount*/) { }
 
         // Called when a player gains XP (before anything is given)
         virtual void OnGiveXP(Player* /*player*/, uint32& /*amount*/, Unit* /*victim*/) { }
@@ -934,7 +934,7 @@ class ScriptMgr
         void OnPlayerLevelChanged(Player *player, uint8 newLevel);
         void OnPlayerFreeTalentPointsChanged(Player *player, uint32 newPoints);
         void OnPlayerTalentsReset(Player *player, bool no_cost);
-        void OnPlayerMoneyChanged(Player *player, int32& amount);
+        void OnPlayerMoneyChanged(Player *player, int64& amount);
         void OnGivePlayerXP(Player *player, uint32& amount, Unit *victim);
         void OnPlayerReputationChange(Player *player, uint32 factionID, int32& standing, bool incremental);
         void OnPlayerDuelRequest(Player* target, Player* challenger);

@@ -103,7 +103,7 @@ m_latency(0), m_TutorialsChanged(false), recruiterId(recruiter)
         m_Address = sock->GetRemoteAddress();
         sock->AddReference();
         ResetTimeOutTime();
-        LoginDatabase.PExecute("UPDATE account SET online = 1 WHERE id = %u;", GetAccountId());
+        RealmDB.PExecute("UPDATE account SET online = 1 WHERE id = %u;", GetAccountId());
     }
 }
 
@@ -127,7 +127,7 @@ WorldSession::~WorldSession()
     while (_recvQueue.next(packet))
         delete packet;
 
-    LoginDatabase.PExecute("UPDATE account SET online = 0 WHERE id = %u;", GetAccountId());
+    RealmDB.PExecute("UPDATE account SET online = 0 WHERE id = %u;", GetAccountId());
 }
 
 void WorldSession::SizeError(WorldPacket const &packet, uint32 size) const
@@ -224,7 +224,11 @@ bool WorldSession::Update(uint32 diff, PacketFilter& updater)
     WorldPacket *packet = NULL;
     while (m_Socket && !m_Socket->IsClosed() && _recvQueue.next(packet, updater))
     {
-        sLog->outString("SESSION: Received opcode 0x%.4X (%s)", packet->GetOpcode(), packet->GetOpcode() > 0xFFFF ?  "Unknown Opcode" : LookupOpcodeName(packet->GetOpcode()));
+        // Show recieved opcodes only in debug mode
+        #ifdef STRAWBERRY_DEBUG
+            sLog->outString("SESSION: Received opcode 0x%.4X (%s)", packet->GetOpcode(), packet->GetOpcode() > 0xFFFF ?  "Unknown Opcode" : LookupOpcodeName(packet->GetOpcode()));
+        #endif
+
         if (packet->GetOpcode() >= NUM_MSG_TYPES)
         {
             sLog->outError("SESSION: received non-existed opcode %s (0x%.4X)", LookupOpcodeName(packet->GetOpcode()), packet->GetOpcode());
@@ -504,7 +508,7 @@ void WorldSession::LogoutPlayer(bool Save)
 
         ///- Since each account can only have one online character at any given time, ensure all characters for active account are marked as offline
         //No SQL injection as AccountId is uint32
-        CharacterDatabase.PExecute("UPDATE characters SET online = 0 WHERE account = '%u'", GetAccountId());
+        CharDB.PExecute("UPDATE characters SET online = 0 WHERE account = '%u'", GetAccountId());
         sLog->outDebug(LOG_FILTER_NETWORKIO, "SESSION: Sent SMSG_LOGOUT_COMPLETE Message");
     }
 
@@ -519,6 +523,14 @@ void WorldSession::KickPlayer()
 {
     if (m_Socket)
         m_Socket->CloseSocket();
+}
+
+void WorldSession::HandleMoveToGraveyard(WorldPacket &recv_data)
+{
+    if (_player->isAlive() || !_player->HasFlag(PLAYER_FLAGS, PLAYER_FLAGS_GHOST))
+        return;
+    
+    _player->RepopAtGraveyard();
 }
 
 void WorldSession::SendNotification(const char *format,...)
@@ -601,9 +613,9 @@ void WorldSession::SendAuthWaitQue(uint32 position)
 
 void WorldSession::LoadGlobalAccountData()
 {
-    PreparedStatement *stmt = CharacterDatabase.GetPreparedStatement(CHAR_LOAD_ACCOUNT_DATA);
+    PreparedStatement *stmt = CharDB.GetPreparedStatement(CHAR_LOAD_ACCOUNT_DATA);
     stmt->setUInt32(0, GetAccountId());
-    LoadAccountData(CharacterDatabase.Query(stmt), GLOBAL_CACHE_MASK);
+    LoadAccountData(CharDB.Query(stmt), GLOBAL_CACHE_MASK);
 }
 
 void WorldSession::LoadAccountData(PreparedQueryResult result, uint32 mask)
@@ -643,11 +655,11 @@ void WorldSession::SetAccountData(AccountDataType type, time_t time_, std::strin
     {
         uint32 acc = GetAccountId();
 
-        SQLTransaction trans = CharacterDatabase.BeginTransaction();
+        SQLTransaction trans = CharDB.BeginTransaction();
         trans->PAppend("DELETE FROM account_data WHERE account='%u' AND type='%u'", acc, type);
-        CharacterDatabase.escape_string(data);
+        CharDB.escape_string(data);
         trans->PAppend("INSERT INTO account_data VALUES ('%u','%u','%u','%s')", acc, type, (uint32)time_, data.c_str());
-        CharacterDatabase.CommitTransaction(trans);
+        CharDB.CommitTransaction(trans);
     }
     else
     {
@@ -655,11 +667,11 @@ void WorldSession::SetAccountData(AccountDataType type, time_t time_, std::strin
         if (!m_GUIDLow)
             return;
 
-        SQLTransaction trans = CharacterDatabase.BeginTransaction();
+        SQLTransaction trans = CharDB.BeginTransaction();
         trans->PAppend("DELETE FROM character_account_data WHERE guid='%u' AND type='%u'", m_GUIDLow, type);
-        CharacterDatabase.escape_string(data);
+        CharDB.escape_string(data);
         trans->PAppend("INSERT INTO character_account_data VALUES ('%u','%u','%u','%s')", m_GUIDLow, type, (uint32)time_, data.c_str());
-        CharacterDatabase.CommitTransaction(trans);
+        CharDB.CommitTransaction(trans);
     }
 
     m_accountData[type].Time = time_;
@@ -684,7 +696,7 @@ void WorldSession::LoadTutorialsData()
         m_Tutorials[ aX ] = 0;
 
     // is there a good reason why this isn't a prepared statement?
-    QueryResult result = CharacterDatabase.PQuery("SELECT tut0, tut1, tut2, tut3, tut4, tut5, tut6, tut7 FROM character_tutorial WHERE account = '%u'", GetAccountId());
+    QueryResult result = CharDB.PQuery("SELECT tut0, tut1, tut2, tut3, tut4, tut5, tut6, tut7 FROM character_tutorial WHERE account = '%u'", GetAccountId());
 
     if (result)
     {
@@ -717,7 +729,7 @@ void WorldSession::SaveTutorialsData(SQLTransaction &trans)
 
     uint32 Rows = 0;
     // it's better than rebuilding indexes multiple times
-    QueryResult result = CharacterDatabase.PQuery("SELECT count(*) AS r FROM character_tutorial WHERE account = '%u'", GetAccountId());
+    QueryResult result = CharDB.PQuery("SELECT count(*) AS r FROM character_tutorial WHERE account = '%u'", GetAccountId());
     if (result)
         Rows = result->Fetch()[0].GetUInt32();
 

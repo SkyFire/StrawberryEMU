@@ -990,13 +990,13 @@ public:
         if (handler->HasLowerSecurity(target, 0))
             return false;
 
-        int32 addmoney = atoi((char*)args);
+        int64 addmoney = atoi((char*)args);
 
-        uint32 moneyuser = target->GetMoney();
+        uint64 moneyuser = target->GetMoney();
 
         if (addmoney < 0)
         {
-            int32 newmoney = int32(moneyuser) + addmoney;
+            int64 newmoney = int64(moneyuser) + addmoney;
 
             sLog->outDetail(handler->GetString(LANG_CURRENT_MONEY), moneyuser, addmoney, newmoney);
             if (newmoney <= 0)
@@ -1012,9 +1012,9 @@ public:
                 if (newmoney > MAX_MONEY_AMOUNT)
                     newmoney = MAX_MONEY_AMOUNT;
 
-                handler->PSendSysMessage(LANG_YOU_TAKE_MONEY, abs(addmoney), handler->GetNameLink(target).c_str());
+                handler->PSendSysMessage(LANG_YOU_TAKE_MONEY, addmoney, handler->GetNameLink(target).c_str());
                 if (handler->needReportToTarget(target))
-                    (ChatHandler(target)).PSendSysMessage(LANG_YOURS_MONEY_TAKEN, handler->GetNameLink().c_str(), abs(addmoney));
+                    (ChatHandler(target)).PSendSysMessage(LANG_YOURS_MONEY_TAKEN, handler->GetNameLink().c_str(), addmoney);
                 target->SetMoney(newmoney);
             }
         }

@@ -23,7 +23,7 @@
 #include "Logging/Log.h"
 #include "Field.h"
 #include "DatabaseWorkerPool.h"
-#include "Implementation/WorldDatabase.h"
+#include "Implementation/WorldDB.h"
 #include "DatabaseEnv.h"
 
 template<class T>

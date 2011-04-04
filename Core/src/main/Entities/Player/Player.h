@@ -1459,7 +1459,7 @@ class Player : public Unit, public GridObject<Player>
         void KilledMonsterCredit(uint32 entry, uint64 guid);
         void CastedCreatureOrGO(uint32 entry, uint64 guid, uint32 spell_id);
         void TalkedToCreature(uint32 entry, uint64 guid);
-        void MoneyChanged(uint32 value);
+        void MoneyChanged(uint64 value);
         void ReputationChanged(FactionEntry const* factionEntry);
         void ReputationChanged2(FactionEntry const* factionEntry);
         bool HasQuestForItem(uint32 itemid) const;
@@ -1531,19 +1531,18 @@ class Player : public Unit, public GridObject<Player>
         void setRegenTimerCount(uint32 time) {m_regenTimerCount = time;}
         void setWeaponChangeTimer(uint32 time) {m_weaponChangeTimer = time;}
 
-        uint32 GetMoney() const { return GetUInt32Value (PLAYER_FIELD_COINAGE); }
-        void ModifyMoney(int32 d);
-        bool HasEnoughMoney(uint32 amount) const { return (GetMoney() >= amount); }
-        bool HasEnoughMoney(int32 amount) const
+        uint64 GetMoney() const { return GetUInt64Value(PLAYER_FIELD_COINAGE); }
+        void ModifyMoney(int64 d);
+        bool HasEnoughMoney(int64 amount) const
         {
             if (amount > 0)
-                return (GetMoney() >= (uint32) amount);
+                return (GetMoney() >= (uint64)amount);
             return true;
         }
 
-        void SetMoney(uint32 value)
+        void SetMoney(uint64 value)
         {
-            SetUInt32Value (PLAYER_FIELD_COINAGE, value);
+            SetUInt64Value(PLAYER_FIELD_COINAGE, value);
             MoneyChanged(value);
             UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_HIGHEST_GOLD_VALUE_OWNED);
         }
@@ -1796,7 +1795,7 @@ class Player : public Unit, public GridObject<Player>
         void RemoveFromGroup(RemoveMethod method = GROUP_REMOVEMETHOD_DEFAULT) { RemoveFromGroup(GetGroup(),GetGUID(), method); }
         void SendUpdateToOutOfRangeGroupMembers();
 
-        void SetInGuild(uint32 GuildId) { m_guildId = GuildId; }
+        void SetInGuild(uint32 GuildId);
         void SetRank(uint8 rankId) { SetUInt32Value(PLAYER_GUILDRANK, rankId); }
         uint8 GetRank() { return uint8(GetUInt32Value(PLAYER_GUILDRANK)); }
         void SetGuildIdInvited(uint32 GuildId) { m_GuildIdInvited = GuildId; }
@@ -1850,6 +1849,7 @@ class Player : public Unit, public GridObject<Player>
         bool UpdateAllStats();
         void UpdateResistances(uint32 school);
         void UpdateArmor();
+        void UpdateSpellPower();
         void UpdateMaxHealth();
         void UpdateMaxPower(Powers power);
         void ApplyFeralAPBonus(int32 amount, bool apply);
@@ -1872,7 +1872,7 @@ class Player : public Unit, public GridObject<Player>
         float OCTRegenMPPerSpirit();
         float GetRatingCoefficient(CombatRating cr) const;
         float GetRatingBonusValue(CombatRating cr) const;
-        uint32 GetBaseSpellPowerBonus() { return m_baseSpellPower; }
+        uint32 GetBaseSpellPowerBonus() { return m_spellPowerFromIntellect + m_baseSpellPower; }
         int32 GetSpellPenetrationItemMod() const { return m_spellPenetrationItemMod; }
 
         float GetExpertiseDodgeOrParryReduction(WeaponAttackType attType) const;
@@ -2629,6 +2629,7 @@ class Player : public Unit, public GridObject<Player>
         float m_auraBaseMod[BASEMOD_END][MOD_END];
         int16 m_baseRatingValue[MAX_COMBAT_RATING];
         uint32 m_baseSpellPower;
+        uint32 m_spellPowerFromIntellect;
         uint32 m_baseFeralAP;
         uint32 m_baseManaRegen;
         uint32 m_baseHealthRegen;

@@ -282,7 +282,7 @@ int Master::Run()
     }
 
     // set server online (allow connecting now)
-    LoginDatabase.DirectPExecute("UPDATE realmlist SET color = color & ~%u, population = 0 WHERE id = '%u'", REALM_FLAG_INVALID, realmID);
+    RealmDB.DirectPExecute("UPDATE realmlist SET color = color & ~%u, population = 0 WHERE id = '%u'", REALM_FLAG_INVALID, realmID);
 
     sWorldSocketMgr->Wait();
 
@@ -294,7 +294,7 @@ int Master::Run()
     }
 
     // set server offline
-    LoginDatabase.DirectPExecute("UPDATE realmlist SET color = color | %u WHERE id = '%d'", REALM_FLAG_OFFLINE, realmID);
+    RealmDB.DirectPExecute("UPDATE realmlist SET color = color | %u WHERE id = '%d'", REALM_FLAG_OFFLINE, realmID);
 
     // when the main thread closes the singletons get unloaded
     // since worldrunnable uses them, it will crash if unloaded after master
@@ -305,9 +305,7 @@ int Master::Run()
     clearOnlineAccounts();
 
     ///- Wait for delay threads to end
-    CharacterDatabase.Close();
-    WorldDatabase.Close();
-    LoginDatabase.Close();
+    _StopDB();
 
     sLog->outString("Halting process...");
 
@@ -393,7 +391,7 @@ bool Master::_StartDB()
 
     connections = sConfig->GetIntDefault("WorldDB.Connections", 1);
 
-    if (!WorldDatabase.Open(dbstring, async_threads, connections))
+    if (!WorldDB.Open(dbstring, async_threads, connections))
     {
         sLog->outError("Cannot connect to world database %s", dbstring.c_str());
         return false;
@@ -418,7 +416,7 @@ bool Master::_StartDB()
     connections = sConfig->GetIntDefault("CharDB.Connections", 1);
 
     ///- Initialise the Character database
-    if (!CharacterDatabase.Open(dbstring, async_threads, connections))
+    if (!CharDB.Open(dbstring, async_threads, connections))
     {
         sLog->outError("Cannot connect to Character database %s", dbstring.c_str());
         return false;
@@ -443,7 +441,7 @@ bool Master::_StartDB()
     connections = sConfig->GetIntDefault("RealmDB.Connections", 1);
 
     ///- Initialise the login database
-    if (!LoginDatabase.Open(dbstring, async_threads, connections))
+    if (!RealmDB.Open(dbstring, async_threads, connections))
     {
         sLog->outError("Cannot connect to login database %s", dbstring.c_str());
         return false;
@@ -472,17 +470,27 @@ bool Master::_StartDB()
     return true;
 }
 
+void Master::_StopDB()
+{
+    CharDB.Close();
+    RealmDB.Close();
+    WorldDB.Close();
+
+    MySQL::Thread_End();
+}
+
+
 /// Clear 'online' status for all accounts with characters in this realm
 void Master::clearOnlineAccounts()
 {
     // Cleanup online status for characters hosted at current realm
     /// \todo Only accounts with characters logged on *this* realm should have online status reset. Move the online column from 'account' to 'realmcharacters'?
-    LoginDatabase.DirectPExecute(
+    RealmDB.DirectPExecute(
         "UPDATE account SET online = 0 WHERE online > 0 "
         "AND id IN (SELECT acctid FROM realmcharacters WHERE realmid = '%d')",realmID);
 
-    CharacterDatabase.DirectExecute("UPDATE characters SET online = 0 WHERE online<>0");
+    CharDB.DirectExecute("UPDATE characters SET online = 0 WHERE online<>0");
 
     // Battleground instance ids reset at server restart
-    CharacterDatabase.DirectExecute("UPDATE character_battleground_data SET instance_id = 0");
+    CharDB.DirectExecute("UPDATE character_battleground_data SET instance_id = 0");
 }

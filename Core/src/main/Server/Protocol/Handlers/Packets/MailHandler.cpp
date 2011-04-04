@@ -127,12 +127,12 @@ void WorldSession::HandleSendMail(WorldPacket & recv_data)
     else
     {
         rc_team = sObjectMgr->GetPlayerTeamByGUID(rc);
-        if (QueryResult result = CharacterDatabase.PQuery("SELECT COUNT(*) FROM mail WHERE receiver = '%u'", GUID_LOPART(rc)))
+        if (QueryResult result = CharDB.PQuery("SELECT COUNT(*) FROM mail WHERE receiver = '%u'", GUID_LOPART(rc)))
         {
             Field *fields = result->Fetch();
             mails_count = fields[0].GetUInt32();
         }
-        if (QueryResult result = CharacterDatabase.PQuery("SELECT level FROM characters WHERE guid = '%u'", GUID_LOPART(rc)))
+        if (QueryResult result = CharDB.PQuery("SELECT level FROM characters WHERE guid = '%u'", GUID_LOPART(rc)))
         {
             Field *fields = result->Fetch();
             receiveLevel = fields[0].GetUInt8();
@@ -237,7 +237,7 @@ void WorldSession::HandleSendMail(WorldPacket & recv_data)
 
     MailDraft draft(subject, body);
 
-    SQLTransaction trans = CharacterDatabase.BeginTransaction();
+    SQLTransaction trans = CharDB.BeginTransaction();
 
     if (items_count > 0 || money > 0)
     {
@@ -283,7 +283,7 @@ void WorldSession::HandleSendMail(WorldPacket & recv_data)
         .SendMailTo(trans, MailReceiver(receive, GUID_LOPART(rc)), MailSender(pl), body.empty() ? MAIL_CHECK_MASK_COPIED : MAIL_CHECK_MASK_HAS_BODY, deliver_delay);
 
     pl->SaveInventoryAndGoldToDB(trans);
-    CharacterDatabase.CommitTransaction(trans);
+    CharDB.CommitTransaction(trans);
 }
 
 //called when mail is read
@@ -358,10 +358,10 @@ void WorldSession::HandleMailReturnToSender(WorldPacket & recv_data)
     }
     //we can return mail now
     //so firstly delete the old one
-    SQLTransaction trans = CharacterDatabase.BeginTransaction();
+    SQLTransaction trans = CharDB.BeginTransaction();
     trans->PAppend("DELETE FROM mail WHERE id = '%u'", mailId);             // needed?
     trans->PAppend("DELETE FROM mail_items WHERE mail_id = '%u'", mailId);
-    CharacterDatabase.CommitTransaction(trans);
+    CharDB.CommitTransaction(trans);
     pl->RemoveMail(mailId);
 
     // only return mail if the player exists (and delete if not existing)
@@ -428,7 +428,7 @@ void WorldSession::HandleMailTakeItem(WorldPacket & recv_data)
     uint8 msg = _player->CanStoreItem(NULL_BAG, NULL_SLOT, dest, it, false);
     if (msg == EQUIP_ERR_OK)
     {
-        SQLTransaction trans = CharacterDatabase.BeginTransaction();
+        SQLTransaction trans = CharDB.BeginTransaction();
         m->RemoveItem(itemId);
         m->removedItems.push_back(itemId);
 
@@ -481,7 +481,7 @@ void WorldSession::HandleMailTakeItem(WorldPacket & recv_data)
 
         pl->SaveInventoryAndGoldToDB(trans);
         pl->_SaveMail(trans);
-        CharacterDatabase.CommitTransaction(trans);
+        CharDB.CommitTransaction(trans);
 
         pl->SendMailResult(mailId, MAIL_ITEM_TAKEN, MAIL_OK, 0, itemId, count);
     }
@@ -518,10 +518,10 @@ void WorldSession::HandleMailTakeMoney(WorldPacket & recv_data)
     pl->m_mailsUpdated = true;
 
     // save money and mail to prevent cheating
-    SQLTransaction trans = CharacterDatabase.BeginTransaction();
+    SQLTransaction trans = CharDB.BeginTransaction();
     pl->SaveGoldToDB(trans);
     pl->_SaveMail(trans);
-    CharacterDatabase.CommitTransaction(trans);
+    CharDB.CommitTransaction(trans);
 }
 
 //called when player lists his received mails

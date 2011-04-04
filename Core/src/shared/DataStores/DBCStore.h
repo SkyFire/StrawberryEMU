@@ -27,7 +27,7 @@
 #include "Logging/Log.h"
 #include "Field.h"
 #include "DatabaseWorkerPool.h"
-#include "Implementation/WorldDatabase.h"
+#include "Implementation/WorldDB.h"
 #include "DatabaseEnv.h"
 
 struct SqlDbc
@@ -102,7 +102,7 @@ public:
             query += ";";
 
 
-            result = WorldDatabase.Query(query.c_str());
+            result = WorldDB.Query(query.c_str());
             if (result)
             {
                 sqlRecordCount = uint32(result->GetRowCount());

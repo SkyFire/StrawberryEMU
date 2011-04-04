@@ -21,19 +21,19 @@
 #include "DatabaseWorkerPool.h"
 #include "MySQLConnection.h"
 
-class WorldDatabaseConnection : public MySQLConnection
+class WorldDBConnection : public MySQLConnection
 {
     public:
         //- Constructors for sync and async connections
-        WorldDatabaseConnection(MySQLConnectionInfo& connInfo) : MySQLConnection(connInfo) {}
+        WorldDBConnection(MySQLConnectionInfo& connInfo) : MySQLConnection(connInfo) {}
 
         //- Loads databasetype specific prepared statements
         bool Open();
 };
 
-typedef DatabaseWorkerPool<WorldDatabaseConnection> WorldDatabaseWorkerPool;
+typedef DatabaseWorkerPool<WorldDBConnection> WorldDBWorkerPool;
 
-enum WorldDatabaseStatements
+enum WorldDBStatements
 {
     /*  Naming standard for defines:
         {DB}_{SET/DEL/ADD/REP}_{Summary of data changed}

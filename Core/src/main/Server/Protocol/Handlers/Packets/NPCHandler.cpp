@@ -173,19 +173,6 @@ void WorldSession::SendTrainerList(uint64 guid, const std::string& strTitle)
         TrainerSpell const* tSpell = &itr->second;
 
         bool valid = true;
-        bool primary_prof_first_rank = false;
-        for (uint8 i = 0; i < MAX_SPELL_EFFECTS ; ++i)
-        {
-            if (!tSpell->learnedSpell[i])
-                continue;
-            if (!_player->IsSpellFitByClassAndRace(tSpell->learnedSpell[i]))
-            {
-                valid = false;
-                break;
-            }
-            if (sSpellMgr->IsPrimaryProfessionFirstRankSpell(tSpell->learnedSpell[i]))
-                primary_prof_first_rank = true;
-        }
         if (!valid)
             continue;
 
@@ -486,7 +473,7 @@ void WorldSession::SendBindPoint(Creature *npc)
     uint32 bindspell = 3286;
 
     // update sql homebind
-    CharacterDatabase.PExecute("UPDATE character_homebind SET map = '%u', zone = '%u', position_x = '%f', position_y = '%f', position_z = '%f' WHERE guid = '%u'",
+    CharDB.PExecute("UPDATE character_homebind SET map = '%u', zone = '%u', position_x = '%f', position_y = '%f', position_z = '%f' WHERE guid = '%u'",
         _player->GetMapId(), _player->GetAreaId(), _player->GetPositionX(), _player->GetPositionY(), _player->GetPositionZ(), _player->GetGUIDLow());
     _player->m_homebindMapId = _player->GetMapId();
     _player->m_homebindAreaId = _player->GetAreaId();
@@ -530,7 +517,7 @@ void WorldSession::SendStablePet(uint64 guid)
 {
     m_sendStabledPetCallback.SetParam(guid);
     m_sendStabledPetCallback.SetFutureResult(
-        CharacterDatabase.AsyncPQuery("SELECT owner, id, entry, level, name FROM character_pet WHERE owner = '%u' AND slot >= '%u' AND slot <= '%u' ORDER BY slot",
+        CharDB.AsyncPQuery("SELECT owner, id, entry, level, name FROM character_pet WHERE owner = '%u' AND slot >= '%u' AND slot <= '%u' ORDER BY slot",
             _player->GetGUIDLow(), PET_SAVE_FIRST_STABLE_SLOT, PET_SAVE_LAST_STABLE_SLOT)
         );
 }
@@ -627,7 +614,7 @@ void WorldSession::HandleStablePet(WorldPacket & recv_data)
         return;
     }
 
-    m_stablePetCallback = CharacterDatabase.AsyncPQuery("SELECT owner,slot,id FROM character_pet WHERE owner = '%u'  AND slot >= '%u' AND slot <= '%u' ORDER BY slot ",
+    m_stablePetCallback = CharDB.AsyncPQuery("SELECT owner,slot,id FROM character_pet WHERE owner = '%u'  AND slot >= '%u' AND slot <= '%u' ORDER BY slot ",
         _player->GetGUIDLow(),PET_SAVE_FIRST_STABLE_SLOT,PET_SAVE_LAST_STABLE_SLOT);
 
 }
@@ -686,7 +673,7 @@ void WorldSession::HandleUnstablePet(WorldPacket & recv_data)
 
     m_unstablePetCallback.SetParam(petnumber);
     m_unstablePetCallback.SetFutureResult(
-            CharacterDatabase.AsyncPQuery("SELECT entry FROM character_pet WHERE owner = '%u' AND id = '%u' AND slot >='%u' AND slot <= '%u'",
+            CharDB.AsyncPQuery("SELECT entry FROM character_pet WHERE owner = '%u' AND id = '%u' AND slot >='%u' AND slot <= '%u'",
                 _player->GetGUIDLow(), petnumber, PET_SAVE_FIRST_STABLE_SLOT, PET_SAVE_LAST_STABLE_SLOT)
             );
 }
@@ -810,7 +797,7 @@ void WorldSession::HandleStableSwapPet(WorldPacket & recv_data)
     // find swapped pet slot in stable
     m_stableSwapCallback.SetParam(pet_number);
     m_stableSwapCallback.SetFutureResult(
-            CharacterDatabase.PQuery("SELECT slot,entry FROM character_pet WHERE owner = '%u' AND id = '%u'",
+            CharDB.PQuery("SELECT slot,entry FROM character_pet WHERE owner = '%u' AND id = '%u'",
                 _player->GetGUIDLow(), pet_number)
             );
 }

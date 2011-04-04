@@ -106,7 +106,7 @@ bool Corpse::Create(uint32 guidlow, Player *owner)
 void Corpse::SaveToDB()
 {
     // prevent DB data inconsistence problems and duplicates
-    SQLTransaction trans = CharacterDatabase.BeginTransaction();
+    SQLTransaction trans = CharDB.BeginTransaction();
     DeleteFromDB(trans);
 
     std::ostringstream ss;
@@ -131,7 +131,7 @@ void Corpse::SaveToDB()
         << int(GetInstanceId()) << ", "
         << uint16(GetPhaseMask()) << ")";           // prevent out of range error
     trans->Append(ss.str().c_str());
-    CharacterDatabase.CommitTransaction(trans);
+    CharDB.CommitTransaction(trans);
 }
 
 void Corpse::DeleteBonesFromWorld()

@@ -126,7 +126,7 @@ bool Group::Create(Player *leader)
         sObjectMgr->RegisterGroupStorageId(m_storageId, this);
 
         // store group in database
-        CharacterDatabase.PExecute("INSERT INTO groups (guid,leaderGuid,lootMethod,looterGuid,lootThreshold,icon1,icon2,icon3,icon4,icon5,icon6,icon7,icon8,groupType,difficulty,raiddifficulty) "
+        CharDB.PExecute("INSERT INTO groups (guid,leaderGuid,lootMethod,looterGuid,lootThreshold,icon1,icon2,icon3,icon4,icon5,icon6,icon7,icon8,groupType,difficulty,raiddifficulty) "
             "VALUES ('%u','%u','%u','%u','%u','" UI64FMTD "','" UI64FMTD "','" UI64FMTD "','" UI64FMTD "','" UI64FMTD "','" UI64FMTD "','" UI64FMTD "','" UI64FMTD "','%u','%u','%u')",
             m_storageId, GUID_LOPART(m_leaderGuid), uint32(m_lootMethod),
             GUID_LOPART(m_looterGuid), uint32(m_lootThreshold), m_targetIcons[0], m_targetIcons[1], m_targetIcons[2], m_targetIcons[3], m_targetIcons[4], m_targetIcons[5], m_targetIcons[6],
@@ -185,7 +185,7 @@ void Group::LoadMemberFromDB(uint32 guidLow, uint8 memberFlags, uint8 subgroup, 
     // skip non-existed member
     if (!sObjectMgr->GetPlayerNameByGUID(member.guid, member.name))
     {
-        CharacterDatabase.PQuery("DELETE FROM group_member WHERE memberGuid=%u", guidLow);
+        CharDB.PQuery("DELETE FROM group_member WHERE memberGuid=%u", guidLow);
         return;
     }
 
@@ -203,7 +203,7 @@ void Group::ConvertToLFG()
     m_groupType = GroupType(m_groupType | GROUPTYPE_LFG | GROUPTYPE_UNK1);
     m_lootMethod = NEED_BEFORE_GREED;
     if (!isBGGroup())
-        CharacterDatabase.PExecute("UPDATE groups SET groupType='%u' WHERE guid='%u'", uint8(m_groupType), m_storageId);
+        CharDB.PExecute("UPDATE groups SET groupType='%u' WHERE guid='%u'", uint8(m_groupType), m_storageId);
     SendUpdate();
 }
 
@@ -214,7 +214,7 @@ void Group::ConvertToRaid()
     _initRaidSubGroupsCounter();
 
     if (!isBGGroup())
-        CharacterDatabase.PExecute("UPDATE groups SET groupType='%u' WHERE guid='%u'", uint8(m_groupType), m_storageId);
+        CharDB.PExecute("UPDATE groups SET groupType='%u' WHERE guid='%u'", uint8(m_groupType), m_storageId);
     SendUpdate();
 
     // update quest related GO states (quest activity dependent from raid membership)
@@ -346,7 +346,7 @@ bool Group::AddMember(Player *player)
 
     // insert into the table if we're not a battleground group
     if (!isBGGroup())
-        CharacterDatabase.PExecute("INSERT INTO group_member (guid, memberGuid, memberFlags, subgroup, roles) VALUES(%u, %u, %u, %u, %u)",
+        CharDB.PExecute("INSERT INTO group_member (guid, memberGuid, memberFlags, subgroup, roles) VALUES(%u, %u, %u, %u, %u)",
                                     m_storageId, GUID_LOPART(member.guid), member.flags, member.group, member.roles);
 
     SendUpdate();
@@ -438,7 +438,7 @@ bool Group::RemoveMember(const uint64 &guid, const RemoveMethod &method /*= GROU
         }
 
         // Remove player from group in DB
-        CharacterDatabase.PExecute("DELETE FROM group_member WHERE memberGuid=%u", GUID_LOPART(guid));
+        CharDB.PExecute("DELETE FROM group_member WHERE memberGuid=%u", GUID_LOPART(guid));
 
         // Reevaluate group enchanter if the leaving player had enchanting skill or the player is offline
         if (player && player->GetSkillValue(SKILL_ENCHANTING) || !player)
@@ -533,14 +533,14 @@ void Group::ChangeLeader(const uint64 &guid)
         }
 
         // Same in the database
-        CharacterDatabase.PExecute("DELETE FROM group_instance WHERE guid=%u AND (permanent = 1 OR instance IN (SELECT instance FROM character_instance WHERE guid = '%u'))",
+        CharDB.PExecute("DELETE FROM group_instance WHERE guid=%u AND (permanent = 1 OR instance IN (SELECT instance FROM character_instance WHERE guid = '%u'))",
             m_storageId, player->GetGUIDLow());
 
         // Copy the permanent binds from the new leader to the group
         Player::ConvertInstancesToGroup(player, this, true);
 
         // update the group leader
-        CharacterDatabase.PExecute("UPDATE groups SET leaderGuid='%u' WHERE guid='%u'", player->GetGUIDLow(), m_storageId);
+        CharDB.PExecute("UPDATE groups SET leaderGuid='%u' WHERE guid='%u'", player->GetGUIDLow(), m_storageId);
     }
 
     m_leaderGuid = player->GetGUID();
@@ -612,10 +612,10 @@ void Group::Disband(bool hideDestroy /* = false */)
 
     if (!isBGGroup())
     {
-        SQLTransaction trans = CharacterDatabase.BeginTransaction();
+        SQLTransaction trans = CharDB.BeginTransaction();
         trans->PAppend("DELETE FROM groups WHERE guid = %u", m_storageId);
         trans->PAppend("DELETE FROM group_member WHERE guid = %u", m_storageId);
-        CharacterDatabase.CommitTransaction(trans);
+        CharDB.CommitTransaction(trans);
         ResetInstances(INSTANCE_RESET_GROUP_DISBAND, false, NULL);
         ResetInstances(INSTANCE_RESET_GROUP_DISBAND, true, NULL);
 
@@ -1308,7 +1308,7 @@ bool Group::_setMembersGroup(const uint64 &guid, const uint8 &group)
     SubGroupCounterIncrease(group);
 
     if (!isBGGroup())
-        CharacterDatabase.PExecute("UPDATE group_member SET subgroup='%u' WHERE memberGuid='%u'", group, GUID_LOPART(guid));
+        CharDB.PExecute("UPDATE group_member SET subgroup='%u' WHERE memberGuid='%u'", group, GUID_LOPART(guid));
 
     return true;
 }
@@ -1351,7 +1351,7 @@ void Group::ChangeMembersGroup(const uint64 &guid, const uint8 &group)
 
     // Preserve new sub group in database for non-raid groups
     if (!isBGGroup())
-        CharacterDatabase.PExecute("UPDATE group_member SET subgroup='%u' WHERE memberGuid='%u'", group, GUID_LOPART(guid));
+        CharDB.PExecute("UPDATE group_member SET subgroup='%u' WHERE memberGuid='%u'", group, GUID_LOPART(guid));
 
     Player *player = sObjectMgr->GetPlayer(guid);
 
@@ -1541,7 +1541,7 @@ void Group::SetDungeonDifficulty(Difficulty difficulty)
 {
     m_dungeonDifficulty = difficulty;
     if (!isBGGroup())
-       CharacterDatabase.PExecute("UPDATE groups SET difficulty = %u WHERE guid ='%u'", m_dungeonDifficulty, m_storageId);
+       CharDB.PExecute("UPDATE groups SET difficulty = %u WHERE guid ='%u'", m_dungeonDifficulty, m_storageId);
 
     for (GroupReference *itr = GetFirstMember(); itr != NULL; itr = itr->next())
     {
@@ -1558,7 +1558,7 @@ void Group::SetRaidDifficulty(Difficulty difficulty)
 {
     m_raidDifficulty = difficulty;
     if (!isBGGroup())
-        CharacterDatabase.PExecute("UPDATE groups SET raiddifficulty = %u WHERE guid ='%u'", m_raidDifficulty, m_storageId);
+        CharDB.PExecute("UPDATE groups SET raiddifficulty = %u WHERE guid ='%u'", m_raidDifficulty, m_storageId);
 
     for (GroupReference *itr = GetFirstMember(); itr != NULL; itr = itr->next())
     {
@@ -1639,7 +1639,7 @@ void Group::ResetInstances(uint8 method, bool isRaid, Player* SendMsgTo)
             if (p->CanReset())
                 p->DeleteFromDB();
             else
-                CharacterDatabase.PExecute("DELETE FROM group_instance WHERE instance = '%u'", p->GetInstanceId());
+                CharDB.PExecute("DELETE FROM group_instance WHERE instance = '%u'", p->GetInstanceId());
 
             // i don't know for sure if hash_map iterators
             m_boundInstances[diff].erase(itr);
@@ -1700,7 +1700,7 @@ InstanceGroupBind* Group::BindToInstance(InstanceSave *save, bool permanent, boo
 
     InstanceGroupBind& bind = m_boundInstances[save->GetDifficulty()][save->GetMapId()];
     if (!load && (!bind.save || permanent != bind.perm || save != bind.save))
-        CharacterDatabase.PExecute("REPLACE INTO group_instance (guid, instance, permanent) VALUES (%u, %u, %u)", m_storageId, save->GetInstanceId(), permanent);
+        CharDB.PExecute("REPLACE INTO group_instance (guid, instance, permanent) VALUES (%u, %u, %u)", m_storageId, save->GetInstanceId(), permanent);
 
     if (bind.save != save)
     {
@@ -1724,7 +1724,7 @@ void Group::UnbindInstance(uint32 mapid, uint8 difficulty, bool unload)
     if (itr != m_boundInstances[difficulty].end())
     {
         if (!unload)
-            CharacterDatabase.PExecute("DELETE FROM group_instance WHERE guid=%u AND instance=%u", m_storageId, itr->second.save->GetInstanceId());
+            CharDB.PExecute("DELETE FROM group_instance WHERE guid=%u AND instance=%u", m_storageId, itr->second.save->GetInstanceId());
         itr->second.save->RemoveGroup(this);                // save can become invalid
         m_boundInstances[difficulty].erase(itr);
     }
@@ -1955,7 +1955,7 @@ void Group::SetGroupMemberFlag(uint64 guid, const bool &apply, GroupMemberFlags 
     ToggleGroupMemberFlag(slot, flag, apply);
 
     // Preserve the new setting in the db
-    CharacterDatabase.PExecute("UPDATE group_member SET memberFlags='%u' WHERE memberGuid='%u'", slot->flags, GUID_LOPART(guid));
+    CharDB.PExecute("UPDATE group_member SET memberFlags='%u' WHERE memberGuid='%u'", slot->flags, GUID_LOPART(guid));
 
     // Broadcast the changes to the group
     SendUpdate();

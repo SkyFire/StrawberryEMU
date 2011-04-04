@@ -113,7 +113,7 @@ public:
             if (!guid)
             {
                 std::string name = pParam1;
-                WorldDatabase.escape_string(name);
+                WorldDB.escape_string(name);
                 whereClause << ", creature_template WHERE creature.id = creature_template.entry AND creature_template.name "_LIKE_" '" << name << "'";
             }
             else
@@ -123,7 +123,7 @@ public:
         }
         //sLog->outError("DEBUG: %s", whereClause.c_str());
 
-        QueryResult result = WorldDatabase.PQuery("SELECT position_x,position_y,position_z,orientation,map FROM creature %s", whereClause.str().c_str());
+        QueryResult result = WorldDB.PQuery("SELECT position_x,position_y,position_z,orientation,map FROM creature %s", whereClause.str().c_str());
         if (!result)
         {
             handler->SendSysMessage(LANG_COMMAND_GOCREATNOTFOUND);

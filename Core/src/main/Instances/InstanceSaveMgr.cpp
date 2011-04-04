@@ -127,11 +127,11 @@ InstanceSave *InstanceSaveManager::GetInstanceSave(uint32 InstanceId)
 
 void InstanceSaveManager::DeleteInstanceFromDB(uint32 instanceid)
 {
-    SQLTransaction trans = CharacterDatabase.BeginTransaction();
+    SQLTransaction trans = CharDB.BeginTransaction();
     trans->PAppend("DELETE FROM instance WHERE id = '%u'", instanceid);
     trans->PAppend("DELETE FROM character_instance WHERE instance = '%u'", instanceid);
     trans->PAppend("DELETE FROM group_instance WHERE instance = '%u'", instanceid);
-    CharacterDatabase.CommitTransaction(trans);
+    CharDB.CommitTransaction(trans);
     // respawn times should be deleted only when the map gets unloaded
 }
 
@@ -142,7 +142,7 @@ void InstanceSaveManager::RemoveInstanceSave(uint32 InstanceId)
     {
         // save the resettime for normal instances only when they get unloaded
         if (time_t resettime = itr->second->GetResetTimeForDB())
-            CharacterDatabase.PExecute("UPDATE instance SET resettime = '"UI64FMTD"' WHERE id = '%u'", (uint64)resettime, InstanceId);
+            CharDB.PExecute("UPDATE instance SET resettime = '"UI64FMTD"' WHERE id = '%u'", (uint64)resettime, InstanceId);
 
         delete itr->second;
         m_instanceSaveById.erase(itr);
@@ -181,14 +181,14 @@ void InstanceSave::SaveToDB()
         }
     }
 
-    PreparedStatement* stmt = CharacterDatabase.GetPreparedStatement(CHAR_ADD_INSTANCE_SAVE);
+    PreparedStatement* stmt = CharDB.GetPreparedStatement(CHAR_ADD_INSTANCE_SAVE);
     stmt->setUInt32(0, m_instanceid);
     stmt->setUInt16(1, GetMapId());
     stmt->setUInt32(2, uint32(GetResetTimeForDB()));
     stmt->setUInt8(3, uint8(GetDifficulty()));
     stmt->setUInt32(4, completedEncounters);
     stmt->setString(5, data);
-    CharacterDatabase.Execute(stmt);
+    CharDB.Execute(stmt);
 }
 
 time_t InstanceSave::GetResetTimeForDB()
@@ -242,7 +242,7 @@ void InstanceSaveManager::_DelHelper(const char *fields, const char *table, cons
     vsnprintf(szQueryTail, MAX_QUERY_LEN, queryTail, ap);
     va_end(ap);
 
-    QueryResult result = CharacterDatabase.PQuery("SELECT %s FROM %s %s", fields, table, szQueryTail);
+    QueryResult result = CharDB.PQuery("SELECT %s FROM %s %s", fields, table, szQueryTail);
     if (result)
     {
         do
@@ -252,10 +252,10 @@ void InstanceSaveManager::_DelHelper(const char *fields, const char *table, cons
             for (size_t i = 0; i < fieldTokens.size(); i++)
             {
                 std::string fieldValue = fields[i].GetString();
-                CharacterDatabase.escape_string(fieldValue);
+                CharDB.escape_string(fieldValue);
                 ss << (i != 0 ? " AND " : "") << fieldTokens[i] << " = '" << fieldValue << "'";
             }
-            CharacterDatabase.DirectPExecute("DELETE FROM %s WHERE %s", table, ss.str().c_str());
+            CharDB.DirectPExecute("DELETE FROM %s WHERE %s", table, ss.str().c_str());
         } while (result->NextRow());
     }
 }
@@ -265,21 +265,21 @@ void InstanceSaveManager::LoadInstances()
     uint32 oldMSTime = getMSTime();
 
     // Delete invalid character_instance and group_instance references
-    CharacterDatabase.DirectExecute("DELETE ci.* FROM character_instance AS ci LEFT JOIN characters AS c ON ci.guid = c.guid WHERE c.guid IS NULL");
-    CharacterDatabase.DirectExecute("DELETE gi.* FROM group_instance     AS gi LEFT JOIN groups     AS g ON gi.guid = g.guid WHERE g.guid IS NULL");
+    CharDB.DirectExecute("DELETE ci.* FROM character_instance AS ci LEFT JOIN characters AS c ON ci.guid = c.guid WHERE c.guid IS NULL");
+    CharDB.DirectExecute("DELETE gi.* FROM group_instance     AS gi LEFT JOIN groups     AS g ON gi.guid = g.guid WHERE g.guid IS NULL");
 
     // Delete invalid instance references
-    CharacterDatabase.DirectExecute("DELETE i.* FROM instance AS i LEFT JOIN character_instance AS ci ON i.id = ci.instance LEFT JOIN group_instance AS gi ON i.id = gi.instance WHERE ci.guid IS NULL AND gi.guid IS NULL");
+    CharDB.DirectExecute("DELETE i.* FROM instance AS i LEFT JOIN character_instance AS ci ON i.id = ci.instance LEFT JOIN group_instance AS gi ON i.id = gi.instance WHERE ci.guid IS NULL AND gi.guid IS NULL");
 
     // Delete invalid references to instance
-    CharacterDatabase.DirectExecute("DELETE tmp.* FROM creature_respawn   AS tmp LEFT JOIN instance ON tmp.instance = instance.id WHERE tmp.instance > 0 AND instance.id IS NULL");
-    CharacterDatabase.DirectExecute("DELETE tmp.* FROM gameobject_respawn AS tmp LEFT JOIN instance ON tmp.instance = instance.id WHERE tmp.instance > 0 AND instance.id IS NULL");
-    CharacterDatabase.DirectExecute("DELETE tmp.* FROM character_instance AS tmp LEFT JOIN instance ON tmp.instance = instance.id WHERE tmp.instance > 0 AND instance.id IS NULL");
-    CharacterDatabase.DirectExecute("DELETE tmp.* FROM group_instance     AS tmp LEFT JOIN instance ON tmp.instance = instance.id WHERE tmp.instance > 0 AND instance.id IS NULL");
+    CharDB.DirectExecute("DELETE tmp.* FROM creature_respawn   AS tmp LEFT JOIN instance ON tmp.instance = instance.id WHERE tmp.instance > 0 AND instance.id IS NULL");
+    CharDB.DirectExecute("DELETE tmp.* FROM gameobject_respawn AS tmp LEFT JOIN instance ON tmp.instance = instance.id WHERE tmp.instance > 0 AND instance.id IS NULL");
+    CharDB.DirectExecute("DELETE tmp.* FROM character_instance AS tmp LEFT JOIN instance ON tmp.instance = instance.id WHERE tmp.instance > 0 AND instance.id IS NULL");
+    CharDB.DirectExecute("DELETE tmp.* FROM group_instance     AS tmp LEFT JOIN instance ON tmp.instance = instance.id WHERE tmp.instance > 0 AND instance.id IS NULL");
 
     // Clean invalid references to instance
-    CharacterDatabase.DirectExecute("UPDATE corpse     AS tmp LEFT JOIN instance ON tmp.instance    = instance.id SET tmp.instance    = 0 WHERE tmp.instance    > 0 AND instance.id IS NULL");
-    CharacterDatabase.DirectExecute("UPDATE characters AS tmp LEFT JOIN instance ON tmp.instance_id = instance.id SET tmp.instance_id = 0 WHERE tmp.instance_id > 0 AND instance.id IS NULL");
+    CharDB.DirectExecute("UPDATE corpse     AS tmp LEFT JOIN instance ON tmp.instance    = instance.id SET tmp.instance    = 0 WHERE tmp.instance    > 0 AND instance.id IS NULL");
+    CharDB.DirectExecute("UPDATE characters AS tmp LEFT JOIN instance ON tmp.instance_id = instance.id SET tmp.instance_id = 0 WHERE tmp.instance_id > 0 AND instance.id IS NULL");
 
     // Initialize instance id storage (Needs to be done after the trash has been clean out)
     sMapMgr->InitInstanceIds();
@@ -309,7 +309,7 @@ void InstanceSaveManager::LoadResetTimes()
     typedef std::multimap<uint32 /*PAIR32(map,difficulty)*/, uint32 /*instanceid*/ > ResetTimeMapDiffInstances;
     ResetTimeMapDiffInstances mapDiffResetInstances;
 
-    QueryResult result = CharacterDatabase.Query("SELECT id, map, difficulty, resettime FROM instance ORDER BY id ASC");
+    QueryResult result = CharDB.Query("SELECT id, map, difficulty, resettime FROM instance ORDER BY id ASC");
     if (result)
     {
         do
@@ -338,7 +338,7 @@ void InstanceSaveManager::LoadResetTimes()
         while (result->NextRow());
 
         // update reset time for normal instances with the max creature respawn time + X hours
-        result = CharacterDatabase.Query("SELECT MAX(respawntime), instance FROM creature_respawn WHERE instance > 0 GROUP BY instance");
+        result = CharDB.Query("SELECT MAX(respawntime), instance FROM creature_respawn WHERE instance > 0 GROUP BY instance");
         if (result)
         {
             do
@@ -349,7 +349,7 @@ void InstanceSaveManager::LoadResetTimes()
                 InstResetTimeMapDiffType::iterator itr = instResetTime.find(instance);
                 if (itr != instResetTime.end() && itr->second.second != resettime)
                 {
-                    CharacterDatabase.DirectPExecute("UPDATE instance SET resettime = '"UI64FMTD"' WHERE id = '%u'", uint64(resettime), instance);
+                    CharDB.DirectPExecute("UPDATE instance SET resettime = '"UI64FMTD"' WHERE id = '%u'", uint64(resettime), instance);
                     itr->second.second = resettime;
                 }
             }
@@ -364,7 +364,7 @@ void InstanceSaveManager::LoadResetTimes()
 
     // load the global respawn times for raid/heroic instances
     uint32 diff = sWorld->getIntConfig(CONFIG_INSTANCE_RESET_TIME_HOUR) * HOUR;
-    result = CharacterDatabase.Query("SELECT mapid, difficulty, resettime FROM instance_reset");
+    result = CharDB.Query("SELECT mapid, difficulty, resettime FROM instance_reset");
     if (result)
     {
         do
@@ -378,14 +378,14 @@ void InstanceSaveManager::LoadResetTimes()
             if (!mapDiff)
             {
                 sLog->outError("InstanceSaveManager::LoadResetTimes: invalid mapid(%u)/difficulty(%u) pair in instance_reset!", mapid, difficulty);
-                CharacterDatabase.DirectPExecute("DELETE FROM instance_reset WHERE mapid = '%u' AND difficulty = '%u'", mapid,difficulty);
+                CharDB.DirectPExecute("DELETE FROM instance_reset WHERE mapid = '%u' AND difficulty = '%u'", mapid,difficulty);
                 continue;
             }
 
             // update the reset time if the hour in the configs changes
             uint64 newresettime = (oldresettime / DAY) * DAY + diff;
             if (oldresettime != newresettime)
-                CharacterDatabase.DirectPExecute("UPDATE instance_reset SET resettime = '%u' WHERE mapid = '%u' AND difficulty = '%u'", uint32(newresettime), mapid, difficulty);
+                CharDB.DirectPExecute("UPDATE instance_reset SET resettime = '%u' WHERE mapid = '%u' AND difficulty = '%u'", uint32(newresettime), mapid, difficulty);
 
             SetResetTimeFor(mapid, difficulty, newresettime);
         } while (result->NextRow());
@@ -418,7 +418,7 @@ void InstanceSaveManager::LoadResetTimes()
         {
             // initialize the reset time
             t = today + period + diff;
-            CharacterDatabase.DirectPExecute("INSERT INTO instance_reset VALUES ('%u','%u','%u')", mapid, difficulty, (uint32)t);
+            CharDB.DirectPExecute("INSERT INTO instance_reset VALUES ('%u','%u','%u')", mapid, difficulty, (uint32)t);
         }
 
         if (t < now)
@@ -427,7 +427,7 @@ void InstanceSaveManager::LoadResetTimes()
             // calculate the next reset time
             t = (t / DAY) * DAY;
             t += ((today - t) / period + 1) * period + diff;
-            CharacterDatabase.DirectPExecute("UPDATE instance_reset SET resettime = '"UI64FMTD"' WHERE mapid = '%u' AND difficulty= '%u'", (uint64)t, mapid, difficulty);
+            CharDB.DirectPExecute("UPDATE instance_reset SET resettime = '"UI64FMTD"' WHERE mapid = '%u' AND difficulty= '%u'", (uint64)t, mapid, difficulty);
         }
 
         SetResetTimeFor(mapid,difficulty,t);
@@ -594,11 +594,11 @@ void InstanceSaveManager::_ResetOrWarnAll(uint32 mapid, Difficulty difficulty, b
         }
 
         // delete them from the DB, even if not loaded
-        SQLTransaction trans = CharacterDatabase.BeginTransaction();
+        SQLTransaction trans = CharDB.BeginTransaction();
         trans->PAppend("DELETE FROM character_instance USING character_instance LEFT JOIN instance ON character_instance.instance = id WHERE map = '%u' and difficulty='%u'", mapid, difficulty);
         trans->PAppend("DELETE FROM group_instance USING group_instance LEFT JOIN instance ON group_instance.instance = id WHERE map = '%u' and difficulty='%u'", mapid, difficulty);
         trans->PAppend("DELETE FROM instance WHERE map = '%u' and difficulty='%u'", mapid, difficulty);
-        CharacterDatabase.CommitTransaction(trans);
+        CharDB.CommitTransaction(trans);
 
         // calculate the next reset time
         uint32 diff = sWorld->getIntConfig(CONFIG_INSTANCE_RESET_TIME_HOUR) * HOUR;
@@ -613,7 +613,7 @@ void InstanceSaveManager::_ResetOrWarnAll(uint32 mapid, Difficulty difficulty, b
         ScheduleReset(true, time_t(next_reset-3600), InstResetEvent(1, mapid, difficulty, 0));
 
         // update it in the DB
-        CharacterDatabase.PExecute("UPDATE instance_reset SET resettime = '%u' WHERE mapid = '%d' AND difficulty = '%d'", uint32(next_reset), mapid, difficulty);
+        CharDB.PExecute("UPDATE instance_reset SET resettime = '%u' WHERE mapid = '%d' AND difficulty = '%d'", uint32(next_reset), mapid, difficulty);
     }
 
     // note: this isn't fast but it's meant to be executed very rarely

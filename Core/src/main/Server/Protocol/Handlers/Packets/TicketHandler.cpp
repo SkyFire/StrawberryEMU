@@ -50,7 +50,7 @@ void WorldSession::HandleGMTicketCreateOpcode(WorldPacket & recv_data)
         return;
     }
 
-    uint32 map, unk1;
+    uint32 map, unk, unk1, unk2;
     uint8 needResponse; // ignored
     float x, y, z;
     std::string ticketText, ticketText2;
@@ -62,8 +62,10 @@ void WorldSession::HandleGMTicketCreateOpcode(WorldPacket & recv_data)
     recv_data >> y;
     recv_data >> z;
     recv_data >> ticketText;
-    recv_data >> unk1; // not sure what this is... replyTo?
+    recv_data >> unk;         // not sure what this is... replyTo?
     recv_data >> needResponse; // always 1/0 -- not sure what retail does with this
+    recv_data >> unk1;
+    recv_data >> unk2;
 
     GM_Ticket *ticket = new GM_Ticket;
     ticket->name = GetPlayer()->GetName();
@@ -259,18 +261,18 @@ void WorldSession::HandleGMSurveySubmit(WorldPacket& recv_data)
         os << uint32(nextSurveyID) << " ";
         os << subSurveyId << ", ";
         os << uint16(rank) << ", '";
-        CharacterDatabase.escape_string(comment);
+        CharDB.escape_string(comment);
         os << comment << "');";
-        CharacterDatabase.PExecute(os.str().c_str());
+        CharDB.PExecute(os.str().c_str());
     }
 
     std::string comment; // just a guess
     recv_data >> comment;
-    CharacterDatabase.escape_string(comment);
+    CharDB.escape_string(comment);
     ss << "'" << comment << "', ";
     ss << int64(time_t(NULL)) << ");";
 
-    CharacterDatabase.PExecute(ss.str().c_str());
+    CharDB.PExecute(ss.str().c_str());
 }
 
 void WorldSession::HandleReportLag(WorldPacket& recv_data)
@@ -295,7 +297,7 @@ void WorldSession::HandleReportLag(WorldPacket& recv_data)
     os << y << ", ";
     os << z << ");";
 
-    CharacterDatabase.Execute(os.str().c_str());
+    CharDB.Execute(os.str().c_str());
 }
 
 void WorldSession::HandleGMResponseResolve(WorldPacket& /*recvPacket*/)

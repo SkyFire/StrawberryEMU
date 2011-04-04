@@ -399,14 +399,12 @@ uint32 GetSpellCastTime(SpellEntry const* spellInfo, Spell * spell)
     if (spell && spell->GetCaster())
     {
         SpellScaling values(spell->GetCaster()->getLevel(), spell->GetSpellInfo());
-        if (values.canScale)
+        if(values.canScale)
         {
             castTime = values.cast;
         }
-    }
-
-    if (spell && spell->GetCaster())
         spell->GetCaster()->ModSpellCastTime(spellInfo, castTime, spell);
+    }        
 
     if (spellInfo->Attributes & SPELL_ATTR_REQ_AMMO && (!spell || !(spell->IsAutoRepeat())))
         castTime += 500;
@@ -1250,7 +1248,7 @@ void SpellMgr::LoadSpellTargetPositions()
     mSpellTargetPositions.clear();                                // need for reload case
 
     //                                                0   1           2                  3                  4                  5
-    QueryResult result = WorldDatabase.Query("SELECT id, target_map, target_position_x, target_position_y, target_position_z, target_orientation FROM spell_target_position");
+    QueryResult result = WorldDB.Query("SELECT id, target_map, target_position_x, target_position_y, target_position_z, target_orientation FROM spell_target_position");
     if (!result)
     {
         sLog->outString(">> Loaded 0 spell target coordinates. DB table `spell_target_position` is empty.");
@@ -1402,7 +1400,7 @@ void SpellMgr::LoadSpellProcEvents()
     uint32 count = 0;
 
     //                                                0      1           2                3                 4                 5                 6          7       8        9             10
-    QueryResult result = WorldDatabase.Query("SELECT entry, SchoolMask, SpellFamilyName, SpellFamilyMask0, SpellFamilyMask1, SpellFamilyMask2, procFlags, procEx, ppmRate, CustomChance, Cooldown FROM spell_proc_event");
+    QueryResult result = WorldDB.Query("SELECT entry, SchoolMask, SpellFamilyName, SpellFamilyMask0, SpellFamilyMask1, SpellFamilyMask2, procFlags, procEx, ppmRate, CustomChance, Cooldown FROM spell_proc_event");
     if (!result)
     {
         sLog->outString(">> Loaded %u spell proc event conditions", count);
@@ -1466,7 +1464,7 @@ void SpellMgr::LoadSpellBonusess()
     mSpellBonusMap.clear();                             // need for reload case
     uint32 count = 0;
     //                                                0      1             2          3         4
-    QueryResult result = WorldDatabase.Query("SELECT entry, direct_bonus, dot_bonus, ap_bonus, ap_dot_bonus FROM spell_bonus_data");
+    QueryResult result = WorldDB.Query("SELECT entry, direct_bonus, dot_bonus, ap_bonus, ap_dot_bonus FROM spell_bonus_data");
     if (!result)
     {
         sLog->outString(">> Loaded %u spell bonus data", count);
@@ -1641,7 +1639,7 @@ void SpellMgr::LoadSpellGroups()
     uint32 count = 0;
 
     //                                                       0   1
-    QueryResult result = WorldDatabase.Query("SELECT id, spell_id FROM spell_group");
+    QueryResult result = WorldDB.Query("SELECT id, spell_id FROM spell_group");
     if (!result)
     {
 
@@ -1729,7 +1727,7 @@ void SpellMgr::LoadSpellGroupStackRules()
     uint32 count = 0;
 
     //                                                       0         1
-    QueryResult result = WorldDatabase.Query("SELECT group_id, stack_rule FROM spell_group_stack_rules");
+    QueryResult result = WorldDB.Query("SELECT group_id, stack_rule FROM spell_group_stack_rules");
     if (!result)
     {
 
@@ -1779,7 +1777,7 @@ void SpellMgr::LoadSpellThreats()
     uint32 count = 0;
 
     //                                                0      1
-    QueryResult result = WorldDatabase.Query("SELECT entry, Threat FROM spell_threat");
+    QueryResult result = WorldDB.Query("SELECT entry, Threat FROM spell_threat");
     if (!result)
     {
 
@@ -1984,14 +1982,13 @@ int32 SpellMgr::CalculateSpellEffectAmount(SpellEntry const * spellEntry, uint8 
 
     float maxPoints = 0.00f;
     float comboPointScaling = 0.00f;
-
-    // base amount modification based on spell lvl vs caster lvl
+    
     if (caster)
     {
         SpellScaling values(caster->getLevel(), spellEntry);
         if (values.canScale && (int32)values.min[effIndex] != 0)
         {
-            basePoints = (int32)values.min[effIndex];
+            float(basePoints) = values.min[effIndex];
             maxPoints = values.max[effIndex];
             comboPointScaling = values.pts[effIndex];
         }
@@ -2003,8 +2000,9 @@ int32 SpellMgr::CalculateSpellEffectAmount(SpellEntry const * spellEntry, uint8 
             else if (level < int32(spellEntry->GetBaseLevel()))
                 level = int32(spellEntry->GetBaseLevel());
             level -= int32(spellEntry->GetSpellLevel());
-            basePoints += int32(level * basePointsPerLevel);
+                basePoints += int32(level * basePointsPerLevel);
         }
+        maxPoints = values.max[effIndex];
     }
 
     if (maxPoints != 0.00f)
@@ -2024,19 +2022,15 @@ int32 SpellMgr::CalculateSpellEffectAmount(SpellEntry const * spellEntry, uint8 
                 // range can have positive (1..rand) and negative (rand..1) values, so order its for irand
                 int32 randvalue = (randomPoints >= 1) ? irand(1, randomPoints) : irand(randomPoints, 1);
 
-            basePoints += randvalue;
-            break;
+                basePoints += randvalue;
+                break;
         }
     }
-    float value = float(basePoints);
+    int32 value = basePoints;
 
     // random damage
     if (caster)
     {
-        SpellEffectEntry const* spellEffect = spellEntry->GetSpellEffect(SpellEffIndex(effIndex));
-        if (!spellEffect)
-            return 0;
-
         // bonus amount from combo points
         if  (caster->m_movedPlayer)
         {
@@ -2044,15 +2038,14 @@ int32 SpellMgr::CalculateSpellEffectAmount(SpellEntry const * spellEntry, uint8 
             {
                 if (float comboDamage = spellEffect->EffectPointsPerComboPoint)
                 {
-                    if (comboPointScaling != 0.00f)
+                    if(comboPointScaling != 0.00f)
                         comboDamage = comboPointScaling;
-
                     value += int32(comboDamage * comboPoints);
                 }
             }
         }
 
-        value = caster->ApplyEffectModifiers(spellEntry, effIndex, value);
+        value = caster->ApplyEffectModifiers(spellEntry, effIndex, float(value));
 
         // amount multiplication based on caster's level
         if (!basePointsPerLevel && (spellEntry->Attributes & SPELL_ATTR_LEVEL_DAMAGE_CALCULATION && spellEntry->GetSpellLevel()) &&
@@ -2063,8 +2056,8 @@ int32 SpellMgr::CalculateSpellEffectAmount(SpellEntry const * spellEntry, uint8 
                 spellEffect->EffectApplyAuraName != SPELL_AURA_MOD_INCREASE_SPEED &&
                 spellEffect->EffectApplyAuraName != SPELL_AURA_MOD_DECREASE_SPEED)
                 //there are many more: slow speed, -healing pct
-            value *= 0.25f * exp(caster->getLevel() * (70 - spellEntry->GetSpellLevel()) / 1000.0f);
-            //value = int32(value * (int32)getLevel() / (int32)(spellProto->GetSpellLevel() ? spellProto->GetSpellLevel() : 1));
+            value = (value * 0.25f * exp(caster->getLevel() * (70 - spellEntry->GetSpellLevel()) / 1000.0f));
+            //value = int32(value * (int32)getLevel() / (int32)(spellProto->spellLevel ? spellProto->spellLevel : 1));
     }
 
     return int32(value);
@@ -2203,7 +2196,7 @@ void SpellMgr::LoadSpellLearnSpells()
     mSpellLearnSpells.clear();                              // need for reload case
 
     //                                                  0      1        2
-    QueryResult result = WorldDatabase.Query("SELECT entry, SpellID, Active FROM spell_learn_spell");
+    QueryResult result = WorldDB.Query("SELECT entry, SpellID, Active FROM spell_learn_spell");
     if (!result)
     {
 
@@ -2312,7 +2305,7 @@ void SpellMgr::LoadSpellPetAuras()
     mSpellPetAuraMap.clear();                                  // need for reload case
 
     //                                                0      1         2    3
-    QueryResult result = WorldDatabase.Query("SELECT spell, effectId, pet, aura FROM spell_pet_auras");
+    QueryResult result = WorldDB.Query("SELECT spell, effectId, pet, aura FROM spell_pet_auras");
     if( !result )
     {
         sLog->outString(">> Loaded 0 spell pet auras. DB table `spell_pet_auras` is empty.");
@@ -2686,7 +2679,7 @@ void SpellMgr::LoadSpellAreas()
     mSpellAreaForAuraMap.clear();
 
     //                                                  0     1         2              3               4           5          6        7       8
-    QueryResult result = WorldDatabase.Query("SELECT spell, area, quest_start, quest_start_active, quest_end, aura_spell, racemask, gender, autocast FROM spell_area");
+    QueryResult result = WorldDB.Query("SELECT spell, area, quest_start, quest_start_active, quest_end, aura_spell, racemask, gender, autocast FROM spell_area");
 
     if (!result)
     {
@@ -3527,7 +3520,7 @@ void SpellMgr::LoadSpellEnchantProcData()
     uint32 count = 0;
 
     //                                                  0         1           2         3
-    QueryResult result = WorldDatabase.Query("SELECT entry, customChance, PPMChance, procEx FROM spell_enchant_proc_data");
+    QueryResult result = WorldDB.Query("SELECT entry, customChance, PPMChance, procEx FROM spell_enchant_proc_data");
     if (!result)
     {
 
@@ -3573,7 +3566,7 @@ void SpellMgr::LoadSpellRequired()
     mSpellsReqSpell.clear();                                   // need for reload case
     mSpellReq.clear();                                         // need for reload case
 
-    QueryResult result = WorldDatabase.Query("SELECT spell_id, req_spell from spell_required");
+    QueryResult result = WorldDB.Query("SELECT spell_id, req_spell from spell_required");
 
     if (!result)
     {
@@ -3621,118 +3614,6 @@ void SpellMgr::LoadSpellRequired()
     } while (result->NextRow());
 
     sLog->outString(">> Loaded %u spell required records in %u ms", rows, GetMSTimeDiffToNow(oldMSTime));
-    sLog->outString();
-}
-
-void SpellMgr::LoadSpellRanks()
-{
-    uint32 oldMSTime = getMSTime();
-
-    mSpellChains.clear();                                   // need for reload case
-
-    QueryResult result = WorldDatabase.Query("SELECT first_spell_id, spell_id, rank from spell_ranks ORDER BY first_spell_id , rank");
-
-    if (!result)
-    {
-
-        sLog->outString(">> Loaded 0 spell rank records");
-        sLog->outString();
-        sLog->outErrorDb("`spell_ranks` table is empty!");
-        return;
-    }
-
-
-    uint32 rows = 0;
-    bool finished = false;
-
-    do
-    {
-                        // spellid, rank
-        std::list < std::pair < int32, int32 > > rankChain;
-        int32 currentSpell = -1;
-        int32 lastSpell = -1;
-
-        // fill one chain
-        while (currentSpell == lastSpell && !finished)
-        {
-            Field *fields = result->Fetch();
-
-            currentSpell = fields[0].GetUInt32();
-            if (lastSpell == -1)
-                lastSpell = currentSpell;
-            uint32 spell_id = fields[1].GetUInt32();
-            uint32 rank = fields[2].GetUInt32();
-
-            // don't drop the row if we're moving to the next rank
-            if (currentSpell == lastSpell)
-            {
-                rankChain.push_back(std::make_pair(spell_id, rank));
-                if (!result->NextRow())
-                    finished = true;
-            }
-            else
-                break;
-        }
-        // check if chain is made with valid first spell
-        SpellEntry const * first = sSpellStore.LookupEntry(lastSpell);
-        if (!first)
-        {
-            sLog->outErrorDb("Spell rank identifier(first_spell_id) %u listed in `spell_ranks` does not exist!", lastSpell);
-            continue;
-        }
-        // check if chain is long enough
-        if (rankChain.size() < 2)
-        {
-            sLog->outErrorDb("There is only 1 spell rank for identifier(first_spell_id) %u in `spell_ranks`, entry is not needed!", lastSpell);
-            continue;
-        }
-        int32 curRank = 0;
-        bool valid = true;
-        // check spells in chain
-        for (std::list<std::pair<int32, int32> >::iterator itr = rankChain.begin() ; itr!= rankChain.end(); ++itr)
-        {
-            SpellEntry const * spell = sSpellStore.LookupEntry(itr->first);
-            if (!spell)
-            {
-                sLog->outErrorDb("Spell %u (rank %u) listed in `spell_ranks` for chain %u does not exist!", itr->first, itr->second, lastSpell);
-                valid = false;
-                break;
-            }
-            ++curRank;
-            if (itr->second != curRank)
-            {
-                sLog->outErrorDb("Spell %u (rank %u) listed in `spell_ranks` for chain %u does not have proper rank value(should be %u)!", itr->first, itr->second, lastSpell, curRank);
-                valid = false;
-                break;
-            }
-        }
-        if (!valid)
-            continue;
-        int32 prevRank = 0;
-        // insert the chain
-        std::list<std::pair<int32, int32> >::iterator itr = rankChain.begin();
-        do
-        {
-            ++rows;
-            int32 addedSpell = itr->first;
-            mSpellChains[addedSpell].first = lastSpell;
-            mSpellChains[addedSpell].last = rankChain.back().first;
-            mSpellChains[addedSpell].rank = itr->second;
-            mSpellChains[addedSpell].prev = prevRank;
-            prevRank = addedSpell;
-            ++itr;
-            if (itr == rankChain.end())
-            {
-                mSpellChains[addedSpell].next = 0;
-                break;
-            }
-            else
-                mSpellChains[addedSpell].next = itr->first;
-        }
-        while (true);
-    } while (!finished);
-
-    sLog->outString(">> Loaded %u spell rank records in %u ms", rows, GetMSTimeDiffToNow(oldMSTime));
     sLog->outString();
 }
 
@@ -4498,7 +4379,7 @@ void SpellMgr::LoadSpellLinked()
     mSpellLinkedMap.clear();    // need for reload case
 
     //                                                0              1             2
-    QueryResult result = WorldDatabase.Query("SELECT spell_trigger, spell_effect, type FROM spell_linked_spell");
+    QueryResult result = WorldDB.Query("SELECT spell_trigger, spell_effect, type FROM spell_linked_spell");
     if (!result)
     {
         sLog->outString(">> Loaded 0 linked spells. DB table `spell_linked_spell` is empty.");

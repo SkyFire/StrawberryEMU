@@ -160,7 +160,7 @@ void AuctionHouseMgr::SendAuctionWonMail(AuctionEntry *auction, SQLTransaction& 
 
         MailDraft(msgAuctionWonSubject.str(), msgAuctionWonBody.str())
             .AddItem(pItem)
-            .SendMailTo(trans, MailReceiver(bidder,auction->bidder), auction, MAIL_CHECK_MASK_COPIED);
+            .SendMailTo(trans, MailReceiver(bidder, auction->bidder), auction, MAIL_CHECK_MASK_COPIED);
     }
 }
 
@@ -215,7 +215,7 @@ void AuctionHouseMgr::SendAuctionSuccessfulMail(AuctionEntry * auction, SQLTrans
 
         sLog->outDebug(LOG_FILTER_AUCTIONHOUSE, "AuctionSuccessful body string : %s", auctionSuccessfulBody.str().c_str());
 
-        uint32 profit = auction->bid + auction->deposit - auctionCut;
+        uint64 profit = auction->bid + auction->deposit - auctionCut;
 
         //FIXME: what do if owner offline
         if (owner)
@@ -257,8 +257,25 @@ void AuctionHouseMgr::SendAuctionExpiredMail(AuctionEntry * auction, SQLTransact
     }
 }
 
+void AuctionHouseMgr::SendAuctionRemovedMail(AuctionEntry * auction, SQLTransaction& trans)
+{
+    uint64 owner_guid = MAKE_NEW_GUID(auction->owner, 0, HIGHGUID_PLAYER);
+    Player *owner = sObjectMgr->GetPlayer(owner_guid);
+    
+    if (owner)
+    {
+        std::ostringstream subject;
+        subject << auction->item_template << ":0:" << AUCTION_CANCELED << ":0:0";
+
+        if (owner)
+            owner->GetSession()->SendAuctionRemovedNotification(auction);
+
+        MailDraft(subject.str(), "").SendMailTo(trans, MailReceiver(owner, auction->owner), auction, MAIL_CHECK_MASK_COPIED, 0);
+    }
+}
+
 //this function sends mail to old bidder
-void AuctionHouseMgr::SendAuctionOutbiddedMail(AuctionEntry *auction, uint32 newPrice, Player* newBidder, SQLTransaction& trans)
+void AuctionHouseMgr::SendAuctionOutbiddedMail(AuctionEntry *auction, uint64 newPrice, Player* newBidder, SQLTransaction& trans)
 {
     uint64 oldBidder_guid = MAKE_NEW_GUID(auction->bidder,0, HIGHGUID_PLAYER);
     Player *oldBidder = sObjectMgr->GetPlayer(oldBidder_guid);
@@ -310,8 +327,8 @@ void AuctionHouseMgr::LoadAuctionItems()
     uint32 oldMSTime = getMSTime();
 
     // data needs to be at first place for Item::LoadFromDB
-    PreparedStatement* stmt = CharacterDatabase.GetPreparedStatement(CHAR_LOAD_AUCTION_ITEMS);
-    PreparedQueryResult result = CharacterDatabase.Query(stmt);
+    PreparedStatement* stmt = CharDB.GetPreparedStatement(CHAR_LOAD_AUCTION_ITEMS);
+    PreparedQueryResult result = CharDB.Query(stmt);
 
     if (!result)
     {
@@ -358,7 +375,7 @@ void AuctionHouseMgr::LoadAuctions()
 {
     uint32 oldMSTime = getMSTime();
 
-    QueryResult result = CharacterDatabase.Query("SELECT COUNT(*) FROM auctionhouse");
+    QueryResult result = CharDB.Query("SELECT COUNT(*) FROM auctionhouse");
     if (!result)
     {
         sLog->outString(">> Loaded 0 auctions. DB table `auctionhouse` is empty.");
@@ -376,7 +393,7 @@ void AuctionHouseMgr::LoadAuctions()
         return;
     }
 
-    result = CharacterDatabase.Query("SELECT id,auctioneerguid,itemguid,item_template,itemowner,buyoutprice,time,buyguid,lastbid,startbid,deposit FROM auctionhouse");
+    result = CharDB.Query("SELECT id,auctioneerguid,itemguid,item_template,itemowner,buyoutprice,time,buyguid,lastbid,startbid,deposit FROM auctionhouse");
     if (!result)
     {
         sLog->outString();
@@ -388,7 +405,7 @@ void AuctionHouseMgr::LoadAuctions()
 
     //- TODO: Get rid of horrible design so we don't have to use transaction here to statisfy
     //- function parameters.
-    SQLTransaction trans = CharacterDatabase.BeginTransaction();
+    SQLTransaction trans = CharDB.BeginTransaction();
 
     do
     {
@@ -450,7 +467,7 @@ void AuctionHouseMgr::LoadAuctions()
 
     } while (result->NextRow());
 
-    CharacterDatabase.CommitTransaction(trans);
+    CharDB.CommitTransaction(trans);
 
     sLog->outString(">> Loaded %u auctions in %u ms", count, GetMSTimeDiffToNow(oldMSTime));
     sLog->outString();   
@@ -548,7 +565,7 @@ void AuctionHouseObject::Update()
     if (AuctionsMap.empty())
         return;
 
-    QueryResult result = CharacterDatabase.PQuery("SELECT id FROM auctionhouse WHERE time <= %u ORDER BY TIME ASC", (uint32)curTime+60);
+    QueryResult result = CharDB.PQuery("SELECT id FROM auctionhouse WHERE time <= %u ORDER BY TIME ASC", (uint32)curTime+60);
 
     if (!result)
         return;
@@ -561,7 +578,7 @@ void AuctionHouseObject::Update()
         if (!auction)
             continue;
 
-        SQLTransaction trans = CharacterDatabase.BeginTransaction();
+        SQLTransaction trans = CharDB.BeginTransaction();
 
         ///- Either cancel the auction if there was no bidder
         if (auction->bidder == 0)
@@ -584,7 +601,7 @@ void AuctionHouseObject::Update()
 
         ///- In any case clear the auction
         auction->DeleteFromDB(trans);
-        CharacterDatabase.CommitTransaction(trans);
+        CharDB.CommitTransaction(trans);
 
         RemoveAuction(auction, item_template);
         sAuctionMgr->RemoveAItem(auction->item_guidlow);
@@ -745,13 +762,13 @@ bool AuctionEntry::BuildAuctionInfo(WorldPacket & data) const
     data << uint32(pItem->GetSpellCharges());               //item->charge FFFFFFF
     data << uint32(0);                                      //Unknown
     data << uint64(owner);                                  //Auction->owner
-    data << uint32(startbid);                               //Auction->startbid (not sure if useful)
-    data << uint32(bid ? GetAuctionOutBid() : 0);
+    data << uint64(startbid);                               //Auction->startbid (not sure if useful)
+    data << uint64(bid ? GetAuctionOutBid() : 0);
     //minimal outbid
-    data << uint32(buyout);                                 //auction->buyout
-    data << uint32((expire_time-time(NULL))*IN_MILLISECONDS);//time left
+    data << uint64(buyout);                                 //auction->buyout
+    data << uint32((expire_time-time(NULL)) * IN_MILLISECONDS);//time left
     data << uint64(bidder);                                 //auction->bidder current
-    data << uint32(bid);                                    //current bid
+    data << uint64(bid);                                    //current bid
     return true;
 }
 
@@ -762,9 +779,9 @@ uint32 AuctionEntry::GetAuctionCut() const
 }
 
 /// the sum of outbid is (1% from current bid)*5, if bid is very small, it is 1c
-uint32 AuctionEntry::GetAuctionOutBid() const
+uint64 AuctionEntry::GetAuctionOutBid() const
 {
-    uint32 outbid = CalculatePctN(bid, 5);
+    uint64 outbid = CalculatePctN(bid, 5);
     return outbid ? outbid : 1;
 }
 
@@ -775,7 +792,7 @@ void AuctionEntry::DeleteFromDB(SQLTransaction& trans) const
 
 void AuctionEntry::SaveToDB(SQLTransaction& trans) const
 {
-    trans->PAppend("INSERT INTO auctionhouse (id,auctioneerguid,itemguid,item_template,itemowner,buyoutprice,time,buyguid,lastbid,startbid,deposit) "
+    trans->PAppend("INSERT INTO auctionhouse (id, auctioneerguid, itemguid, item_template, itemowner, buyoutprice, time, buyguid, lastbid, startbid, deposit) "
         "VALUES ('%u', '%u', '%u', '%u', '%u', '%u', '" UI64FMTD "', '%u', '%u', '%u', '%u')",
         Id, auctioneer, item_guidlow, item_template, owner, buyout, (uint64)expire_time, bidder, bid, startbid, deposit);
 }

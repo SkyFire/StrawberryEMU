@@ -693,7 +693,7 @@ void WorldSession::HandleQuestgiverStatusMultipleQuery(WorldPacket& /*recvPacket
 
     uint32 count = 0;
 
-    WorldPacket data(SMSG_QUESTGIVER_STATUS_MULTIPLE, 4);
+    WorldPacket data(SMSG_QUESTGIVER_STATUS_MULTIPLE, 4 + 8 + 4);
     data << uint32(count);                                  // placeholder
 
     for (Player::ClientGUIDs::const_iterator itr = _player->m_clientGUIDs.begin(); itr != _player->m_clientGUIDs.end(); ++itr)

@@ -91,7 +91,7 @@ public:
                 pathid = target->GetWaypointPath();
             else
             {
-                QueryResult result = WorldDatabase.Query("SELECT MAX(id) FROM waypoint_data");
+                QueryResult result = WorldDB.Query("SELECT MAX(id) FROM waypoint_data");
                 uint32 maxpathid = result->Fetch()->GetInt32();
                 pathid = maxpathid+1;
                 handler->PSendSysMessage("%s%s|r", "|cff00ff00", "New path started.");
@@ -109,7 +109,7 @@ public:
             return true;
         }
 
-        QueryResult result = WorldDatabase.PQuery("SELECT MAX(point) FROM waypoint_data WHERE id = '%u'",pathid);
+        QueryResult result = WorldDB.PQuery("SELECT MAX(point) FROM waypoint_data WHERE id = '%u'",pathid);
 
         if (result)
             point = (*result)[0].GetUInt32();
@@ -117,7 +117,7 @@ public:
         Player* player = handler->GetSession()->GetPlayer();
         //Map *map = player->GetMap();
 
-        WorldDatabase.PExecute("INSERT INTO waypoint_data (id, point, position_x, position_y, position_z) VALUES ('%u','%u','%f', '%f', '%f')",
+        WorldDB.PExecute("INSERT INTO waypoint_data (id, point, position_x, position_y, position_z) VALUES ('%u','%u','%f', '%f', '%f')",
             pathid, point+1, player->GetPositionX(), player->GetPositionY(), player->GetPositionZ());
 
         handler->PSendSysMessage("%s%s%u%s%u%s|r", "|cff00ff00", "PathID: |r|cff00ffff", pathid, "|r|cff00ff00: Waypoint |r|cff00ffff", point+1,"|r|cff00ff00 created. ");
@@ -166,14 +166,14 @@ public:
         }
 
         guidlow = target->GetDBTableGUIDLow();
-        QueryResult result = WorldDatabase.PQuery("SELECT guid FROM creature_addon WHERE guid = '%u'",guidlow);
+        QueryResult result = WorldDB.PQuery("SELECT guid FROM creature_addon WHERE guid = '%u'",guidlow);
 
         if (result)
-            WorldDatabase.PExecute("UPDATE creature_addon SET path_id = '%u' WHERE guid = '%u'", pathid, guidlow);
+            WorldDB.PExecute("UPDATE creature_addon SET path_id = '%u' WHERE guid = '%u'", pathid, guidlow);
         else
-            WorldDatabase.PExecute("INSERT INTO creature_addon(guid,path_id) VALUES ('%u','%u')", guidlow, pathid);
+            WorldDB.PExecute("INSERT INTO creature_addon(guid,path_id) VALUES ('%u','%u')", guidlow, pathid);
 
-        WorldDatabase.PExecute("UPDATE creature SET MovementType = '%u' WHERE guid = '%u'", WAYPOINT_MOTION_TYPE, guidlow);
+        WorldDB.PExecute("UPDATE creature SET MovementType = '%u' WHERE guid = '%u'", WAYPOINT_MOTION_TYPE, guidlow);
 
         target->LoadPath(pathid);
         target->SetDefaultMovementType(WAYPOINT_MOTION_TYPE);
@@ -212,9 +212,9 @@ public:
         {
             if (target->GetCreatureAddon()->path_id != 0)
             {
-                WorldDatabase.PExecute("DELETE FROM creature_addon WHERE guid = %u", target->GetGUIDLow());
+                WorldDB.PExecute("DELETE FROM creature_addon WHERE guid = %u", target->GetGUIDLow());
                 target->UpdateWaypointID(0);
-                WorldDatabase.PExecute("UPDATE creature SET MovementType = '%u' WHERE guid = '%u'", IDLE_MOTION_TYPE, guidlow);
+                WorldDB.PExecute("UPDATE creature SET MovementType = '%u' WHERE guid = '%u'", IDLE_MOTION_TYPE, guidlow);
                 target->LoadPath(0);
                 target->SetDefaultMovementType(IDLE_MOTION_TYPE);
                 target->GetMotionMaster()->MoveTargetedHome();
@@ -248,11 +248,11 @@ public:
 
             if (id)
             {
-                QueryResult result = WorldDatabase.PQuery("SELECT id FROM waypoint_scripts WHERE guid = %u", id);
+                QueryResult result = WorldDB.PQuery("SELECT id FROM waypoint_scripts WHERE guid = %u", id);
 
                 if (!result)
                 {
-                    WorldDatabase.PExecute("INSERT INTO waypoint_scripts(guid)VALUES(%u)", id);
+                    WorldDB.PExecute("INSERT INTO waypoint_scripts(guid)VALUES(%u)", id);
                     handler->PSendSysMessage("%s%s%u|r", "|cff00ff00", "Wp Event: New waypoint event added: ", id);
                 }
                 else
@@ -260,9 +260,9 @@ public:
             }
             else
             {
-                QueryResult result = WorldDatabase.Query("SELECT MAX(guid) FROM waypoint_scripts");
+                QueryResult result = WorldDB.Query("SELECT MAX(guid) FROM waypoint_scripts");
                 id = result->Fetch()->GetUInt32();
-                WorldDatabase.PExecute("INSERT INTO waypoint_scripts(guid)VALUES(%u)", id+1);
+                WorldDB.PExecute("INSERT INTO waypoint_scripts(guid)VALUES(%u)", id+1);
                 handler->PSendSysMessage("%s%s%u|r", "|cff00ff00","Wp Event: New waypoint event added: |r|cff00ffff", id+1);
             }
 
@@ -283,7 +283,7 @@ public:
             float a8, a9, a10, a11;
             char const* a7;
 
-            QueryResult result = WorldDatabase.PQuery("SELECT guid, delay, command, datalong, datalong2, dataint, x, y, z, o FROM waypoint_scripts WHERE id = %u", id);
+            QueryResult result = WorldDB.PQuery("SELECT guid, delay, command, datalong, datalong2, dataint, x, y, z, o FROM waypoint_scripts WHERE id = %u", id);
 
             if (!result)
             {
@@ -316,11 +316,11 @@ public:
         {
             id = atoi(arg_id);
 
-            QueryResult result = WorldDatabase.PQuery("SELECT guid FROM waypoint_scripts WHERE guid = %u", id);
+            QueryResult result = WorldDB.PQuery("SELECT guid FROM waypoint_scripts WHERE guid = %u", id);
 
             if (result)
             {
-                WorldDatabase.PExecute("DELETE FROM waypoint_scripts WHERE guid = %u", id);
+                WorldDB.PExecute("DELETE FROM waypoint_scripts WHERE guid = %u", id);
                 handler->PSendSysMessage("%s%s%u|r","|cff00ff00","Wp Event: Waypoint script removed: ", id);
             }
             else
@@ -379,12 +379,12 @@ public:
             {
                 uint32 newid = atoi(arg_3);
                 handler->PSendSysMessage("%s%s|r|cff00ffff%u|r|cff00ff00%s|r|cff00ffff%u|r","|cff00ff00","Wp Event: Wypoint scipt guid: ", newid," id changed: ", id);
-                WorldDatabase.PExecute("UPDATE waypoint_scripts SET id='%u' WHERE guid='%u'",
+                WorldDB.PExecute("UPDATE waypoint_scripts SET id='%u' WHERE guid='%u'",
                     newid, id); return true;
             }
             else
             {
-                QueryResult result = WorldDatabase.PQuery("SELECT id FROM waypoint_scripts WHERE guid='%u'",id);
+                QueryResult result = WorldDB.PQuery("SELECT id FROM waypoint_scripts WHERE guid='%u'",id);
 
                 if (!result)
                 {
@@ -395,7 +395,7 @@ public:
                 if (arg_str_2 == "posx")
                 {
                     coord = (float)(atof(arg_3));
-                    WorldDatabase.PExecute("UPDATE waypoint_scripts SET x='%f' WHERE guid='%u'",
+                    WorldDB.PExecute("UPDATE waypoint_scripts SET x='%f' WHERE guid='%u'",
                         coord, id);
                     handler->PSendSysMessage("|cff00ff00Waypoint script:|r|cff00ffff %u|r|cff00ff00 position_x updated.|r", id);
                     return true;
@@ -403,7 +403,7 @@ public:
                 else if (arg_str_2 == "posy")
                 {
                     coord = (float)(atof(arg_3));
-                    WorldDatabase.PExecute("UPDATE waypoint_scripts SET y='%f' WHERE guid='%u'",
+                    WorldDB.PExecute("UPDATE waypoint_scripts SET y='%f' WHERE guid='%u'",
                         coord, id);
                     handler->PSendSysMessage("|cff00ff00Waypoint script: %u position_y updated.|r", id);
                     return true;
@@ -411,7 +411,7 @@ public:
                 else if (arg_str_2 == "posz")
                 {
                     coord = (float)(atof(arg_3));
-                    WorldDatabase.PExecute("UPDATE waypoint_scripts SET z='%f' WHERE guid='%u'",
+                    WorldDB.PExecute("UPDATE waypoint_scripts SET z='%f' WHERE guid='%u'",
                         coord, id);
                     handler->PSendSysMessage("|cff00ff00Waypoint script: |r|cff00ffff%u|r|cff00ff00 position_z updated.|r", id);
                     return true;
@@ -419,14 +419,14 @@ public:
                 else if (arg_str_2 == "orientation")
                 {
                     coord = (float)(atof(arg_3));
-                    WorldDatabase.PExecute("UPDATE waypoint_scripts SET o='%f' WHERE guid='%u'",
+                    WorldDB.PExecute("UPDATE waypoint_scripts SET o='%f' WHERE guid='%u'",
                         coord, id);
                     handler->PSendSysMessage("|cff00ff00Waypoint script: |r|cff00ffff%u|r|cff00ff00 orientation updated.|r", id);
                     return true;
                 }
                 else if (arg_str_2 == "dataint")
                 {
-                    WorldDatabase.PExecute("UPDATE waypoint_scripts SET %s='%u' WHERE guid='%u'",
+                    WorldDB.PExecute("UPDATE waypoint_scripts SET %s='%u' WHERE guid='%u'",
                         arg_2, atoi(arg_3), id);
                     handler->PSendSysMessage("|cff00ff00Waypoint script: |r|cff00ffff%u|r|cff00ff00 dataint updated.|r", id);
                     return true;
@@ -434,8 +434,8 @@ public:
                 else
                 {
                     std::string arg_str_3 = arg_3;
-                    WorldDatabase.escape_string(arg_str_3);
-                    WorldDatabase.PExecute("UPDATE waypoint_scripts SET %s='%s' WHERE guid='%u'",
+                    WorldDB.escape_string(arg_str_3);
+                    WorldDB.PExecute("UPDATE waypoint_scripts SET %s='%s' WHERE guid='%u'",
                         arg_2, arg_str_3.c_str(), id);
                 }
             }
@@ -500,7 +500,7 @@ public:
         // Check the creature
         if (wpCreature->GetEntry() == VISUAL_WAYPOINT)
         {
-            QueryResult result = WorldDatabase.PQuery("SELECT id, point FROM waypoint_data WHERE wpguid = %u", wpGuid);
+            QueryResult result = WorldDB.PQuery("SELECT id, point FROM waypoint_data WHERE wpguid = %u", wpGuid);
 
             if (!result)
             {
@@ -512,7 +512,7 @@ public:
                 // (0.001) - There is no other way to compare C++ floats with mySQL floats
                 // See also: http://dev.mysql.com/doc/refman/5.0/en/problems-with-float.html
                 const char* maxDIFF = "0.01";
-                result = WorldDatabase.PQuery("SELECT id, point FROM waypoint_data WHERE (abs(position_x - %f) <= %s) and (abs(position_y - %f) <= %s) and (abs(position_z - %f) <= %s)",
+                result = WorldDB.PQuery("SELECT id, point FROM waypoint_data WHERE (abs(position_x - %f) <= %s) and (abs(position_y - %f) <= %s) and (abs(position_z - %f) <= %s)",
                     wpCreature->GetPositionX(), maxDIFF, wpCreature->GetPositionY(), maxDIFF, wpCreature->GetPositionZ(), maxDIFF);
                 if (!result)
                 {
@@ -556,9 +556,9 @@ public:
                 wpCreature->AddObjectToRemoveList();
             }
 
-            WorldDatabase.PExecute("DELETE FROM waypoint_data WHERE id='%u' AND point='%u'",
+            WorldDB.PExecute("DELETE FROM waypoint_data WHERE id='%u' AND point='%u'",
                 pathid, point);
-            WorldDatabase.PExecute("UPDATE waypoint_data SET point=point-1 WHERE id='%u' AND point>'%u'",
+            WorldDB.PExecute("UPDATE waypoint_data SET point=point-1 WHERE id='%u' AND point>'%u'",
                 pathid, point);
 
             handler->PSendSysMessage(LANG_WAYPOINT_REMOVED);
@@ -599,7 +599,7 @@ public:
                     //sMapMgr->GetMap(npcCreature->GetMapId())->Add(wpCreature2);
                 }
 
-                WorldDatabase.PExecute("UPDATE waypoint_data SET position_x = '%f',position_y = '%f',position_z = '%f' where id = '%u' AND point='%u'",
+                WorldDB.PExecute("UPDATE waypoint_data SET position_x = '%f',position_y = '%f',position_z = '%f' where id = '%u' AND point='%u'",
                     chr->GetPositionX(), chr->GetPositionY(), chr->GetPositionZ(), pathid, point);
 
                 handler->PSendSysMessage(LANG_WAYPOINT_CHANGED);
@@ -612,15 +612,15 @@ public:
         if (text == 0)
         {
             // show_str check for present in list of correct values, no sql injection possible
-            WorldDatabase.PExecute("UPDATE waypoint_data SET %s=NULL WHERE id='%u' AND point='%u'",
+            WorldDB.PExecute("UPDATE waypoint_data SET %s=NULL WHERE id='%u' AND point='%u'",
                 show_str, pathid, point);
         }
         else
         {
             // show_str check for present in list of correct values, no sql injection possible
             std::string text2 = text;
-            WorldDatabase.escape_string(text2);
-            WorldDatabase.PExecute("UPDATE waypoint_data SET %s='%s' WHERE id='%u' AND point='%u'",
+            WorldDB.escape_string(text2);
+            WorldDB.PExecute("UPDATE waypoint_data SET %s='%s' WHERE id='%u' AND point='%u'",
                 show_str, text2.c_str(), pathid, point);
         }
 
@@ -687,7 +687,7 @@ public:
                 return false;
             }
 
-            QueryResult result = WorldDatabase.PQuery("SELECT id, point, delay, move_flag, action, action_chance FROM waypoint_data WHERE wpguid = %u", target->GetGUIDLow());
+            QueryResult result = WorldDB.PQuery("SELECT id, point, delay, move_flag, action, action_chance FROM waypoint_data WHERE wpguid = %u", target->GetGUIDLow());
 
             if (!result)
             {
@@ -719,7 +719,7 @@ public:
 
         if (show == "on")
         {
-            QueryResult result = WorldDatabase.PQuery("SELECT point, position_x,position_y,position_z FROM waypoint_data WHERE id = '%u'", pathid);
+            QueryResult result = WorldDB.PQuery("SELECT point, position_x,position_y,position_z FROM waypoint_data WHERE id = '%u'", pathid);
 
             if (!result)
             {
@@ -731,7 +731,7 @@ public:
             handler->PSendSysMessage("|cff00ff00DEBUG: wp on, PathID: |cff00ffff%u|r", pathid);
 
             // Delete all visuals for this NPC
-            QueryResult result2 = WorldDatabase.PQuery("SELECT wpguid FROM waypoint_data WHERE id = '%u' and wpguid <> 0", pathid);
+            QueryResult result2 = WorldDB.PQuery("SELECT wpguid FROM waypoint_data WHERE id = '%u' and wpguid <> 0", pathid);
 
             if (result2)
             {
@@ -746,7 +746,7 @@ public:
                     {
                         handler->PSendSysMessage(LANG_WAYPOINT_NOTREMOVED, wpguid);
                         hasError = true;
-                        WorldDatabase.PExecute("DELETE FROM creature WHERE guid = '%u'", wpguid);
+                        WorldDB.PExecute("DELETE FROM creature WHERE guid = '%u'", wpguid);
                     }
                     else
                     {
@@ -789,7 +789,7 @@ public:
                 }
 
                 // set "wpguid" column to the visual waypoint
-                WorldDatabase.PExecute("UPDATE waypoint_data SET wpguid = '%u' WHERE id = '%u' and point = '%u'", wpCreature->GetGUIDLow(), pathid, point);
+                WorldDB.PExecute("UPDATE waypoint_data SET wpguid = '%u' WHERE id = '%u' and point = '%u'", wpCreature->GetGUIDLow(), pathid, point);
 
                 wpCreature->SaveToDB(map->GetId(), (1 << map->GetSpawnMode()), chr->GetPhaseMaskForSpawn());
                 // To call _LoadGoods(); _LoadQuests(); CreateTrainerSpells();
@@ -813,7 +813,7 @@ public:
         {
             handler->PSendSysMessage("|cff00ff00DEBUG: wp first, GUID: %u|r", pathid);
 
-            QueryResult result = WorldDatabase.PQuery("SELECT position_x,position_y,position_z FROM waypoint_data WHERE point='1' AND id = '%u'",pathid);
+            QueryResult result = WorldDB.PQuery("SELECT position_x,position_y,position_z FROM waypoint_data WHERE point='1' AND id = '%u'",pathid);
             if (!result)
             {
                 handler->PSendSysMessage(LANG_WAYPOINT_NOTFOUND, pathid);
@@ -856,13 +856,13 @@ public:
         {
             handler->PSendSysMessage("|cff00ff00DEBUG: wp last, PathID: |r|cff00ffff%u|r", pathid);
 
-            QueryResult result = WorldDatabase.PQuery("SELECT MAX(point) FROM waypoint_data WHERE id = '%u'",pathid);
+            QueryResult result = WorldDB.PQuery("SELECT MAX(point) FROM waypoint_data WHERE id = '%u'",pathid);
             if (result)
                 Maxpoint = (*result)[0].GetUInt32();
             else
                 Maxpoint = 0;
 
-            result = WorldDatabase.PQuery("SELECT position_x,position_y,position_z FROM waypoint_data WHERE point ='%u' AND id = '%u'",Maxpoint, pathid);
+            result = WorldDB.PQuery("SELECT position_x,position_y,position_z FROM waypoint_data WHERE point ='%u' AND id = '%u'",Maxpoint, pathid);
             if (!result)
             {
                 handler->PSendSysMessage(LANG_WAYPOINT_NOTFOUNDLAST, pathid);
@@ -902,7 +902,7 @@ public:
 
         if (show == "off")
         {
-            QueryResult result = WorldDatabase.PQuery("SELECT guid FROM creature WHERE id = '%u'", 1);
+            QueryResult result = WorldDB.PQuery("SELECT guid FROM creature WHERE id = '%u'", 1);
             if (!result)
             {
                 handler->SendSysMessage(LANG_WAYPOINT_VP_NOTFOUND);
@@ -919,7 +919,7 @@ public:
                 {
                     handler->PSendSysMessage(LANG_WAYPOINT_NOTREMOVED, guid);
                     hasError = true;
-                    WorldDatabase.PExecute("DELETE FROM creature WHERE guid = '%u'", guid);
+                    WorldDB.PExecute("DELETE FROM creature WHERE guid = '%u'", guid);
                 }
                 else
                 {
@@ -930,8 +930,8 @@ public:
             }
             while (result->NextRow());
             // set "wpguid" column to "empty" - no visual waypoint spawned
-            WorldDatabase.PExecute("UPDATE waypoint_data SET wpguid = '0'");
-            //WorldDatabase.PExecute("UPDATE creature_movement SET wpguid = '0' WHERE wpguid <> '0'");
+            WorldDB.PExecute("UPDATE waypoint_data SET wpguid = '0'");
+            //WorldDB.PExecute("UPDATE creature_movement SET wpguid = '0' WHERE wpguid <> '0'");
 
             if (hasError)
             {

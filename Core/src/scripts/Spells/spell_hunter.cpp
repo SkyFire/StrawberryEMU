@@ -79,7 +79,7 @@ public:
                     continue;
 
                 // Search only Serpent Sting, Viper Sting, Scorpid Sting auras
-                flag96 familyFlag = classOptions->SpellFamilyFlags;
+                flag96 familyFlag = (flag96)classOptions->SpellFamilyFlags;
                 if (!(familyFlag[1] & 0x00000080 || familyFlag[0] & 0x0000C000))
                     continue;
                 if (AuraEffect const * aurEff = aura->GetEffect(0))

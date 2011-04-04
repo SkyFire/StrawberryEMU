@@ -442,7 +442,7 @@ void PoolGroup<Quest>::SpawnObject(ActivePoolData& spawns, uint32 limit, uint32 
     // load state from db
     if (!triggerFrom)
     {
-        QueryResult result = CharacterDatabase.PQuery("SELECT quest_id FROM pool_quest_save WHERE pool_id = %u", poolId);
+        QueryResult result = CharDB.PQuery("SELECT quest_id FROM pool_quest_save WHERE pool_id = %u", poolId);
         if (result)
         {
             do
@@ -542,7 +542,7 @@ PoolMgr::PoolMgr() : max_pool_id(0)
 
 void PoolMgr::Initialize()
 {
-    QueryResult result = WorldDatabase.Query("SELECT MAX(entry) FROM pool_template");
+    QueryResult result = WorldDB.Query("SELECT MAX(entry) FROM pool_template");
     if (result)
     {
         Field *fields = result->Fetch();
@@ -566,7 +566,7 @@ void PoolMgr::LoadFromDB()
     {
         uint32 oldMSTime = getMSTime();
 
-        QueryResult result = WorldDatabase.Query("SELECT entry,max_limit FROM pool_template");
+        QueryResult result = WorldDB.Query("SELECT entry,max_limit FROM pool_template");
         if (!result)
         {
             mPoolTemplate.clear();
@@ -600,7 +600,7 @@ void PoolMgr::LoadFromDB()
         uint32 oldMSTime = getMSTime();
 
         //                                                 1     2           3
-        QueryResult result = WorldDatabase.Query("SELECT guid, pool_entry, chance FROM pool_creature");
+        QueryResult result = WorldDB.Query("SELECT guid, pool_entry, chance FROM pool_creature");
 
         if (!result)
         {
@@ -658,7 +658,7 @@ void PoolMgr::LoadFromDB()
         uint32 oldMSTime = getMSTime();
 
         //                                                 1        2         3
-        QueryResult result = WorldDatabase.Query("SELECT guid, pool_entry, chance FROM pool_gameobject");
+        QueryResult result = WorldDB.Query("SELECT guid, pool_entry, chance FROM pool_gameobject");
 
         if (!result)
         {
@@ -729,7 +729,7 @@ void PoolMgr::LoadFromDB()
         uint32 oldMSTime = getMSTime();
 
         //                                                  1        2            3
-        QueryResult result = WorldDatabase.Query("SELECT pool_id, mother_pool, chance FROM pool_pool");
+        QueryResult result = WorldDB.Query("SELECT pool_id, mother_pool, chance FROM pool_pool");
 
         if (!result)
         {
@@ -812,8 +812,8 @@ void PoolMgr::LoadFromDB()
     {
         uint32 oldMSTime = getMSTime();
 
-        PreparedStatement* stmt = WorldDatabase.GetPreparedStatement(WORLD_LOAD_QUEST_POOLS);
-        PreparedQueryResult result = WorldDatabase.Query(stmt);
+        PreparedStatement* stmt = WorldDB.GetPreparedStatement(WORLD_LOAD_QUEST_POOLS);
+        PreparedQueryResult result = WorldDB.Query(stmt);
 
         if (!result)
         {
@@ -903,7 +903,7 @@ void PoolMgr::LoadFromDB()
     {
         uint32 oldMSTime = getMSTime();
 
-        QueryResult result = WorldDatabase.Query("SELECT DISTINCT pool_template.entry, pool_pool.pool_id, pool_pool.mother_pool FROM pool_template"
+        QueryResult result = WorldDB.Query("SELECT DISTINCT pool_template.entry, pool_pool.pool_id, pool_pool.mother_pool FROM pool_template"
             " LEFT JOIN game_event_pool ON pool_template.entry=game_event_pool.pool_entry"
             " LEFT JOIN pool_pool ON pool_template.entry=pool_pool.pool_id WHERE game_event_pool.pool_entry IS NULL");
 
@@ -954,13 +954,13 @@ void PoolMgr::LoadQuestPools()
 
 void PoolMgr::SaveQuestsToDB()
 {
-    SQLTransaction trans = CharacterDatabase.BeginTransaction();
+    SQLTransaction trans = CharDB.BeginTransaction();
 
     for (PoolGroupQuestMap::iterator itr = mPoolQuestGroups.begin(); itr != mPoolQuestGroups.end(); ++itr)
     {
         if (itr->isEmpty())
             continue;
-        PreparedStatement* stmt = CharacterDatabase.GetPreparedStatement(CHAR_DEL_QUEST_POOL_SAVE);
+        PreparedStatement* stmt = CharDB.GetPreparedStatement(CHAR_DEL_QUEST_POOL_SAVE);
         stmt->setUInt32(0, itr->GetPoolId());
         trans->Append(stmt);
     }
@@ -969,14 +969,14 @@ void PoolMgr::SaveQuestsToDB()
     {
         if (IsSpawnedObject<Quest>(itr->first))
         {
-            PreparedStatement* stmt = CharacterDatabase.GetPreparedStatement(CHAR_ADD_QUEST_POOL_SAVE);
+            PreparedStatement* stmt = CharDB.GetPreparedStatement(CHAR_ADD_QUEST_POOL_SAVE);
             stmt->setUInt32(0, itr->second);
             stmt->setUInt32(1, itr->first);
             trans->Append(stmt);
         }
     }
 
-    CharacterDatabase.CommitTransaction(trans);
+    CharDB.CommitTransaction(trans);
 }
 
 void PoolMgr::ChangeDailyQuests()

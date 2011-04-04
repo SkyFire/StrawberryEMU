@@ -15,9 +15,9 @@
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "LoginDatabase.h"
+#include "RealmDB.h"
 
-bool LoginDatabaseConnection::Open()
+bool RealmDBConnection::Open()
 {
     if (!MySQLConnection::Open())
         return false;

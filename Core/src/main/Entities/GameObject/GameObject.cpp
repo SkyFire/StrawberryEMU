@@ -701,10 +701,10 @@ void GameObject::SaveToDB(uint32 mapid, uint8 spawnMask, uint32 phaseMask)
         << uint32(GetGoAnimProgress()) << ", "
         << uint32(GetGoState()) << ")";
 
-    SQLTransaction trans = WorldDatabase.BeginTransaction();
+    SQLTransaction trans = WorldDB.BeginTransaction();
     trans->PAppend("DELETE FROM gameobject WHERE guid = '%u'", m_DBTableGuid);
     trans->Append(ss.str().c_str());
-    WorldDatabase.CommitTransaction(trans);
+    WorldDB.CommitTransaction(trans);
 }
 
 bool GameObject::LoadFromDB(uint32 guid, Map *map)
@@ -779,8 +779,8 @@ void GameObject::DeleteFromDB()
 {
     sObjectMgr->RemoveGORespawnTime(m_DBTableGuid, GetInstanceId());
     sObjectMgr->DeleteGOData(m_DBTableGuid);
-    WorldDatabase.PExecute("DELETE FROM gameobject WHERE guid = '%u'", m_DBTableGuid);
-    WorldDatabase.PExecute("DELETE FROM game_event_gameobject WHERE guid = '%u'", m_DBTableGuid);
+    WorldDB.PExecute("DELETE FROM gameobject WHERE guid = '%u'", m_DBTableGuid);
+    WorldDB.PExecute("DELETE FROM game_event_gameobject WHERE guid = '%u'", m_DBTableGuid);
 }
 
 GameObject* GameObject::GetGameObject(WorldObject& object, uint64 guid)

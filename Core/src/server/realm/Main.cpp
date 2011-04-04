@@ -37,10 +37,11 @@
 #include "RealmAcceptor.h"
 
 bool StartDB();
+void StopDB();
 
 bool stopEvent = false;                                     // Setting it to true stops the server
 
-LoginDatabaseWorkerPool LoginDatabase;                      // Accessor to the logon server database
+RealmDBWorkerPool RealmDB;                      // Accessor to the logon server database
 
 
 // Handle realmd's termination signals
@@ -93,7 +94,7 @@ extern int main(int argc, char **argv)
     if (!sConfig->SetSource(cfg_file))
     {
         sLog->outError("Invalid or missing configuration file : %s", cfg_file);
-        sLog->outError("Verify that the file exists and has \'[authserver]\' written in the top of the file!");
+        sLog->outError("Verify that the file exists and has \'[RealmServer]\' written in the top of the file!");
         return 1;
     }
     sLog->Initialize();
@@ -231,12 +232,12 @@ extern int main(int argc, char **argv)
         {
             loopCounter = 0;
             sLog->outDetail("Ping MySQL to keep connection alive");
-            LoginDatabase.KeepAlive();
+            RealmDB.KeepAlive();
         }
     }
 
     // Close the Database Pool and library
-    LoginDatabase.Close();
+    StopDB();
 
     sLog->outString("Halting process...");
     return 0;
@@ -267,11 +268,17 @@ bool StartDB()
     }
 
     // NOTE: While authserver is singlethreaded you should keep synch_threads == 1. Increasing it is just silly since only 1 will be used ever.
-    if (!LoginDatabase.Open(dbstring.c_str(), worker_threads, synch_threads))
+    if (!RealmDB.Open(dbstring.c_str(), worker_threads, synch_threads))
     {
         sLog->outError("Cannot connect to database");
         return false;
     }
 
     return true;
+}
+
+void StopDB()
+{
+    RealmDB.Close();
+    MySQL::Thread_End();
 }

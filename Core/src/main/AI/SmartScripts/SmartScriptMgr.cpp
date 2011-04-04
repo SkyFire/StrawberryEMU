@@ -37,8 +37,8 @@ void SmartWaypointMgr::LoadFromDB()
 
     waypoint_map.clear();
 
-    PreparedStatement* stmt = WorldDatabase.GetPreparedStatement(WORLD_LOAD_SMARTAI_WP);
-    PreparedQueryResult result = WorldDatabase.Query(stmt);
+    PreparedStatement* stmt = WorldDB.GetPreparedStatement(WORLD_LOAD_SMARTAI_WP);
+    PreparedQueryResult result = WorldDB.Query(stmt);
 
     if (!result)
     {
@@ -99,8 +99,8 @@ void SmartAIMgr::LoadSmartAIFromDB()
     for (uint8 i = 0; i < SMART_SCRIPT_TYPE_MAX; i++)
         mEventMap[i].clear();  //Drop Existing SmartAI List
 
-    PreparedStatement* stmt = WorldDatabase.GetPreparedStatement(WORLD_LOAD_SMART_SCRIPTS);
-    PreparedQueryResult result = WorldDatabase.Query(stmt);
+    PreparedStatement* stmt = WorldDB.GetPreparedStatement(WORLD_LOAD_SMART_SCRIPTS);
+    PreparedQueryResult result = WorldDB.Query(stmt);
 
     if (!result)
     {

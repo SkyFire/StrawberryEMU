@@ -64,20 +64,12 @@
     <_ProjectFileVersion>10.0.40219.1</_ProjectFileVersion>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\shared__$(Platform)_$(Configuration)\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\shared__$(Platform)_$(Configuration)\</IntDir>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">shared</TargetName>
-    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.lib</TargetExt>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\shared__$(Platform)_$(Configuration)\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\shared__$(Platform)_$(Configuration)\</IntDir>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|X64'">shared</TargetName>
-    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|X64'">.lib</TargetExt>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\shared__$(Platform)_$(Configuration)\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\shared__$(Platform)_$(Configuration)\</IntDir>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">shared</TargetName>
-    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.lib</TargetExt>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\shared__$(Platform)_$(Configuration)\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\shared__$(Platform)_$(Configuration)\</IntDir>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|X64'">shared</TargetName>
-    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|X64'">.lib</TargetExt>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <PreBuildEvent>
@@ -208,7 +200,7 @@
       <AdditionalOptions>/MP %(AdditionalOptions)</AdditionalOptions>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>..\..\src\shared;..\..\src\shared\Collision;..\..\src\shared\Collision\Management;..\..\src\shared\Collision\Maps;..\..\src\shared\Collision\Models;..\..\src\shared\Configuration;..\..\src\shared\Cryptography;..\..\src\shared\Cryptography\Authentication;..\..\src\shared\Database;..\..\src\shared\DataStores;..\..\src\shared\Debugging;..\..\src\shared\Dynamic;..\..\src\shared\Dynamic\LinkedReference;..\..\src\shared\Logging;..\..\src\shared\Packets;..\..\src\shared\Threading;..\..\src\shared\Utilities;..\..\src\main\Entities\Object;..\..\dep\mysql;..\..\dep\mersennetwister;..\..\dep\utf8cpp;..\..\dep\mysqllite\extra\yassl\include;..\..\dep\acelite;..\..\dep;..\..\dep\mysqllite\include;..\..\dep\g3dlite\include;..\..\dep\g3dlite;..\..\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_DEBUG;DIAMOND_DEBUG;_LIB;_CRT_SECURE_NO_DEPRECATE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;STRAWBERRY_DEBUG;_LIB;_CRT_SECURE_NO_DEPRECATE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -257,18 +249,22 @@
     <ClCompile Include="..\..\src\shared\Database\PreparedStatement.cpp" />
     <ClCompile Include="..\..\src\shared\Database\QueryHolder.cpp" />
     <ClCompile Include="..\..\src\shared\Database\QueryResult.cpp" />
-    <ClCompile Include="..\..\src\shared\DataStores\DB2FileLoader.cpp" />
     <ClCompile Include="..\..\src\shared\PCH\sharedPCH.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">..\..\src\shared\PCH\sharedPCH.h</PrecompiledHeaderFile>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">..\..\src\shared\PCH\sharedPCH.h</PrecompiledHeaderFile>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\..\src\shared\PCH\sharedPCH.h</PrecompiledHeaderFile>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">..\..\src\shared\PCH\sharedPCH.h</PrecompiledHeaderFile>
     </ClCompile>
     <ClCompile Include="..\..\src\shared\Database\SQLStorage.cpp" />
     <ClCompile Include="..\..\src\shared\Database\Transaction.cpp" />
-    <ClCompile Include="..\..\src\shared\Database\Implementation\CharacterDatabase.cpp" />
-    <ClCompile Include="..\..\src\shared\Database\Implementation\LoginDatabase.cpp" />
-    <ClCompile Include="..\..\src\shared\Database\Implementation\WorldDatabase.cpp" />
+    <ClCompile Include="..\..\src\shared\Database\Implementation\CharDB.cpp" />
+    <ClCompile Include="..\..\src\shared\Database\Implementation\RealmDB.cpp" />
+    <ClCompile Include="..\..\src\shared\Database\Implementation\WorldDB.cpp" />
+    <ClCompile Include="..\..\src\shared\DataStores\DB2FileLoader.cpp" />
     <ClCompile Include="..\..\src\shared\DataStores\DBCFileLoader.cpp" />
     <ClCompile Include="..\..\src\shared\Debugging\WheatyExceptionReport.cpp" />
     <ClCompile Include="..\..\src\shared\Logging\Log.cpp" />
@@ -310,9 +306,9 @@
     <ClInclude Include="..\..\src\shared\Database\SQLStorage.h" />
     <ClInclude Include="..\..\src\shared\Database\SQLStorageImpl.h" />
     <ClInclude Include="..\..\src\shared\Database\Transaction.h" />
-    <ClInclude Include="..\..\src\shared\Database\Implementation\CharacterDatabase.h" />
-    <ClInclude Include="..\..\src\shared\Database\Implementation\LoginDatabase.h" />
-    <ClInclude Include="..\..\src\shared\Database\Implementation\WorldDatabase.h" />
+    <ClInclude Include="..\..\src\shared\Database\Implementation\CharDB.h" />
+    <ClInclude Include="..\..\src\shared\Database\Implementation\RealmDB.h" />
+    <ClInclude Include="..\..\src\shared\Database\Implementation\WorldDB.h" />
     <ClInclude Include="..\..\src\shared\DataStores\DB2FileLoader.h" />
     <ClInclude Include="..\..\src\shared\DataStores\DB2Store.h" />
     <ClInclude Include="..\..\src\shared\DataStores\DBCFileLoader.h" />
@@ -333,7 +329,6 @@
     <ClInclude Include="..\..\src\shared\Logging\Log.h" />
     <ClInclude Include="..\..\src\shared\Packets\ByteBuffer.h" />
     <ClInclude Include="..\..\src\shared\Packets\WorldPacket.h" />
-    <ClInclude Include="..\..\src\shared\revision_nr.h" />
     <ClInclude Include="..\..\src\shared\Threading\Callback.h" />
     <ClInclude Include="..\..\src\shared\Threading\DelayExecutor.h" />
     <ClInclude Include="..\..\src\shared\Threading\LockedQueue.h" />
@@ -347,6 +342,7 @@
     <ClInclude Include="..\..\src\shared\Common.h" />
     <ClInclude Include="..\..\src\shared\CompilerDefs.h" />
     <ClInclude Include="..\..\src\shared\Define.h" />
+    <ClInclude Include="..\..\src\shared\revision_nr.h" />
     <ClInclude Include="..\..\src\shared\SystemConfig.h" />
   </ItemGroup>
   <ItemGroup>

@@ -192,7 +192,6 @@ DBCStorage <SpellRadiusEntry> sSpellRadiusStore(SpellRadiusfmt);
 DBCStorage <SpellRangeEntry> sSpellRangeStore(SpellRangefmt);
 DBCStorage <SpellRuneCostEntry> sSpellRuneCostStore(SpellRuneCostfmt);
 DBCStorage <SpellShapeshiftFormEntry> sSpellShapeshiftFormStore(SpellShapeshiftFormfmt);
-//DBCStorage <StableSlotPricesEntry> sStableSlotPricesStore(StableSlotPricesfmt);
 DBCStorage <SummonPropertiesEntry> sSummonPropertiesStore(SummonPropertiesfmt);
 DBCStorage <TalentEntry> sTalentStore(TalentEntryfmt);
 TalentSpellPosMap sTalentSpellPosMap;
@@ -410,7 +409,7 @@ void LoadDBCStores(const std::string& dataPath)
         exit(1);
     }
 
-    const uint32 DBCFilesCount = 115;
+    const uint32 DBCFilesCount = 118;
 
     StoreProblemList bad_dbc_files;
 
@@ -1078,12 +1077,12 @@ uint32 const* GetTalentTabPages(uint8 cls)
 float GetGtSpellScalingValue(int8 class_, uint8 level)
 {
     if(class_ < 0)
-        class_ = MAX_CLASSES - class_ + 1; //there are negative values in SpellScaling.dbc.
+        class_ = MAX_CLASSES - class_ + 1; // there are negative values in SpellScaling.dbc.
     if(class_ == 0)
-        class_ = MAX_CLASSES; //use general scaling.
+        class_ = MAX_CLASSES; // use general scaling.
     
     //They really wants that players reach level 100... in the 5th expansion.
-    SpellScalingEntry const* spellscaling = sSpellScalingStore.LookupEntry((class_-1) * 100 + level);
+    SpellScalingEntry const* spellscaling = sSpellScalingStore.LookupEntry((class_-1) * 100 + level - 1);
     if (spellscaling)
         return spellscaling->coefMultiplier[0];
     else

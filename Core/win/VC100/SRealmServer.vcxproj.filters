@@ -2,13 +2,13 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="Auth">
-      <UniqueIdentifier>{8e38cfb4-ff95-4fc5-9ab2-e676c1544bcf}</UniqueIdentifier>
+      <UniqueIdentifier>{68cb3f44-16e3-410b-b0cd-c0f5b97943b7}</UniqueIdentifier>
     </Filter>
     <Filter Include="Realms">
-      <UniqueIdentifier>{4598ec89-a9a3-4dcd-ae06-82ad2eb0a75b}</UniqueIdentifier>
+      <UniqueIdentifier>{01786b33-e135-4c6b-8d97-b59b4a1dc439}</UniqueIdentifier>
     </Filter>
     <Filter Include="Server">
-      <UniqueIdentifier>{9b11c6b5-9774-463f-b22e-3ce9148178db}</UniqueIdentifier>
+      <UniqueIdentifier>{a8fec138-acc9-4cbb-928c-c41345e3db4c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

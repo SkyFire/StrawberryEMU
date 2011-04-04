@@ -42,20 +42,20 @@ AccountOpResult AccountMgr::CreateAccount(std::string username, std::string pass
         return AOR_NAME_ALREDY_EXIST;                       // username does already exist
     }
 
-    LoginDatabase.PExecute("INSERT INTO account(username,sha_pass_hash,joindate) VALUES('%s','%s',NOW())", username.c_str(), CalculateShaPassHash(username, password).c_str());
-    LoginDatabase.Execute("INSERT INTO realmcharacters (realmid, acctid, numchars) SELECT realmlist.id, account.id, 0 FROM realmlist,account LEFT JOIN realmcharacters ON acctid=account.id WHERE acctid IS NULL");
+    RealmDB.PExecute("INSERT INTO account(username,sha_pass_hash,joindate) VALUES('%s','%s',NOW())", username.c_str(), CalculateShaPassHash(username, password).c_str());
+    RealmDB.Execute("INSERT INTO realmcharacters (realmid, acctid, numchars) SELECT realmlist.id, account.id, 0 FROM realmlist,account LEFT JOIN realmcharacters ON acctid=account.id WHERE acctid IS NULL");
 
     return AOR_OK;                                          // everything's fine
 }
 
 AccountOpResult AccountMgr::DeleteAccount(uint32 accid)
 {
-    QueryResult result = LoginDatabase.PQuery("SELECT 1 FROM account WHERE id='%d'", accid);
+    QueryResult result = RealmDB.PQuery("SELECT 1 FROM account WHERE id='%d'", accid);
     if (!result)
         return AOR_NAME_NOT_EXIST;                          // account doesn't exist
 
     // existed characters list
-    result = CharacterDatabase.PQuery("SELECT guid FROM characters WHERE account='%d'",accid);
+    result = CharDB.PQuery("SELECT guid FROM characters WHERE account='%d'",accid);
     if (result)
     {
         do
@@ -77,23 +77,23 @@ AccountOpResult AccountMgr::DeleteAccount(uint32 accid)
     }
 
     // table realm specific but common for all characters of account for realm
-    CharacterDatabase.PExecute("DELETE FROM character_tutorial WHERE account = '%u'",accid);
-    CharacterDatabase.PExecute("DELETE FROM account_data WHERE account = '%u'",accid);
+    CharDB.PExecute("DELETE FROM character_tutorial WHERE account = '%u'",accid);
+    CharDB.PExecute("DELETE FROM account_data WHERE account = '%u'",accid);
 
-    SQLTransaction trans = LoginDatabase.BeginTransaction();
+    SQLTransaction trans = RealmDB.BeginTransaction();
 
     trans->PAppend("DELETE FROM account WHERE id='%d'", accid);
     trans->PAppend("DELETE FROM account_access WHERE id ='%d'", accid);
     trans->PAppend("DELETE FROM realmcharacters WHERE acctid='%d'", accid);
 
-    LoginDatabase.CommitTransaction(trans);
+    RealmDB.CommitTransaction(trans);
 
     return AOR_OK;
 }
 
 AccountOpResult AccountMgr::ChangeUsername(uint32 accid, std::string new_uname, std::string new_passwd)
 {
-    QueryResult result = LoginDatabase.PQuery("SELECT 1 FROM account WHERE id='%d'", accid);
+    QueryResult result = RealmDB.PQuery("SELECT 1 FROM account WHERE id='%d'", accid);
     if (!result)
         return AOR_NAME_NOT_EXIST;                          // account doesn't exist
 
@@ -107,9 +107,9 @@ AccountOpResult AccountMgr::ChangeUsername(uint32 accid, std::string new_uname, 
     normalizeString(new_passwd);
 
     std::string safe_new_uname = new_uname;
-    LoginDatabase.escape_string(safe_new_uname);
+    RealmDB.escape_string(safe_new_uname);
 
-    LoginDatabase.PExecute("UPDATE account SET v='0',s='0',username='%s',sha_pass_hash='%s' WHERE id='%d'", safe_new_uname.c_str(),
+    RealmDB.PExecute("UPDATE account SET v='0',s='0',username='%s',sha_pass_hash='%s' WHERE id='%d'", safe_new_uname.c_str(),
                 CalculateShaPassHash(new_uname, new_passwd).c_str(), accid);
 
     return AOR_OK;
@@ -129,7 +129,7 @@ AccountOpResult AccountMgr::ChangePassword(uint32 accid, std::string new_passwd)
     normalizeString(new_passwd);
 
     // also reset s and v to force update at next realmd login
-    LoginDatabase.PExecute("UPDATE account SET v='0', s='0', sha_pass_hash='%s' WHERE id='%d'",
+    RealmDB.PExecute("UPDATE account SET v='0', s='0', sha_pass_hash='%s' WHERE id='%d'",
                 CalculateShaPassHash(username, new_passwd).c_str(), accid);
 
     return AOR_OK;
@@ -137,8 +137,8 @@ AccountOpResult AccountMgr::ChangePassword(uint32 accid, std::string new_passwd)
 
 uint32 AccountMgr::GetId(std::string username)
 {
-    LoginDatabase.escape_string(username);
-    QueryResult result = LoginDatabase.PQuery("SELECT id FROM account WHERE username = '%s'", username.c_str());
+    RealmDB.escape_string(username);
+    QueryResult result = RealmDB.PQuery("SELECT id FROM account WHERE username = '%s'", username.c_str());
     if (!result)
         return 0;
     else
@@ -150,7 +150,7 @@ uint32 AccountMgr::GetId(std::string username)
 
 uint32 AccountMgr::GetSecurity(uint32 acc_id)
 {
-    QueryResult result = LoginDatabase.PQuery("SELECT gmlevel FROM account_access WHERE id = '%u'", acc_id);
+    QueryResult result = RealmDB.PQuery("SELECT gmlevel FROM account_access WHERE id = '%u'", acc_id);
     if (result)
     {
         uint32 sec = (*result)[0].GetUInt32();
@@ -163,8 +163,8 @@ uint32 AccountMgr::GetSecurity(uint32 acc_id)
 uint32 AccountMgr::GetSecurity(uint64 acc_id, int32 realm_id)
 {
     QueryResult result = (realm_id == -1)
-        ? LoginDatabase.PQuery("SELECT gmlevel FROM account_access WHERE id = '%u' AND RealmID = '%d'", acc_id, realm_id)
-        : LoginDatabase.PQuery("SELECT gmlevel FROM account_access WHERE id = '%u' AND (RealmID = '%d' OR RealmID = '-1')", acc_id, realm_id);
+        ? RealmDB.PQuery("SELECT gmlevel FROM account_access WHERE id = '%u' AND RealmID = '%d'", acc_id, realm_id)
+        : RealmDB.PQuery("SELECT gmlevel FROM account_access WHERE id = '%u' AND (RealmID = '%d' OR RealmID = '-1')", acc_id, realm_id);
     if (result)
     {
         uint32 sec = (*result)[0].GetUInt32();
@@ -176,7 +176,7 @@ uint32 AccountMgr::GetSecurity(uint64 acc_id, int32 realm_id)
 
 bool AccountMgr::GetName(uint32 acc_id, std::string &name)
 {
-    QueryResult result = LoginDatabase.PQuery("SELECT username FROM account WHERE id = '%u'", acc_id);
+    QueryResult result = RealmDB.PQuery("SELECT username FROM account WHERE id = '%u'", acc_id);
     if (result)
     {
         name = (*result)[0].GetString();
@@ -195,7 +195,7 @@ bool AccountMgr::CheckPassword(uint32 accid, std::string passwd)
     normalizeString(username);
     normalizeString(passwd);
 
-    QueryResult result = LoginDatabase.PQuery("SELECT 1 FROM account WHERE id='%d' AND sha_pass_hash='%s'", accid, CalculateShaPassHash(username, passwd).c_str());
+    QueryResult result = RealmDB.PQuery("SELECT 1 FROM account WHERE id='%d' AND sha_pass_hash='%s'", accid, CalculateShaPassHash(username, passwd).c_str());
     if (result)
         return true;
 
@@ -206,7 +206,7 @@ uint32 AccountMgr::GetCharactersCount(uint32 acc_id)
 {
     uint32 charcount = 0;
     // check character count
-    QueryResult result = CharacterDatabase.PQuery("SELECT COUNT(guid) FROM characters WHERE account = '%d'", acc_id);
+    QueryResult result = CharDB.PQuery("SELECT COUNT(guid) FROM characters WHERE account = '%d'", acc_id);
     if (result)
     {
         Field *fields=result->Fetch();

@@ -111,24 +111,24 @@ bool Pet::LoadPetFromDB(Player* owner, uint32 petentry, uint32 petnumber, bool c
 
     if (petnumber)
         // known petnumber entry                  0   1      2(?)   3        4      5    6           7     8     9        10         11       12            13      14        15                 16                 17              18
-        result = CharacterDatabase.PQuery("SELECT id, entry, owner, modelid, level, exp, Reactstate, slot, name, renamed, curhealth, curmana, curhappiness, abdata, savetime, resettalents_cost, resettalents_time, CreatedBySpell, PetType "
+        result = CharDB.PQuery("SELECT id, entry, owner, modelid, level, exp, Reactstate, slot, name, renamed, curhealth, curmana, curhappiness, abdata, savetime, resettalents_cost, resettalents_time, CreatedBySpell, PetType "
             "FROM character_pet WHERE owner = '%u' AND id = '%u'",
             ownerid, petnumber);
     else if (current)
         // current pet (slot 0)                   0   1      2(?)   3        4      5    6           7     8     9        10         11       12            13      14        15                 16                 17              18
-        result = CharacterDatabase.PQuery("SELECT id, entry, owner, modelid, level, exp, Reactstate, slot, name, renamed, curhealth, curmana, curhappiness, abdata, savetime, resettalents_cost, resettalents_time, CreatedBySpell, PetType "
+        result = CharDB.PQuery("SELECT id, entry, owner, modelid, level, exp, Reactstate, slot, name, renamed, curhealth, curmana, curhappiness, abdata, savetime, resettalents_cost, resettalents_time, CreatedBySpell, PetType "
             "FROM character_pet WHERE owner = '%u' AND slot = '%u'",
             ownerid, PET_SAVE_AS_CURRENT);
     else if (petentry)
         // known petentry entry (unique for summoned pet, but non unique for hunter pet (only from current or not stabled pets)
         //                                        0   1      2(?)   3        4      5    6           7     8     9        10         11       12           13       14        15                 16                 17              18
-        result = CharacterDatabase.PQuery("SELECT id, entry, owner, modelid, level, exp, Reactstate, slot, name, renamed, curhealth, curmana, curhappiness, abdata, savetime, resettalents_cost, resettalents_time, CreatedBySpell, PetType "
+        result = CharDB.PQuery("SELECT id, entry, owner, modelid, level, exp, Reactstate, slot, name, renamed, curhealth, curmana, curhappiness, abdata, savetime, resettalents_cost, resettalents_time, CreatedBySpell, PetType "
             "FROM character_pet WHERE owner = '%u' AND entry = '%u' AND (slot = '%u' OR slot > '%u') ",
             ownerid, petentry,PET_SAVE_AS_CURRENT,PET_SAVE_LAST_STABLE_SLOT);
     else
         // any current or other non-stabled pet (for hunter "call pet")
         //                                        0   1      2(?)   3        4      5    6           7     8     9        10         11       12            13      14        15                 16                 17              18
-        result = CharacterDatabase.PQuery("SELECT id, entry, owner, modelid, level, exp, Reactstate, slot, name, renamed, curhealth, curmana, curhappiness, abdata, savetime, resettalents_cost, resettalents_time, CreatedBySpell, PetType "
+        result = CharDB.PQuery("SELECT id, entry, owner, modelid, level, exp, Reactstate, slot, name, renamed, curhealth, curmana, curhappiness, abdata, savetime, resettalents_cost, resettalents_time, CreatedBySpell, PetType "
             "FROM character_pet WHERE owner = '%u' AND (slot = '%u' OR slot > '%u') ",
             ownerid,PET_SAVE_AS_CURRENT,PET_SAVE_LAST_STABLE_SLOT);
 
@@ -260,12 +260,12 @@ bool Pet::LoadPetFromDB(Player* owner, uint32 petentry, uint32 petnumber, bool c
     // PET_SAVE_NOT_IN_SLOT(100) = not stable slot (summoning))
     if (fields[7].GetUInt8() != 0)
     {
-        SQLTransaction trans = CharacterDatabase.BeginTransaction();
+        SQLTransaction trans = CharDB.BeginTransaction();
         trans->PAppend("UPDATE character_pet SET slot = '%u' WHERE owner = '%u' AND slot = '%u' AND id <> '%u'",
             PET_SAVE_NOT_IN_SLOT, ownerid, PET_SAVE_AS_CURRENT, m_charmInfo->GetPetNumber());
         trans->PAppend("UPDATE character_pet SET slot = '%u' WHERE owner = '%u' AND id = '%u'",
             PET_SAVE_AS_CURRENT, ownerid, m_charmInfo->GetPetNumber());
-        CharacterDatabase.CommitTransaction(trans);
+        CharDB.CommitTransaction(trans);
     }
 
     // Send fake summon spell cast - this is needed for correct cooldown application for spells
@@ -319,7 +319,7 @@ bool Pet::LoadPetFromDB(Player* owner, uint32 petentry, uint32 petnumber, bool c
 
     if (getPetType() == HUNTER_PET)
     {
-        result = CharacterDatabase.PQuery("SELECT genitive, dative, accusative, instrumental, prepositional FROM character_pet_declinedname WHERE owner = '%u' AND id = '%u'", owner->GetGUIDLow(), GetCharmInfo()->GetPetNumber());
+        result = CharDB.PQuery("SELECT genitive, dative, accusative, instrumental, prepositional FROM character_pet_declinedname WHERE owner = '%u' AND id = '%u'", owner->GetGUIDLow(), GetCharmInfo()->GetPetNumber());
 
         if (result)
         {
@@ -374,7 +374,7 @@ void Pet::SavePetToDB(PetSaveMode mode)
     uint32 curhealth = GetHealth();
     uint32 curmana = GetPower(POWER_MANA);
 
-    SQLTransaction trans = CharacterDatabase.BeginTransaction();
+    SQLTransaction trans = CharDB.BeginTransaction();
     // save auras before possibly removing them
     _SaveAuras(trans);
 
@@ -384,15 +384,15 @@ void Pet::SavePetToDB(PetSaveMode mode)
 
     _SaveSpells(trans);
     _SaveSpellCooldowns(trans);
-    CharacterDatabase.CommitTransaction(trans);
+    CharDB.CommitTransaction(trans);
 
     // current/stable/not_in_slot
     if (mode >= PET_SAVE_AS_CURRENT)
     {
         uint32 owner = GUID_LOPART(GetOwnerGUID());
         std::string name = m_name;
-        CharacterDatabase.escape_string(name);
-        SQLTransaction trans = CharacterDatabase.BeginTransaction();
+        CharDB.escape_string(name);
+        SQLTransaction trans = CharDB.BeginTransaction();
         // remove current data
         trans->PAppend("DELETE FROM character_pet WHERE owner = '%u' AND id = '%u'", owner,m_charmInfo->GetPetNumber());
 
@@ -437,7 +437,7 @@ void Pet::SavePetToDB(PetSaveMode mode)
             << uint32(getPetType()) << ")";
 
         trans->Append(ss.str().c_str());
-        CharacterDatabase.CommitTransaction(trans);
+        CharDB.CommitTransaction(trans);
     }
     // delete
     else
@@ -449,13 +449,13 @@ void Pet::SavePetToDB(PetSaveMode mode)
 
 void Pet::DeleteFromDB(uint32 guidlow)
 {
-    SQLTransaction trans = CharacterDatabase.BeginTransaction();
+    SQLTransaction trans = CharDB.BeginTransaction();
     trans->PAppend("DELETE FROM character_pet WHERE id = '%u'", guidlow);
     trans->PAppend("DELETE FROM character_pet_declinedname WHERE id = '%u'", guidlow);
     trans->PAppend("DELETE FROM pet_aura WHERE guid = '%u'", guidlow);
     trans->PAppend("DELETE FROM pet_spell WHERE guid = '%u'", guidlow);
     trans->PAppend("DELETE FROM pet_spell_cooldown WHERE guid = '%u'", guidlow);
-    CharacterDatabase.CommitTransaction(trans);
+    CharDB.CommitTransaction(trans);
 }
 
 void Pet::setDeathState(DeathState s)                       // overwrite virtual Creature::setDeathState and Unit::setDeathState
@@ -1094,7 +1094,7 @@ void Pet::_LoadSpellCooldowns()
     m_CreatureSpellCooldowns.clear();
     m_CreatureCategoryCooldowns.clear();
 
-    QueryResult result = CharacterDatabase.PQuery("SELECT spell,time FROM pet_spell_cooldown WHERE guid = '%u'",m_charmInfo->GetPetNumber());
+    QueryResult result = CharDB.PQuery("SELECT spell,time FROM pet_spell_cooldown WHERE guid = '%u'",m_charmInfo->GetPetNumber());
 
     if (result)
     {
@@ -1156,7 +1156,7 @@ void Pet::_SaveSpellCooldowns(SQLTransaction& trans)
 
 void Pet::_LoadSpells()
 {
-    QueryResult result = CharacterDatabase.PQuery("SELECT spell,active FROM pet_spell WHERE guid = '%u'",m_charmInfo->GetPetNumber());
+    QueryResult result = CharDB.PQuery("SELECT spell,active FROM pet_spell WHERE guid = '%u'",m_charmInfo->GetPetNumber());
 
     if (result)
     {
@@ -1204,7 +1204,7 @@ void Pet::_LoadAuras(uint32 timediff)
 {
     sLog->outDebug(LOG_FILTER_PETS, "Loading auras for pet %u",GetGUIDLow());
 
-    QueryResult result = CharacterDatabase.PQuery("SELECT caster_guid,spell,effect_mask,recalculate_mask,stackcount,amount0,amount1,amount2,base_amount0,base_amount1,base_amount2,maxduration,remaintime,remaincharges FROM pet_aura WHERE guid = '%u'",m_charmInfo->GetPetNumber());
+    QueryResult result = CharDB.PQuery("SELECT caster_guid,spell,effect_mask,recalculate_mask,stackcount,amount0,amount1,amount2,base_amount0,base_amount1,base_amount2,maxduration,remaintime,remaincharges FROM pet_aura WHERE guid = '%u'",m_charmInfo->GetPetNumber());
 
     if (result)
     {
@@ -1323,7 +1323,7 @@ bool Pet::addSpell(uint32 spell_id,ActiveStates active /*= ACT_DECIDE*/, PetSpel
         if (state == PETSPELL_UNCHANGED)                    // spell load case
         {
             sLog->outError("Pet::addSpell: Non-existed in SpellStore spell #%u request, deleting for all pets in `pet_spell`.",spell_id);
-            CharacterDatabase.PExecute("DELETE FROM pet_spell WHERE spell = '%u'",spell_id);
+            CharDB.PExecute("DELETE FROM pet_spell WHERE spell = '%u'",spell_id);
         }
         else
             sLog->outError("Pet::addSpell: Non-existed in SpellStore spell #%u request.",spell_id);
@@ -1695,7 +1695,7 @@ void Pet::resetTalentsForAllPetsOf(Player* owner, Pet* online_pet /*= NULL*/)
     // now need only reset for offline pets (all pets except online case)
     uint32 except_petnumber = online_pet ? online_pet->GetCharmInfo()->GetPetNumber() : 0;
 
-    QueryResult resultPets = CharacterDatabase.PQuery(
+    QueryResult resultPets = CharDB.PQuery(
         "SELECT id FROM character_pet WHERE owner = '%u' AND id <> '%u'",
         owner->GetGUIDLow(),except_petnumber);
 
@@ -1703,7 +1703,7 @@ void Pet::resetTalentsForAllPetsOf(Player* owner, Pet* online_pet /*= NULL*/)
     if (!resultPets)
         return;
 
-    QueryResult result = CharacterDatabase.PQuery(
+    QueryResult result = CharDB.PQuery(
         "SELECT DISTINCT pet_spell.spell FROM pet_spell, character_pet "
         "WHERE character_pet.owner = '%u' AND character_pet.id = pet_spell.guid AND character_pet.id <> %u",
         owner->GetGUIDLow(),except_petnumber);
@@ -1756,7 +1756,7 @@ void Pet::resetTalentsForAllPetsOf(Player* owner, Pet* online_pet /*= NULL*/)
 
     ss << ")";
 
-    CharacterDatabase.Execute(ss.str().c_str());
+    CharDB.Execute(ss.str().c_str());
 }
 
 void Pet::InitTalentForLevel()

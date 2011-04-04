@@ -442,7 +442,7 @@ void ObjectMgr::LoadCreatureLocales()
 
     mCreatureLocaleMap.clear();                              // need for reload case
 
-    QueryResult result = WorldDatabase.Query("SELECT entry,name_loc1,subname_loc1,name_loc2,subname_loc2,name_loc3,subname_loc3,name_loc4,subname_loc4,name_loc5,subname_loc5,name_loc6,subname_loc6,name_loc7,subname_loc7,name_loc8,subname_loc8 FROM locales_creature");
+    QueryResult result = WorldDB.Query("SELECT entry,name_loc1,subname_loc1,name_loc2,subname_loc2,name_loc3,subname_loc3,name_loc4,subname_loc4,name_loc5,subname_loc5,name_loc6,subname_loc6,name_loc7,subname_loc7,name_loc8,subname_loc8 FROM locales_creature");
 
     if (!result)
         return;
@@ -477,7 +477,7 @@ void ObjectMgr::LoadGossipMenuItemsLocales()
 
     mGossipMenuItemsLocaleMap.clear();                              // need for reload case
 
-    QueryResult result = WorldDatabase.Query("SELECT menu_id,id,"
+    QueryResult result = WorldDB.Query("SELECT menu_id,id,"
         "option_text_loc1,box_text_loc1,option_text_loc2,box_text_loc2,"
         "option_text_loc3,box_text_loc3,option_text_loc4,box_text_loc4,"
         "option_text_loc5,box_text_loc5,option_text_loc6,box_text_loc6,"
@@ -518,7 +518,7 @@ void ObjectMgr::LoadPointOfInterestLocales()
 
     mPointOfInterestLocaleMap.clear();                              // need for reload case
 
-    QueryResult result = WorldDatabase.Query("SELECT entry,icon_name_loc1,icon_name_loc2,icon_name_loc3,icon_name_loc4,icon_name_loc5,icon_name_loc6,icon_name_loc7,icon_name_loc8 FROM locales_points_of_interest");
+    QueryResult result = WorldDB.Query("SELECT entry,icon_name_loc1,icon_name_loc2,icon_name_loc3,icon_name_loc4,icon_name_loc5,icon_name_loc6,icon_name_loc7,icon_name_loc8 FROM locales_points_of_interest");
 
     if (!result)
         return;
@@ -1199,7 +1199,7 @@ void ObjectMgr::LoadLinkedRespawn()
     uint32 oldMSTime = getMSTime();
 
     mLinkedRespawnMap.clear();
-    QueryResult result = WorldDatabase.Query("SELECT guid, linkedGuid, linkType FROM linked_respawn ORDER BY guid ASC");
+    QueryResult result = WorldDB.Query("SELECT guid, linkedGuid, linkType FROM linked_respawn ORDER BY guid ASC");
 
     if (!result)
     {
@@ -1391,9 +1391,9 @@ bool ObjectMgr::SetCreatureLinkedRespawn(uint32 guidLow, uint32 linkedGuidLow)
     if (!linkedGuidLow) // we're removing the linking
     {
         mLinkedRespawnMap.erase(guid);
-        PreparedStatement *stmt = WorldDatabase.GetPreparedStatement(WORLD_DEL_CRELINKED_RESPAWN);
+        PreparedStatement *stmt = WorldDB.GetPreparedStatement(WORLD_DEL_CRELINKED_RESPAWN);
         stmt->setUInt32(0, guidLow);
-        WorldDatabase.Execute(stmt);
+        WorldDB.Execute(stmt);
         return true;
     }
 
@@ -1415,10 +1415,10 @@ bool ObjectMgr::SetCreatureLinkedRespawn(uint32 guidLow, uint32 linkedGuidLow)
     uint64 linkedGuid = MAKE_NEW_GUID(linkedGuidLow, slave->id, HIGHGUID_UNIT);
 
     mLinkedRespawnMap[guid] = linkedGuid;
-    PreparedStatement *stmt = WorldDatabase.GetPreparedStatement(WORLD_REP_CRELINKED_RESPAWN);
+    PreparedStatement *stmt = WorldDB.GetPreparedStatement(WORLD_REP_CRELINKED_RESPAWN);
     stmt->setUInt32(0, guidLow);
     stmt->setUInt32(1, linkedGuidLow);
-    WorldDatabase.Execute(stmt);
+    WorldDB.Execute(stmt);
     return true;
 }
 
@@ -1428,7 +1428,7 @@ void ObjectMgr::LoadCreatures()
 
     uint32 count = 0;
     //                                                0              1   2    3
-    QueryResult result = WorldDatabase.Query("SELECT creature.guid, id, map, modelid,"
+    QueryResult result = WorldDB.Query("SELECT creature.guid, id, map, modelid,"
     //   4             5           6           7           8            9              10         11
         "equipment_id, position_x, position_y, position_z, orientation, spawntimesecs, spawndist, currentwaypoint,"
     //   12         13       14          15            16         17             18        19
@@ -1789,7 +1789,7 @@ void ObjectMgr::LoadGameobjects()
     uint32 count = 0;
 
     //                                                0                1   2    3           4           5           6
-    QueryResult result = WorldDatabase.Query("SELECT gameobject.guid, id, map, position_x, position_y, position_z, orientation,"
+    QueryResult result = WorldDB.Query("SELECT gameobject.guid, id, map, position_x, position_y, position_z, orientation,"
     //   7          8          9          10         11             12            13     14         15             16          17
         "rotation0, rotation1, rotation2, rotation3, spawntimesecs, animprogress, state, spawnMask, phaseMask, eventEntry, pool_entry "
         "FROM gameobject LEFT OUTER JOIN game_event_gameobject ON gameobject.guid = game_event_gameobject.guid "
@@ -1962,7 +1962,7 @@ void ObjectMgr::LoadCreatureRespawnTimes()
 
     uint32 count = 0;
 
-    QueryResult result = CharacterDatabase.Query("SELECT guid,respawntime,instance FROM creature_respawn");
+    QueryResult result = CharDB.Query("SELECT guid,respawntime,instance FROM creature_respawn");
 
     if (!result)
     {
@@ -1993,12 +1993,12 @@ void ObjectMgr::LoadGameobjectRespawnTimes()
     uint32 oldMSTime = getMSTime();
 
     // Remove outdated data
-    PreparedStatement *stmt = CharacterDatabase.GetPreparedStatement(CHAR_DEL_EXPIRED_GO_RESPAWN_TIMES);
-    CharacterDatabase.DirectExecute(stmt);
+    PreparedStatement *stmt = CharDB.GetPreparedStatement(CHAR_DEL_EXPIRED_GO_RESPAWN_TIMES);
+    CharDB.DirectExecute(stmt);
 
     uint32 count = 0;
 
-    QueryResult result = CharacterDatabase.Query("SELECT guid,respawntime,instance FROM gameobject_respawn");
+    QueryResult result = CharDB.Query("SELECT guid,respawntime,instance FROM gameobject_respawn");
 
     if (!result)
     {
@@ -2036,10 +2036,10 @@ uint64 ObjectMgr::GetPlayerGUIDByName(std::string name) const
 {
     uint64 guid = 0;
 
-    CharacterDatabase.escape_string(name);
+    CharDB.escape_string(name);
 
     // Player name safe to sending to DB (checked at login) and this function using
-    QueryResult result = CharacterDatabase.PQuery("SELECT guid FROM characters WHERE name = '%s'", name.c_str());
+    QueryResult result = CharDB.PQuery("SELECT guid FROM characters WHERE name = '%s'", name.c_str());
     if (result)
         guid = MAKE_NEW_GUID((*result)[0].GetUInt32(), 0, HIGHGUID_PLAYER);
 
@@ -2055,7 +2055,7 @@ bool ObjectMgr::GetPlayerNameByGUID(const uint64 &guid, std::string &name) const
         return true;
     }
 
-    QueryResult result = CharacterDatabase.PQuery("SELECT name FROM characters WHERE guid = '%u'", GUID_LOPART(guid));
+    QueryResult result = CharDB.PQuery("SELECT name FROM characters WHERE guid = '%u'", GUID_LOPART(guid));
 
     if (result)
     {
@@ -2074,7 +2074,7 @@ uint32 ObjectMgr::GetPlayerTeamByGUID(const uint64 &guid) const
         return Player::TeamForRace(player->getRace());
     }
 
-    QueryResult result = CharacterDatabase.PQuery("SELECT race FROM characters WHERE guid = '%u'", GUID_LOPART(guid));
+    QueryResult result = CharDB.PQuery("SELECT race FROM characters WHERE guid = '%u'", GUID_LOPART(guid));
 
     if (result)
     {
@@ -2093,7 +2093,7 @@ uint32 ObjectMgr::GetPlayerAccountIdByGUID(const uint64 &guid) const
         return player->GetSession()->GetAccountId();
     }
 
-    QueryResult result = CharacterDatabase.PQuery("SELECT account FROM characters WHERE guid = '%u'", GUID_LOPART(guid));
+    QueryResult result = CharDB.PQuery("SELECT account FROM characters WHERE guid = '%u'", GUID_LOPART(guid));
     if (result)
     {
         uint32 acc = (*result)[0].GetUInt32();
@@ -2105,7 +2105,7 @@ uint32 ObjectMgr::GetPlayerAccountIdByGUID(const uint64 &guid) const
 
 uint32 ObjectMgr::GetPlayerAccountIdByPlayerName(const std::string& name) const
 {
-    QueryResult result = CharacterDatabase.PQuery("SELECT account FROM characters WHERE name = '%s'", name.c_str());
+    QueryResult result = CharDB.PQuery("SELECT account FROM characters WHERE name = '%s'", name.c_str());
     if (result)
     {
         uint32 acc = (*result)[0].GetUInt32();
@@ -2121,7 +2121,7 @@ void ObjectMgr::LoadItemLocales()
 
     mItemLocaleMap.clear();                                 // need for reload case
 
-    QueryResult result = WorldDatabase.Query("SELECT entry,name_loc1,description_loc1,name_loc2,description_loc2,name_loc3,description_loc3,name_loc4,description_loc4,name_loc5,description_loc5,name_loc6,description_loc6,name_loc7,description_loc7,name_loc8,description_loc8 FROM locales_item");
+    QueryResult result = WorldDB.Query("SELECT entry,name_loc1,description_loc1,name_loc2,description_loc2,name_loc3,description_loc3,name_loc4,description_loc4,name_loc5,description_loc5,name_loc6,description_loc6,name_loc7,description_loc7,name_loc8,description_loc8 FROM locales_item");
 
     if (!result)
         return;
@@ -2610,7 +2610,7 @@ void ObjectMgr::LoadItemSetNameLocales()
 
     mItemSetNameLocaleMap.clear();                                 // need for reload case
 
-    QueryResult result = WorldDatabase.Query("SELECT `entry`,`name_loc1`,`name_loc2`,`name_loc3`,`name_loc4`,`name_loc5`,`name_loc6`,`name_loc7`,`name_loc8` FROM `locales_item_set_names`");
+    QueryResult result = WorldDB.Query("SELECT `entry`,`name_loc1`,`name_loc2`,`name_loc3`,`name_loc4`,`name_loc5`,`name_loc6`,`name_loc7`,`name_loc8` FROM `locales_item_set_names`");
 
     if (!result)
         return;
@@ -2655,7 +2655,7 @@ void ObjectMgr::LoadItemSetNames()
                 itemSetItems.insert(setEntry->itemId[i]);
     }
 
-    QueryResult result = WorldDatabase.Query("SELECT `entry`,`name`,`InventoryType` FROM `item_set_names`");
+    QueryResult result = WorldDB.Query("SELECT `entry`,`name`,`InventoryType` FROM `item_set_names`");
 
     if (!result)
     {
@@ -2726,7 +2726,7 @@ void ObjectMgr::LoadVehicleTemplateAccessories()
 
     uint32 count = 0;
 
-    QueryResult result = WorldDatabase.Query("SELECT `entry`,`accessory_entry`,`seat_id`,`minion`,`summontype`,`summontimer` FROM `vehicle_template_accessory`");
+    QueryResult result = WorldDB.Query("SELECT `entry`,`accessory_entry`,`seat_id`,`minion`,`summontype`,`summontimer` FROM `vehicle_template_accessory`");
 
     if (!result)
     {
@@ -2782,7 +2782,7 @@ void ObjectMgr::LoadVehicleAccessories()
 
     uint32 count = 0;
 
-    QueryResult result = WorldDatabase.Query("SELECT `guid`,`accessory_entry`,`seat_id`,`minion`,`summontype`,`summontimer` FROM `vehicle_accessory`");
+    QueryResult result = WorldDB.Query("SELECT `guid`,`accessory_entry`,`seat_id`,`minion`,`summontype`,`summontimer` FROM `vehicle_accessory`");
 
     if (!result)
     {
@@ -2827,7 +2827,7 @@ void ObjectMgr::LoadVehicleScaling()
 
     uint32 count = 0;
 
-    QueryResult result = WorldDatabase.Query("SELECT `entry`,`baseItemLevel`,`scalingFactor` FROM `vehicle_scaling_info`");
+    QueryResult result = WorldDB.Query("SELECT `entry`,`baseItemLevel`,`scalingFactor` FROM `vehicle_scaling_info`");
 
     if (!result)
     {
@@ -2867,7 +2867,7 @@ void ObjectMgr::LoadPetLevelInfo()
     uint32 oldMSTime = getMSTime();
 
     //                                                 0               1      2   3     4    5    6    7     8    9
-    QueryResult result  = WorldDatabase.Query("SELECT creature_entry, level, hp, mana, str, agi, sta, inte, spi, armor FROM pet_levelstats");
+    QueryResult result  = WorldDB.Query("SELECT creature_entry, level, hp, mana, str, agi, sta, inte, spi, armor FROM pet_levelstats");
 
     if (!result)
     {
@@ -3014,7 +3014,7 @@ void ObjectMgr::LoadPlayerInfo()
     {
         uint32 oldMSTime = getMSTime();
         //                                                0     1      2    3     4           5           6
-        QueryResult result = WorldDatabase.Query("SELECT race, class, map, zone, position_x, position_y, position_z, orientation FROM playercreateinfo");
+        QueryResult result = WorldDB.Query("SELECT race, class, map, zone, position_x, position_y, position_z, orientation FROM playercreateinfo");
 
         if (!result)
         {
@@ -3103,7 +3103,7 @@ void ObjectMgr::LoadPlayerInfo()
     {
         uint32 oldMSTime = getMSTime();
         //                                                0     1      2       3
-        QueryResult result = WorldDatabase.Query("SELECT race, class, itemid, amount FROM playercreateinfo_item");
+        QueryResult result = WorldDB.Query("SELECT race, class, itemid, amount FROM playercreateinfo_item");
 
         if (!result)
         {
@@ -3177,9 +3177,9 @@ void ObjectMgr::LoadPlayerInfo()
 
         QueryResult result = QueryResult(NULL);
         if (sWorld->getBoolConfig(CONFIG_START_ALL_SPELLS))
-            result = WorldDatabase.Query("SELECT race, class, Spell, Active FROM playercreateinfo_spell_custom");
+            result = WorldDB.Query("SELECT race, class, Spell, Active FROM playercreateinfo_spell_custom");
         else
-            result = WorldDatabase.Query("SELECT race, class, Spell FROM playercreateinfo_spell");
+            result = WorldDB.Query("SELECT race, class, Spell FROM playercreateinfo_spell");
 
         if (!result)
         {
@@ -3236,7 +3236,7 @@ void ObjectMgr::LoadPlayerInfo()
         uint32 oldMSTime = getMSTime();
 
         //                                                0     1      2       3       4
-        QueryResult result = WorldDatabase.Query("SELECT race, class, button, action, type FROM playercreateinfo_action");
+        QueryResult result = WorldDB.Query("SELECT race, class, button, action, type FROM playercreateinfo_action");
 
         if (!result)
         {
@@ -3283,7 +3283,7 @@ void ObjectMgr::LoadPlayerInfo()
         uint32 oldMSTime = getMSTime();
 
         //                                                 0      1      2       3
-        QueryResult result  = WorldDatabase.Query("SELECT class, level, basehp, basemana FROM player_classlevelstats");
+        QueryResult result  = WorldDB.Query("SELECT class, level, basehp, basemana FROM player_classlevelstats");
 
         if (!result)
         {
@@ -3364,7 +3364,7 @@ void ObjectMgr::LoadPlayerInfo()
         uint32 oldMSTime = getMSTime();
 
         //                                                 0     1      2      3    4    5    6    7
-        QueryResult result  = WorldDatabase.Query("SELECT race, class, level, str, agi, sta, inte, spi FROM player_levelstats");
+        QueryResult result  = WorldDB.Query("SELECT race, class, level, str, agi, sta, inte, spi FROM player_levelstats");
 
         if (!result)
         {
@@ -3486,7 +3486,7 @@ void ObjectMgr::LoadPlayerInfo()
             mPlayerXPperLevel[level] = 0;
 
         //                                                 0    1
-        QueryResult result  = WorldDatabase.Query("SELECT lvl, xp_for_next_level FROM player_xp_for_level");
+        QueryResult result  = WorldDB.Query("SELECT lvl, xp_for_next_level FROM player_xp_for_level");
 
         if (!result)
         {
@@ -3647,8 +3647,8 @@ void ObjectMgr::LoadGuilds()
     {
         uint32 oldMSTime = getMSTime();
 
-        PreparedStatement* stmt = CharacterDatabase.GetPreparedStatement(CHAR_LOAD_GUILDS);
-        PreparedQueryResult result = CharacterDatabase.Query(stmt);
+        PreparedStatement* stmt = CharDB.GetPreparedStatement(CHAR_LOAD_GUILDS);
+        PreparedQueryResult result = CharDB.Query(stmt);
 
         if (!result)
         {
@@ -3686,11 +3686,11 @@ void ObjectMgr::LoadGuilds()
         uint32 oldMSTime = getMSTime();
 
         // Delete orphaned guild rank entries before loading the valid ones
-        PreparedStatement* stmt = CharacterDatabase.GetPreparedStatement(CHAR_CLEAN_GUILD_RANKS);
-        CharacterDatabase.Execute(stmt);
+        PreparedStatement* stmt = CharDB.GetPreparedStatement(CHAR_CLEAN_GUILD_RANKS);
+        CharDB.Execute(stmt);
 
-        stmt = CharacterDatabase.GetPreparedStatement(CHAR_LOAD_GUILD_RANKS);
-        PreparedQueryResult result = CharacterDatabase.Query(stmt);
+        stmt = CharDB.GetPreparedStatement(CHAR_LOAD_GUILD_RANKS);
+        PreparedQueryResult result = CharDB.Query(stmt);
 
         if (!result)
         {
@@ -3723,11 +3723,11 @@ void ObjectMgr::LoadGuilds()
         uint32 oldMSTime = getMSTime();
 
         // Delete orphaned guild member entries before loading the valid ones
-        PreparedStatement* stmt = CharacterDatabase.GetPreparedStatement(CHAR_CLEAN_GUILD_MEMBERS);
-        CharacterDatabase.Execute(stmt);
+        PreparedStatement* stmt = CharDB.GetPreparedStatement(CHAR_CLEAN_GUILD_MEMBERS);
+        CharDB.Execute(stmt);
 
-        stmt = CharacterDatabase.GetPreparedStatement(CHAR_LOAD_GUILD_MEMBERS);
-        PreparedQueryResult result = CharacterDatabase.Query(stmt);
+        stmt = CharDB.GetPreparedStatement(CHAR_LOAD_GUILD_MEMBERS);
+        PreparedQueryResult result = CharDB.Query(stmt);
 
         if (!result)
         {
@@ -3761,11 +3761,11 @@ void ObjectMgr::LoadGuilds()
         uint32 oldMSTime = getMSTime();
 
         // Delete orphaned guild bank right entries before loading the valid ones
-        PreparedStatement* stmt = CharacterDatabase.GetPreparedStatement(CHAR_CLEAN_GUILD_BANK_RIGHTS);
-        CharacterDatabase.Execute(stmt);
+        PreparedStatement* stmt = CharDB.GetPreparedStatement(CHAR_CLEAN_GUILD_BANK_RIGHTS);
+        CharDB.Execute(stmt);
 
-        stmt = CharacterDatabase.GetPreparedStatement(CHAR_LOAD_GUILD_BANK_RIGHTS);
-        PreparedQueryResult result = CharacterDatabase.Query(stmt);
+        stmt = CharDB.GetPreparedStatement(CHAR_LOAD_GUILD_BANK_RIGHTS);
+        PreparedQueryResult result = CharDB.Query(stmt);
 
         if (!result)
         {
@@ -3792,17 +3792,20 @@ void ObjectMgr::LoadGuilds()
         }
     }
 
+    // 6. Load guild member professions
+    // Placeholder...
+
     // 5. Load all event logs
     sLog->outString("Loading guild event logs...");
     {
         uint32 oldMSTime = getMSTime();
 
-        PreparedStatement* stmt = CharacterDatabase.GetPreparedStatement(CHAR_DEL_OLD_GUILD_EVENT_LOGS);
+        PreparedStatement* stmt = CharDB.GetPreparedStatement(CHAR_DEL_OLD_GUILD_EVENT_LOGS);
         stmt->setUInt32(0, sWorld->getIntConfig(CONFIG_GUILD_EVENT_LOG_COUNT));
-        CharacterDatabase.Execute(stmt);
+        CharDB.Execute(stmt);
 
-        stmt = CharacterDatabase.GetPreparedStatement(CHAR_LOAD_GUILD_EVENTLOGS);
-        PreparedQueryResult result = CharacterDatabase.Query(stmt);
+        stmt = CharDB.GetPreparedStatement(CHAR_LOAD_GUILD_EVENTLOGS);
+        PreparedQueryResult result = CharDB.Query(stmt);
 
         if (!result)
         {
@@ -3835,12 +3838,12 @@ void ObjectMgr::LoadGuilds()
         uint32 oldMSTime = getMSTime();
 
         // Remove log entries that exceed the number of allowed entries per guild
-        PreparedStatement* stmt = CharacterDatabase.GetPreparedStatement(CHAR_DEL_OLD_GUILD_BANK_EVENT_LOGS);
+        PreparedStatement* stmt = CharDB.GetPreparedStatement(CHAR_DEL_OLD_GUILD_BANK_EVENT_LOGS);
         stmt->setUInt32(0, sWorld->getIntConfig(CONFIG_GUILD_BANK_EVENT_LOG_COUNT));
-        CharacterDatabase.Execute(stmt);
+        CharDB.Execute(stmt);
 
-        stmt = CharacterDatabase.GetPreparedStatement(CHAR_LOAD_GUILD_BANK_EVENTLOGS);
-        PreparedQueryResult result = CharacterDatabase.Query(stmt);
+        stmt = CharDB.GetPreparedStatement(CHAR_LOAD_GUILD_BANK_EVENTLOGS);
+        PreparedQueryResult result = CharDB.Query(stmt);
 
         if (!result)
         {
@@ -3873,11 +3876,11 @@ void ObjectMgr::LoadGuilds()
         uint32 oldMSTime = getMSTime();
 
         // Delete orphaned guild bank tab entries before loading the valid ones
-        PreparedStatement* stmt = CharacterDatabase.GetPreparedStatement(CHAR_CLEAN_GUILD_BANK_TABS);
-        CharacterDatabase.Execute(stmt);
+        PreparedStatement* stmt = CharDB.GetPreparedStatement(CHAR_CLEAN_GUILD_BANK_TABS);
+        CharDB.Execute(stmt);
 
-        stmt = CharacterDatabase.GetPreparedStatement(CHAR_LOAD_GUILD_BANK_TABS);
-        PreparedQueryResult result = CharacterDatabase.Query(stmt);
+        stmt = CharDB.GetPreparedStatement(CHAR_LOAD_GUILD_BANK_TABS);
+        PreparedQueryResult result = CharDB.Query(stmt);
 
         if (!result)
         {
@@ -3910,11 +3913,11 @@ void ObjectMgr::LoadGuilds()
         uint32 oldMSTime = getMSTime();
 
         // Delete orphan guild bank items
-        PreparedStatement* stmt = CharacterDatabase.GetPreparedStatement(CHAR_CLEAN_GUILD_BANK_ITEMS);
-        CharacterDatabase.Execute(stmt);
+        PreparedStatement* stmt = CharDB.GetPreparedStatement(CHAR_CLEAN_GUILD_BANK_ITEMS);
+        CharDB.Execute(stmt);
 
-        stmt = CharacterDatabase.GetPreparedStatement(CHAR_LOAD_GUILD_BANK_ITEMS);
-        PreparedQueryResult result = CharacterDatabase.Query(stmt);
+        stmt = CharDB.GetPreparedStatement(CHAR_LOAD_GUILD_BANK_ITEMS);
+        PreparedQueryResult result = CharDB.Query(stmt);
 
         if (!result)
         {
@@ -3969,7 +3972,7 @@ void ObjectMgr::LoadArenaTeams()
     uint32 oldMSTime = getMSTime();
 
     //                                                     0                      1    2           3    4               5
-    QueryResult result = CharacterDatabase.Query("SELECT arena_team.arenateamid,name,captainguid,type,BackgroundColor,EmblemStyle,"
+    QueryResult result = CharDB.Query("SELECT arena_team.arenateamid,name,captainguid,type,BackgroundColor,EmblemStyle,"
     //   6           7           8            9      10    11   12     13    14
         "EmblemColor,BorderStyle,BorderColor, rating,games,wins,played,wins2,rank "
         "FROM arena_team LEFT JOIN arena_team_stats ON arena_team.arenateamid = arena_team_stats.arenateamid ORDER BY arena_team.arenateamid ASC");
@@ -3982,7 +3985,7 @@ void ObjectMgr::LoadArenaTeams()
     }
 
     // load arena_team members
-    QueryResult arenaTeamMembersResult = CharacterDatabase.Query(
+    QueryResult arenaTeamMembersResult = CharDB.Query(
     //          0           1           2           3         4             5           6               7    8
         "SELECT arenateamid,member.guid,played_week,wons_week,played_season,wons_season,name,class "
         "FROM arena_team_member member LEFT JOIN characters chars on member.guid = chars.guid ORDER BY member.arenateamid ASC");
@@ -4016,12 +4019,12 @@ void ObjectMgr::LoadGroups()
         uint32 oldMSTime = getMSTime();
 
         // Delete all groups whose leader does not exist
-        CharacterDatabase.DirectExecute("DELETE FROM groups WHERE leaderGuid NOT IN (SELECT guid FROM characters)");
+        CharDB.DirectExecute("DELETE FROM groups WHERE leaderGuid NOT IN (SELECT guid FROM characters)");
         // Delete all groups with less than 2 members
-        CharacterDatabase.DirectExecute("DELETE FROM groups WHERE guid NOT IN (SELECT guid FROM group_member GROUP BY guid HAVING COUNT(guid) > 1)");
+        CharDB.DirectExecute("DELETE FROM groups WHERE guid NOT IN (SELECT guid FROM group_member GROUP BY guid HAVING COUNT(guid) > 1)");
 
         //                                                        0           1           2             3          4      5      6      7      8     9
-        QueryResult result = CharacterDatabase.PQuery("SELECT leaderGuid, lootMethod, looterGuid, lootThreshold, icon1, icon2, icon3, icon4, icon5, icon6" 
+        QueryResult result = CharDB.PQuery("SELECT leaderGuid, lootMethod, looterGuid, lootThreshold, icon1, icon2, icon3, icon4, icon5, icon6" 
         //                                                10     11     12         13              14        15    
                                                       ",icon7, icon8, groupType, difficulty, raiddifficulty, guid FROM groups ORDER BY guid ASC");
         if (!result)
@@ -4061,13 +4064,13 @@ void ObjectMgr::LoadGroups()
         uint32 oldMSTime = getMSTime();
 
         // Delete all rows from group_member or group_instance with no group
-        CharacterDatabase.DirectExecute("DELETE FROM group_member WHERE guid NOT IN (SELECT guid FROM groups)");
-        CharacterDatabase.DirectExecute("DELETE FROM group_instance WHERE guid NOT IN (SELECT guid FROM groups)");
+        CharDB.DirectExecute("DELETE FROM group_member WHERE guid NOT IN (SELECT guid FROM groups)");
+        CharDB.DirectExecute("DELETE FROM group_instance WHERE guid NOT IN (SELECT guid FROM groups)");
         // Delete all members that does not exist
-        CharacterDatabase.DirectExecute("DELETE FROM group_member WHERE memberGuid NOT IN (SELECT guid FROM characters)");
+        CharDB.DirectExecute("DELETE FROM group_member WHERE memberGuid NOT IN (SELECT guid FROM characters)");
 
         //                                                    0        1           2            3       4
-        QueryResult result = CharacterDatabase.Query("SELECT guid, memberGuid, memberFlags, subgroup, roles FROM group_member ORDER BY guid");
+        QueryResult result = CharDB.Query("SELECT guid, memberGuid, memberFlags, subgroup, roles FROM group_member ORDER BY guid");
         if (!result)
         {
             sLog->outString(">> Loaded 0 group members. DB table `group_member` is empty!");
@@ -4100,7 +4103,7 @@ void ObjectMgr::LoadGroups()
         uint32 oldMSTime = getMSTime();
 
         //                                        0     1      2         3           4          5
-        QueryResult result = CharacterDatabase.Query("SELECT guid, map, instance, permanent, difficulty, resettime, "
+        QueryResult result = CharDB.Query("SELECT guid, map, instance, permanent, difficulty, resettime, "
         //           6
             "(SELECT COUNT(1) FROM groups JOIN character_instance ON leaderGuid = groups.guid WHERE instance = group_instance.instance AND permanent = 1 LIMIT 1) "
             "FROM group_instance LEFT JOIN instance ON instance = id ORDER BY guid");
@@ -4156,7 +4159,7 @@ void ObjectMgr::LoadQuests()
     mExclusiveQuestGroups.clear();
 
     //                                               1      2       3           4                 5         6         7           8     9              10
-    QueryResult result = WorldDatabase.Query("SELECT entry, Method, ZoneOrSort, SkillOrClassMask, MinLevel, MaxLevel, QuestLevel, Type, RequiredRaces, RequiredSkillValue, "
+    QueryResult result = WorldDB.Query("SELECT entry, Method, ZoneOrSort, SkillOrClassMask, MinLevel, MaxLevel, QuestLevel, Type, RequiredRaces, RequiredSkillValue, "
     //   11                   12                 13                    14                  15                     16                   17                     18
         "RepObjectiveFaction, RepObjectiveValue, RepObjectiveFaction2, RepObjectiveValue2, RequiredMinRepFaction, RequiredMinRepValue, RequiredMaxRepFaction, RequiredMaxRepValue, "
     //   19                20         21          22            23           24            25            26                 27              28              29
@@ -4201,7 +4204,7 @@ void ObjectMgr::LoadQuests()
         "SoundId, SoundId2, StartScript, CompleteScript "
         " FROM quest_template");
 
-    if (result == NULL)
+    if (!result)
     {
         sLog->outErrorDb(">> Loaded 0 quests definitions. DB table `quest_template` is empty.");
         sLog->outString();
@@ -4861,7 +4864,7 @@ void ObjectMgr::LoadQuestLocales()
 
     mQuestLocaleMap.clear();                                // need for reload case
 
-    QueryResult result = WorldDatabase.Query("SELECT entry,"
+    QueryResult result = WorldDB.Query("SELECT entry,"
         "Title_loc1,Details_loc1,Objectives_loc1,OfferRewardText_loc1,RequestItemsText_loc1,EndText_loc1,CompletedText_loc1,ObjectiveText1_loc1,ObjectiveText2_loc1,ObjectiveText3_loc1,ObjectiveText4_loc1,"
         "Title_loc2,Details_loc2,Objectives_loc2,OfferRewardText_loc2,RequestItemsText_loc2,EndText_loc2,CompletedText_loc2,ObjectiveText1_loc2,ObjectiveText2_loc2,ObjectiveText3_loc2,ObjectiveText4_loc2,"
         "Title_loc3,Details_loc3,Objectives_loc3,OfferRewardText_loc3,RequestItemsText_loc3,EndText_loc3,CompletedText_loc3,ObjectiveText1_loc3,ObjectiveText2_loc3,ObjectiveText3_loc3,ObjectiveText4_loc3,"
@@ -4941,7 +4944,7 @@ void ObjectMgr::LoadScripts(ScriptsType type)
     bool isSpellScriptTable = (type == SCRIPTS_SPELL);
     char buff[125];
     sprintf(buff, "SELECT id,delay,command,datalong,datalong2,dataint,x,y,z,o%s FROM %s", isSpellScriptTable ? ",effIndex" : "", tableName.c_str());
-    QueryResult result = WorldDatabase.Query(buff);
+    QueryResult result = WorldDB.Query(buff);
 
 
     if (!result)
@@ -5380,7 +5383,7 @@ void ObjectMgr::LoadWaypointScripts()
     for (ScriptMapMap::const_iterator itr = sWaypointScripts.begin(); itr != sWaypointScripts.end(); ++itr)
         actionSet.insert(itr->first);
 
-    QueryResult result = WorldDatabase.PQuery("SELECT DISTINCT(`action`) FROM waypoint_data");
+    QueryResult result = WorldDB.PQuery("SELECT DISTINCT(`action`) FROM waypoint_data");
     if (result)
     {
         do
@@ -5403,7 +5406,7 @@ void ObjectMgr::LoadSpellScriptNames()
 
     mSpellScripts.clear();                            // need for reload case
 
-    QueryResult result = WorldDatabase.Query("SELECT spell_id, ScriptName FROM spell_script_names");
+    QueryResult result = WorldDB.Query("SELECT spell_id, ScriptName FROM spell_script_names");
 
     if (!result)
     {
@@ -5578,7 +5581,7 @@ void ObjectMgr::LoadPageTextLocales()
 
     mPageTextLocaleMap.clear();                             // need for reload case
 
-    QueryResult result = WorldDatabase.Query("SELECT entry,text_loc1,text_loc2,text_loc3,text_loc4,text_loc5,text_loc6,text_loc7,text_loc8 FROM locales_page_text");
+    QueryResult result = WorldDB.Query("SELECT entry,text_loc1,text_loc2,text_loc3,text_loc4,text_loc5,text_loc6,text_loc7,text_loc8 FROM locales_page_text");
 
     if (!result)
         return;
@@ -5644,7 +5647,7 @@ void ObjectMgr::LoadInstanceEncounters()
 {
     uint32 oldMSTime = getMSTime();
 
-    QueryResult result = WorldDatabase.Query("SELECT entry, creditType, creditEntry, lastEncounterDungeon FROM instance_encounters");
+    QueryResult result = WorldDB.Query("SELECT entry, creditType, creditEntry, lastEncounterDungeon FROM instance_encounters");
     if (!result)
     {
         sLog->outErrorDb(">> Loaded 0 instance encounters, table is empty!");
@@ -5732,7 +5735,7 @@ void ObjectMgr::LoadGossipText()
 {
     uint32 oldMSTime = getMSTime();
 
-    QueryResult result = WorldDatabase.Query("SELECT * FROM npc_text");
+    QueryResult result = WorldDB.Query("SELECT * FROM npc_text");
 
     int count = 0;
     if (!result)
@@ -5789,7 +5792,7 @@ void ObjectMgr::LoadNpcTextLocales()
 
     mNpcTextLocaleMap.clear();                              // need for reload case
 
-    QueryResult result = WorldDatabase.Query("SELECT entry,"
+    QueryResult result = WorldDB.Query("SELECT entry,"
         "Text0_0_loc1,Text0_1_loc1,Text1_0_loc1,Text1_1_loc1,Text2_0_loc1,Text2_1_loc1,Text3_0_loc1,Text3_1_loc1,Text4_0_loc1,Text4_1_loc1,Text5_0_loc1,Text5_1_loc1,Text6_0_loc1,Text6_1_loc1,Text7_0_loc1,Text7_1_loc1,"
         "Text0_0_loc2,Text0_1_loc2,Text1_0_loc2,Text1_1_loc2,Text2_0_loc2,Text2_1_loc2,Text3_0_loc2,Text3_1_loc1,Text4_0_loc2,Text4_1_loc2,Text5_0_loc2,Text5_1_loc2,Text6_0_loc2,Text6_1_loc2,Text7_0_loc2,Text7_1_loc2,"
         "Text0_0_loc3,Text0_1_loc3,Text1_0_loc3,Text1_1_loc3,Text2_0_loc3,Text2_1_loc3,Text3_0_loc3,Text3_1_loc1,Text4_0_loc3,Text4_1_loc3,Text5_0_loc3,Text5_1_loc3,Text6_0_loc3,Text6_1_loc3,Text7_0_loc3,Text7_1_loc3,"
@@ -5838,9 +5841,9 @@ void ObjectMgr::ReturnOrDeleteOldMails(bool serverUp)
     sLog->outDebug(LOG_FILTER_NONE, "Returning mails current time: hour: %d, minute: %d, second: %d ", localtime(&basetime)->tm_hour, localtime(&basetime)->tm_min, localtime(&basetime)->tm_sec);
     //delete all old mails without item and without body immediately, if starting server
     if (!serverUp)
-        CharacterDatabase.PExecute("DELETE FROM mail WHERE expire_time < '" UI64FMTD "' AND has_items = '0' AND body = ''", (uint64)basetime);
+        CharDB.PExecute("DELETE FROM mail WHERE expire_time < '" UI64FMTD "' AND has_items = '0' AND body = ''", (uint64)basetime);
     //                                                     0  1           2      3        4          5         6           7   8       9
-    QueryResult result = CharacterDatabase.PQuery("SELECT id,messageType,sender,receiver,has_items,expire_time,cod,checked,mailTemplateId FROM mail WHERE expire_time < '" UI64FMTD "'", (uint64)basetime);
+    QueryResult result = CharDB.PQuery("SELECT id,messageType,sender,receiver,has_items,expire_time,cod,checked,mailTemplateId FROM mail WHERE expire_time < '" UI64FMTD "'", (uint64)basetime);
     if (!result)
     {
         sLog->outString(">> No expired mails found or DB table `mail` is empty.");
@@ -5879,7 +5882,7 @@ void ObjectMgr::ReturnOrDeleteOldMails(bool serverUp)
         //delete or return mail:
         if (has_items)
         {
-            QueryResult resultItems = CharacterDatabase.PQuery("SELECT item_guid,item_template FROM mail_items WHERE mail_id='%u'", m->messageID);
+            QueryResult resultItems = CharDB.PQuery("SELECT item_guid,item_template FROM mail_items WHERE mail_id='%u'", m->messageID);
             if (resultItems)
             {
                 do
@@ -5899,21 +5902,21 @@ void ObjectMgr::ReturnOrDeleteOldMails(bool serverUp)
                 // mail open and then not returned
                 for (std::vector<MailItemInfo>::iterator itr2 = m->items.begin(); itr2 != m->items.end(); ++itr2)
                 {
-                    PreparedStatement* stmt = CharacterDatabase.GetPreparedStatement(CHAR_DEL_ITEM_INSTANCE);
+                    PreparedStatement* stmt = CharDB.GetPreparedStatement(CHAR_DEL_ITEM_INSTANCE);
                     stmt->setUInt32(0, itr2->item_guid);
-                    CharacterDatabase.Execute(stmt);
+                    CharDB.Execute(stmt);
                 }
             }
             else
             {
                 //mail will be returned:
-                CharacterDatabase.PExecute("UPDATE mail SET sender = '%u', receiver = '%u', expire_time = '" UI64FMTD "', deliver_time = '" UI64FMTD "',cod = '0', checked = '%u' WHERE id = '%u'", m->receiver, m->sender, (uint64)(basetime + 30*DAY), (uint64)basetime, MAIL_CHECK_MASK_RETURNED, m->messageID);
+                CharDB.PExecute("UPDATE mail SET sender = '%u', receiver = '%u', expire_time = '" UI64FMTD "', deliver_time = '" UI64FMTD "',cod = '0', checked = '%u' WHERE id = '%u'", m->receiver, m->sender, (uint64)(basetime + 30*DAY), (uint64)basetime, MAIL_CHECK_MASK_RETURNED, m->messageID);
                 delete m;
                 continue;
             }
         }
 
-        CharacterDatabase.PExecute("DELETE FROM mail WHERE id = '%u'", m->messageID);
+        CharDB.PExecute("DELETE FROM mail WHERE id = '%u'", m->messageID);
         delete m;
         ++count;
     }
@@ -5929,7 +5932,7 @@ void ObjectMgr::LoadQuestAreaTriggers()
 
     mQuestAreaTriggerMap.clear();                           // need for reload case
 
-    QueryResult result = WorldDatabase.Query("SELECT id,quest FROM areatrigger_involvedrelation");
+    QueryResult result = WorldDB.Query("SELECT id,quest FROM areatrigger_involvedrelation");
 
     if (!result)
     {
@@ -5988,7 +5991,7 @@ void ObjectMgr::LoadTavernAreaTriggers()
 
     mTavernAreaTriggerSet.clear();                          // need for reload case
 
-    QueryResult result = WorldDatabase.Query("SELECT id FROM areatrigger_tavern");
+    QueryResult result = WorldDB.Query("SELECT id FROM areatrigger_tavern");
 
     if (!result)
     {
@@ -6026,7 +6029,7 @@ void ObjectMgr::LoadAreaTriggerScripts()
     uint32 oldMSTime = getMSTime();
 
     mAreaTriggerScripts.clear();                            // need for reload case
-    QueryResult result = WorldDatabase.Query("SELECT entry, ScriptName FROM areatrigger_scripts");
+    QueryResult result = WorldDB.Query("SELECT entry, ScriptName FROM areatrigger_scripts");
 
     if (!result)
     {
@@ -6170,7 +6173,7 @@ void ObjectMgr::LoadGraveyardZones()
 
     mGraveYardMap.clear();                                  // need for reload case
 
-    QueryResult result = WorldDatabase.Query("SELECT id,ghost_zone,faction FROM game_graveyard_zone");
+    QueryResult result = WorldDB.Query("SELECT id,ghost_zone,faction FROM game_graveyard_zone");
 
     if (!result)
     {
@@ -6378,7 +6381,7 @@ bool ObjectMgr::AddGraveYardLink(uint32 id, uint32 zoneId, uint32 team, bool inD
     // add link to DB
     if (inDB)
     {
-        WorldDatabase.PExecute("INSERT INTO game_graveyard_zone (id,ghost_zone,faction) "
+        WorldDB.PExecute("INSERT INTO game_graveyard_zone (id,ghost_zone,faction) "
             "VALUES ('%u', '%u','%u')",id,zoneId,team);
     }
 
@@ -6426,7 +6429,7 @@ void ObjectMgr::RemoveGraveYardLink(uint32 id, uint32 zoneId, uint32 team, bool 
     // remove link from DB
     if (inDB)
     {
-        WorldDatabase.PExecute("DELETE FROM game_graveyard_zone WHERE id = '%u' AND ghost_zone = '%u' AND faction = '%u'",id,zoneId,team);
+        WorldDB.PExecute("DELETE FROM game_graveyard_zone WHERE id = '%u' AND ghost_zone = '%u' AND faction = '%u'",id,zoneId,team);
     }
 
     return;
@@ -6439,7 +6442,7 @@ void ObjectMgr::LoadAreaTriggerTeleports()
     mAreaTriggers.clear();                                  // need for reload case
 
     //                                                        0            1                  2                  3                  4                   5
-    QueryResult result = WorldDatabase.Query("SELECT id,  target_map, target_position_x, target_position_y, target_position_z, target_orientation FROM areatrigger_teleport");
+    QueryResult result = WorldDB.Query("SELECT id,  target_map, target_position_x, target_position_y, target_position_z, target_orientation FROM areatrigger_teleport");
     if (!result)
     {
         sLog->outString(">> Loaded 0 area trigger teleport definitions. DB table `areatrigger_teleport` is empty.");
@@ -6501,7 +6504,7 @@ void ObjectMgr::LoadAccessRequirements()
     mAccessRequirements.clear();                                  // need for reload case
 
     //                                                           0           1          2          3     4      5             6             7                      8                  9
-    QueryResult result = WorldDatabase.Query("SELECT mapid, difficulty, level_min, level_max, item, item2, quest_done_A, quest_done_H, completed_achievement, quest_failed_text FROM access_requirement");
+    QueryResult result = WorldDB.Query("SELECT mapid, difficulty, level_min, level_max, item, item2, quest_done_A, quest_done_H, completed_achievement, quest_failed_text FROM access_requirement");
     if (!result)
     {
         sLog->outString(">> Loaded 0 access requirement definitions. DB table `access_requirement` is empty.");
@@ -6639,57 +6642,57 @@ AreaTrigger const* ObjectMgr::GetMapEntranceTrigger(uint32 Map) const
 
 void ObjectMgr::SetHighestGuids()
 {
-    QueryResult result = CharacterDatabase.Query("SELECT MAX(guid) FROM characters");
+    QueryResult result = CharDB.Query("SELECT MAX(guid) FROM characters");
     if (result)
         m_hiCharGuid = (*result)[0].GetUInt32()+1;
 
-    result = WorldDatabase.Query("SELECT MAX(guid) FROM creature");
+    result = WorldDB.Query("SELECT MAX(guid) FROM creature");
     if (result)
         m_hiCreatureGuid = (*result)[0].GetUInt32()+1;
 
-    result = CharacterDatabase.Query("SELECT MAX(guid) FROM item_instance");
+    result = CharDB.Query("SELECT MAX(guid) FROM item_instance");
     if (result)
         m_hiItemGuid = (*result)[0].GetUInt32()+1;
 
     // Cleanup other tables from not existed guids ( >= m_hiItemGuid)
-    CharacterDatabase.PExecute("DELETE FROM character_inventory WHERE item >= '%u'", m_hiItemGuid);
-    CharacterDatabase.PExecute("DELETE FROM mail_items WHERE item_guid >= '%u'", m_hiItemGuid);
-    CharacterDatabase.PExecute("DELETE FROM auctionhouse WHERE itemguid >= '%u'", m_hiItemGuid);
-    CharacterDatabase.PExecute("DELETE FROM guild_bank_item WHERE item_guid >= '%u'", m_hiItemGuid);
+    CharDB.PExecute("DELETE FROM character_inventory WHERE item >= '%u'", m_hiItemGuid);
+    CharDB.PExecute("DELETE FROM mail_items WHERE item_guid >= '%u'", m_hiItemGuid);
+    CharDB.PExecute("DELETE FROM auctionhouse WHERE itemguid >= '%u'", m_hiItemGuid);
+    CharDB.PExecute("DELETE FROM guild_bank_item WHERE item_guid >= '%u'", m_hiItemGuid);
 
-    result = WorldDatabase.Query("SELECT MAX(guid) FROM gameobject");
+    result = WorldDB.Query("SELECT MAX(guid) FROM gameobject");
     if (result)
         m_hiGoGuid = (*result)[0].GetUInt32()+1;
 
-    result = WorldDatabase.Query("SELECT MAX(guid) FROM transports");
+    result = WorldDB.Query("SELECT MAX(guid) FROM transports");
     if (result)
         m_hiMoTransGuid = (*result)[0].GetUInt32()+1;
 
-    result = CharacterDatabase.Query("SELECT MAX(id) FROM auctionhouse");
+    result = CharDB.Query("SELECT MAX(id) FROM auctionhouse");
     if (result)
         m_auctionid = (*result)[0].GetUInt32()+1;
 
-    result = CharacterDatabase.Query("SELECT MAX(id) FROM mail");
+    result = CharDB.Query("SELECT MAX(id) FROM mail");
     if (result)
         m_mailid = (*result)[0].GetUInt32()+1;
 
-    result = CharacterDatabase.Query("SELECT MAX(guid) FROM corpse");
+    result = CharDB.Query("SELECT MAX(guid) FROM corpse");
     if (result)
         m_hiCorpseGuid = (*result)[0].GetUInt32()+1;
 
-    result = CharacterDatabase.Query("SELECT MAX(arenateamid) FROM arena_team");
+    result = CharDB.Query("SELECT MAX(arenateamid) FROM arena_team");
     if (result)
         m_arenaTeamId = (*result)[0].GetUInt32()+1;
 
-    result = CharacterDatabase.Query("SELECT MAX(setguid) FROM character_equipmentsets");
+    result = CharDB.Query("SELECT MAX(setguid) FROM character_equipmentsets");
     if (result)
         m_equipmentSetGuid = (*result)[0].GetUInt64()+1;
 
-    result = CharacterDatabase.Query("SELECT MAX(guildid) FROM guild");
+    result = CharDB.Query("SELECT MAX(guildid) FROM guild");
     if (result)
         m_guildId = (*result)[0].GetUInt32()+1;
 
-    result = CharacterDatabase.Query("SELECT MAX(guid) FROM groups");
+    result = CharDB.Query("SELECT MAX(guid) FROM groups");
     if (result)
         mGroupStorage.resize((*result)[0].GetUInt32()+1);
 }
@@ -6832,7 +6835,7 @@ void ObjectMgr::LoadGameObjectLocales()
 
     mGameObjectLocaleMap.clear();                           // need for reload case
 
-    QueryResult result = WorldDatabase.Query("SELECT entry,"
+    QueryResult result = WorldDB.Query("SELECT entry,"
         "name_loc1,name_loc2,name_loc3,name_loc4,name_loc5,name_loc6,name_loc7,name_loc8,"
         "castbarcaption_loc1,castbarcaption_loc2,castbarcaption_loc3,castbarcaption_loc4,"
         "castbarcaption_loc5,castbarcaption_loc6,castbarcaption_loc7,castbarcaption_loc8 FROM locales_gameobject");
@@ -7090,7 +7093,7 @@ void ObjectMgr::LoadExplorationBaseXP()
 {
     uint32 oldMSTime = getMSTime();
 
-    QueryResult result = WorldDatabase.Query("SELECT level, basexp FROM exploration_basexp");
+    QueryResult result = WorldDB.Query("SELECT level, basexp FROM exploration_basexp");
 
     if (!result)
     {
@@ -7132,7 +7135,7 @@ void ObjectMgr::LoadPetNames()
 {
     uint32 oldMSTime = getMSTime();
 
-    QueryResult result = WorldDatabase.Query("SELECT word,entry,half FROM pet_name_generation");
+    QueryResult result = WorldDB.Query("SELECT word,entry,half FROM pet_name_generation");
 
     if (!result)
     {
@@ -7166,7 +7169,7 @@ void ObjectMgr::LoadPetNumber()
 {
     uint32 oldMSTime = getMSTime();
 
-    QueryResult result = CharacterDatabase.Query("SELECT MAX(id) FROM character_pet");
+    QueryResult result = CharDB.Query("SELECT MAX(id) FROM character_pet");
     if (result)
     {
         Field *fields = result->Fetch();
@@ -7204,7 +7207,7 @@ void ObjectMgr::LoadCorpses()
     uint32 oldMSTime = getMSTime();
     
     //                                                      0           1           2            3         4      5          6         7       8       9     10      11
-    QueryResult result = CharacterDatabase.Query("SELECT position_x, position_y, position_z, orientation, map, displayId, itemCache, bytes1, bytes2, guild, flags, dynFlags"
+    QueryResult result = CharDB.Query("SELECT position_x, position_y, position_z, orientation, map, displayId, itemCache, bytes1, bytes2, guild, flags, dynFlags"
     //                                               12       13          14        15       16     17        
                                                  ", time, corpse_type, instance, phaseMask, guid, player FROM corpse WHERE corpse_type <> 0");
 
@@ -7248,7 +7251,7 @@ void ObjectMgr::LoadReputationRewardRate()
     m_RepRewardRateMap.clear();                             // for reload case
 
     uint32 count = 0;
-    QueryResult result = WorldDatabase.Query("SELECT faction, quest_rate, creature_rate, spell_rate FROM reputation_reward_rate");
+    QueryResult result = WorldDB.Query("SELECT faction, quest_rate, creature_rate, spell_rate FROM reputation_reward_rate");
 
     if (!result)
     {
@@ -7316,7 +7319,7 @@ void ObjectMgr::LoadReputationOnKill()
     uint32 count = 0;
 
     //                                                0            1                     2
-    QueryResult result = WorldDatabase.Query("SELECT creature_id, RewOnKillRepFaction1, RewOnKillRepFaction2,"
+    QueryResult result = WorldDB.Query("SELECT creature_id, RewOnKillRepFaction1, RewOnKillRepFaction2,"
     //   3             4             5                   6             7             8                   9
         "IsTeamAward1, MaxStanding1, RewOnKillRepValue1, IsTeamAward2, MaxStanding2, RewOnKillRepValue2, TeamDependent "
         "FROM creature_onkill_reputation");
@@ -7388,7 +7391,7 @@ void ObjectMgr::LoadReputationSpilloverTemplate()
     m_RepSpilloverTemplateMap.clear();                      // for reload case
 
     uint32 count = 0;
-    QueryResult result = WorldDatabase.Query("SELECT faction, faction1, rate_1, rank_1, faction2, rate_2, rank_2, faction3, rate_3, rank_3, faction4, rate_4, rank_4 FROM reputation_spillover_template");
+    QueryResult result = WorldDB.Query("SELECT faction, faction1, rate_1, rank_1, faction2, rate_2, rank_2, faction3, rate_3, rank_3, faction4, rate_4, rank_4 FROM reputation_spillover_template");
 
     if (!result)
     {
@@ -7504,7 +7507,7 @@ void ObjectMgr::LoadPointsOfInterest()
     uint32 count = 0;
 
     //                                                0      1  2  3      4     5     6
-    QueryResult result = WorldDatabase.Query("SELECT entry, x, y, icon, flags, data, icon_name FROM points_of_interest");
+    QueryResult result = WorldDB.Query("SELECT entry, x, y, icon, flags, data, icon_name FROM points_of_interest");
 
     if (!result)
     {
@@ -7552,7 +7555,7 @@ void ObjectMgr::LoadQuestPOI()
     uint32 count = 0;
 
     //                                               0        1   2         3      4               5        6     7
-    QueryResult result = WorldDatabase.Query("SELECT questId, id, objIndex, mapid, WorldMapAreaId, FloorId, unk3, unk4 FROM quest_poi order by questId");
+    QueryResult result = WorldDB.Query("SELECT questId, id, objIndex, mapid, WorldMapAreaId, FloorId, unk3, unk4 FROM quest_poi order by questId");
 
     if (!result)
     {
@@ -7562,7 +7565,7 @@ void ObjectMgr::LoadQuestPOI()
     }
 
     //                                                0        1   2  3
-    QueryResult points = WorldDatabase.PQuery("SELECT questId, id, x, y FROM quest_poi_points ORDER BY questId DESC, idx");
+    QueryResult points = WorldDB.PQuery("SELECT questId, id, x, y FROM quest_poi_points ORDER BY questId DESC, idx");
 
 
     std::vector<std::vector<std::vector<QuestPOIPoint> > > POIs;
@@ -7623,7 +7626,7 @@ void ObjectMgr::LoadNPCSpellClickSpells()
 
     mSpellClickInfoMap.clear();
     //                                                0          1         2            3                   4          5           6              7               8
-    QueryResult result = WorldDatabase.Query("SELECT npc_entry, spell_id, quest_start, quest_start_active, quest_end, cast_flags, aura_required, aura_forbidden, user_type FROM npc_spellclick_spells");
+    QueryResult result = WorldDB.Query("SELECT npc_entry, spell_id, quest_start, quest_start_active, quest_end, cast_flags, aura_required, aura_forbidden, user_type FROM npc_spellclick_spells");
 
     if (!result)
     {
@@ -7741,11 +7744,11 @@ void ObjectMgr::SaveCreatureRespawnTime(uint32 loguid, uint32 instance, time_t t
         m_CreatureRespawnTimesMtx.release();
     }
 
-    PreparedStatement *stmt = CharacterDatabase.GetPreparedStatement(CHAR_ADD_CREATURE_RESPAWN_TIME);
+    PreparedStatement *stmt = CharDB.GetPreparedStatement(CHAR_ADD_CREATURE_RESPAWN_TIME);
     stmt->setUInt32(0, loguid);
     stmt->setUInt64(1, uint64(t));
     stmt->setUInt32(2, instance);
-    CharacterDatabase.Execute(stmt);
+    CharDB.Execute(stmt);
 }
 
 void ObjectMgr::RemoveCreatureRespawnTime(uint32 loguid, uint32 instance)
@@ -7757,10 +7760,10 @@ void ObjectMgr::RemoveCreatureRespawnTime(uint32 loguid, uint32 instance)
         m_CreatureRespawnTimesMtx.release();
     }
 
-    PreparedStatement *stmt = CharacterDatabase.GetPreparedStatement(CHAR_DEL_CREATURE_RESPAWN_TIME);
+    PreparedStatement *stmt = CharDB.GetPreparedStatement(CHAR_DEL_CREATURE_RESPAWN_TIME);
     stmt->setUInt32(0, loguid);
     stmt->setUInt32(1, instance);
-    CharacterDatabase.Execute(stmt);
+    CharDB.Execute(stmt);
 }
 
 void ObjectMgr::DeleteCreatureData(uint32 guid)
@@ -7789,11 +7792,11 @@ void ObjectMgr::SaveGORespawnTime(uint32 loguid, uint32 instance, time_t t)
         m_GORespawnTimesMtx.release();
     }
 
-    PreparedStatement *stmt = CharacterDatabase.GetPreparedStatement(CHAR_ADD_GO_RESPAWN_TIME);
+    PreparedStatement *stmt = CharDB.GetPreparedStatement(CHAR_ADD_GO_RESPAWN_TIME);
     stmt->setUInt32(0, loguid);
     stmt->setUInt64(1, uint64(t));
     stmt->setUInt32(2, instance);
-    CharacterDatabase.Execute(stmt);
+    CharDB.Execute(stmt);
 }
 
 void ObjectMgr::RemoveGORespawnTime(uint32 loguid, uint32 instance)
@@ -7805,10 +7808,10 @@ void ObjectMgr::RemoveGORespawnTime(uint32 loguid, uint32 instance)
         m_GORespawnTimesMtx.release();
     }
 
-    PreparedStatement *stmt = CharacterDatabase.GetPreparedStatement(CHAR_DEL_GO_RESPAWN_TIME);
+    PreparedStatement *stmt = CharDB.GetPreparedStatement(CHAR_DEL_GO_RESPAWN_TIME);
     stmt->setUInt32(0, loguid);
     stmt->setUInt32(1, instance);
-    CharacterDatabase.Execute(stmt);
+    CharDB.Execute(stmt);
 }
 
 void ObjectMgr::DeleteRespawnTimeForInstance(uint32 instance)
@@ -7840,8 +7843,8 @@ void ObjectMgr::DeleteRespawnTimeForInstance(uint32 instance)
         }
         m_CreatureRespawnTimesMtx.release();
     }
-    CharacterDatabase.PExecute("DELETE FROM creature_respawn WHERE instance = '%u'", instance);
-    CharacterDatabase.PExecute("DELETE FROM gameobject_respawn WHERE instance = '%u'", instance);
+    CharDB.PExecute("DELETE FROM creature_respawn WHERE instance = '%u'", instance);
+    CharDB.PExecute("DELETE FROM gameobject_respawn WHERE instance = '%u'", instance);
 }
 
 void ObjectMgr::DeleteGOData(uint32 guid)
@@ -7876,7 +7879,7 @@ void ObjectMgr::LoadQuestRelationsHelper(QuestRelations& map, std::string table,
 
     uint32 count = 0;
 
-    QueryResult result = WorldDatabase.PQuery("SELECT id, quest, pool_entry FROM %s qr LEFT JOIN pool_quest pq ON qr.quest = pq.entry", table.c_str());
+    QueryResult result = WorldDB.PQuery("SELECT id, quest, pool_entry FROM %s qr LEFT JOIN pool_quest pq ON qr.quest = pq.entry", table.c_str());
 
     if (!result)
     {
@@ -7977,7 +7980,7 @@ void ObjectMgr::LoadReservedPlayersNames()
 
     m_ReservedNames.clear();                                // need for reload case
 
-    QueryResult result = CharacterDatabase.Query("SELECT name FROM reserved_name");
+    QueryResult result = CharDB.Query("SELECT name FROM reserved_name");
 
     if (!result)
     {
@@ -8256,7 +8259,7 @@ bool ObjectMgr::LoadStrings(char const* table, int32 min_value, int32 max_value)
             ++itr;
     }
 
-    QueryResult result = WorldDatabase.PQuery("SELECT entry,content_default,content_loc1,content_loc2,content_loc3,content_loc4,content_loc5,content_loc6,content_loc7,content_loc8 FROM %s",table);
+    QueryResult result = WorldDB.PQuery("SELECT entry,content_default,content_loc1,content_loc2,content_loc3,content_loc4,content_loc5,content_loc6,content_loc7,content_loc8 FROM %s",table);
 
     if (!result)
     {
@@ -8341,7 +8344,7 @@ void ObjectMgr::LoadFishingBaseSkillLevel()
 
     mFishingBaseForArea.clear();                            // for reload case
 
-    QueryResult result = WorldDatabase.Query("SELECT entry,skill FROM skill_fishing_base_level");
+    QueryResult result = WorldDB.Query("SELECT entry,skill FROM skill_fishing_base_level");
 
     if (!result)
     {
@@ -8440,7 +8443,7 @@ void ObjectMgr::LoadGameTele()
 
     m_GameTeleMap.clear();                                  // for reload case
 
-    QueryResult result = WorldDatabase.Query("SELECT id, position_x, position_y, position_z, orientation, map, name FROM game_tele");
+    QueryResult result = WorldDB.Query("SELECT id, position_x, position_y, position_z, orientation, map, name FROM game_tele");
 
     if (!result)
     {
@@ -8532,7 +8535,7 @@ bool ObjectMgr::AddGameTele(GameTele& tele)
 
     m_GameTeleMap[new_id] = tele;
 
-    WorldDatabase.PExecute("INSERT INTO game_tele (id,position_x,position_y,position_z,orientation,map,name) VALUES (%u,%f,%f,%f,%f,%d,'%s')",
+    WorldDB.PExecute("INSERT INTO game_tele (id,position_x,position_y,position_z,orientation,map,name) VALUES (%u,%f,%f,%f,%f,%d,'%s')",
         new_id,tele.position_x,tele.position_y,tele.position_z,tele.orientation,tele.mapId,tele.name.c_str());
     return true;
 }
@@ -8551,7 +8554,7 @@ bool ObjectMgr::DeleteGameTele(const std::string& name)
     {
         if (itr->second.wnameLow == wname)
         {
-            WorldDatabase.PExecute("DELETE FROM game_tele WHERE name = '%s'",itr->second.name.c_str());
+            WorldDB.PExecute("DELETE FROM game_tele WHERE name = '%s'",itr->second.name.c_str());
             m_GameTeleMap.erase(itr);
             return true;
         }
@@ -8566,7 +8569,7 @@ void ObjectMgr::LoadMailLevelRewards()
 
     m_mailLevelRewardMap.clear();                           // for reload case
 
-    QueryResult result = WorldDatabase.Query("SELECT level, raceMask, mailTemplateId, senderEntry FROM mail_level_reward");
+    QueryResult result = WorldDB.Query("SELECT level, raceMask, mailTemplateId, senderEntry FROM mail_level_reward");
 
     if (!result)
     {
@@ -8708,7 +8711,7 @@ void ObjectMgr::LoadTrainerSpell()
 
     std::set<uint32> skip_trainers;
 
-    QueryResult result = WorldDatabase.Query("SELECT b.entry, a.spell, a.spellcost, a.reqskill, a.reqskillvalue, a.reqlevel FROM npc_trainer AS a "
+    QueryResult result = WorldDB.Query("SELECT b.entry, a.spell, a.spellcost, a.reqskill, a.reqskillvalue, a.reqlevel FROM npc_trainer AS a "
                                              "INNER JOIN npc_trainer AS b ON a.entry = -(b.spell) "
                                              "UNION SELECT * FROM npc_trainer WHERE spell > 0");
 
@@ -8747,7 +8750,7 @@ void ObjectMgr::LoadTrainerSpell()
 int ObjectMgr::LoadReferenceVendor(int32 vendor, int32 item, std::set<uint32> *skip_vendors)
 {
     // find all items from the reference vendor
-    QueryResult result = WorldDatabase.PQuery("SELECT item, maxcount, incrtime, ExtendedCost FROM npc_vendor WHERE entry='%d' ORDER BY slot ASC", item);
+    QueryResult result = WorldDB.PQuery("SELECT item, maxcount, incrtime, ExtendedCost FROM npc_vendor WHERE entry='%d' ORDER BY slot ASC", item);
     if (!result)
         return 0;
 
@@ -8792,7 +8795,7 @@ void ObjectMgr::LoadVendors()
 
     std::set<uint32> skip_vendors;
 
-    QueryResult result = WorldDatabase.Query("SELECT entry, item, maxcount, incrtime, ExtendedCost FROM npc_vendor ORDER BY entry, slot ASC");
+    QueryResult result = WorldDB.Query("SELECT entry, item, maxcount, incrtime, ExtendedCost FROM npc_vendor ORDER BY entry, slot ASC");
     if (!result)
     {
         sLog->outString();
@@ -8840,7 +8843,7 @@ void ObjectMgr::LoadGossipMenu()
 
     m_mGossipMenusMap.clear();
 
-    QueryResult result = WorldDatabase.Query("SELECT entry, text_id FROM gossip_menu");
+    QueryResult result = WorldDB.Query("SELECT entry, text_id FROM gossip_menu");
 
     if (!result)
     {
@@ -8883,7 +8886,7 @@ void ObjectMgr::LoadGossipMenuItems()
 
     m_mGossipMenuItemsMap.clear();
 
-    QueryResult result = WorldDatabase.Query(
+    QueryResult result = WorldDB.Query(
         "SELECT menu_id, id, option_icon, option_text, option_id, npc_option_npcflag, "
         "action_menu_id, action_poi_id, action_script_id, box_coded, box_money, box_text "
         "FROM gossip_menu_option ORDER BY menu_id, id");
@@ -8977,7 +8980,7 @@ void ObjectMgr::AddVendorItem(uint32 entry,uint32 item, int32 maxcount, uint32 i
     vList.AddItem(item, maxcount, incrtime, extendedcost);
 
     if (savetodb)
-        WorldDatabase.PExecute("INSERT INTO npc_vendor (entry,item,maxcount,incrtime,extendedcost) VALUES('%u','%u','%u','%u','%u')", entry, item, maxcount, incrtime, extendedcost);
+        WorldDB.PExecute("INSERT INTO npc_vendor (entry,item,maxcount,incrtime,extendedcost) VALUES('%u','%u','%u','%u','%u')", entry, item, maxcount, incrtime, extendedcost);
 }
 
 bool ObjectMgr::RemoveVendorItem(uint32 entry,uint32 item, bool savetodb)
@@ -8989,7 +8992,7 @@ bool ObjectMgr::RemoveVendorItem(uint32 entry,uint32 item, bool savetodb)
     if(!iter->second.RemoveItem(item))
         return false;
 
-    if (savetodb) WorldDatabase.PExecute("DELETE FROM npc_vendor WHERE entry='%u' AND item='%u'",entry, item);
+    if (savetodb) WorldDB.PExecute("DELETE FROM npc_vendor WHERE entry='%u' AND item='%u'",entry, item);
     return true;
 }
 
@@ -9085,7 +9088,7 @@ void ObjectMgr::LoadScriptNames()
     uint32 oldMSTime = getMSTime();
 
     m_scriptNames.push_back("");
-    QueryResult result = WorldDatabase.Query(
+    QueryResult result = WorldDB.Query(
       "SELECT DISTINCT(ScriptName) FROM achievement_criteria_data WHERE ScriptName <> '' AND type = 11 "
       "UNION "
       "SELECT DISTINCT(ScriptName) FROM battleground_template WHERE ScriptName <> '' "
@@ -9264,7 +9267,7 @@ void ObjectMgr::LoadCreatureClassLevelStats()
 {
     uint32 oldMSTime = getMSTime();
 
-    QueryResult result = WorldDatabase.Query("SELECT level, class, basehp0, basehp1, basehp2, basemana, basearmor FROM creature_classlevelstats");
+    QueryResult result = WorldDB.Query("SELECT level, class, basehp0, basehp1, basehp2, basemana, basearmor FROM creature_classlevelstats");
 
     if (!result)
     {
@@ -9329,7 +9332,7 @@ void ObjectMgr::LoadFactionChangeAchievements()
 {
     uint32 oldMSTime = getMSTime();
 
-    QueryResult result = WorldDatabase.Query("SELECT alliance_id, horde_id FROM player_factionchange_achievement");
+    QueryResult result = WorldDB.Query("SELECT alliance_id, horde_id FROM player_factionchange_achievement");
 
     if (!result)
     {
@@ -9366,7 +9369,7 @@ void ObjectMgr::LoadFactionChangeItems()
 {
     uint32 oldMSTime = getMSTime();
 
-    QueryResult result = WorldDatabase.Query("SELECT alliance_id, horde_id FROM player_factionchange_items");
+    QueryResult result = WorldDB.Query("SELECT alliance_id, horde_id FROM player_factionchange_items");
 
     if (!result)
     {
@@ -9403,7 +9406,7 @@ void ObjectMgr::LoadFactionChangeSpells()
 {
     uint32 oldMSTime = getMSTime();
 
-    QueryResult result = WorldDatabase.Query("SELECT alliance_id, horde_id FROM player_factionchange_spells");
+    QueryResult result = WorldDB.Query("SELECT alliance_id, horde_id FROM player_factionchange_spells");
 
     if (!result)
     {
@@ -9440,7 +9443,7 @@ void ObjectMgr::LoadFactionChangeReputations()
 {
     uint32 oldMSTime = getMSTime();
 
-    QueryResult result = WorldDatabase.Query("SELECT alliance_id, horde_id FROM player_factionchange_reputations");
+    QueryResult result = WorldDB.Query("SELECT alliance_id, horde_id FROM player_factionchange_reputations");
 
     if (!result)
     {

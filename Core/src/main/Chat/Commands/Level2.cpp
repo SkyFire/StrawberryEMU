@@ -84,7 +84,7 @@ bool ChatHandler::HandleMuteCommand(const char* args)
     if (target)
         target->GetSession()->m_muteTime = mutetime;
 
-    LoginDatabase.PExecute("UPDATE account SET mutetime = " UI64FMTD " WHERE id = '%u'",uint64(mutetime), account_id);
+    RealmDB.PExecute("UPDATE account SET mutetime = " UI64FMTD " WHERE id = '%u'",uint64(mutetime), account_id);
 
     if (target)
         ChatHandler(target).PSendSysMessage(LANG_YOUR_CHAT_DISABLED, notspeaktime, mutereasonstr.c_str());
@@ -128,7 +128,7 @@ bool ChatHandler::HandleUnmuteCommand(const char* args)
         target->GetSession()->m_muteTime = 0;
     }
 
-    LoginDatabase.PExecute("UPDATE account SET mutetime = '0' WHERE id = '%u'", account_id);
+    RealmDB.PExecute("UPDATE account SET mutetime = '0' WHERE id = '%u'", account_id);
 
     if (target)
         ChatHandler(target).PSendSysMessage(LANG_YOUR_CHAT_ENABLED);
@@ -243,7 +243,7 @@ bool ChatHandler::HandlePInfoCommand(const char* args)
         return false;
 
     uint32 accId = 0;
-    uint32 money = 0;
+    uint64 money = 0;
     uint32 total_player_time = 0;
     uint8 level = 0;
     uint32 latency = 0;
@@ -273,14 +273,14 @@ bool ChatHandler::HandlePInfoCommand(const char* args)
             return false;
 
         //                                                     0          1      2      3        4     5
-        QueryResult result = CharacterDatabase.PQuery("SELECT totaltime, level, money, account, race, class FROM characters WHERE guid = '%u'", GUID_LOPART(target_guid));
+        QueryResult result = CharDB.PQuery("SELECT totaltime, level, money, account, race, class FROM characters WHERE guid = '%u'", GUID_LOPART(target_guid));
         if (!result)
             return false;
 
         Field *fields = result->Fetch();
         total_player_time = fields[0].GetUInt32();
         level = fields[1].GetUInt32();
-        money = fields[2].GetUInt32();
+        money = fields[2].GetUInt64();
         accId = fields[3].GetUInt32();
         race = fields[4].GetUInt8();
         Class = fields[5].GetUInt8();
@@ -292,7 +292,7 @@ bool ChatHandler::HandlePInfoCommand(const char* args)
     uint32 security = 0;
     std::string last_login = GetString(LANG_ERROR);
 
-    QueryResult result = LoginDatabase.PQuery("SELECT a.username,aa.gmlevel,a.email,a.last_ip,a.last_login "
+    QueryResult result = RealmDB.PQuery("SELECT a.username,aa.gmlevel,a.email,a.last_ip,a.last_login "
                                                 "FROM account a "
                                                 "LEFT JOIN account_access aa "
                                                 "ON (a.id = aa.id) "
@@ -326,29 +326,69 @@ bool ChatHandler::HandlePInfoCommand(const char* args)
     std::string race_s, Class_s;
     switch(race)
     {
-        case RACE_HUMAN:            race_s = "Human";       break;
-        case RACE_ORC:              race_s = "Orc";         break;
-        case RACE_DWARF:            race_s = "Dwarf";       break;
-        case RACE_NIGHTELF:         race_s = "Night Elf";   break;
-        case RACE_UNDEAD_PLAYER:    race_s = "Undead";      break;
-        case RACE_TAUREN:           race_s = "Tauren";      break;
-        case RACE_GNOME:            race_s = "Gnome";       break;
-        case RACE_TROLL:            race_s = "Troll";       break;
-        case RACE_BLOODELF:         race_s = "Blood Elf";   break;
-        case RACE_DRAENEI:          race_s = "Draenei";     break;
+        case RACE_HUMAN:
+            race_s = "Human";
+            break;
+        case RACE_ORC:
+            race_s = "Orc";
+            break;
+        case RACE_DWARF:
+            race_s = "Dwarf";
+            break;
+        case RACE_NIGHTELF:
+            race_s = "Night Elf";
+            break;
+        case RACE_UNDEAD_PLAYER:
+            race_s = "Undead";
+            break;
+        case RACE_TAUREN:
+            race_s = "Tauren";
+            break;
+        case RACE_GNOME:
+            race_s = "Gnome";
+            break;
+        case RACE_TROLL:
+            race_s = "Troll";
+            break;
+        case RACE_BLOODELF:
+            race_s = "Blood Elf";
+            break;
+        case RACE_DRAENEI:
+            race_s = "Draenei";
+            break;
     }
     switch(Class)
     {
-        case CLASS_WARRIOR:         Class_s = "Warrior";        break;
-        case CLASS_PALADIN:         Class_s = "Paladin";        break;
-        case CLASS_HUNTER:          Class_s = "Hunter";         break;
-        case CLASS_ROGUE:           Class_s = "Rogue";          break;
-        case CLASS_PRIEST:          Class_s = "Priest";         break;
-        case CLASS_DEATH_KNIGHT:    Class_s = "Death Knight";   break;
-        case CLASS_SHAMAN:          Class_s = "Shaman";         break;
-        case CLASS_MAGE:            Class_s = "Mage";           break;
-        case CLASS_WARLOCK:         Class_s = "Warlock";        break;
-        case CLASS_DRUID:           Class_s = "Druid";          break;
+        case CLASS_WARRIOR:
+            Class_s = "Warrior";
+            break;
+        case CLASS_PALADIN:
+            Class_s = "Paladin";
+            break;
+        case CLASS_HUNTER:
+            Class_s = "Hunter";
+            break;
+        case CLASS_ROGUE:
+            Class_s = "Rogue";
+            break;
+        case CLASS_PRIEST:
+            Class_s = "Priest";
+            break;
+        case CLASS_DEATH_KNIGHT:
+            Class_s = "Death Knight";
+            break;
+        case CLASS_SHAMAN:
+            Class_s = "Shaman";
+            break;
+        case CLASS_MAGE:
+            Class_s = "Mage";
+            break;
+        case CLASS_WARLOCK:
+            Class_s = "Warlock";
+            break;
+        case CLASS_DRUID:
+            Class_s = "Druid";
+            break;
     }
 
     std::string timeStr = secsToTimeString(total_player_time,true,true);
@@ -387,7 +427,7 @@ bool ChatHandler::HandleCharacterRenameCommand(const char* args)
         std::string oldNameLink = playerLink(target_name);
 
         PSendSysMessage(LANG_RENAME_PLAYER_GUID, oldNameLink.c_str(), GUID_LOPART(target_guid));
-        CharacterDatabase.PExecute("UPDATE characters SET at_login = at_login | '1' WHERE guid = '%u'", GUID_LOPART(target_guid));
+        CharDB.PExecute("UPDATE characters SET at_login = at_login | '1' WHERE guid = '%u'", GUID_LOPART(target_guid));
     }
 
     return true;
@@ -406,14 +446,14 @@ bool ChatHandler::HandleCharacterCustomizeCommand(const char* args)
     {
         PSendSysMessage(LANG_CUSTOMIZE_PLAYER, GetNameLink(target).c_str());
         target->SetAtLoginFlag(AT_LOGIN_CUSTOMIZE);
-        CharacterDatabase.PExecute("UPDATE characters SET at_login = at_login | '8' WHERE guid = '%u'", target->GetGUIDLow());
+        CharDB.PExecute("UPDATE characters SET at_login = at_login | '8' WHERE guid = '%u'", target->GetGUIDLow());
     }
     else
     {
         std::string oldNameLink = playerLink(target_name);
 
         PSendSysMessage(LANG_CUSTOMIZE_PLAYER_GUID, oldNameLink.c_str(), GUID_LOPART(target_guid));
-        CharacterDatabase.PExecute("UPDATE characters SET at_login = at_login | '8' WHERE guid = '%u'", GUID_LOPART(target_guid));
+        CharDB.PExecute("UPDATE characters SET at_login = at_login | '8' WHERE guid = '%u'", GUID_LOPART(target_guid));
     }
 
     return true;
@@ -433,7 +473,7 @@ bool ChatHandler::HandleCharacterChangeFactionCommand(const char * args)
         // TODO : add text into database
         PSendSysMessage(LANG_CUSTOMIZE_PLAYER, GetNameLink(target).c_str());
         target->SetAtLoginFlag(AT_LOGIN_CHANGE_FACTION);
-        CharacterDatabase.PExecute("UPDATE characters SET at_login = at_login | '64' WHERE guid = %u", target->GetGUIDLow());
+        CharDB.PExecute("UPDATE characters SET at_login = at_login | '64' WHERE guid = %u", target->GetGUIDLow());
     }
     else
     {
@@ -441,7 +481,7 @@ bool ChatHandler::HandleCharacterChangeFactionCommand(const char * args)
 
         // TODO : add text into database
         PSendSysMessage(LANG_CUSTOMIZE_PLAYER_GUID, oldNameLink.c_str(), GUID_LOPART(target_guid));
-        CharacterDatabase.PExecute("UPDATE characters SET at_login = at_login | '64' WHERE guid = %u", GUID_LOPART(target_guid));
+        CharDB.PExecute("UPDATE characters SET at_login = at_login | '64' WHERE guid = %u", GUID_LOPART(target_guid));
     }
 
     return true;
@@ -460,7 +500,7 @@ bool ChatHandler::HandleCharacterChangeRaceCommand(const char * args)
         // TODO : add text into database
         PSendSysMessage(LANG_CUSTOMIZE_PLAYER, GetNameLink(target).c_str());
         target->SetAtLoginFlag(AT_LOGIN_CHANGE_RACE);
-        CharacterDatabase.PExecute("UPDATE characters SET at_login = at_login | '128' WHERE guid = %u", target->GetGUIDLow());
+        CharDB.PExecute("UPDATE characters SET at_login = at_login | '128' WHERE guid = %u", target->GetGUIDLow());
     }
     else
     {
@@ -468,7 +508,7 @@ bool ChatHandler::HandleCharacterChangeRaceCommand(const char * args)
 
         // TODO : add text into database
         PSendSysMessage(LANG_CUSTOMIZE_PLAYER_GUID, oldNameLink.c_str(), GUID_LOPART(target_guid));
-        CharacterDatabase.PExecute("UPDATE characters SET at_login = at_login | '128' WHERE guid = %u", GUID_LOPART(target_guid));
+        CharDB.PExecute("UPDATE characters SET at_login = at_login | '128' WHERE guid = %u", GUID_LOPART(target_guid));
     }
 
     return true;
@@ -595,9 +635,9 @@ bool ChatHandler::HandleLookupPlayerIpCommand(const char* args)
     char* limit_str = strtok (NULL, " ");
     int32 limit = limit_str ? atoi (limit_str) : -1;
 
-    LoginDatabase.escape_string (ip);
+    RealmDB.escape_string (ip);
 
-    QueryResult result = LoginDatabase.PQuery ("SELECT id,username FROM account WHERE last_ip = '%s'", ip.c_str ());
+    QueryResult result = RealmDB.PQuery ("SELECT id,username FROM account WHERE last_ip = '%s'", ip.c_str ());
 
     return LookupPlayerSearchCommand (result,limit);
 }
@@ -614,9 +654,9 @@ bool ChatHandler::HandleLookupPlayerAccountCommand(const char* args)
     if (!AccountMgr::normalizeString (account))
         return false;
 
-    LoginDatabase.escape_string (account);
+    RealmDB.escape_string (account);
 
-    QueryResult result = LoginDatabase.PQuery ("SELECT id,username FROM account WHERE username = '%s'", account.c_str ());
+    QueryResult result = RealmDB.PQuery ("SELECT id,username FROM account WHERE username = '%s'", account.c_str ());
 
     return LookupPlayerSearchCommand (result,limit);
 }
@@ -631,9 +671,9 @@ bool ChatHandler::HandleLookupPlayerEmailCommand(const char* args)
     char* limit_str = strtok (NULL, " ");
     int32 limit = limit_str ? atoi (limit_str) : -1;
 
-    LoginDatabase.escape_string (email);
+    RealmDB.escape_string (email);
 
-    QueryResult result = LoginDatabase.PQuery ("SELECT id,username FROM account WHERE email = '%s'", email.c_str ());
+    QueryResult result = RealmDB.PQuery ("SELECT id,username FROM account WHERE email = '%s'", email.c_str ());
 
     return LookupPlayerSearchCommand (result,limit);
 }
@@ -662,7 +702,7 @@ bool ChatHandler::LookupPlayerSearchCommand(QueryResult result, int32 limit)
         uint32 acc_id = fields[0].GetUInt32();
         std::string acc_name = fields[1].GetString();
 
-        QueryResult chars = CharacterDatabase.PQuery("SELECT guid,name FROM characters WHERE account = '%u'", acc_id);
+        QueryResult chars = CharDB.PQuery("SELECT guid,name FROM characters WHERE account = '%u'", acc_id);
         if (chars)
         {
             PSendSysMessage(LANG_LOOKUP_PLAYER_ACCOUNT,acc_name.c_str(),acc_id);

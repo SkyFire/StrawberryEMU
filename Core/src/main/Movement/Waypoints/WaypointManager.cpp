@@ -40,7 +40,7 @@ void WaypointStore::Load()
 {
     uint32 oldMSTime = getMSTime();
 
-    QueryResult result = WorldDatabase.Query("SELECT id,point,position_x,position_y,position_z,move_flag,delay,action,action_chance FROM waypoint_data ORDER BY id, point");
+    QueryResult result = WorldDB.Query("SELECT id,point,position_x,position_y,position_z,move_flag,delay,action,action_chance FROM waypoint_data ORDER BY id, point");
 
     if (!result)
     {
@@ -102,7 +102,7 @@ void WaypointStore::UpdatePath(uint32 id)
 
     QueryResult result;
 
-    result = WorldDatabase.PQuery("SELECT point,position_x,position_y,position_z,move_flag,delay,action,action_chance FROM waypoint_data WHERE id = %u ORDER BY point", id);
+    result = WorldDB.PQuery("SELECT point,position_x,position_y,position_z,move_flag,delay,action,action_chance FROM waypoint_data WHERE id = %u ORDER BY point", id);
 
     if (!result)
         return;

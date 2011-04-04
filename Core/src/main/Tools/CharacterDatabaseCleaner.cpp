@@ -22,7 +22,7 @@
 #include "Database/DatabaseEnv.h"
 #include "DBCStores.h"
 
-void CharacterDatabaseCleaner::CleanDatabase()
+void CharDBCleaner::CleanDatabase()
 {
     // config to disable
     if (!sWorld->getBoolConfig(CONFIG_CLEAN_CHARACTER_DB))
@@ -33,7 +33,7 @@ void CharacterDatabaseCleaner::CleanDatabase()
     uint32 oldMSTime = getMSTime();
 
     // check flags which clean ups are necessary
-    QueryResult result = CharacterDatabase.Query("SELECT value FROM worldstates WHERE entry = 20004");
+    QueryResult result = CharDB.Query("SELECT value FROM worldstates WHERE entry = 20004");
     if (!result)
         return;
 
@@ -58,7 +58,7 @@ void CharacterDatabaseCleaner::CleanDatabase()
     // NOTE: In order to have persistentFlags be set in worldstates for the next cleanup, 
     // you need to define them at least once in worldstates.
     flags &= sWorld->getIntConfig(CONFIG_PERSISTENT_CHARACTER_CLEAN_FLAGS);
-    CharacterDatabase.DirectPExecute("UPDATE worldstates SET value = %u WHERE entry = 20004", flags);
+    CharDB.DirectPExecute("UPDATE worldstates SET value = %u WHERE entry = 20004", flags);
 
     sWorld->SetCleaningFlags(flags);
 
@@ -66,9 +66,9 @@ void CharacterDatabaseCleaner::CleanDatabase()
     sLog->outString();
 }
 
-void CharacterDatabaseCleaner::CheckUnique(const char* column, const char* table, bool (*check)(uint32))
+void CharDBCleaner::CheckUnique(const char* column, const char* table, bool (*check)(uint32))
 {
-    QueryResult result = CharacterDatabase.PQuery("SELECT DISTINCT %s FROM %s", column, table);
+    QueryResult result = CharDB.PQuery("SELECT DISTINCT %s FROM %s", column, table);
     if (!result)
     {
         sLog->outString("Table %s is empty.", table);
@@ -102,41 +102,41 @@ void CharacterDatabaseCleaner::CheckUnique(const char* column, const char* table
     if (found)
     {
         ss << ")";
-        CharacterDatabase.Execute(ss.str().c_str());
+        CharDB.Execute(ss.str().c_str());
     }
 }
 
-bool CharacterDatabaseCleaner::AchievementProgressCheck(uint32 criteria)
+bool CharDBCleaner::AchievementProgressCheck(uint32 criteria)
 {
     return sAchievementCriteriaStore.LookupEntry(criteria);
 }
 
-void CharacterDatabaseCleaner::CleanCharacterAchievementProgress()
+void CharDBCleaner::CleanCharacterAchievementProgress()
 {
     CheckUnique("criteria", "character_achievement_progress", &AchievementProgressCheck);
 }
 
-bool CharacterDatabaseCleaner::SkillCheck(uint32 skill)
+bool CharDBCleaner::SkillCheck(uint32 skill)
 {
     return sSkillLineStore.LookupEntry(skill);
 }
 
-void CharacterDatabaseCleaner::CleanCharacterSkills()
+void CharDBCleaner::CleanCharacterSkills()
 {
     CheckUnique("skill", "character_skills", &SkillCheck);
 }
 
-bool CharacterDatabaseCleaner::SpellCheck(uint32 spell_id)
+bool CharDBCleaner::SpellCheck(uint32 spell_id)
 {
     return sSpellStore.LookupEntry(spell_id) && !GetTalentSpellPos(spell_id);
 }
 
-void CharacterDatabaseCleaner::CleanCharacterSpell()
+void CharDBCleaner::CleanCharacterSpell()
 {
     CheckUnique("spell", "character_spell", &SpellCheck);
 }
 
-bool CharacterDatabaseCleaner::TalentCheck(uint32 talent_id)
+bool CharDBCleaner::TalentCheck(uint32 talent_id)
 {
     TalentEntry const *talentInfo = sTalentStore.LookupEntry(talent_id);
     if (!talentInfo)
@@ -145,14 +145,14 @@ bool CharacterDatabaseCleaner::TalentCheck(uint32 talent_id)
     return sTalentTabStore.LookupEntry(talentInfo->TalentTab);
 }
 
-void CharacterDatabaseCleaner::CleanCharacterTalent()
+void CharDBCleaner::CleanCharacterTalent()
 {
-    CharacterDatabase.DirectPExecute("DELETE FROM character_talent WHERE spec > %u", MAX_TALENT_SPECS);
+    CharDB.DirectPExecute("DELETE FROM character_talent WHERE spec > %u", MAX_TALENT_SPECS);
     CheckUnique("spell", "character_talent", &TalentCheck);
 }
 
-void CharacterDatabaseCleaner::CleanCharacterQuestStatus()
+void CharDBCleaner::CleanCharacterQuestStatus()
 {
-    CharacterDatabase.DirectExecute("DELETE FROM character_queststatus WHERE status = 0");
+    CharDB.DirectExecute("DELETE FROM character_queststatus WHERE status = 0");
 }
 

@@ -687,7 +687,7 @@ void BattlegroundMgr::CreateInitialBattlegrounds()
     uint32 scriptId = 0;
 
     //                                                       0   1                 2                 3      4      5                6              7             8           9      10
-    QueryResult result = WorldDatabase.Query("SELECT id, MinPlayersPerTeam,MaxPlayersPerTeam,MinLvl,MaxLvl,AllianceStartLoc,AllianceStartO,HordeStartLoc,HordeStartO,Weight,ScriptName FROM battleground_template");
+    QueryResult result = WorldDB.Query("SELECT id, MinPlayersPerTeam,MaxPlayersPerTeam,MinLvl,MaxLvl,AllianceStartLoc,AllianceStartO,HordeStartLoc,HordeStartO,Weight,ScriptName FROM battleground_template");
 
     if (!result)
     {
@@ -838,7 +838,7 @@ void BattlegroundMgr::DistributeArenaPoints()
     for (std::map<uint32, uint32>::iterator plr_itr = PlayerPoints.begin(); plr_itr != PlayerPoints.end(); ++plr_itr)
     {
         //update to database
-        CharacterDatabase.PExecute("UPDATE characters SET arenaPoints = arenaPoints + '%u' WHERE guid = '%u'", plr_itr->second, plr_itr->first);
+        CharDB.PExecute("UPDATE characters SET arenaPoints = arenaPoints + '%u' WHERE guid = '%u'", plr_itr->second, plr_itr->first);
 
         //add points to player if online
         Player* pl = sObjectMgr->GetPlayer(plr_itr->first);
@@ -1125,7 +1125,7 @@ void BattlegroundMgr::LoadBattleMastersEntry()
 
     mBattleMastersMap.clear();                                  // need for reload case
 
-    QueryResult result = WorldDatabase.Query("SELECT entry, bg_template FROM battlemaster_entry");
+    QueryResult result = WorldDB.Query("SELECT entry, bg_template FROM battlemaster_entry");
 
     if (!result)
     {

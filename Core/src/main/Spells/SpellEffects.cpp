@@ -2163,8 +2163,6 @@ void Spell::EffectPowerDrain(SpellEffectEntry const* effect)
 
     // resilience reduce mana draining effect at spell crit damage reduction (added in 2.4)
     int32 power = damage;
-    if (powerType == POWER_MANA)
-        power -= unitTarget->GetSpellCritDamageReduction(power);
 
     int32 newDamage = -(unitTarget->ModifyPower(powerType, -int32(power)));
 
@@ -2229,9 +2227,6 @@ void Spell::EffectPowerBurn(SpellEffectEntry const* effect)
     }
 
     int32 power = damage;
-    // resilience reduce mana draining effect at spell crit damage reduction (added in 2.4)
-    if (powerType == POWER_MANA)
-        power -= unitTarget->GetSpellCritDamageReduction(power);
 
     int32 newDamage = -(unitTarget->ModifyPower(powerType, -power));
 
@@ -3991,7 +3986,8 @@ void Spell::SpellDamageWeaponDmg(SpellEffectEntry const* effect)
             case SPELL_EFFECT_WEAPON_DAMAGE_NOSCHOOL:
             case SPELL_EFFECT_NORMALIZED_WEAPON_DMG:
             case SPELL_EFFECT_WEAPON_PERCENT_DAMAGE:
-                return;     // we must calculate only at last weapon effect
+                if (j < int(effect->EffectIndex)) // we must calculate only at last weapon effect
+                    return;
             break;
         }
     }
@@ -4206,14 +4202,14 @@ void Spell::SpellDamageWeaponDmg(SpellEffectEntry const* effect)
         {
             case SPELL_EFFECT_WEAPON_DAMAGE:
             case SPELL_EFFECT_WEAPON_DAMAGE_NOSCHOOL:
-                fixed_bonus += CalculateDamage(j, unitTarget);
+                fixed_bonus += CalculateDamage(SpellEffIndex(j), unitTarget);
                 break;
             case SPELL_EFFECT_NORMALIZED_WEAPON_DMG:
-                fixed_bonus += CalculateDamage(j, unitTarget);
+                fixed_bonus += CalculateDamage(SpellEffIndex(j), unitTarget);
                 normalized = true;
                 break;
             case SPELL_EFFECT_WEAPON_PERCENT_DAMAGE:
-                ApplyPctN(weaponDamagePercentMod, CalculateDamage(j, unitTarget));
+                ApplyPctN(weaponDamagePercentMod, CalculateDamage(SpellEffIndex(j), unitTarget));
                 break;
             default:
                 break;                                      // not weapon damage effect, just skip
@@ -4639,11 +4635,14 @@ void Spell::EffectScriptEffect(SpellEffectEntry const* effect)
                     // Triggered spell id dependent on riding skill and zone
                     bool canFly = true;
                     uint32 v_map = GetVirtualMapForMapAndZone(unitTarget->GetMapId(), unitTarget->GetZoneId());
-                    if (v_map != 530 && v_map != 571)
+                    if (v_map != 530 && v_map != 571 && v_map != 0)
                         canFly = false;
 
                     if (canFly && v_map == 571 && !unitTarget->ToPlayer()->HasSpell(54197))
                         canFly = false;
+
+                    if(canFly && v_map == 0 && !unitTarget->ToPlayer()->HasSpell(90267))
+                         canFly = false;
 
                     float x, y, z;
                     unitTarget->GetPosition(x, y, z);
@@ -4690,10 +4689,13 @@ void Spell::EffectScriptEffect(SpellEffectEntry const* effect)
                     // Triggered spell id dependent on riding skill and zone
                     bool canFly = true;
                     uint32 v_map = GetVirtualMapForMapAndZone(unitTarget->GetMapId(), unitTarget->GetZoneId());
-                    if (v_map != 530 && v_map != 571)
+                    if (v_map != 530 && v_map != 571 && v_map != 0)
                         canFly = false;
 
                     if (canFly && v_map == 571 && !unitTarget->ToPlayer()->HasSpell(54197))
+                        canFly = false;
+
+                    if(canFly && v_map == 0 && !unitTarget->ToPlayer()->HasSpell(90267))
                         canFly = false;
 
                     float x, y, z;
@@ -5062,10 +5064,13 @@ void Spell::EffectScriptEffect(SpellEffectEntry const* effect)
                     // Triggered spell id dependent on riding skill and zone
                     bool canFly = true;
                     uint32 v_map = GetVirtualMapForMapAndZone(unitTarget->GetMapId(), unitTarget->GetZoneId());
-                    if (v_map != 530 && v_map != 571)
+                    if (v_map != 530 && v_map != 571 && v_map != 0)
                         canFly = false;
 
                     if (canFly && v_map == 571 && !unitTarget->ToPlayer()->HasSpell(54197))
+                        canFly = false;
+
+                    if(canFly && v_map == 0 && !unitTarget->ToPlayer()->HasSpell(90267))
                         canFly = false;
 
                     float x, y, z;
@@ -5108,10 +5113,13 @@ void Spell::EffectScriptEffect(SpellEffectEntry const* effect)
                     // Triggered spell id dependent on riding skill and zone
                     bool canFly = true;
                     uint32 v_map = GetVirtualMapForMapAndZone(unitTarget->GetMapId(), unitTarget->GetZoneId());
-                    if (v_map != 530 && v_map != 571)
+                    if (v_map != 530 && v_map != 571 && v_map != 0)
                         canFly = false;
 
                     if (canFly && v_map == 571 && !unitTarget->ToPlayer()->HasSpell(54197))
+                        canFly = false;
+
+                    if(canFly && v_map == 0 && !unitTarget->ToPlayer()->HasSpell(90267))
                         canFly = false;
 
                     float x, y, z;
@@ -5171,10 +5179,13 @@ void Spell::EffectScriptEffect(SpellEffectEntry const* effect)
                     // Triggered spell id dependent on riding skill and zone
                     bool canFly = true;
                     uint32 v_map = GetVirtualMapForMapAndZone(unitTarget->GetMapId(), unitTarget->GetZoneId());
-                    if (v_map != 530 && v_map != 571)
+                    if (v_map != 530 && v_map != 571 && v_map != 0)
                         canFly = false;
 
                     if (canFly && v_map == 571 && !unitTarget->ToPlayer()->HasSpell(54197))
+                        canFly = false;
+
+                    if(canFly && v_map == 0 && !unitTarget->ToPlayer()->HasSpell(90267))
                         canFly = false;
 
                     float x, y, z;

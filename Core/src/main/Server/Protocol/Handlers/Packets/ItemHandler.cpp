@@ -310,7 +310,7 @@ void WorldSession::HandleItemQuerySingleOpcode(WorldPacket & recv_data)
         data << pProto->ItemId;
         data << pProto->Class;
         data << pProto->SubClass;
-        data << int32(pProto->Unk0);                        // New 2.0.3 - Exist in item-sparse file (4.0.1)
+        data << int32(pProto->Unk0);                               // New 2.0.3 - Exist in item-sparse file (4.0.1)
         data << Name;
         data << pProto->DisplayInfoID;
         data << pProto->Quality;
@@ -738,7 +738,8 @@ void WorldSession::SendListInventory(uint64 vendorguid)
     VendorItemData const* vItems = pCreature->GetVendorItems();
     if (!vItems)
     {
-        WorldPacket data(SMSG_LIST_INVENTORY, (8 + 1 + 1));
+        WorldPacket data(SMSG_MULTIPLE_PACKETS, (2 + 8 + 1 + 1));
+        data << uint16(SMSG_LIST_INVENTORY);
         data << uint64(vendorguid);
         data << uint8(0);                                   // count == 0, next will be error code
         data << uint8(0);                                   // "Vendor has no inventory"
@@ -749,7 +750,7 @@ void WorldSession::SendListInventory(uint64 vendorguid)
     uint8 numitems = vItems->GetItemCount();
     uint8 count = 0;
 
-    WorldPacket data(SMSG_MULTIPLE_PACKETS, (8 + 1 + numitems * 9 * 4 + 1 * numitems + 2));
+    WorldPacket data(SMSG_MULTIPLE_PACKETS, (2 + 8 + 1 + numitems * 9 * 4 + 1 * numitems ));
     data << uint16(SMSG_LIST_INVENTORY);
     data << uint64(vendorguid);
 
@@ -993,12 +994,11 @@ void WorldSession::HandleSetAmmoOpcode(WorldPacket & recv_data)
 
 void WorldSession::SendEnchantmentLog(uint64 Target, uint64 Caster,uint32 ItemID,uint32 SpellID)
 {
-    WorldPacket data(SMSG_ENCHANTMENTLOG, (8+8+4+4+1));     // last check 2.0.10
+    WorldPacket data(SMSG_ENCHANTMENTLOG, (8+8+4+4+1));     // last check 4.0.6.13623
     data << uint64(Target);
     data << uint64(Caster);
     data << uint32(ItemID);
     data << uint32(SpellID);
-    data << uint8(0);
     SendPacket(&data);
 }
 
@@ -1113,7 +1113,7 @@ void WorldSession::HandleWrapItemOpcode(WorldPacket& recv_data)
         return;
     }
 
-    SQLTransaction trans = CharacterDatabase.BeginTransaction();
+    SQLTransaction trans = CharDB.BeginTransaction();
     trans->PAppend("INSERT INTO character_gifts VALUES ('%u', '%u', '%u', '%u')", GUID_LOPART(item->GetOwnerGUID()), item->GetGUIDLow(), item->GetEntry(), item->GetUInt32Value(ITEM_FIELD_FLAGS));
     item->SetEntry(gift->GetEntry());
 
@@ -1136,7 +1136,7 @@ void WorldSession::HandleWrapItemOpcode(WorldPacket& recv_data)
         item->RemoveFromUpdateQueueOf(_player);
         item->SaveToDB(trans);                                   // item gave inventory record unchanged and can be save standalone
     }
-    CharacterDatabase.CommitTransaction(trans);
+    CharDB.CommitTransaction(trans);
 
     uint32 count = 1;
     _player->DestroyItemCount(gift, count, true);

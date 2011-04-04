@@ -954,7 +954,7 @@ void Spell::CleanupTargetList()
 void Spell::AddUnitTarget(Unit* pVictim, uint32 effIndex)
 {
     SpellEffectEntry const *spellEffect = m_spellInfo->GetSpellEffect(SpellEffIndex(effIndex));
-    if( spellEffect && spellEffect->Effect == 0 )
+    if (spellEffect && spellEffect->Effect == 0)
         return;
 
     if (!CheckTarget(pVictim, effIndex))
@@ -1106,7 +1106,7 @@ void Spell::AddGOTarget(uint64 goGUID, uint32 effIndex)
 void Spell::AddItemTarget(Item* pitem, uint32 effIndex)
 {
     SpellEffectEntry const* spellEffect = m_spellInfo->GetSpellEffect(SpellEffIndex(effIndex));
-    if( spellEffect && spellEffect->Effect == 0 )
+    if (spellEffect && spellEffect->Effect == 0)
         return;
 
     // Lookup target in already in list
@@ -3049,7 +3049,7 @@ void Spell::prepare(SpellCastTargets const* targets, AuraEffect const * triggere
             m_caster->RemoveAurasWithInterruptFlags(AURA_INTERRUPT_FLAG_CAST);
             for (uint32 i = 0; i < MAX_SPELL_EFFECTS; ++i)
             {
-                SpellEffectEntry const* spellEffect = m_spellInfo->GetSpellEffect(SpellEffIndex(EFFECT_0));
+                SpellEffectEntry const* spellEffect = m_spellInfo->GetSpellEffect(SpellEffIndex(i));
                 if (!spellEffect)
                     continue;
 
@@ -4080,7 +4080,7 @@ void Spell::WriteAmmoToPacket(WorldPacket * data)
         Item *pItem = m_caster->ToPlayer()->GetWeaponForAttack(RANGED_ATTACK);
         if (pItem)
         {
-            ammoInventoryType = pItem->GetProto()->InventoryType;
+           ammoInventoryType = pItem->GetProto()->InventoryType;
             if (ammoInventoryType == INVTYPE_THROWN)
                 ammoDisplayID = pItem->GetProto()->DisplayInfoID;
             else
@@ -4523,35 +4523,6 @@ void Spell::TakePower()
         m_caster->SetLastManaUse(getMSTime());
 }
 
-void Spell::TakeAmmo()
-{
-    if (m_attackType == RANGED_ATTACK && m_caster->GetTypeId() == TYPEID_PLAYER)
-    {
-        Item *pItem = m_caster->ToPlayer()->GetWeaponForAttack(RANGED_ATTACK);
-
-        // wands don't have ammo
-        if (!pItem  || pItem->IsBroken() || pItem->GetProto()->SubClass == ITEM_SUBCLASS_WEAPON_WAND)
-            return;
-
-        if (pItem->GetProto()->InventoryType == INVTYPE_THROWN)
-        {
-            if (pItem->GetMaxStackCount() == 1)
-            {
-                // decrease durability for non-stackable throw weapon
-                m_caster->ToPlayer()->DurabilityPointLossForEquipSlot(EQUIPMENT_SLOT_RANGED);
-            }
-            else
-            {
-                // decrease items amount for stackable throw weapon
-                uint32 count = 1;
-                m_caster->ToPlayer()->DestroyItemCount(pItem, count, true);
-            }
-        }
-        else if (uint32 ammo = m_caster->ToPlayer()->GetUInt32Value(0))//PLAYER_AMMO_ID))
-            m_caster->ToPlayer()->DestroyItemCount(ammo, 1, true);
-    }
-}
-
 SpellCastResult Spell::CheckRuneCost(uint32 runeCostID)
 {
     if (m_spellInfo->powerType != POWER_RUNE || !runeCostID)
@@ -4757,7 +4728,7 @@ void Spell::HandleEffects(Unit *pUnitTarget, Item *pItemTarget, GameObject *pGOT
     itemTarget = pItemTarget;
     gameObjTarget = pGOTarget;
 
-    SpellEffectEntry const* spellEffect = m_spellInfo->GetSpellEffect(SpellEffIndex(SpellEffIndex(i)));
+    SpellEffectEntry const* spellEffect = m_spellInfo->GetSpellEffect(SpellEffIndex(i));
     if (!spellEffect)
         return;
 
@@ -7054,8 +7025,7 @@ void Spell::CalculateDamageDoneForAllTargets()
                     case SPELL_EFFECT_WEAPON_DAMAGE_NOSCHOOL:
                     case SPELL_EFFECT_NORMALIZED_WEAPON_DMG:
                     case SPELL_EFFECT_WEAPON_PERCENT_DAMAGE:
-                    ammoTaken=true;
-                    TakeAmmo();
+                    ammoTaken = true;
                 }
                 if (ammoTaken)
                     break;

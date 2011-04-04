@@ -365,7 +365,7 @@ void MapManager::InitInstanceIds()
 {
     _nextInstanceId = 1;
 
-    QueryResult result = CharacterDatabase.Query("SELECT MAX(id) FROM instance");
+    QueryResult result = CharDB.Query("SELECT MAX(id) FROM instance");
     if (result)
     {
         uint32 maxId = (*result)[0].GetUInt32();

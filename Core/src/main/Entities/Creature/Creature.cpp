@@ -1094,7 +1094,7 @@ void Creature::SaveToDB(uint32 mapid, uint8 spawnMask, uint32 phaseMask)
     data.dynamicflags = dynamicflags;
 
     // updated in DB
-    SQLTransaction trans = WorldDatabase.BeginTransaction();
+    SQLTransaction trans = WorldDB.BeginTransaction();
 
     trans->PAppend("DELETE FROM creature WHERE guid = '%u'", m_DBTableGuid);
 
@@ -1124,7 +1124,7 @@ void Creature::SaveToDB(uint32 mapid, uint8 spawnMask, uint32 phaseMask)
 
     trans->Append(ss.str().c_str());
 
-    WorldDatabase.CommitTransaction(trans);
+    WorldDB.CommitTransaction(trans);
 }
 
 void Creature::SelectLevel(const CreatureInfo *cinfo)
@@ -1171,7 +1171,8 @@ void Creature::SelectLevel(const CreatureInfo *cinfo)
     SetFloatValue(UNIT_FIELD_MINRANGEDDAMAGE,cinfo->minrangedmg * damagemod);
     SetFloatValue(UNIT_FIELD_MAXRANGEDDAMAGE,cinfo->maxrangedmg * damagemod);
 
-    SetModifierValue(UNIT_MOD_ATTACK_POWER, BASE_VALUE, cinfo->attackpower * damagemod);
+    SetModifierValue(UNIT_MOD_ATTACK_POWER_POS, BASE_VALUE, cinfo->attackpower * damagemod);
+    SetModifierValue(UNIT_MOD_ATTACK_POWER_NEG, BASE_VALUE, cinfo->attackpower * damagemod);
 
 }
 
@@ -1393,12 +1394,12 @@ void Creature::DeleteFromDB()
     sObjectMgr->RemoveCreatureRespawnTime(m_DBTableGuid, GetInstanceId());
     sObjectMgr->DeleteCreatureData(m_DBTableGuid);
 
-    SQLTransaction trans = WorldDatabase.BeginTransaction();
+    SQLTransaction trans = WorldDB.BeginTransaction();
     trans->PAppend("DELETE FROM creature WHERE guid = '%u'", m_DBTableGuid);
     trans->PAppend("DELETE FROM creature_addon WHERE guid = '%u'", m_DBTableGuid);
     trans->PAppend("DELETE FROM game_event_creature WHERE guid = '%u'", m_DBTableGuid);
     trans->PAppend("DELETE FROM game_event_model_equip WHERE guid = '%u'", m_DBTableGuid);
-    WorldDatabase.CommitTransaction(trans);
+    WorldDB.CommitTransaction(trans);
 }
 
 bool Creature::isVisibleForInState(WorldObject const* seer) const

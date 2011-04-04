@@ -34,7 +34,7 @@ void MapManager::LoadTransports()
 {
     uint32 oldMSTime = getMSTime();
 
-    QueryResult result = WorldDatabase.Query("SELECT guid, entry, name, period, ScriptName FROM transports");
+    QueryResult result = WorldDB.Query("SELECT guid, entry, name, period, ScriptName FROM transports");
 
     if (!result)
     {
@@ -112,7 +112,7 @@ void MapManager::LoadTransports()
     while (result->NextRow());
 
     // check transport data DB integrity
-    result = WorldDatabase.Query("SELECT gameobject.guid,gameobject.id,transports.name FROM gameobject,transports WHERE gameobject.id = transports.entry");
+    result = WorldDB.Query("SELECT gameobject.guid,gameobject.id,transports.name FROM gameobject,transports WHERE gameobject.id = transports.entry");
     if (result)                                              // wrong data found
     {
         do
@@ -136,7 +136,7 @@ void MapManager::LoadTransportNPCs()
     uint32 oldMSTime = getMSTime();
 
     //                                                         0    1          2                3             4             5             6             7
-    QueryResult result = WorldDatabase.PQuery("SELECT guid, npc_entry, transport_entry, TransOffsetX, TransOffsetY, TransOffsetZ, TransOffsetO, emote FROM creature_transport");
+    QueryResult result = WorldDB.PQuery("SELECT guid, npc_entry, transport_entry, TransOffsetX, TransOffsetY, TransOffsetZ, TransOffsetO, emote FROM creature_transport");
 
     if (!result)
     {

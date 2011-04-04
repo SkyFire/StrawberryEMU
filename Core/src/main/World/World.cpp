@@ -1243,10 +1243,10 @@ void World::SetInitialWorldSettings()
     else
         server_type = getIntConfig(CONFIG_GAME_TYPE);
     uint32 realm_zone = getIntConfig(CONFIG_REALM_ZONE);
-    LoginDatabase.PExecute("UPDATE realmlist SET icon = %u, timezone = %u WHERE id = '%d'", server_type, realm_zone, realmID);
+    RealmDB.PExecute("UPDATE realmlist SET icon = %u, timezone = %u WHERE id = '%d'", server_type, realm_zone, realmID);
 
     ///- Remove the bones (they should not exist in DB though) and old corpses after a restart
-    CharacterDatabase.PExecute("DELETE FROM corpse WHERE corpse_type = '0' OR time < (UNIX_TIMESTAMP()-'%u')", 3 * DAY);
+    CharDB.PExecute("DELETE FROM corpse WHERE corpse_type = '0' OR time < (UNIX_TIMESTAMP()-'%u')", 3 * DAY);
 
     ///- Load the DBC files
     sLog->outString("Initialize dbc stores...");
@@ -1292,9 +1292,6 @@ void World::SetInitialWorldSettings()
     sLog->outString("Loading Game Object Templates...");         // must be after LoadPageTexts
     sObjectMgr->LoadGameobjectInfo();
 
-    sLog->outString("Loading Spell Rank Data...");
-    sSpellMgr->LoadSpellRanks();
-
     sLog->outString("Loading Spell Required Data...");
     sSpellMgr->LoadSpellRequired();
 
@@ -1302,7 +1299,7 @@ void World::SetInitialWorldSettings()
     sSpellMgr->LoadSpellGroups();
 
     sLog->outString("Loading Spell Learn Skills...");
-    sSpellMgr->LoadSpellLearnSkills();                           // must be after LoadSpellRanks
+    sSpellMgr->LoadSpellLearnSkills();
 
     sLog->outString("Loading Spell Learn Spells...");
     sSpellMgr->LoadSpellLearnSpells();
@@ -1469,7 +1466,7 @@ void World::SetInitialWorldSettings()
     sLog->outString("Loading Pet Name Parts...");
     sObjectMgr->LoadPetNames();
 
-    CharacterDatabaseCleaner::CleanDatabase();
+    CharDBCleaner::CleanDatabase();
 
     sLog->outString("Loading the max pet number...");
     sObjectMgr->LoadPetNumber();
@@ -1636,7 +1633,7 @@ void World::SetInitialWorldSettings()
     sprintf(isoDate, "%04d-%02d-%02d %02d:%02d:%02d",
         local.tm_year+1900, local.tm_mon+1, local.tm_mday, local.tm_hour, local.tm_min, local.tm_sec);
 
-    LoginDatabase.PExecute("INSERT INTO uptime (realmid, starttime, startstring, uptime, revision) VALUES('%u', " UI64FMTD ", '%s', 0, '%s')",
+    RealmDB.PExecute("INSERT INTO uptime (realmid, starttime, startstring, uptime, revision) VALUES('%u', " UI64FMTD ", '%s', 0, '%s')",
         realmID, uint64(m_startTime), isoDate, _FULLVERSION);
 
     m_timers[WUPDATE_OBJECTS].SetInterval(IN_MILLISECONDS/2);
@@ -1705,7 +1702,7 @@ void World::SetInitialWorldSettings()
     sMapMgr->LoadTransportNPCs();
 
     sLog->outString("Deleting expired bans...");
-    LoginDatabase.Execute("DELETE FROM ip_banned WHERE unbandate <= UNIX_TIMESTAMP() AND unbandate<>bandate");
+    RealmDB.Execute("DELETE FROM ip_banned WHERE unbandate <= UNIX_TIMESTAMP() AND unbandate<>bandate");
 
     sLog->outString("Calculate next daily quest reset time...");
     InitDailyQuestResetTime();
@@ -1808,7 +1805,7 @@ void World::LoadAutobroadcasts()
 
     m_Autobroadcasts.clear();
 
-    QueryResult result = WorldDatabase.Query("SELECT text FROM autobroadcast");
+    QueryResult result = WorldDB.Query("SELECT text FROM autobroadcast");
 
     if (!result)
     {
@@ -1915,7 +1912,7 @@ void World::Update(uint32 diff)
         uint32 maxOnlinePlayers = GetMaxPlayerCount();
 
         m_timers[WUPDATE_UPTIME].Reset();
-        LoginDatabase.PExecute("UPDATE uptime SET uptime = %u, maxplayers = %u WHERE realmid = %u AND starttime = " UI64FMTD, tmpDiff, maxOnlinePlayers, realmID, uint64(m_startTime));
+        RealmDB.PExecute("UPDATE uptime SET uptime = %u, maxplayers = %u WHERE realmid = %u AND starttime = " UI64FMTD, tmpDiff, maxOnlinePlayers, realmID, uint64(m_startTime));
     }
 
     /// <li> Clean logs table
@@ -1924,7 +1921,7 @@ void World::Update(uint32 diff)
         if (m_timers[WUPDATE_CLEANDB].Passed())
         {
             m_timers[WUPDATE_CLEANDB].Reset();
-            LoginDatabase.PExecute("DELETE FROM logs WHERE (time + %u) < "UI64FMTD";",
+            RealmDB.PExecute("DELETE FROM logs WHERE (time + %u) < "UI64FMTD";",
                 sWorld->getIntConfig(CONFIG_LOGDB_CLEARTIME), uint64(time(0)));
         }
     }
@@ -1983,9 +1980,9 @@ void World::Update(uint32 diff)
     {
         m_timers[WUPDATE_PINGDB].Reset();
         sLog->outDetail("Ping MySQL to keep connection alive");
-        CharacterDatabase.KeepAlive();
-        LoginDatabase.KeepAlive();
-        WorldDatabase.KeepAlive();
+        CharDB.KeepAlive();
+        RealmDB.KeepAlive();
+        WorldDB.KeepAlive();
     }
 
     // update the instance reset times
@@ -2213,27 +2210,27 @@ BanReturn World::BanAccount(BanMode mode, std::string nameOrIP, std::string dura
     {
         case BAN_IP:
             // No SQL injection with prepared statements
-            stmt = LoginDatabase.GetPreparedStatement(LOGIN_GET_ACCOUNT_BY_IP);
+            stmt = RealmDB.GetPreparedStatement(LOGIN_GET_ACCOUNT_BY_IP);
             stmt->setString(0, nameOrIP);
-            resultAccounts = LoginDatabase.Query(stmt);
-            stmt = LoginDatabase.GetPreparedStatement(LOGIN_SET_IP_BANNED);
+            resultAccounts = RealmDB.Query(stmt);
+            stmt = RealmDB.GetPreparedStatement(LOGIN_SET_IP_BANNED);
             stmt->setString(0, nameOrIP);
             stmt->setUInt32(1, duration_secs);
             stmt->setString(2, author);
             stmt->setString(3, reason);
-            LoginDatabase.Execute(stmt);
+            RealmDB.Execute(stmt);
             break;
         case BAN_ACCOUNT:
             // No SQL injection with prepared statements
-            stmt = LoginDatabase.GetPreparedStatement(LOGIN_GET_ACCIDBYNAME);
+            stmt = RealmDB.GetPreparedStatement(LOGIN_GET_ACCIDBYNAME);
             stmt->setString(0, nameOrIP);
-            resultAccounts = LoginDatabase.Query(stmt);
+            resultAccounts = RealmDB.Query(stmt);
             break;
         case BAN_CHARACTER:
             // No SQL injection with prepared statements
-            stmt = CharacterDatabase.GetPreparedStatement(CHAR_GET_ACCOUNT_BY_NAME);
+            stmt = CharDB.GetPreparedStatement(CHAR_GET_ACCOUNT_BY_NAME);
             stmt->setString(0, nameOrIP);
-            resultAccounts = CharacterDatabase.Query(stmt);
+            resultAccounts = CharDB.Query(stmt);
             break;
         default:
             return BAN_SYNTAX_ERROR;
@@ -2248,7 +2245,7 @@ BanReturn World::BanAccount(BanMode mode, std::string nameOrIP, std::string dura
     }
 
     ///- Disconnect all affected players (for IP it can be several)
-    SQLTransaction trans = LoginDatabase.BeginTransaction();
+    SQLTransaction trans = RealmDB.BeginTransaction();
     do
     {
         Field* fieldsAccount = resultAccounts->Fetch();
@@ -2257,11 +2254,11 @@ BanReturn World::BanAccount(BanMode mode, std::string nameOrIP, std::string dura
         if (mode != BAN_IP)
         {
             // make sure there is only one active ban
-            stmt = LoginDatabase.GetPreparedStatement(LOGIN_SET_ACCOUNT_NOT_BANNED);
+            stmt = RealmDB.GetPreparedStatement(LOGIN_SET_ACCOUNT_NOT_BANNED);
             stmt->setUInt32(0, account);
             trans->Append(stmt);
             // No SQL injection with prepared statements
-            stmt = LoginDatabase.GetPreparedStatement(LOGIN_SET_ACCOUNT_BANNED);
+            stmt = RealmDB.GetPreparedStatement(LOGIN_SET_ACCOUNT_BANNED);
             stmt->setUInt32(0, account);
             stmt->setUInt32(1, duration_secs);
             stmt->setString(2, author);
@@ -2274,7 +2271,7 @@ BanReturn World::BanAccount(BanMode mode, std::string nameOrIP, std::string dura
                 sess->KickPlayer();
     } while (resultAccounts->NextRow());
 
-    LoginDatabase.CommitTransaction(trans);
+    RealmDB.CommitTransaction(trans);
 
     return BAN_SUCCESS;
 }
@@ -2285,9 +2282,9 @@ bool World::RemoveBanAccount(BanMode mode, std::string nameOrIP)
     PreparedStatement* stmt = NULL;
     if (mode == BAN_IP)
     {
-        stmt = LoginDatabase.GetPreparedStatement(LOGIN_SET_IP_NOT_BANNED);
+        stmt = RealmDB.GetPreparedStatement(LOGIN_SET_IP_NOT_BANNED);
         stmt->setString(0, nameOrIP);
-        LoginDatabase.Execute(stmt);
+        RealmDB.Execute(stmt);
     }
     else
     {
@@ -2301,9 +2298,9 @@ bool World::RemoveBanAccount(BanMode mode, std::string nameOrIP)
             return false;
 
         //NO SQL injection as account is uint32
-        stmt = LoginDatabase.GetPreparedStatement(LOGIN_SET_ACCOUNT_NOT_BANNED);
+        stmt = RealmDB.GetPreparedStatement(LOGIN_SET_ACCOUNT_NOT_BANNED);
         stmt->setUInt32(0, account);
-        LoginDatabase.Execute(stmt);
+        RealmDB.Execute(stmt);
     }
     return true;
 }
@@ -2319,9 +2316,9 @@ BanReturn World::BanCharacter(std::string name, std::string duration, std::strin
     /// Pick a player to ban if not online
     if (!pBanned)
     {
-        PreparedStatement* stmt = CharacterDatabase.GetPreparedStatement(CHAR_GET_GUID_BY_NAME);
+        PreparedStatement* stmt = CharDB.GetPreparedStatement(CHAR_GET_GUID_BY_NAME);
         stmt->setString(0, name);
-        PreparedQueryResult resultCharacter = CharacterDatabase.Query(stmt);
+        PreparedQueryResult resultCharacter = CharDB.Query(stmt);
 
         if (!resultCharacter)
             return BAN_NOTFOUND;                                    // Nobody to ban
@@ -2332,16 +2329,16 @@ BanReturn World::BanCharacter(std::string name, std::string duration, std::strin
         guid = pBanned->GetGUIDLow();
 
     // make sure there is only one active ban
-    PreparedStatement* stmt = CharacterDatabase.GetPreparedStatement(CHAR_SET_NOT_BANNED);
+    PreparedStatement* stmt = CharDB.GetPreparedStatement(CHAR_SET_NOT_BANNED);
     stmt->setUInt32(0, guid);
-    CharacterDatabase.Execute(stmt);
+    CharDB.Execute(stmt);
 
-    stmt = CharacterDatabase.GetPreparedStatement(CHAR_ADD_BAN);
+    stmt = CharDB.GetPreparedStatement(CHAR_ADD_BAN);
     stmt->setUInt32(0, guid);
     stmt->setUInt32(1, duration_secs);
     stmt->setString(2, author);
     stmt->setString(3, reason);
-    CharacterDatabase.Execute(stmt);
+    CharDB.Execute(stmt);
 
     if (pBanned)
         pBanned->GetSession()->KickPlayer();
@@ -2358,9 +2355,9 @@ bool World::RemoveBanCharacter(std::string name)
     /// Pick a player to ban if not online
     if (!pBanned)
     {
-        PreparedStatement* stmt = CharacterDatabase.GetPreparedStatement(CHAR_GET_GUID_BY_NAME);
+        PreparedStatement* stmt = CharDB.GetPreparedStatement(CHAR_GET_GUID_BY_NAME);
         stmt->setString(0, name);
-        PreparedQueryResult resultCharacter = CharacterDatabase.Query(stmt);
+        PreparedQueryResult resultCharacter = CharDB.Query(stmt);
 
         if (!resultCharacter)
             return false;
@@ -2373,9 +2370,9 @@ bool World::RemoveBanCharacter(std::string name)
     if (!guid)
         return false;
 
-    PreparedStatement* stmt = CharacterDatabase.GetPreparedStatement(CHAR_SET_NOT_BANNED);
+    PreparedStatement* stmt = CharDB.GetPreparedStatement(CHAR_SET_NOT_BANNED);
     stmt->setUInt32(0, guid);
-    CharacterDatabase.Execute(stmt);
+    CharDB.Execute(stmt);
     return true;
 }
 
@@ -2579,7 +2576,7 @@ void World::SendAutoBroadcast()
 void World::UpdateRealmCharCount(uint32 accountId)
 {
     m_realmCharCallback.SetParam(accountId);
-    m_realmCharCallback.SetFutureResult(CharacterDatabase.AsyncPQuery("SELECT COUNT(guid) FROM characters WHERE account = '%u'", accountId));
+    m_realmCharCallback.SetFutureResult(CharDB.AsyncPQuery("SELECT COUNT(guid) FROM characters WHERE account = '%u'", accountId));
 }
 
 void World::_UpdateRealmCharCount(QueryResult resultCharCount, uint32 accountId)
@@ -2589,8 +2586,8 @@ void World::_UpdateRealmCharCount(QueryResult resultCharCount, uint32 accountId)
         Field *fields = resultCharCount->Fetch();
         uint32 charCount = fields[0].GetUInt32();
 
-        LoginDatabase.PExecute("DELETE FROM realmcharacters WHERE acctid= '%d' AND realmid = '%d'", accountId, realmID);
-        LoginDatabase.PExecute("INSERT INTO realmcharacters (numchars, acctid, realmid) VALUES (%u, %u, %u)", charCount, accountId, realmID);
+        RealmDB.PExecute("DELETE FROM realmcharacters WHERE acctid= '%d' AND realmid = '%d'", accountId, realmID);
+        RealmDB.PExecute("INSERT INTO realmcharacters (numchars, acctid, realmid) VALUES (%u, %u, %u)", charCount, accountId, realmID);
     }
 }
 
@@ -2605,7 +2602,7 @@ void World::InitDailyQuestResetTime()
 {
     time_t mostRecentQuestTime;
 
-    QueryResult result = CharacterDatabase.Query("SELECT MAX(time) FROM character_queststatus_daily");
+    QueryResult result = CharDB.Query("SELECT MAX(time) FROM character_queststatus_daily");
     if (result)
     {
         Field *fields = result->Fetch();
@@ -2665,7 +2662,7 @@ void World::InitRandomBGResetTime()
 void World::ResetDailyQuests()
 {
     sLog->outDetail("Daily quests reset for all characters.");
-    CharacterDatabase.Execute("DELETE FROM character_queststatus_daily");
+    CharDB.Execute("DELETE FROM character_queststatus_daily");
     for (SessionMap::const_iterator itr = m_sessions.begin(); itr != m_sessions.end(); ++itr)
         if (itr->second->GetPlayer())
             itr->second->GetPlayer()->ResetDailyQuestStatus();
@@ -2676,7 +2673,7 @@ void World::ResetDailyQuests()
 
 void World::LoadDBAllowedSecurityLevel()
 {
-    QueryResult result = LoginDatabase.PQuery("SELECT allowedSecurityLevel from realmlist WHERE id = '%d'", realmID);
+    QueryResult result = RealmDB.PQuery("SELECT allowedSecurityLevel from realmlist WHERE id = '%d'", realmID);
     if (result)
         SetPlayerSecurityLimit(AccountTypes(result->Fetch()->GetUInt16()));
 }
@@ -2692,8 +2689,8 @@ void World::SetPlayerSecurityLimit(AccountTypes _sec)
 
 void World::ResetWeeklyQuests()
 {
-    CharacterDatabase.Execute("DELETE FROM character_queststatus_weekly");
-    CharacterDatabase.Execute("UPDATE character_currency SET thisweek = 0");
+    CharDB.Execute("DELETE FROM character_queststatus_weekly");
+    CharDB.Execute("UPDATE character_currency SET thisweek = 0");
     for (SessionMap::const_iterator itr = m_sessions.begin(); itr != m_sessions.end(); ++itr)
         if (itr->second->GetPlayer())
             itr->second->GetPlayer()->ResetWeeklyQuestStatus();
@@ -2708,7 +2705,7 @@ void World::ResetWeeklyQuests()
 void World::ResetRandomBG()
 {
     sLog->outDetail("Random BG status reset for all characters.");
-    CharacterDatabase.Execute("DELETE FROM character_battleground_random");
+    CharDB.Execute("DELETE FROM character_battleground_random");
     for(SessionMap::const_iterator itr = m_sessions.begin(); itr != m_sessions.end(); ++itr)
         if (itr->second->GetPlayer())
             itr->second->GetPlayer()->SetRandomWinner(false);
@@ -2725,7 +2722,7 @@ void World::UpdateMaxSessionCounters()
 
 void World::LoadDBVersion()
 {
-    QueryResult result = WorldDatabase.Query("SELECT db_version, script_version, cache_id FROM version LIMIT 1");
+    QueryResult result = WorldDB.Query("SELECT db_version, script_version, cache_id FROM version LIMIT 1");
     if (result)
     {
         Field* fields = result->Fetch();
@@ -2768,7 +2765,7 @@ void World::LoadWorldStates()
 {
     uint32 oldMSTime = getMSTime();
 
-    QueryResult result = CharacterDatabase.Query("SELECT entry, value FROM worldstates");
+    QueryResult result = CharDB.Query("SELECT entry, value FROM worldstates");
 
     if (!result)
     {
@@ -2796,9 +2793,9 @@ void World::setWorldState(uint32 index, uint64 value)
 {
     WorldStatesMap::const_iterator it = m_worldstates.find(index);
     if (it != m_worldstates.end())
-        CharacterDatabase.PExecute("UPDATE worldstates SET value="UI64FMTD" where entry=%u", value, index);
+        CharDB.PExecute("UPDATE worldstates SET value="UI64FMTD" where entry=%u", value, index);
     else
-        CharacterDatabase.PExecute("INSERT INTO worldstates (entry, value) VALUES (%u,"UI64FMTD")", index, value);
+        CharDB.PExecute("INSERT INTO worldstates (entry, value) VALUES (%u,"UI64FMTD")", index, value);
     m_worldstates[index] = value;
 }
 

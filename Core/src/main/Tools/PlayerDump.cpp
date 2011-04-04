@@ -210,7 +210,7 @@ std::string CreateDumpString(char const* tableName, QueryResult result)
         else ss << ", '";
 
         std::string s = fields[i].GetString();
-        CharacterDatabase.escape_string(s);
+        CharDB.escape_string(s);
         ss << s;
 
         ss << "'";
@@ -300,7 +300,7 @@ bool PlayerDumpWriter::DumpTable(std::string& dump, uint32 guid, char const*tabl
         else                                                // not set case, get single guid string
             wherestr = GenerateWhereStr(fieldname,guid);
 
-        QueryResult result = CharacterDatabase.PQuery("SELECT * FROM %s WHERE %s", tableFrom, wherestr.c_str());
+        QueryResult result = CharDB.PQuery("SELECT * FROM %s WHERE %s", tableFrom, wherestr.c_str());
         if (!result)
             return true;
 
@@ -401,7 +401,7 @@ DumpReturn PlayerDumpReader::LoadDump(const std::string& file, uint32 account, s
     bool incHighest = true;
     if (guid != 0 && guid < sObjectMgr->m_hiCharGuid)
     {
-        result = CharacterDatabase.PQuery("SELECT 1 FROM characters WHERE guid = '%d'", guid);
+        result = CharDB.PQuery("SELECT 1 FROM characters WHERE guid = '%d'", guid);
         if (result)
             guid = sObjectMgr->m_hiCharGuid;                     // use first free if exists
         else incHighest = false;
@@ -415,8 +415,8 @@ DumpReturn PlayerDumpReader::LoadDump(const std::string& file, uint32 account, s
 
     if (ObjectMgr::CheckPlayerName(name,true) == CHAR_NAME_SUCCESS)
     {
-        CharacterDatabase.escape_string(name);              // for safe, we use name only for sql quearies anyway
-        result = CharacterDatabase.PQuery("SELECT 1 FROM characters WHERE name = '%s'", name.c_str());
+        CharDB.escape_string(name);              // for safe, we use name only for sql quearies anyway
+        result = CharDB.PQuery("SELECT 1 FROM characters WHERE name = '%s'", name.c_str());
         if (result)
             name = "";                                      // use the one from the dump
     }
@@ -438,7 +438,7 @@ DumpReturn PlayerDumpReader::LoadDump(const std::string& file, uint32 account, s
     typedef PetIds::value_type PetIdsPair;
     PetIds petids;
 
-    SQLTransaction trans = CharacterDatabase.BeginTransaction();
+    SQLTransaction trans = CharDB.BeginTransaction();
     while (!feof(fin))
     {
         if (!fgets(buf, 32000, fin))
@@ -464,7 +464,7 @@ DumpReturn PlayerDumpReader::LoadDump(const std::string& file, uint32 account, s
         /*
         if (line.substr(nw_pos,41) == "UPDATE character_db_version SET required_")
         {
-            if (!CharacterDatabase.Execute(line.c_str()))
+            if (!CharDB.Execute(line.c_str()))
                 ROLLBACK(DUMP_FILE_BROKEN);
 
             continue;
@@ -511,9 +511,9 @@ DumpReturn PlayerDumpReader::LoadDump(const std::string& file, uint32 account, s
                 {
                     // check if the original name already exists
                     name = getnth(line, 3);
-                    CharacterDatabase.escape_string(name);
+                    CharDB.escape_string(name);
 
-                    result = CharacterDatabase.PQuery("SELECT 1 FROM characters WHERE name = '%s'", name.c_str());
+                    result = CharDB.PQuery("SELECT 1 FROM characters WHERE name = '%s'", name.c_str());
                     if (result)
                     {
                         if (!changenth(line, 37, "1"))       // characters.at_login set to "rename on login"
@@ -647,7 +647,7 @@ DumpReturn PlayerDumpReader::LoadDump(const std::string& file, uint32 account, s
         trans->Append(line.c_str());
     }
 
-    CharacterDatabase.CommitTransaction(trans);
+    CharDB.CommitTransaction(trans);
 
     sObjectMgr->m_hiItemGuid += items.size();
     sObjectMgr->m_mailid     += mails.size();
