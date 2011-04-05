@@ -350,11 +350,17 @@ bool ChatHandler::HandlePInfoCommand(const char* args)
         case RACE_TROLL:
             race_s = "Troll";
             break;
+        case RACE_GOBLIN:
+            race_s = "Goblin";
+            break;
         case RACE_BLOODELF:
             race_s = "Blood Elf";
             break;
         case RACE_DRAENEI:
             race_s = "Draenei";
+            break;
+        case RACE_WORGEN:
+            race_s = "Worgen";
             break;
     }
     switch(Class)
@@ -392,9 +398,9 @@ bool ChatHandler::HandlePInfoCommand(const char* args)
     }
 
     std::string timeStr = secsToTimeString(total_player_time,true,true);
-    uint32 gold = money /GOLD;
-    uint32 silv = (money % GOLD) / SILVER;
-    uint32 copp = (money % GOLD) % SILVER;
+    uint64 gold = money /GOLD;
+    uint64 silv = (money % GOLD) / SILVER;
+    uint64 copp = (money % GOLD) % SILVER;
     PSendSysMessage(LANG_PINFO_LEVEL, race_s.c_str(), Class_s.c_str(), timeStr.c_str(), level, gold, silv, copp);
 
     return true;

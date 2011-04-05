@@ -345,7 +345,7 @@ public:
     static bool HandleReloadAchievementCriteriaDataCommand(ChatHandler* handler, const char* /*args*/)
     {
         sLog->outString("Re-Loading Additional Achievement Criteria Data...");
-        sAchievementMgr->LoadAchievementCriteriaData();
+        sAchievementGlobalMgr->LoadAchievementCriteriaData();
         handler->SendGlobalGMSysMessage("DB table `achievement_criteria_data` reloaded.");
         return true;
     }
@@ -353,7 +353,7 @@ public:
     static bool HandleReloadAchievementRewardCommand(ChatHandler* handler, const char* /*args*/)
     {
         sLog->outString("Re-Loading Achievement Reward Data...");
-        sAchievementMgr->LoadRewards();
+        sAchievementGlobalMgr->LoadRewards();
         handler->SendGlobalGMSysMessage("DB table `achievement_reward` reloaded.");
         return true;
     }
@@ -1152,7 +1152,7 @@ public:
     static bool HandleReloadLocalesAchievementRewardCommand(ChatHandler* handler, const char* /*args*/)
     {
         sLog->outString("Re-Loading Locales Achievement Reward Data...");
-        sAchievementMgr->LoadRewardLocales();
+        sAchievementGlobalMgr->LoadRewardLocales();
         handler->SendGlobalGMSysMessage("DB table `locales_achievement_reward` reloaded.");
         return true;
     }

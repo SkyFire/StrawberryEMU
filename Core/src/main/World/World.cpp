@@ -1493,17 +1493,17 @@ void World::SetInitialWorldSettings()
     sObjectMgr->LoadFishingBaseSkillLevel();
 
     sLog->outString("Loading Achievements...");
-    sAchievementMgr->LoadAchievementReferenceList();
+    sAchievementGlobalMgr->LoadAchievementReferenceList();
     sLog->outString("Loading Achievement Criteria Lists...");
-    sAchievementMgr->LoadAchievementCriteriaList();
+    sAchievementGlobalMgr->LoadAchievementCriteriaList();
     sLog->outString("Loading Achievement Criteria Data...");
-    sAchievementMgr->LoadAchievementCriteriaData();
+    sAchievementGlobalMgr->LoadAchievementCriteriaData();
     sLog->outString("Loading Achievement Rewards...");
-    sAchievementMgr->LoadRewards();
+    sAchievementGlobalMgr->LoadRewards();
     sLog->outString("Loading Achievement Reward Locales...");
-    sAchievementMgr->LoadRewardLocales();
+    sAchievementGlobalMgr->LoadRewardLocales();
     sLog->outString("Loading Completed Achievements...");
-    sAchievementMgr->LoadCompletedAchievements();
+    sAchievementGlobalMgr->LoadCompletedAchievements();
 
     ///- Load dynamic data tables from the database
     sLog->outString("Loading Item Auctions...");

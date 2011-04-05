@@ -54,7 +54,7 @@ enum ObjectUpdateFlags
 class UpdateData
 {
     public:
-        UpdateData(uint16 map);
+        UpdateData();
 
         void AddOutOfRangeGUID(std::set<uint64>& guids);
         void AddOutOfRangeGUID(const uint64 &guid);
@@ -64,9 +64,9 @@ class UpdateData
         void Clear();
 
         std::set<uint64> const& GetOutOfRangeGUIDs() const { return m_outOfRangeGUIDs; }
+        uint16 m_map;
 
     protected:
-        uint16 m_map;
         uint32 m_blockCount;
         std::set<uint64> m_outOfRangeGUIDs;
         ByteBuffer m_data;
