@@ -676,6 +676,8 @@ void PlayerMenu::SendQuestQueryResponse(Quest const *pQuest)
         data << uint32(pQuest->ReqItemCount[iI]);
     }
 
+    data << uint32(pQuest->GetCriteriaSpellID());
+
     for (iI = 0; iI < QUEST_OBJECTIVES_COUNT; ++iI)
         data << ObjectiveText[iI];
 
