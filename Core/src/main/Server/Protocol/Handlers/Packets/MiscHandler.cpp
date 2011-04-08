@@ -1719,10 +1719,47 @@ void WorldSession::HandleReadyForAccountDataTimes(WorldPacket& /*recv_data*/)
     SendAccountDataTimes(GLOBAL_CACHE_MASK);
 }
 
-void WorldSession::SendSetPhaseShift(uint32 PhaseShift)
+void WorldSession::SendSetPhaseShift(uint32 phaseType, uint32 terrPhaseId, uint32 questPhaseId, uint32 questMapId, uint32 terrainMapId)
 {
-    WorldPacket data(SMSG_SET_PHASE_SHIFT, 4);
-    data << uint32(PhaseShift);
+    uint8 questType   = 0;
+    uint8 terrainType = 2;
+    WorldPacket data(SMSG_SET_PHASE_SHIFT, 32);    // Max size in dump was 36 (terrain and quest phase change???).
+    
+    data <<_player->GetGUID();           // Player guid.
+    data << uint32(phaseType);           // Phase change type: Quest Zone-Specific = 0x00
+                                         //                    Terrain Swap        = 0x02
+    if (phaseType == terrainType)
+    {
+        data << uint16(terrPhaseId);     // Terrain Swap phase id from Phase.dbc.
+        data << uint16(0x02);
+    }
+    else
+        data << uint32(0x02);            // If "Quest Zone-Specific" then 0x02.
+
+    if (phaseType == questType)
+        data << uint32(questMapId);      // Quest Zone-Specific MapId from Map.dbc
+    else if (phaseType == terrainType)
+        data << uint32(0x00);            // If Terrain Swap then 0x00.
+    else 
+        data << uint16(0x02);            // If MapID not changed then 0x02 and -2 bytes.
+
+    if (phaseType == questType)
+    {
+        data << uint16(0x02);
+        data << uint16(questPhaseId);    // Quest Zone-Specific phase id from Phase.dbc
+    }
+    else
+        data << uint32(0x02);            // If "Terrain Swap" then 0x02.
+
+    if (phaseType == terrainType)
+        data << uint32(terrainMapId);    // Terrain Swap MapId from Map.dbc
+    else
+        data << uint32(0);               // If Quest Zone-Specific then 0x00.
+
+    if (phaseType == terrainType)
+        data << uint32(0x08);
+    else
+        data << uint32(0x00);
     SendPacket(&data);
 }
 

@@ -204,7 +204,7 @@ class WorldSession
         void SendPetNameInvalid(uint32 error, const std::string& name, DeclinedName *declinedName);
         void SendPartyResult(PartyOperation operation, const std::string& member, PartyResult res, uint32 val = 0);
         void SendAreaTriggerMessage(const char* Text, ...) ATTR_PRINTF(2,3);
-        void SendSetPhaseShift(uint32 phaseShift);
+        void SendSetPhaseShift(uint32 phaseType, uint32 terrPhaseId, uint32 questPhaseId, uint32 questMapId, uint32 terrainMapId);
         void SendQueryTimeResponse();
 
         void SendAuthResponse(uint8 code, bool shortForm, uint32 queuePos = 0);
