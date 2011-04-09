@@ -17,9 +17,6 @@
  */
 
 #include "headers.h"
-#include "dbc.h"
-#include "map.h"
-#include "misc.h"
 #include "wdt.h"
 #include "adt.h"
 #include "MPQ.h"
@@ -30,6 +27,12 @@
 #include "MPQFile.h"
 #include "FileLoader.h"
 #include "DBCFile.h"
+
+#ifdef WIN32
+#include "direct.h"
+#else
+#include <sys/stat.h>
+#endif
 
 HANDLE localeMPQ[PATCH_REV_COUNT+1];
 HANDLE WorldMPQ;
@@ -88,8 +91,8 @@ void Usage(char* prg)
 {
     printf(
         "Usage:\n"\
-        "-i set input path\n"\
-        "-o set output path\n"\);
+        "-i set input path\n"
+        "-o set output path\n");
     exit(1);
 }
 
@@ -122,17 +125,20 @@ void HandleArgs(int argc, char * arg[])
 
 int ReadBuild(int locale)
 {
+    std::string path = output_path;
+    path += "/dbc/";
+
     // include build info file also
     std::string filename = std::string("component.wow-")+langs[locale]+".txt";
     //printf("Read %s file... ", filename.c_str());
 	
-    CreateDir("./dbc/");
-    ExtractFileToHardDrive(localeMPQ[0], filename.c_str(), (std::string("./dbc/") + filename).c_str());
+    CreateDir(path);
+    ExtractFileToHardDrive(localeMPQ[0], filename.c_str(), (std::string(path) + filename).c_str());
 	
     std::string text;
     std::string temp;
 	
-    std::ifstream fichier((std::string("./dbc/") + filename).c_str(), std::ios::in);
+    std::ifstream fichier((std::string(path) + filename).c_str(), std::ios::in);
     if(!fichier)
         assert(false && "Error when loading component.wow-...");
     while(fichier)
@@ -146,7 +152,7 @@ int ReadBuild(int locale)
     size_t pos2 = text.find("\"",pos1);
     if (pos == text.npos || pos2 == text.npos || pos1 >= pos2)
     {
-        printf("Fatal error: Invalid  %s file format!\n", filename.c_str());
+        printf("Fatal error: Invalid  %s file format!\n", path + filename.c_str());
         exit(1);
     }
 	
@@ -155,7 +161,7 @@ int ReadBuild(int locale)
     int build = atoi(build_str.c_str());
     if (build <= 0)
     {
-        printf("Fatal error: Invalid  %s file format!\n", filename.c_str());
+        printf("Fatal error: Invalid  %s file format!\n", path + filename.c_str());
         exit(1);
     }
 	
