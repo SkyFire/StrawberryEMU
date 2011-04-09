@@ -121,7 +121,7 @@
             />
             <Tool
                 Name="VCPostBuildEventTool"
-                CommandLine="mkdir ..\..\bin\$(PlatformName)_$(ConfigurationName)\Tools&#x0D;&#x0A;copy ..\..\dep\lib\$(PlatformName)_$(ConfigurationName)\*.dll ..\..\bin\$(PlatformName)_$(ConfigurationName)&#x0D;&#x0A;copy ..\..\src\server\world\worldserver.conf.dist ..\..\bin\$(PlatformName)_$(ConfigurationName)\Configs\WorldServer.conf&#x0D;&#x0A;copy ..\..\src\tools\extractor\* ..\..\bin\$(PlatformName)_$(ConfigurationName)\Tools&#x0D;&#x0A;"
+                CommandLine="mkdir ..\..\bin\$(PlatformName)_$(ConfigurationName)\Tools&#x0D;&#x0A;copy ..\..\dep\lib\$(PlatformName)_$(ConfigurationName)\*.dll ..\..\bin\$(PlatformName)_$(ConfigurationName)&#x0D;&#x0A;copy ..\..\src\server\world\worldserver.conf.dist ..\..\bin\$(PlatformName)_$(ConfigurationName)\Configs\WorldServer.conf&#x0D;&#x0A;copy ..\..\src\tools\extractor\bin\* ..\..\bin\$(PlatformName)_$(ConfigurationName)\Tools&#x0D;&#x0A;"
             />
         </Configuration>
         <Configuration
@@ -226,7 +226,7 @@
             />
             <Tool
                 Name="VCPostBuildEventTool"
-                CommandLine="mkdir ..\..\bin\$(PlatformName)_$(ConfigurationName)\Tools&#x0D;&#x0A;copy ..\..\dep\lib\$(PlatformName)_$(ConfigurationName)\*.dll ..\..\bin\$(PlatformName)_$(ConfigurationName)&#x0D;&#x0A;copy ..\..\src\server\world\worldserver.conf.dist ..\..\bin\$(PlatformName)_$(ConfigurationName)\Configs\WorldServer.conf&#x0D;&#x0A;copy ..\..\src\tools\extractor\* ..\..\bin\$(PlatformName)_$(ConfigurationName)\Tools&#x0D;&#x0A;"
+                CommandLine="mkdir ..\..\bin\$(PlatformName)_$(ConfigurationName)\Tools&#x0D;&#x0A;copy ..\..\dep\lib\$(PlatformName)_$(ConfigurationName)\*.dll ..\..\bin\$(PlatformName)_$(ConfigurationName)&#x0D;&#x0A;copy ..\..\src\server\world\worldserver.conf.dist ..\..\bin\$(PlatformName)_$(ConfigurationName)\Configs\WorldServer.conf&#x0D;&#x0A;copy ..\..\src\tools\extractor\bin\* ..\..\bin\$(PlatformName)_$(ConfigurationName)\Tools&#x0D;&#x0A;"
             />
         </Configuration>
         <Configuration
@@ -330,7 +330,7 @@
             />
             <Tool
                 Name="VCPostBuildEventTool"
-                CommandLine="mkdir ..\..\bin\$(PlatformName)_$(ConfigurationName)\Tools&#x0D;&#x0A;copy ..\..\dep\lib\$(PlatformName)_$(ConfigurationName)\*.dll ..\..\bin\$(PlatformName)_$(ConfigurationName)&#x0D;&#x0A;copy ..\..\src\server\world\worldserver.conf.dist ..\..\bin\$(PlatformName)_$(ConfigurationName)\Configs\WorldServer.conf&#x0D;&#x0A;copy ..\..\src\tools\extractor\* ..\..\bin\$(PlatformName)_$(ConfigurationName)\Tools&#x0D;&#x0A;"
+                CommandLine="mkdir ..\..\bin\$(PlatformName)_$(ConfigurationName)\Tools&#x0D;&#x0A;copy ..\..\dep\lib\$(PlatformName)_$(ConfigurationName)\*.dll ..\..\bin\$(PlatformName)_$(ConfigurationName)&#x0D;&#x0A;copy ..\..\src\server\world\worldserver.conf.dist ..\..\bin\$(PlatformName)_$(ConfigurationName)\Configs\WorldServer.conf&#x0D;&#x0A;copy ..\..\src\tools\extractor\bin\* ..\..\bin\$(PlatformName)_$(ConfigurationName)\Tools&#x0D;&#x0A;"
             />
         </Configuration>
         <Configuration
@@ -436,7 +436,7 @@
             />
             <Tool
                 Name="VCPostBuildEventTool"
-                CommandLine="mkdir ..\..\bin\$(PlatformName)_$(ConfigurationName)\Tools&#x0D;&#x0A;copy ..\..\dep\lib\$(PlatformName)_$(ConfigurationName)\*.dll ..\..\bin\$(PlatformName)_$(ConfigurationName)&#x0D;&#x0A;copy ..\..\src\server\world\worldserver.conf.dist ..\..\bin\$(PlatformName)_$(ConfigurationName)\Configs\WorldServer.conf&#x0D;&#x0A;copy ..\..\src\tools\extractor\* ..\..\bin\$(PlatformName)_$(ConfigurationName)\Tools&#x0D;&#x0A;"
+                CommandLine="mkdir ..\..\bin\$(PlatformName)_$(ConfigurationName)\Tools&#x0D;&#x0A;copy ..\..\dep\lib\$(PlatformName)_$(ConfigurationName)\*.dll ..\..\bin\$(PlatformName)_$(ConfigurationName)&#x0D;&#x0A;copy ..\..\src\server\world\worldserver.conf.dist ..\..\bin\$(PlatformName)_$(ConfigurationName)\Configs\WorldServer.conf&#x0D;&#x0A;copy ..\..\src\tools\extractor\bin\* ..\..\bin\$(PlatformName)_$(ConfigurationName)\Tools&#x0D;&#x0A;"
             />
         </Configuration>
     </Configurations>

@@ -10,19 +10,13 @@
     <ClCompile Include="..\..\dep\zlib\adler32.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\dep\zlib\compress.c">
+    <ClCompile Include="..\..\dep\zlib\compress2.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dep\zlib\crc32.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dep\zlib\deflate.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\dep\zlib\example.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\dep\zlib\infback.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dep\zlib\inffast.c">
@@ -35,9 +29,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dep\zlib\trees.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\dep\zlib\uncompr.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dep\zlib\zutil.c">

@@ -134,7 +134,7 @@
       <Command>mkdir ..\..\bin\$(Platform)_$(Configuration)\Tools
 copy ..\..\dep\lib\$(Platform)_$(Configuration)\*.dll ..\..\bin\$(Platform)_$(Configuration)
 copy ..\..\src\server\world\worldserver.conf.dist ..\..\bin\$(Platform)_$(Configuration)\Configs\WorldServer.conf
-copy ..\..\src\tools\extractor\* ..\..\bin\$(Platform)_$(Configuration)\Tools
+copy ..\..\src\tools\extractor\bin\* ..\..\bin\$(Platform)_$(Configuration)\Tools
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -196,7 +196,7 @@ copy ..\..\src\tools\extractor\* ..\..\bin\$(Platform)_$(Configuration)\Tools
       <Command>mkdir ..\..\bin\$(Platform)_$(Configuration)\Tools
 copy ..\..\dep\lib\$(Platform)_$(Configuration)\*.dll ..\..\bin\$(Platform)_$(Configuration)
 copy ..\..\src\server\world\worldserver.conf.dist ..\..\bin\$(Platform)_$(Configuration)\Configs\WorldServer.conf
-copy ..\..\src\tools\extractor\* ..\..\bin\$(Platform)_$(Configuration)\Tools
+copy ..\..\src\tools\extractor\bin\* ..\..\bin\$(Platform)_$(Configuration)\Tools
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -256,7 +256,7 @@ copy ..\..\src\tools\extractor\* ..\..\bin\$(Platform)_$(Configuration)\Tools
       <Command>mkdir ..\..\bin\$(Platform)_$(Configuration)\Tools
 copy ..\..\dep\lib\$(Platform)_$(Configuration)\*.dll ..\..\bin\$(Platform)_$(Configuration)
 copy ..\..\src\server\world\worldserver.conf.dist ..\..\bin\$(Platform)_$(Configuration)\Configs\WorldServer.conf
-copy ..\..\src\tools\extractor\* ..\..\bin\$(Platform)_$(Configuration)\Tools
+copy ..\..\src\tools\extractor\bin\* ..\..\bin\$(Platform)_$(Configuration)\Tools
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -317,7 +317,7 @@ copy ..\..\src\tools\extractor\* ..\..\bin\$(Platform)_$(Configuration)\Tools
       <Command>mkdir ..\..\bin\$(Platform)_$(Configuration)\Tools
 copy ..\..\dep\lib\$(Platform)_$(Configuration)\*.dll ..\..\bin\$(Platform)_$(Configuration)
 copy ..\..\src\server\world\worldserver.conf.dist ..\..\bin\$(Platform)_$(Configuration)\Configs\WorldServer.conf
-copy ..\..\src\tools\extractor\* ..\..\bin\$(Platform)_$(Configuration)\Tools
+copy ..\..\src\tools\extractor\bin\* ..\..\bin\$(Platform)_$(Configuration)\Tools
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>

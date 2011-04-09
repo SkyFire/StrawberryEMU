@@ -1,0 +1,389 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectName>DataExtractor</ProjectName>
+    <ProjectGuid>{D7552D4F-408F-4F8E-859B-366659150CF4}</ProjectGuid>
+    <RootNamespace>DataExtractor</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.40219.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\debug\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\release\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Midl>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TargetEnvironment>Win32</TargetEnvironment>
+      <TypeLibraryName>./ad.tlb</TypeLibraryName>
+      <HeaderFileName>
+      </HeaderFileName>
+    </Midl>
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>loadlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <PrecompiledHeaderOutputFile>$(IntDir)ad.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <ProgramDataBaseFileName>$(IntDir)</ProgramDataBaseFileName>
+      <XMLDocumentationFileName>$(IntDir)</XMLDocumentationFileName>
+      <BrowseInformation>true</BrowseInformation>
+      <BrowseInformationFile>$(IntDir)</BrowseInformationFile>
+      <WarningLevel>Level3</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0419</Culture>
+    </ResourceCompile>
+    <Link>
+      <AdditionalDependencies>zlib.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>ad_debug.exe</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <AdditionalLibraryDirectories>./debug/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <IgnoreSpecificDefaultLibraries>LIBCD.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ProgramDatabaseFile>./ad_debug.pdb</ProgramDatabaseFile>
+      <SubSystem>Console</SubSystem>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention>
+      </DataExecutionPrevention>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Midl>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TargetEnvironment>Win32</TargetEnvironment>
+      <TypeLibraryName>./ad.tlb</TypeLibraryName>
+      <HeaderFileName>
+      </HeaderFileName>
+    </Midl>
+    <ClCompile>
+      <Optimization>Full</Optimization>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <AdditionalIncludeDirectories>loadlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <PrecompiledHeaderOutputFile>$(IntDir)ad.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <ProgramDataBaseFileName>$(IntDir)</ProgramDataBaseFileName>
+      <XMLDocumentationFileName>$(IntDir)</XMLDocumentationFileName>
+      <WarningLevel>Level3</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0419</Culture>
+    </ResourceCompile>
+    <Link>
+      <AdditionalDependencies>zlib.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>./data_extractor.exe</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <AdditionalLibraryDirectories>./release/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <IgnoreSpecificDefaultLibraries>LIBC.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ProgramDatabaseFile>./ad.pdb</ProgramDatabaseFile>
+      <SubSystem>Console</SubSystem>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention>
+      </DataExecutionPrevention>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="adt.cpp" />
+    <ClCompile Include="DBCFile.cpp" />
+    <ClCompile Include="FileLoader.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="MPQ.cpp" />
+    <ClCompile Include="MPQFile.cpp" />
+    <ClCompile Include="wdt.cpp" />
+    <ClCompile Include="stormlib\src\FileStream.cpp" />
+    <ClCompile Include="stormlib\src\SBaseCommon.cpp" />
+    <ClCompile Include="stormlib\src\SBaseFileTable.cpp" />
+    <ClCompile Include="stormlib\src\SCompression.cpp" />
+    <ClCompile Include="stormlib\src\SFileAddFile.cpp" />
+    <ClCompile Include="stormlib\src\SFileAttributes.cpp" />
+    <ClCompile Include="stormlib\src\SFileCompactArchive.cpp" />
+    <ClCompile Include="stormlib\src\SFileCreateArchive.cpp" />
+    <ClCompile Include="stormlib\src\SFileExtractFile.cpp" />
+    <ClCompile Include="stormlib\src\SFileFindFile.cpp" />
+    <ClCompile Include="stormlib\src\SFileListFile.cpp" />
+    <ClCompile Include="stormlib\src\SFileOpenArchive.cpp" />
+    <ClCompile Include="stormlib\src\SFileOpenFileEx.cpp" />
+    <ClCompile Include="stormlib\src\SFilePatchArchives.cpp" />
+    <ClCompile Include="stormlib\src\SFileReadFile.cpp" />
+    <ClCompile Include="stormlib\src\SFileVerify.cpp" />
+    <ClCompile Include="stormlib\src\libtomcrypt\src\hashes\hash_memory.c" />
+    <ClCompile Include="stormlib\src\libtomcrypt\src\hashes\md5.c" />
+    <ClCompile Include="stormlib\src\libtomcrypt\src\hashes\sha1.c" />
+    <ClCompile Include="stormlib\src\libtomcrypt\src\math\ltm_desc.c" />
+    <ClCompile Include="stormlib\src\libtomcrypt\src\math\multi.c" />
+    <ClCompile Include="stormlib\src\libtomcrypt\src\math\rand_prime.c" />
+    <ClCompile Include="stormlib\src\libtomcrypt\src\misc\base64_decode.c" />
+    <ClCompile Include="stormlib\src\libtomcrypt\src\misc\crypt_argchk.c" />
+    <ClCompile Include="stormlib\src\libtomcrypt\src\misc\crypt_find_hash.c" />
+    <ClCompile Include="stormlib\src\libtomcrypt\src\misc\crypt_find_prng.c" />
+    <ClCompile Include="stormlib\src\libtomcrypt\src\misc\crypt_hash_descriptor.c" />
+    <ClCompile Include="stormlib\src\libtomcrypt\src\misc\crypt_hash_is_valid.c" />
+    <ClCompile Include="stormlib\src\libtomcrypt\src\misc\crypt_libc.c" />
+    <ClCompile Include="stormlib\src\libtomcrypt\src\misc\crypt_ltc_mp_descriptor.c" />
+    <ClCompile Include="stormlib\src\libtomcrypt\src\misc\crypt_prng_descriptor.c" />
+    <ClCompile Include="stormlib\src\libtomcrypt\src\misc\crypt_prng_is_valid.c" />
+    <ClCompile Include="stormlib\src\libtomcrypt\src\misc\crypt_register_hash.c" />
+    <ClCompile Include="stormlib\src\libtomcrypt\src\misc\crypt_register_prng.c" />
+    <ClCompile Include="stormlib\src\libtomcrypt\src\misc\zeromem.c" />
+    <ClCompile Include="stormlib\src\libtomcrypt\src\pk\asn1\der_decode_bit_string.c" />
+    <ClCompile Include="stormlib\src\libtomcrypt\src\pk\asn1\der_decode_boolean.c" />
+    <ClCompile Include="stormlib\src\libtomcrypt\src\pk\asn1\der_decode_choice.c" />
+    <ClCompile Include="stormlib\src\libtomcrypt\src\pk\asn1\der_decode_ia5_string.c" />
+    <ClCompile Include="stormlib\src\libtomcrypt\src\pk\asn1\der_decode_integer.c" />
+    <ClCompile Include="stormlib\src\libtomcrypt\src\pk\asn1\der_decode_object_identifier.c" />
+    <ClCompile Include="stormlib\src\libtomcrypt\src\pk\asn1\der_decode_octet_string.c" />
+    <ClCompile Include="stormlib\src\libtomcrypt\src\pk\asn1\der_decode_printable_string.c" />
+    <ClCompile Include="stormlib\src\libtomcrypt\src\pk\asn1\der_decode_sequence_ex.c" />
+    <ClCompile Include="stormlib\src\libtomcrypt\src\pk\asn1\der_decode_sequence_flexi.c" />
+    <ClCompile Include="stormlib\src\libtomcrypt\src\pk\asn1\der_decode_sequence_multi.c" />
+    <ClCompile Include="stormlib\src\libtomcrypt\src\pk\asn1\der_decode_short_integer.c" />
+    <ClCompile Include="stormlib\src\libtomcrypt\src\pk\asn1\der_decode_utctime.c" />
+    <ClCompile Include="stormlib\src\libtomcrypt\src\pk\asn1\der_decode_utf8_string.c" />
+    <ClCompile Include="stormlib\src\libtomcrypt\src\pk\asn1\der_length_bit_string.c" />
+    <ClCompile Include="stormlib\src\libtomcrypt\src\pk\asn1\der_length_boolean.c" />
+    <ClCompile Include="stormlib\src\libtomcrypt\src\pk\asn1\der_length_ia5_string.c" />
+    <ClCompile Include="stormlib\src\libtomcrypt\src\pk\asn1\der_length_integer.c" />
+    <ClCompile Include="stormlib\src\libtomcrypt\src\pk\asn1\der_length_object_identifier.c" />
+    <ClCompile Include="stormlib\src\libtomcrypt\src\pk\asn1\der_length_octet_string.c" />
+    <ClCompile Include="stormlib\src\libtomcrypt\src\pk\asn1\der_length_printable_string.c" />
+    <ClCompile Include="stormlib\src\libtomcrypt\src\pk\asn1\der_length_sequence.c" />
+    <ClCompile Include="stormlib\src\libtomcrypt\src\pk\asn1\der_length_short_integer.c" />
+    <ClCompile Include="stormlib\src\libtomcrypt\src\pk\asn1\der_length_utctime.c" />
+    <ClCompile Include="stormlib\src\libtomcrypt\src\pk\asn1\der_length_utf8_string.c" />
+    <ClCompile Include="stormlib\src\libtomcrypt\src\pk\asn1\der_sequence_free.c" />
+    <ClCompile Include="stormlib\src\libtomcrypt\src\pk\ecc\ltc_ecc_map.c" />
+    <ClCompile Include="stormlib\src\libtomcrypt\src\pk\ecc\ltc_ecc_mul2add.c" />
+    <ClCompile Include="stormlib\src\libtomcrypt\src\pk\ecc\ltc_ecc_mulmod.c" />
+    <ClCompile Include="stormlib\src\libtomcrypt\src\pk\ecc\ltc_ecc_points.c" />
+    <ClCompile Include="stormlib\src\libtomcrypt\src\pk\ecc\ltc_ecc_projective_add_point.c" />
+    <ClCompile Include="stormlib\src\libtomcrypt\src\pk\ecc\ltc_ecc_projective_dbl_point.c" />
+    <ClCompile Include="stormlib\src\libtomcrypt\src\pk\pkcs1\pkcs_1_mgf1.c" />
+    <ClCompile Include="stormlib\src\libtomcrypt\src\pk\pkcs1\pkcs_1_oaep_decode.c" />
+    <ClCompile Include="stormlib\src\libtomcrypt\src\pk\pkcs1\pkcs_1_pss_decode.c" />
+    <ClCompile Include="stormlib\src\libtomcrypt\src\pk\pkcs1\pkcs_1_v1_5_decode.c" />
+    <ClCompile Include="stormlib\src\libtomcrypt\src\pk\rsa\rsa_exptmod.c" />
+    <ClCompile Include="stormlib\src\libtomcrypt\src\pk\rsa\rsa_free.c" />
+    <ClCompile Include="stormlib\src\libtomcrypt\src\pk\rsa\rsa_import.c" />
+    <ClCompile Include="stormlib\src\libtomcrypt\src\pk\rsa\rsa_make_key.c" />
+    <ClCompile Include="stormlib\src\libtomcrypt\src\pk\rsa\rsa_verify_hash.c" />
+    <ClCompile Include="stormlib\src\libtomcrypt\src\pk\rsa\rsa_verify_simple.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_fast_mp_invmod.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_fast_mp_montgomery_reduce.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_fast_s_mp_mul_digs.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_fast_s_mp_mul_high_digs.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_fast_s_mp_sqr.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_mp_2expt.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_mp_abs.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_mp_add.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_mp_add_d.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_mp_addmod.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_mp_and.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_mp_clamp.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_mp_clear.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_mp_clear_multi.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_mp_cmp.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_mp_cmp_d.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_mp_cmp_mag.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_mp_cnt_lsb.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_mp_copy.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_mp_count_bits.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_mp_div.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_mp_div_2.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_mp_div_2d.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_mp_div_3.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_mp_div_d.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_mp_dr_is_modulus.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_mp_dr_reduce.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_mp_dr_setup.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_mp_exch.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_mp_expt_d.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_mp_exptmod.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_mp_exptmod_fast.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_mp_exteuclid.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_mp_fread.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_mp_fwrite.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_mp_gcd.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_mp_get_int.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_mp_grow.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_mp_init.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_mp_init_copy.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_mp_init_multi.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_mp_init_set.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_mp_init_set_int.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_mp_init_size.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_mp_invmod.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_mp_invmod_slow.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_mp_is_square.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_mp_jacobi.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_mp_karatsuba_mul.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_mp_karatsuba_sqr.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_mp_lcm.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_mp_lshd.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_mp_mod.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_mp_mod_2d.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_mp_mod_d.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_mp_montgomery_calc_normalization.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_mp_montgomery_reduce.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_mp_montgomery_setup.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_mp_mul.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_mp_mul_2.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_mp_mul_2d.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_mp_mul_d.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_mp_mulmod.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_mp_n_root.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_mp_neg.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_mp_or.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_mp_prime_fermat.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_mp_prime_is_divisible.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_mp_prime_is_prime.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_mp_prime_miller_rabin.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_mp_prime_next_prime.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_mp_prime_rabin_miller_trials.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_mp_prime_random_ex.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_mp_radix_size.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_mp_radix_smap.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_mp_rand.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_mp_read_radix.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_mp_read_signed_bin.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_mp_read_unsigned_bin.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_mp_reduce.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_mp_reduce_2k.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_mp_reduce_2k_l.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_mp_reduce_2k_setup.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_mp_reduce_2k_setup_l.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_mp_reduce_is_2k.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_mp_reduce_is_2k_l.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_mp_reduce_setup.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_mp_rshd.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_mp_set.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_mp_set_int.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_mp_shrink.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_mp_signed_bin_size.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_mp_sqr.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_mp_sqrmod.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_mp_sqrt.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_mp_sub.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_mp_sub_d.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_mp_submod.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_mp_to_signed_bin.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_mp_to_signed_bin_n.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_mp_to_unsigned_bin.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_mp_to_unsigned_bin_n.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_mp_toom_mul.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_mp_toom_sqr.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_mp_toradix.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_mp_toradix_n.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_mp_unsigned_bin_size.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_mp_xor.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_mp_zero.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_prime_tab.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_reverse.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_s_mp_add.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_s_mp_exptmod.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_s_mp_mul_digs.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_s_mp_mul_high_digs.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_s_mp_sqr.c" />
+    <ClCompile Include="stormlib\src\libtommath\bn_s_mp_sub.c" />
+    <ClCompile Include="stormlib\src\libtommath\bncore.c" />
+    <ClCompile Include="stormlib\src\lzma\C\LzFind.c" />
+    <ClCompile Include="stormlib\src\lzma\C\LzFindMt.c" />
+    <ClCompile Include="stormlib\src\lzma\C\LzmaDec.c" />
+    <ClCompile Include="stormlib\src\lzma\C\LzmaEnc.c" />
+    <ClCompile Include="stormlib\src\lzma\C\Threads.c" />
+    <ClCompile Include="stormlib\src\pklib\explode.c" />
+    <ClCompile Include="stormlib\src\pklib\implode.c" />
+    <ClCompile Include="stormlib\src\bzip2\blocksort.c" />
+    <ClCompile Include="stormlib\src\bzip2\bzlib.c" />
+    <ClCompile Include="stormlib\src\bzip2\compress.c" />
+    <ClCompile Include="stormlib\src\bzip2\crctable.c" />
+    <ClCompile Include="stormlib\src\bzip2\decompress.c" />
+    <ClCompile Include="stormlib\src\bzip2\huffman.c" />
+    <ClCompile Include="stormlib\src\bzip2\randtable.c" />
+    <ClCompile Include="stormlib\src\zlib\adler32.c" />
+    <ClCompile Include="stormlib\src\zlib\compress2.c" />
+    <ClCompile Include="stormlib\src\zlib\crc32.c" />
+    <ClCompile Include="stormlib\src\zlib\deflate.c" />
+    <ClCompile Include="stormlib\src\zlib\inffast.c" />
+    <ClCompile Include="stormlib\src\zlib\inflate.c" />
+    <ClCompile Include="stormlib\src\zlib\inftrees.c" />
+    <ClCompile Include="stormlib\src\zlib\trees.c" />
+    <ClCompile Include="stormlib\src\zlib\zutil.c" />
+    <ClCompile Include="stormlib\src\jenkins\lookup3.c" />
+    <ClCompile Include="stormlib\src\sparse\sparse.cpp" />
+    <ClCompile Include="stormlib\src\adpcm\adpcm.cpp" />
+    <ClCompile Include="stormlib\src\huffman\huff.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="adt.h" />
+    <ClInclude Include="DBCFile.h" />
+    <ClInclude Include="FileLoader.h" />
+    <ClInclude Include="headers.h" />
+    <ClInclude Include="MPQ.h" />
+    <ClInclude Include="MPQFile.h" />
+    <ClInclude Include="typedefs.h" />
+    <ClInclude Include="wdt.h" />
+    <ClInclude Include="stormlib\src\sparse\sparse.h" />
+    <ClInclude Include="stormlib\src\adpcm\adpcm.h" />
+    <ClInclude Include="stormlib\src\huffman\huff.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
