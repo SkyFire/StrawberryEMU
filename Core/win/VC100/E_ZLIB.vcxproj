@@ -164,6 +164,12 @@
     <ClCompile Include="..\..\dep\zlib\trees.c" />
     <ClCompile Include="..\..\dep\zlib\zutil.c" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="E_G3D_LIB.vcxproj">
+      <Project>{8072769e-cf10-48bf-b9e1-12752a5dac6e}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

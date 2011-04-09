@@ -2,55 +2,55 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="Collision">
-      <UniqueIdentifier>{62fe298f-293b-42c4-b8e3-bdd9b8a252ed}</UniqueIdentifier>
+      <UniqueIdentifier>{4e6f24f2-dd5b-4c75-85af-b6abecb564c4}</UniqueIdentifier>
     </Filter>
     <Filter Include="Collision\Management">
-      <UniqueIdentifier>{7e5d1bd3-036e-452d-8299-a8bbd1873102}</UniqueIdentifier>
+      <UniqueIdentifier>{c25ad7e7-edef-43cd-b9a8-327a8f9b6df0}</UniqueIdentifier>
     </Filter>
     <Filter Include="Collision\Maps">
-      <UniqueIdentifier>{90fe3e38-82a8-4a18-b174-dc3e59b7b926}</UniqueIdentifier>
+      <UniqueIdentifier>{864ec827-2d80-4121-bd5b-868ae03c23e3}</UniqueIdentifier>
     </Filter>
     <Filter Include="Collision\Models">
-      <UniqueIdentifier>{7cab1804-abea-487e-92ff-2f9c3d331865}</UniqueIdentifier>
+      <UniqueIdentifier>{dead5fb2-6c3f-4750-afde-9b18752362f6}</UniqueIdentifier>
     </Filter>
     <Filter Include="Configuration">
-      <UniqueIdentifier>{75002793-ffd0-407d-a659-cba35b3ba1e6}</UniqueIdentifier>
+      <UniqueIdentifier>{fb3a1654-4b93-4e17-a097-1a9d9529cae5}</UniqueIdentifier>
     </Filter>
     <Filter Include="Cryptography">
-      <UniqueIdentifier>{50573d88-fe7b-4212-b72a-3b5542c01b58}</UniqueIdentifier>
+      <UniqueIdentifier>{ecb532b2-6b30-46b7-98bd-aaf85e657662}</UniqueIdentifier>
     </Filter>
     <Filter Include="Cryptography\Authentication">
-      <UniqueIdentifier>{a8493bda-835f-4afd-9ec5-fa95ed9ed4de}</UniqueIdentifier>
+      <UniqueIdentifier>{1153eb4c-b702-4ebc-b158-3efcaf90032b}</UniqueIdentifier>
     </Filter>
     <Filter Include="Database">
-      <UniqueIdentifier>{0b33da80-26b3-44fc-80f8-2bc0146babfc}</UniqueIdentifier>
+      <UniqueIdentifier>{b16ab536-4478-40a9-8041-b15d048043d4}</UniqueIdentifier>
     </Filter>
     <Filter Include="Database\Implementation">
-      <UniqueIdentifier>{358e0b29-1b00-4480-88e2-3acf4a096927}</UniqueIdentifier>
+      <UniqueIdentifier>{c78b2e2f-992a-4a40-ae4d-4af40cdb5ea3}</UniqueIdentifier>
     </Filter>
     <Filter Include="DataStores">
-      <UniqueIdentifier>{f02fa004-0b77-4daa-82c0-316832197906}</UniqueIdentifier>
+      <UniqueIdentifier>{28318647-18a0-407e-a97e-aa17bc45ec6a}</UniqueIdentifier>
     </Filter>
     <Filter Include="Debugging">
-      <UniqueIdentifier>{114d465b-281b-42db-998f-e5f444910a1d}</UniqueIdentifier>
+      <UniqueIdentifier>{8ceaa906-d826-4697-bf56-f7a4b3a36f86}</UniqueIdentifier>
     </Filter>
     <Filter Include="Dynamic">
-      <UniqueIdentifier>{ea993d16-470d-46c2-8e36-86113b3a35ac}</UniqueIdentifier>
+      <UniqueIdentifier>{eaa66ee7-561e-4667-bea5-75e71fb7fa30}</UniqueIdentifier>
     </Filter>
     <Filter Include="Dynamic\LinkedReference">
-      <UniqueIdentifier>{a20ef541-cdd3-40d4-b42c-4b31180e7e2f}</UniqueIdentifier>
+      <UniqueIdentifier>{d65fb017-2bfe-4d3f-ba2e-3ceba6cee060}</UniqueIdentifier>
     </Filter>
     <Filter Include="Logging">
-      <UniqueIdentifier>{35ebd663-5e66-456e-836c-3698e538897f}</UniqueIdentifier>
+      <UniqueIdentifier>{ff6a858c-9bcb-4e51-bcb9-80f00dd94fe0}</UniqueIdentifier>
     </Filter>
     <Filter Include="Packets">
-      <UniqueIdentifier>{586236a9-46ee-4a27-8768-e0798730018e}</UniqueIdentifier>
+      <UniqueIdentifier>{942011ba-4141-4799-bbcf-57837a03ba56}</UniqueIdentifier>
     </Filter>
     <Filter Include="Threading">
-      <UniqueIdentifier>{3ce27052-a077-442a-940d-dc21ce0d3788}</UniqueIdentifier>
+      <UniqueIdentifier>{c7332f66-6935-44ef-9435-5ce0e6ff8f19}</UniqueIdentifier>
     </Filter>
     <Filter Include="Utilities">
-      <UniqueIdentifier>{de99d42e-5d97-4a17-8fbf-3ea3abeab894}</UniqueIdentifier>
+      <UniqueIdentifier>{faa8e2ff-abd3-4561-8489-1aa52bd12994}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
