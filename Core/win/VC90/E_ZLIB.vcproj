@@ -303,7 +303,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\dep\zlib\compress2.c"
+				RelativePath="..\..\dep\zlib\compress.c"
 				>
 			</File>
 			<File
@@ -312,6 +312,18 @@
 			</File>
 			<File
 				RelativePath="..\..\dep\zlib\deflate.c"
+				>
+			</File>
+			<File
+				RelativePath="..\..\dep\zlib\example.c"
+				>
+			</File>
+			<File
+				RelativePath="..\..\dep\zlib\gzio.c"
+				>
+			</File>
+			<File
+				RelativePath="..\..\dep\zlib\infback.c"
 				>
 			</File>
 			<File
@@ -328,6 +340,10 @@
 			</File>
 			<File
 				RelativePath="..\..\dep\zlib\trees.c"
+				>
+			</File>
+			<File
+				RelativePath="..\..\dep\zlib\uncompr.c"
 				>
 			</File>
 			<File
