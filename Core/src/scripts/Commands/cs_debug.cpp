@@ -886,7 +886,7 @@ public:
             return false;
 
         uint32 PhaseShift = atoi(args);
-        handler->GetSession()->SendSetPhaseShift(PhaseShift);
+        //handler->GetSession()->SendSetPhaseShift(PhaseShift);
         return true;
     }
 
