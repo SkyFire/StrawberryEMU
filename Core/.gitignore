@@ -9,10 +9,3 @@
 *.lastbuildstate
 *.unsuccessfulbuild
 *.pdb
-lib
-Win32_Debug/
-bin/
-*__Win32_Debug/
-*_Win32_Debug/
-*_Win32_Release/
-*__Win32_Release/
