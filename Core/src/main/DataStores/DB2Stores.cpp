@@ -89,7 +89,7 @@ inline void LoadDB2(LocalDB2Data& localeData, StoreProblemList1& errlist, DB2Sto
 void LoadDB2Stores(const std::string& dataPath)
 {
     uint32 oldMSTime = getMSTime();
-    std::string db2Path = dataPath + "db2/";
+    std::string db2Path = dataPath + "dbc/";
 
     LocaleNameStr const* defaultLocaleNameStr = NULL;
 
