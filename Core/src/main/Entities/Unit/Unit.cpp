@@ -16087,11 +16087,14 @@ void Unit::GetPartyMembers(std::list<Unit*> &TagUnitMap)
 
 Aura * Unit::AddAura(uint32 spellId, Unit *target)
 {
-    if (!target || !target->isAlive())
+    if (!target)
         return NULL;
 
     SpellEntry const *spellInfo = sSpellStore.LookupEntry(spellId);
     if (!spellInfo)
+        return NULL;
+
+    if (!target->isAlive() && !(spellInfo->Attributes & SPELL_ATTR_PASSIVE) && !(spellInfo->AttributesEx2 & SPELL_ATTR_EX2_ALLOW_DEAD_TARGET))
         return NULL;
 
     return AddAura(spellInfo, MAX_EFFECT_MASK, target);
