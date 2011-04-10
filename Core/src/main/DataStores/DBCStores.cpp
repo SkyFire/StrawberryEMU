@@ -300,6 +300,8 @@ static uint32 ReadDBCBuild(const std::string& dbc_path, LocaleNameStr const*&loc
     return build;
 }
 
+uint32 DBCFileCount = 0;
+
 static bool LoadDBC_assert_print(uint32 fsize,uint32 rsize, const std::string& filename)
 {
     sLog->outError("Size of '%s' setted by format string (%u) not equal size of C++ structure (%u).",filename.c_str(),fsize,rsize);
@@ -322,69 +324,68 @@ struct LocalData
 };
 
 template<class T>
-inline void LoadDBC(LocalData& localeData, StoreProblemList& errlist, DBCStorage<T>& storage, const std::string& dbc_path, const std::string& filename, const std::string * custom_entries = NULL, const std::string * idname = NULL)
+inline void LoadDBC(LocalData& localeData, StoreProblemList& errors, DBCStorage<T>& storage, std::string const& dbcPath, std::string const& filename, std::string const* customFormat = NULL, std::string const* customIndexName = NULL)
 {
     // compatibility format and C++ structure sizes
-    ASSERT(DBCFileLoader::GetFormatRecordSize(storage.GetFormat()) == sizeof(T) || LoadDBC_assert_print(DBCFileLoader::GetFormatRecordSize(storage.GetFormat()),sizeof(T),filename));
+    ASSERT(DBCFileLoader::GetFormatRecordSize(storage.GetFormat()) == sizeof(T) || LoadDBC_assert_print(DBCFileLoader::GetFormatRecordSize(storage.GetFormat()), sizeof(T), filename));
 
-    std::string dbc_filename = dbc_path + filename;
-    SqlDbc * sql = NULL;
+    ++DBCFileCount;
+    std::string dbcFilename = dbcPath + filename;
+    SqlDbc* sql = NULL;
 
-    if (custom_entries)
-        sql = new SqlDbc(&filename, custom_entries, idname, storage.GetFormat());
+    if (customFormat)
+        sql = new SqlDbc(&filename, customFormat, customIndexName, storage.GetFormat());
 
-    if(storage.Load(dbc_filename.c_str(), localeData.defaultLocale, sql))
+    if (storage.Load(dbcFilename.c_str(), localeData.defaultLocale, sql))
     {
-        for(uint8 i = 0; fullLocaleNameList[i].name; ++i)
+        for (uint8 i = 0; fullLocaleNameList[i].name; ++i)
         {
             if (!(localeData.availableDbcLocales & (1 << i)))
                 continue;
 
             LocaleNameStr const* localStr = &fullLocaleNameList[i];
 
-            std::string dbc_dir_loc = dbc_path + localStr->name + "/";
+            std::string dbc_dir_loc = dbcPath + localStr->name + "/";
 
             if (!(localeData.checkedDbcLocaleBuilds & (1 << i)))
             {
                 localeData.checkedDbcLocaleBuilds |= (1<<i);// mark as checked for speedup next checks
 
-
                 uint32 build_loc = ReadDBCBuild(dbc_dir_loc, localStr);
-                if(localeData.main_build != build_loc)
+                if (localeData.main_build != build_loc)
                 {
                     localeData.availableDbcLocales &= ~(1<<i);  // mark as not available for speedup next checks
 
                     // exist but wrong build
                     if (build_loc)
                     {
-                        std::string dbc_filename_loc = dbc_path + localStr->name + "/" + filename;
+                        std::string dbc_filename_loc = dbcPath + localStr->name + "/" + filename;
                         char buf[200];
                         snprintf(buf,200," (exist, but DBC locale subdir %s have DBCs for build %u instead expected build %u, it and other DBC from subdir skipped)",localStr->name,build_loc,localeData.main_build);
-                        errlist.push_back(dbc_filename_loc + buf);
+                        errors.push_back(dbc_filename_loc + buf);
                     }
 
                     continue;
                 }
             }
 
-            std::string dbc_filename_loc = dbc_path + localStr->name + "/" + filename;
-            if (!storage.LoadStringsFrom(dbc_filename_loc.c_str(),localStr->locale))
+            std::string localizedName = dbcPath + localStr->name + "/" + filename;
+            if (!storage.LoadStringsFrom(localizedName.c_str(), localStr->locale))
                 localeData.availableDbcLocales &= ~(1<<i);  // mark as not available for speedup next checks
         }
     }
     else
     {
         // sort problematic dbc to (1) non compatible and (2) nonexistent
-        FILE * f=fopen(dbc_filename.c_str(),"rb");
-        if (f)
+        if (FILE* f = fopen(dbcFilename.c_str(), "rb"))
         {
             char buf[100];
-            snprintf(buf,100," (exist, but have %d fields instead " SIZEFMTD ") Wrong client version DBC file?",storage.GetFieldCount(),strlen(storage.GetFormat()));
-            errlist.push_back(dbc_filename + buf);
+            snprintf(buf, 100, " (exists, but has %d fields instead of " SIZEFMTD ") Possible wrong client version.", storage.GetFieldCount(), strlen(storage.GetFormat()));
+            errors.push_back(dbcFilename + buf);
             fclose(f);
         }
         else
-            errlist.push_back(dbc_filename);
+            errors.push_back(dbcFilename);
     }
 
     delete sql;
@@ -409,13 +410,11 @@ void LoadDBCStores(const std::string& dataPath)
         exit(1);
     }
 
-    const uint32 DBCFilesCount = 118;
-
     StoreProblemList bad_dbc_files;
 
     LocalData availableDbcLocales(build,defaultLocaleNameStr->locale);
 
-    LoadDBC(availableDbcLocales,bad_dbc_files,sAreaStore,                dbcPath,"AreaTable.dbc");
+    LoadDBC(availableDbcLocales, bad_dbc_files, sAreaStore,                dbcPath,"AreaTable.dbc");
 
     // must be after sAreaStore loading
     for(uint32 i = 0; i < sAreaStore.GetNumRows(); ++i)           // areaflag numbered from 0
@@ -801,18 +800,18 @@ void LoadDBCStores(const std::string& dataPath)
     LoadDBC(availableDbcLocales,bad_dbc_files,sWorldSafeLocsStore,       dbcPath,"WorldSafeLocs.dbc");
 
     // error checks
-    if (bad_dbc_files.size() >= DBCFilesCount)
+    if (bad_dbc_files.size() >= DBCFileCount)
     {
-        sLog->outError("\nIncorrect DataDir value in worldserver.conf or ALL required *.dbc files (%d) not found by path: %sdbc",DBCFilesCount,dataPath.c_str());
+        sLog->outError("Incorrect DataDir value in worldserver.conf or ALL required *.dbc files (%d) not found by path: %sdbc", DBCFileCount, dataPath.c_str());
         exit(1);
     }
     else if (!bad_dbc_files.empty())
     {
         std::string str;
-        for (std::list<std::string>::iterator i = bad_dbc_files.begin(); i != bad_dbc_files.end(); ++i)
+        for (StoreProblemList::iterator i = bad_dbc_files.begin(); i != bad_dbc_files.end(); ++i)
             str += *i + "\n";
 
-        sLog->outError("\nSome required *.dbc files (%u from %d) not found or not compatible:\n%s",(uint32)bad_dbc_files.size(),DBCFilesCount,str.c_str());
+        sLog->outError("Some required *.dbc files (%u from %d) not found or not compatible:\n%s", (uint32)bad_dbc_files.size(), DBCFileCount, str.c_str());
         exit(1);
     }
 
@@ -830,7 +829,8 @@ void LoadDBCStores(const std::string& dataPath)
         sLog->outError("Please extract correct dbc files from build %s", AcceptableClientBuildsListStr().c_str());
         exit(1);
     }
-    sLog->outString(">> Initialized %d data stores in %u ms", DBCFilesCount, GetMSTimeDiffToNow(oldMSTime));
+
+    sLog->outString(">> Initialized %d data stores in %u ms", DBCFileCount, GetMSTimeDiffToNow(oldMSTime));
     sLog->outString();
 }
 
