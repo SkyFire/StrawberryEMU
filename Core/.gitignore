@@ -9,3 +9,14 @@
 *.lastbuildstate
 *.unsuccessfulbuild
 *.pdb
+*.sbr
+*.idb
+*.manifest
+*.ilk
+*.bsc
+Win32_Debug
+Win32_Release
+*__Win32_Debug
+*__Win32_Release
+*_Win32_Debug
+*_Win32_Release
