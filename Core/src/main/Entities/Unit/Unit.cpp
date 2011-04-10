@@ -10850,6 +10850,7 @@ uint32 Unit::SpellCriticalDamageBonus(SpellEntry const *spellProto, uint32 damag
 {
     // Calculate critical bonus
     int32 crit_bonus;
+    Player* modOwner = GetSpellModOwner();
     switch(spellProto->GetDmgClass())
     {
         case SPELL_DAMAGE_CLASS_MELEE:                      // for melee based spells is 100%
@@ -10858,12 +10859,19 @@ uint32 Unit::SpellCriticalDamageBonus(SpellEntry const *spellProto, uint32 damag
             crit_bonus = damage;
             break;
         default:
-            crit_bonus = damage / 2;                        // for spells is 50%
+            if (modOwner && (modOwner->getClass() == CLASS_MAGE || modOwner->getClass() == CLASS_WARLOCK))
+            {
+                crit_bonus = damage; // 100% bonus for Mages and Warlocks in Cataclysm
+            }
+            else
+            {
+                crit_bonus = damage / 2;                        // for spells is 50%
+            }
             break;
     }
 
     // adds additional damage to crit_bonus (from talents)
-    if (Player* modOwner = GetSpellModOwner())
+    if (modOwner)
         modOwner->ApplySpellMod(spellProto->Id, SPELLMOD_CRIT_DAMAGE_BONUS, crit_bonus);
 
     if (pVictim)
