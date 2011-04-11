@@ -278,7 +278,7 @@ void InstanceSaveManager::LoadInstances()
     CharDB.DirectExecute("DELETE tmp.* FROM group_instance     AS tmp LEFT JOIN instance ON tmp.instance = instance.id WHERE tmp.instance > 0 AND instance.id IS NULL");
 
     // Clean invalid references to instance
-    CharDB.DirectExecute("UPDATE corpse     AS tmp LEFT JOIN instance ON tmp.instance    = instance.id SET tmp.instance    = 0 WHERE tmp.instance    > 0 AND instance.id IS NULL");
+    CharDB.DirectExecute(CharDB.GetPreparedStatement(CHAR_RESET_NONEXISTENT_INSTANCE_FOR_CORPSES));
     CharDB.DirectExecute("UPDATE characters AS tmp LEFT JOIN instance ON tmp.instance_id = instance.id SET tmp.instance_id = 0 WHERE tmp.instance_id > 0 AND instance.id IS NULL");
 
     // Initialize instance id storage (Needs to be done after the trash has been clean out)
