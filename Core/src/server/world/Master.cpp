@@ -82,7 +82,7 @@ public:
     {
         if (!_delaytime)
             return;
-        sLog->outString("Starting up anti-freeze thread (%u seconds max stuck time)...",_delaytime/1000);
+        sLog->outString("Starting up anti-freeze thread (%u seconds max stuck time)...", _delaytime/1000);
         m_loops = 0;
         w_loops = 0;
         m_lastchange = 0;
@@ -171,7 +171,6 @@ int Master::Run()
     ///- Initialize the World
     sWorld->SetInitialWorldSettings();
 
-
     // Initialise the signal handlers
     CoredSignalHandler SignalINT, SignalTERM;
     #ifdef _WIN32
@@ -216,7 +215,7 @@ int Master::Run()
             ULONG_PTR appAff;
             ULONG_PTR sysAff;
 
-            if (GetProcessAffinityMask(hProcess,&appAff,&sysAff))
+            if (GetProcessAffinityMask(hProcess, &appAff, &sysAff))
             {
                 ULONG_PTR curAff = Aff & appAff;            // remove non accessible processors
 
@@ -226,7 +225,7 @@ int Master::Run()
                 }
                 else
                 {
-                    if (SetProcessAffinityMask(hProcess,curAff))
+                    if (SetProcessAffinityMask(hProcess, curAff))
                         sLog->outString("Using processors (bitmask, hex): %x", curAff);
                     else
                         sLog->outError("Can't set used processors (hex): %x", curAff);
@@ -258,9 +257,6 @@ int Master::Run()
         soap_thread = new ACE_Based::Thread(runnable);
     }
 
-    uint32 realCurrTime, realPrevTime;
-    realCurrTime = realPrevTime = getMSTime();
-
     ///- Start up freeze catcher thread
     if (uint32 freeze_delay = sConfig->GetIntDefault("MaxCoreStuckTime", 0))
     {
@@ -276,7 +272,7 @@ int Master::Run()
 
     if (sWorldSocketMgr->StartNetwork(wsport, bind_ip.c_str ()) == -1)
     {
-        sLog->outError ("Failed to start network");
+        sLog->outError("Failed to start network");
         World::StopNow(ERROR_EXIT_CODE);
         // go down and shutdown the server
     }
@@ -390,7 +386,6 @@ bool Master::_StartDB()
     }
 
     connections = sConfig->GetIntDefault("WorldDB.Connections", 1);
-
     if (!WorldDB.Open(dbstring, async_threads, connections))
     {
         sLog->outError("Cannot connect to world database %s", dbstring.c_str());
@@ -487,9 +482,9 @@ void Master::clearOnlineAccounts()
     /// \todo Only accounts with characters logged on *this* realm should have online status reset. Move the online column from 'account' to 'realmcharacters'?
     RealmDB.DirectPExecute(
         "UPDATE account SET online = 0 WHERE online > 0 "
-        "AND id IN (SELECT acctid FROM realmcharacters WHERE realmid = '%d')",realmID);
+        "AND id IN (SELECT acctid FROM realmcharacters WHERE realmid = '%d')", realmID);
 
-    CharDB.DirectExecute("UPDATE characters SET online = 0 WHERE online<>0");
+    CharDB.DirectExecute("UPDATE characters SET online = 0 WHERE online <> 0");
 
     // Battleground instance ids reset at server restart
     CharDB.DirectExecute("UPDATE character_battleground_data SET instance_id = 0");

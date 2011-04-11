@@ -48,7 +48,7 @@ public:
         uint64 uiRazorHarpoonGUIDs[4];
         uint64 uiExpCommanderGUID;
         uint64 uiXT002GUID;
-        uint64 uiAssemblyGUIDs[3];
+        uint64 uiAssemblyGUIDs[4];
         uint64 uiKologarnGUID;
         uint64 uiLeftArmGUID;
         uint64 uiRightArmGUID;

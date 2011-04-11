@@ -729,7 +729,7 @@ public:
             // GUID
             // type
             // doNotDEL
-            if (stricmp(dontdel_str, "NODEL") == 0)
+            if (_stricmp(dontdel_str, "NODEL") == 0)
             {
                 //sLog->outError("DEBUG: doNotDelete = true;");
                 doNotDelete = true;
@@ -741,7 +741,7 @@ public:
             if (type_str)
             {
                 sLog->outError("DEBUG: Only 2 params ");
-                if (stricmp(type_str, "NODEL") == 0)
+                if (_stricmp(type_str, "NODEL") == 0)
                 {
                     //sLog->outError("DEBUG: type_str, NODEL ");
                     doNotDelete = true;
