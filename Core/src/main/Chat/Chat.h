@@ -405,7 +405,4 @@ class CliHandler : public ChatHandler
         Print* m_print;
 };
 
-char const *fmtstring(char const *format, ...);
-
 #endif
-
