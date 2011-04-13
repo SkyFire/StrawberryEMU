@@ -330,8 +330,6 @@ Group* ObjectMgr::GetGroupByStorageId(uint32 storageId) const
     return NULL;
 }
 
-
-
 // Guild collection
 Guild* ObjectMgr::GetGuildById(uint32 guildId) const
 {
@@ -2786,7 +2784,7 @@ void ObjectMgr::LoadVehicleAccessories()
 
     if (!result)
     {
-        sLog->outErrorDb(">> Loaded 0 vehicle accessories. DB table `vehicle_accessory` is empty.");
+        sLog->outString(">> Loaded 0 Vehicle Accessories in %u ms", GetMSTimeDiffToNow(oldMSTime));
         sLog->outString();
         return;
     }
