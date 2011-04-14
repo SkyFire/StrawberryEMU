@@ -203,7 +203,7 @@ class DatabaseWorkerPool
             va_list ap;
             char szQuery[MAX_QUERY_LEN];
             va_start(ap, sql);
-            _vsnprintf(szQuery, MAX_QUERY_LEN, sql, ap);
+            vsnprintf(szQuery, MAX_QUERY_LEN, sql, ap);
             va_end(ap);
 
             return Query(szQuery);
