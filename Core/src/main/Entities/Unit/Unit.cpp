@@ -3797,8 +3797,8 @@ void Unit::RemoveAurasByType(AuraType auraType, uint64 casterGUID, Aura * except
 {
     for (AuraEffectList::iterator iter = m_modAuras[auraType].begin(); iter != m_modAuras[auraType].end();)
     {
-        Aura * aura = (*iter)->GetBase();
-        AuraApplication * aurApp = aur->GetApplicationOfTarget(GetGUID());
+        Aura *aura = (*iter)->GetBase();
+        AuraApplication * aurApp = aura->GetApplicationOfTarget(GetGUID());
 
         ++iter;
         if (aura != except && (!casterGUID || aura->GetCasterGUID() == casterGUID)

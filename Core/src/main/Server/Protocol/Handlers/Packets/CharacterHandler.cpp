@@ -211,6 +211,7 @@ void WorldSession::HandleCharEnum(QueryResult result)
     
     data << numchar;
 
+    _allowedCharsToLogin.clear();
     if (result)
     {
         do
@@ -219,7 +220,7 @@ void WorldSession::HandleCharEnum(QueryResult result)
             sLog->outDetail("Loading char guid %u from account %u.",guidlow,GetAccountId());
             if (Player::BuildEnumData(result, &data))
             {
-                m_AllowedCharsToLogin.push_back(guidlow);
+                _allowedCharsToLogin.insert(guidlow);
                 ++numchar;
             }
         }
