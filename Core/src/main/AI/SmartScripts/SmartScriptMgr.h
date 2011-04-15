@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2010 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2008-2011 TrinityCore <http://www.trinitycore.org/>
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -151,8 +151,9 @@ enum SMART_EVENT
     SMART_EVENT_GOSSIP_HELLO             = 64,      //1             // none
     SMART_EVENT_FOLLOW_COMPLETED         = 65,      //1             // none
     SMART_EVENT_DUMMY_EFFECT             = 66,      //1             // spellId, effectIndex
+    SMART_EVENT_IS_BEHIND_TARGET         = 67,      //1             // cooldownMin, CooldownMax
 
-    SMART_EVENT_END                      = 67,
+    SMART_EVENT_END                      = 68,
 };
 
 struct SmartEvent
@@ -330,6 +331,12 @@ struct SmartEvent
             uint32 spell;
             uint32 effIndex;
         } dummy;
+
+        struct
+        {
+            uint32 cooldownMin;
+            uint32 cooldownMax;
+        } behindTarget;
 
         struct
         {
@@ -692,7 +699,6 @@ struct SmartAction
             uint32 id;
         } taxi;
 
-
         struct
         {
             uint32 run;
@@ -761,7 +767,6 @@ struct SmartAction
         {
             uint32 id;
         } storeTargets;
-
 
         struct
         {
@@ -1096,8 +1101,9 @@ const uint32 SmartAIEventMask[SMART_EVENT_END][2] =
     {SMART_EVENT_GOSSIP_SELECT,             SMART_SCRIPT_TYPE_MASK_CREATURE + SMART_SCRIPT_TYPE_MASK_GAMEOBJECT },
     {SMART_EVENT_JUST_CREATED,              SMART_SCRIPT_TYPE_MASK_CREATURE + SMART_SCRIPT_TYPE_MASK_GAMEOBJECT },
     {SMART_EVENT_GOSSIP_HELLO,              SMART_SCRIPT_TYPE_MASK_CREATURE + SMART_SCRIPT_TYPE_MASK_GAMEOBJECT },
-    {SMART_EVENT_FOLLOW_COMPLETED,           SMART_SCRIPT_TYPE_MASK_CREATURE },
+    {SMART_EVENT_FOLLOW_COMPLETED,          SMART_SCRIPT_TYPE_MASK_CREATURE },
     {SMART_EVENT_DUMMY_EFFECT,              SMART_SCRIPT_TYPE_MASK_CREATURE },
+    {SMART_EVENT_IS_BEHIND_TARGET,          SMART_SCRIPT_TYPE_MASK_CREATURE }
 
 };
 
@@ -1294,11 +1300,11 @@ class SmartAIMgr
         }
         inline bool IsItemValid(SmartScriptHolder e, uint32 entry)
         {
-            /*if (!sItemStore.LookupEntry(entry))
+            if (!sItemStore.LookupEntry(entry))
             {
                 sLog->outErrorDb("SmartAIMgr: Entry %d SourceType %u Event %u Action %u uses non-existent Item entry %u, skipped.", e.entryOrGuid, e.GetScriptType(), e.event_id, e.GetActionType(), entry);
                 return false;
-            }*/
+            }
             return true;
         }
         /*inline bool IsConditionValid(SmartScriptHolder e, int32 t, int32 v1, int32 v2, int32 v3)

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2010 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2008-2011 TrinityCore <http://www.trinitycore.org/>
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -14,7 +14,6 @@
  * You should have received a copy of the GNU General Public License along
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-
 
 #include "DatabaseEnv.h"
 #include "SQLStorage.h"
@@ -55,7 +54,7 @@ void SmartWaypointMgr::LoadFromDB()
 
     do
     {
-        Field *fields = result->Fetch();
+        Field* fields = result->Fetch();
         uint32 entry = fields[0].GetUInt32();
         uint32 id = fields[1].GetUInt32();
         float x,y,z;
@@ -63,8 +62,7 @@ void SmartWaypointMgr::LoadFromDB()
         y = fields[3].GetFloat();
         z = fields[4].GetFloat();
 
-
-        WayPoint *wp = new WayPoint(id, x, y, z);
+        WayPoint* wp = new WayPoint(id, x, y, z);
 
         if (last_entry != entry)
         {
@@ -118,7 +116,7 @@ void SmartAIMgr::LoadSmartAIFromDB()
         SmartScriptHolder temp;
 
         temp.entryOrGuid = fields[0].GetInt32();
-        SmartScriptType source_type = (SmartScriptType)fields[1].GetUInt32();
+        SmartScriptType source_type = (SmartScriptType)fields[1].GetUInt8();
         if (source_type >= SMART_SCRIPT_TYPE_MAX)
         {
             sLog->outErrorDb("SmartAIMgr::LoadSmartAIFromDB: invalid source_type (%u), skipped loading.", uint32(source_type));
@@ -170,19 +168,19 @@ void SmartAIMgr::LoadSmartAIFromDB()
             }
         }
         temp.source_type = source_type;
-        temp.event_id = fields[2].GetUInt32();
-        temp.link = fields[3].GetUInt32();
-        temp.event.type = (SMART_EVENT)fields[4].GetUInt32();
-        temp.event.event_phase_mask = fields[5].GetUInt32();
-        temp.event.event_chance = fields[6].GetUInt32();
-        temp.event.event_flags = fields[7].GetUInt32();
+        temp.event_id = fields[2].GetUInt16();
+        temp.link = fields[3].GetUInt16();
+        temp.event.type = (SMART_EVENT)fields[4].GetUInt8();
+        temp.event.event_phase_mask = fields[5].GetUInt8();
+        temp.event.event_chance = fields[6].GetUInt8();
+        temp.event.event_flags = fields[7].GetUInt8();
 
         temp.event.raw.param1 = fields[8].GetUInt32();
         temp.event.raw.param2 = fields[9].GetUInt32();
         temp.event.raw.param3 = fields[10].GetUInt32();
         temp.event.raw.param4 = fields[11].GetUInt32();
 
-        temp.action.type = (SMART_ACTION)fields[12].GetUInt32();
+        temp.action.type = (SMART_ACTION)fields[12].GetUInt8();
 
         temp.action.raw.param1 = fields[13].GetUInt32();
         temp.action.raw.param2 = fields[14].GetUInt32();
@@ -191,7 +189,7 @@ void SmartAIMgr::LoadSmartAIFromDB()
         temp.action.raw.param5 = fields[17].GetUInt32();
         temp.action.raw.param6 = fields[18].GetUInt32();
 
-        temp.target.type = (SMARTAI_TARGETS)fields[19].GetUInt32();
+        temp.target.type = (SMARTAI_TARGETS)fields[19].GetUInt8();
         temp.target.raw.param1 = fields[20].GetUInt32();
         temp.target.raw.param2 = fields[21].GetUInt32();
         temp.target.raw.param3 = fields[22].GetUInt32();
@@ -452,6 +450,10 @@ bool SmartAIMgr::IsEventValid(SmartScriptHolder &e)
                 if (!IsSpellValid(e, e.event.dummy.spell)) return false;
                 if (e.event.dummy.effIndex > EFFECT_2) return false;
                 break;
+            case SMART_EVENT_IS_BEHIND_TARGET:
+                if (!IsMinMaxValid(e, e.event.behindTarget.cooldownMin, e.event.behindTarget.cooldownMax))
+                    return false;
+                break;
             case SMART_EVENT_TIMED_EVENT_TRIGGERED:
             case SMART_EVENT_INSTANCE_PLAYER_ENTER:
             case SMART_EVENT_TRANSPORT_RELOCATE:
@@ -582,7 +584,6 @@ bool SmartAIMgr::IsEventValid(SmartScriptHolder &e)
             if (!IsQuestValid(e, e.action.castCreatureOrGO.quest)) return false;
             if (!IsSpellValid(e, e.action.castCreatureOrGO.spell)) return false;
             break;
-
 
 
         case SMART_ACTION_SET_EVENT_PHASE:
