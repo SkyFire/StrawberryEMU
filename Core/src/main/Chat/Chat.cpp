@@ -38,7 +38,7 @@
 #include "SpellMgr.h"
 #include "ScriptMgr.h"
 
-#ifdef TRINITY_DEBUG
+#ifdef STRAWBERRY_DEBUG
     #define LOG(...) sLog->outDebug(LOG_FILTER_CHATSYS, __VA_ARGS__);
 #else
     #define LOG(...)
