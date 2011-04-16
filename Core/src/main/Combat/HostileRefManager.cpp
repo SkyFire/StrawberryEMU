@@ -72,7 +72,6 @@ void HostileRefManager::addTempThreat(float fThreat, bool apply)
     }
 }
 
-
 //=================================================
 
 void HostileRefManager::addThreatPercent(int32 iPercent)

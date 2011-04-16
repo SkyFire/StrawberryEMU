@@ -28,8 +28,8 @@
 #include "TicketMgr.h"
 #include "Player.h"
 #include "AccountMgr.h"
-#include "Chat.h"
 #include "OpcodeHandler.h"
+#include "Chat.h"
 #include "Log.h"
 #include "MapManager.h"
 #include "ObjectAccessor.h"
@@ -185,19 +185,6 @@ bool ChatHandler::HandleGPSCommand(const char* args)
         obj->GetMapId(), (mapEntry ? mapEntry->name[GetSessionDbcLocale()] : "<unknown>"),
         zone_id, (zoneEntry ? zoneEntry->area_name[GetSessionDbcLocale()] : "<unknown>"),
         area_id, (areaEntry ? areaEntry->area_name[GetSessionDbcLocale()] : "<unknown>"),
-        obj->GetPhaseMask(),
-        obj->GetPositionX(), obj->GetPositionY(), obj->GetPositionZ(), obj->GetOrientation(),
-        cell.GridX(), cell.GridY(), cell.CellX(), cell.CellY(), obj->GetInstanceId(),
-        zone_x, zone_y, ground_z, floor_z, have_map, have_vmap);
-
-    sLog->outDebug(LOG_FILTER_CHATSYS, "Player %s GPS call for %s '%s' (%s: %u):",
-        m_session ? GetNameLink().c_str() : GetString(LANG_CONSOLE_COMMAND),
-        (obj->GetTypeId() == TYPEID_PLAYER ? "player" : "creature"), obj->GetName(),
-        (obj->GetTypeId() == TYPEID_PLAYER ? "GUID" : "Entry"), (obj->GetTypeId() == TYPEID_PLAYER ? obj->GetGUIDLow(): obj->GetEntry()));
-    sLog->outDebug(LOG_FILTER_CHATSYS, GetString(LANG_MAP_POSITION),
-        obj->GetMapId(), (mapEntry ? mapEntry->name[sWorld->GetDefaultDbcLocale()] : "<unknown>"),
-        zone_id, (zoneEntry ? zoneEntry->area_name[sWorld->GetDefaultDbcLocale()] : "<unknown>"),
-        area_id, (areaEntry ? areaEntry->area_name[sWorld->GetDefaultDbcLocale()] : "<unknown>"),
         obj->GetPhaseMask(),
         obj->GetPositionX(), obj->GetPositionY(), obj->GetPositionZ(), obj->GetOrientation(),
         cell.GridX(), cell.GridY(), cell.CellX(), cell.CellY(), obj->GetInstanceId(),

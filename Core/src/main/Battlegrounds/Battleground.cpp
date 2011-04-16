@@ -44,16 +44,16 @@ namespace Strawberry
     {
         public:
             BattlegroundChatBuilder(ChatMsg msgtype, int32 textId, Player const* source, va_list* args = NULL)
-                : _msgtype(msgtype), _textId(textId), _source(source), _args(args) {}
+                : _msgtype(msgtype), _textId(textId), _source(source), _args(args) { }
+
             void operator()(WorldPacket& data, LocaleConstant loc_idx)
             {
                 char const* text = sObjectMgr->GetString(_textId, loc_idx);
-
                 if (_args)
                 {
                     // we need copy va_list before use or original va_list will corrupted
                     va_list ap;
-                    va_copy(ap,*_args);
+                    va_copy(ap, *_args);
 
                     char str[2048];
                     vsnprintf(str, 2048, text, ap);
@@ -64,19 +64,20 @@ namespace Strawberry
                 else
                     do_helper(data, text);
             }
+
         private:
             void do_helper(WorldPacket& data, char const* text)
             {
                 uint64 target_guid = _source  ? _source ->GetGUID() : 0;
 
-                data << uint8(_msgtype);
+                data << uint8 (_msgtype);
                 data << uint32(LANG_UNIVERSAL);
                 data << uint64(target_guid);                // there 0 for BG messages
                 data << uint32(0);                          // can be chat msg group or something
                 data << uint64(target_guid);
                 data << uint32(strlen(text) + 1);
                 data << text;
-                data << uint8(_source ? _source->chatTag() : uint8(0));
+                data << uint8 (_source ? _source->chatTag() : uint8(0));
             }
 
             ChatMsg _msgtype;
@@ -90,6 +91,7 @@ namespace Strawberry
         public:
             Battleground2ChatBuilder(ChatMsg msgtype, int32 textId, Player const* source, int32 arg1, int32 arg2)
                 : _msgtype(msgtype), _textId(textId), _source(source), _arg1(arg1), _arg2(arg2) {}
+
             void operator()(WorldPacket& data, LocaleConstant loc_idx)
             {
                 char const* text = sObjectMgr->GetString(_textId, loc_idx);
@@ -97,18 +99,18 @@ namespace Strawberry
                 char const* arg2str = _arg2 ? sObjectMgr->GetString(_arg2, loc_idx) : "";
 
                 char str[2048];
-                snprintf(str, 2048,text, arg1str, arg2str);
+                snprintf(str, 2048, text, arg1str, arg2str);
 
-                uint64 target_guid = _source  ? _source ->GetGUID() : 0;
+                uint64 target_guid = _source  ? _source->GetGUID() : 0;
 
-                data << uint8(_msgtype);
+                data << uint8 (_msgtype);
                 data << uint32(LANG_UNIVERSAL);
                 data << uint64(target_guid);                // there 0 for BG messages
                 data << uint32(0);                          // can be chat msg group or something
                 data << uint64(target_guid);
                 data << uint32(strlen(str) + 1);
                 data << str;
-                data << uint8(_source ? _source->chatTag() : uint8(0));
+                data << uint8 (_source ? _source->chatTag() : uint8(0));
             }
 
         private:
@@ -118,7 +120,7 @@ namespace Strawberry
             int32 _arg1;
             int32 _arg2;
     };
-}                                                           // namespace Strawberry
+}                                                           // namespace Trinity
 
 template<class Do>
 void Battleground::BroadcastWorker(Do& _do)
@@ -282,6 +284,7 @@ inline void Battleground::_ProcessOfflineQueue()
             }
         }
     }
+
 }
 
 inline void Battleground::_ProcessRessurect(uint32 diff)
@@ -394,8 +397,6 @@ inline void Battleground::_ProcessJoin(uint32 diff)
 
     if (m_ResetStatTimer <= 5000)
     {
-        ModifyStartDelayTime(diff);
-
         m_ResetStatTimer = 0;
         for (BattlegroundPlayerMap::const_iterator itr = GetPlayers().begin(); itr != GetPlayers().end(); ++itr)
             if (Player *plr = sObjectMgr->GetPlayer(itr->first))
@@ -412,6 +413,7 @@ inline void Battleground::_ProcessJoin(uint32 diff)
             EndNow();
             return;
         }
+
         StartingEventCloseDoors();
         SetStartDelayTime(m_StartDelayTimes[BG_STARTING_EVENT_FIRST]);
         // First start warning - 2 or 1 minute
@@ -586,13 +588,11 @@ void Battleground::PlaySoundToTeam(uint32 SoundID, uint32 TeamID)
 {
     WorldPacket data;
     for (BattlegroundPlayerMap::const_iterator itr = m_Players.begin(); itr != m_Players.end(); ++itr)
-    {
         if (Player* player = _GetPlayerForTeam(TeamID, itr, "PlaySoundToTeam"))
         {
             sBattlegroundMgr->BuildPlaySoundPacket(&data, SoundID);
             player->GetSession()->SendPacket(&data);
         }
-    }
 }
 
 void Battleground::CastSpellOnTeam(uint32 SpellID, uint32 TeamID)
@@ -704,7 +704,7 @@ void Battleground::EndBattleground(uint32 winner)
                 winner_matchmaker_rating = GetArenaMatchmakerRating(winner);
                 winner_change = winner_arena_team->WonAgainst(loser_matchmaker_rating);
                 loser_change = loser_arena_team->LostAgainst(winner_matchmaker_rating);
-                sLog->outArena("--- Winner rating: %u, Loser rating: %u, Winner MMR: %u, Loser MMR: %u, Winner change: %u, Loser change: %u ---", winner_team_rating, loser_team_rating,
+                sLog->outArena("--- Winner rating: %u, Loser rating: %u, Winner MMR: %u, Loser MMR: %u, Winner change: %d, Loser change: %d ---", winner_team_rating, loser_team_rating,
                     winner_matchmaker_rating, loser_matchmaker_rating, winner_change, loser_change);
                 SetArenaTeamRatingChangeForTeam(winner, winner_change);
                 SetArenaTeamRatingChangeForTeam(GetOtherTeam(winner), loser_change);
@@ -778,7 +778,7 @@ void Battleground::EndBattleground(uint32 winner)
                 // update achievement BEFORE personal rating update
                 ArenaTeamMember* member = winner_arena_team->GetMember(plr->GetGUID());
                 if (member)
-                    plr->GetAchievementMgr().UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_WIN_RATED_ARENA, member->personal_rating);
+                    plr->GetAchievementMgr().UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_WIN_RATED_ARENA, member->PersonalRating);
 
                 winner_arena_team->MemberWon(plr,loser_matchmaker_rating, winner_change);
             }
@@ -814,7 +814,6 @@ void Battleground::EndBattleground(uint32 winner)
             if (IsRandom() || BattlegroundMgr::IsBGWeekend(GetTypeID()))
                 UpdatePlayerScore(plr, SCORE_BONUS_HONOR, GetBonusHonorFromKill(loser_kills));
         }
-
 
         plr->ResetAllPowers();
         plr->CombatStopWithPets(true);
@@ -1345,12 +1344,11 @@ void Battleground::RemovePlayerFromResurrectQueue(const uint64& player_guid)
 {
     for (std::map<uint64, std::vector<uint64> >::iterator itr = m_ReviveQueue.begin(); itr != m_ReviveQueue.end(); ++itr)
     {
-        for (std::vector<uint64>::iterator itr2 =(itr->second).begin(); itr2 != (itr->second).end(); ++itr2)
+        for (std::vector<uint64>::iterator itr2 = (itr->second).begin(); itr2 != (itr->second).end(); ++itr2)
         {
             if (*itr2 == player_guid)
             {
                 (itr->second).erase(itr2);
-
                 if (Player *plr = sObjectMgr->GetPlayer(player_guid))
                     plr->RemoveAurasDueToSpell(SPELL_WAITING_FOR_RESURRECT);
                 return;
@@ -1530,7 +1528,6 @@ bool Battleground::DelCreature(uint32 type)
 
     sLog->outError("Battleground::DelCreature: creature (type: %u, GUID: %u) not found for BG (map: %u, instance id: %u)!",
         type, GUID_LOPART(m_BgCreatures[type]), m_MapId, m_InstanceID);
-
     m_BgCreatures[type] = 0;
     return false;
 }
@@ -1602,8 +1599,8 @@ void Battleground::SendWarningToAll(int32 entry, ...)
 {
     const char *format = sObjectMgr->GetStringForDBCLocale(entry);
 
-    va_list ap;
     char str[1024];
+    va_list ap;
     va_start(ap, entry);
     vsnprintf(str, 1024, format, ap);
     va_end(ap);
@@ -1701,7 +1698,7 @@ void Battleground::HandleKillPlayer(Player* player, Player* killer)
 
         for (BattlegroundPlayerMap::const_iterator itr = m_Players.begin(); itr != m_Players.end(); ++itr)
         {
-            Player *plr = sObjectMgr->GetPlayer(itr->first);
+            Player* plr = sObjectMgr->GetPlayer(itr->first);
             if (!plr || plr == killer)
                 continue;
 
@@ -1712,6 +1709,7 @@ void Battleground::HandleKillPlayer(Player* player, Player* killer)
 
     if (!isArena())
     {
+        // To be able to remove insignia -- ONLY IN Battlegrounds
         player->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_SKINNABLE);
         RewardXPAtKill(killer, player);
     }
@@ -1847,6 +1845,6 @@ void Battleground::SetBracket(PvPDifficultyEntry const* bracketEntry)
 
 void Battleground::RewardXPAtKill(Player* killer, Player* victim)
 {
-   if (sWorld->getBoolConfig(CONFIG_BG_XP_FOR_KILL) && killer && victim)
+    if (sWorld->getBoolConfig(CONFIG_BG_XP_FOR_KILL) && killer && victim)
         killer->RewardPlayerAndGroupAtKill(victim, true);
 }

@@ -27,7 +27,6 @@
 #include "ObjectMgr.h"
 #include "WorldPacket.h"
 
-
 BattlegroundSA::BattlegroundSA()
 {
     m_StartMessageIds[BG_STARTING_EVENT_FIRST]  = LANG_BG_SA_START_TWO_MINUTES;
@@ -72,7 +71,6 @@ bool BattlegroundSA::ResetObjs()
 
     uint32 atF = BG_SA_Factions[Attackers];
     uint32 defF = BG_SA_Factions[Attackers ? TEAM_ALLIANCE : TEAM_HORDE];
-
 
     for (uint8 i = 0; i <BG_SA_MAXOBJ; i++)
         DelObject(i);
@@ -529,36 +527,30 @@ void BattlegroundSA::TeleportPlayers()
     }
 }
 
-void BattlegroundSA::EventPlayerDamagedGO(Player* /*plr*/, GameObject* go, uint8 hitType, uint32 destroyedEvent)
+void BattlegroundSA::EventPlayerDamagedGO(Player* /*plr*/, GameObject* go, uint32 eventType)
 {
     if (!go || !go->GetGOInfo())
         return;
 
-    switch(hitType)
+    if (eventType == go->GetGOInfo()->building.damagedEvent)
     {
-        case BG_OBJECT_DMG_HIT_TYPE_JUST_DAMAGED://under attack
-            SendWarningToAll(LANG_BG_SA_IS_UNDER_ATTACK, go->GetGOInfo()->name);
-            break;
-        case BG_OBJECT_DMG_HIT_TYPE_DAMAGED:
-            break;
-        case BG_OBJECT_DMG_HIT_TYPE_JUST_HIGH_DAMAGED:
-            {
-                uint32 i = GetGateIDFromDestroyEventID(destroyedEvent);
-                GateStatus[i] = BG_SA_GATE_DAMAGED;
-                uint32 uws = GetWorldStateFromGateID(i);
-                if (uws)
-                    UpdateWorldState(uws, GateStatus[i]);
-                break;
-            }
-        case BG_OBJECT_DMG_HIT_TYPE_HIGH_DAMAGED:
-            break;
-        case BG_OBJECT_DMG_HIT_TYPE_JUST_DESTROYED://handled at DestroyGate()
-            if (destroyedEvent == 19837)
-                SendWarningToAll(LANG_BG_SA_CHAMBER_BREACHED);
-            else
-                SendWarningToAll(LANG_BG_SA_WAS_DESTROYED, go->GetGOInfo()->name);
-            break;
+        uint32 i = GetGateIDFromDestroyEventID(eventType);
+        GateStatus[i] = BG_SA_GATE_DAMAGED;
+        uint32 uws = GetWorldStateFromGateID(i);
+        if (uws)
+            UpdateWorldState(uws, GateStatus[i]);
     }
+
+    if (eventType == go->GetGOInfo()->building.destroyedEvent)
+    {
+        if (go->GetGOInfo()->building.destroyedEvent == 19837)
+            SendWarningToAll(LANG_BG_SA_CHAMBER_BREACHED);
+        else
+            SendWarningToAll(LANG_BG_SA_WAS_DESTROYED, go->GetGOInfo()->name);
+    }
+
+    if (eventType == go->GetGOInfo()->building.damageEvent)
+        SendWarningToAll(LANG_BG_SA_IS_UNDER_ATTACK, go->GetGOInfo()->name);
 }
 
 void BattlegroundSA::HandleKillUnit(Creature* unit, Player* killer)

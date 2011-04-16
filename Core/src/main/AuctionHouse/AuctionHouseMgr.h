@@ -64,6 +64,7 @@ struct AuctionEntry
     uint64 bidder;
     uint32 deposit;                                         //deposit can be calculated only when creating auction
     AuctionHouseEntry const* auctionHouseEntry;             // in AuctionHouse.dbc
+    uint32 factionTemplateId;
 
     // helpers
     uint32 GetHouseId() const { return auctionHouseEntry->houseId; }
@@ -73,6 +74,7 @@ struct AuctionEntry
     bool BuildAuctionInfo(WorldPacket & data) const;
     void DeleteFromDB(SQLTransaction& trans) const;
     void SaveToDB(SQLTransaction& trans) const;
+    bool LoadFromDB(Field* fields);
 };
 
 //this class is used as auctionhouse instance

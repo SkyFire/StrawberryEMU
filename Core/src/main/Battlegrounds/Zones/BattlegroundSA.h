@@ -75,7 +75,6 @@ enum BG_SA_WorldStates
     BG_SA_YELLOW_GATEWS = 3638,
     BG_SA_ANCIENT_GATEWS = 3849,
 
-
     BG_SA_LEFT_GY_ALLIANCE = 3635,
     BG_SA_RIGHT_GY_ALLIANCE = 3636,
     BG_SA_CENTER_GY_ALLIANCE = 3637,
@@ -441,7 +440,7 @@ class BattlegroundSA : public Battleground
         /// Called for generate packet contain worldstate data
         virtual void FillInitialWorldStates(WorldPacket& data);
         /// Called when a player deal damage to building (door)
-        virtual void EventPlayerDamagedGO(Player* plr, GameObject* go, uint8 hitType, uint32 destroyedEvent);
+        virtual void EventPlayerDamagedGO(Player* plr, GameObject* go, uint32 eventType);
         /// Called when a player kill a unit in bg
         virtual void HandleKillUnit(Creature* unit, Player* killer);
         /// Return the nearest graveyard where player can respawn
@@ -487,7 +486,6 @@ class BattlegroundSA : public Battleground
         /// CAlled when a player leave battleground
         void RemovePlayer(Player *plr,uint64 guid);
         void HandleAreaTrigger(Player *Source, uint32 Trigger);
-
 
         /* Scorekeeping */
         /// Update score board
@@ -544,7 +542,6 @@ class BattlegroundSA : public Battleground
         void SendTransportInit(Player *player);
         /// Send packet to player for destroy boats (client part)
         void SendTransportsRemove(Player * player);
-
 
         /// Id of attacker team
         TeamId Attackers;

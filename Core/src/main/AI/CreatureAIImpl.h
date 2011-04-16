@@ -1,5 +1,9 @@
 /*
+ * Copyright (C) 2010-2011 Strawberry-Pr0jcts <http://www.strawberry-pr0jcts.com/>
+ *
  * Copyright (C) 2008-2010 TrinityCore <http://www.trinitycore.org/>
+ *
+ * Copyright (C) 2005-2009 MaNGOS <http://getmangos.com/>
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -14,6 +18,7 @@
  * You should have received a copy of the GNU General Public License along
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 #ifndef CREATUREAIIMPL_H
 #define CREATUREAIIMPL_H
 
@@ -584,24 +589,24 @@ inline void UnitAI::DoCastAOE(uint32 spellId, bool triggered)
     me->CastSpell((Unit*)NULL, spellId, triggered);
 }
 
-inline Creature *CreatureAI::DoSummon(uint32 uiEntry, const Position &pos, uint32 uiDespawntime, TempSummonType uiType)
+inline Creature* CreatureAI::DoSummon(uint32 entry, const Position &pos, uint32 despawnTime, TempSummonType summonType)
 {
-    return me->SummonCreature(uiEntry, pos, uiType, uiDespawntime);
+    return me->SummonCreature(entry, pos, summonType, despawnTime);
 }
 
-inline Creature *CreatureAI::DoSummon(uint32 uiEntry, WorldObject* obj, float fRadius, uint32 uiDespawntime, TempSummonType uiType)
+inline Creature* CreatureAI::DoSummon(uint32 entry, WorldObject* obj, float radius, uint32 despawnTime, TempSummonType summonType)
 {
     Position pos;
-    obj->GetRandomNearPosition(pos, fRadius);
-    return me->SummonCreature(uiEntry, pos, uiType, uiDespawntime);
+    obj->GetRandomNearPosition(pos, radius);
+    return me->SummonCreature(entry, pos, summonType, despawnTime);
 }
 
-inline Creature *CreatureAI::DoSummonFlyer(uint32 uiEntry, WorldObject *obj, float _fZ, float fRadius, uint32 uiDespawntime, TempSummonType uiType)
+inline Creature* CreatureAI::DoSummonFlyer(uint32 entry, WorldObject* obj, float flightZ, float radius, uint32 despawnTime, TempSummonType summonType)
 {
     Position pos;
-    obj->GetRandomNearPosition(pos, fRadius);
-    pos.m_positionZ += _fZ;
-    return me->SummonCreature(uiEntry, pos, uiType, uiDespawntime);
+    obj->GetRandomNearPosition(pos, radius);
+    pos.m_positionZ += flightZ;
+    return me->SummonCreature(entry, pos, summonType, despawnTime);
 }
 
 #endif
