@@ -1140,42 +1140,6 @@
     <ClCompile Include="..\..\src\scripts\EasternKingdoms\BlackrockDepths\instance_blackrock_depths.cpp">
       <Filter>Scripts\EasternKingdoms\BlackrockDepths</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\scripts\EasternKingdoms\BlackrockSpire\boss_drakkisath.cpp">
-      <Filter>Scripts\EasternKingdoms\BlackrockSpire</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\scripts\EasternKingdoms\BlackrockSpire\boss_gyth.cpp">
-      <Filter>Scripts\EasternKingdoms\BlackrockSpire</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\scripts\EasternKingdoms\BlackrockSpire\boss_halycon.cpp">
-      <Filter>Scripts\EasternKingdoms\BlackrockSpire</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\scripts\EasternKingdoms\BlackrockSpire\boss_highlord_omokk.cpp">
-      <Filter>Scripts\EasternKingdoms\BlackrockSpire</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\scripts\EasternKingdoms\BlackrockSpire\boss_mother_smolderweb.cpp">
-      <Filter>Scripts\EasternKingdoms\BlackrockSpire</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\scripts\EasternKingdoms\BlackrockSpire\boss_overlord_wyrmthalak.cpp">
-      <Filter>Scripts\EasternKingdoms\BlackrockSpire</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\scripts\EasternKingdoms\BlackrockSpire\boss_pyroguard_emberseer.cpp">
-      <Filter>Scripts\EasternKingdoms\BlackrockSpire</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\scripts\EasternKingdoms\BlackrockSpire\boss_quartermaster_zigris.cpp">
-      <Filter>Scripts\EasternKingdoms\BlackrockSpire</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\scripts\EasternKingdoms\BlackrockSpire\boss_rend_blackhand.cpp">
-      <Filter>Scripts\EasternKingdoms\BlackrockSpire</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\scripts\EasternKingdoms\BlackrockSpire\boss_shadow_hunter_voshgajin.cpp">
-      <Filter>Scripts\EasternKingdoms\BlackrockSpire</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\scripts\EasternKingdoms\BlackrockSpire\boss_the_beast.cpp">
-      <Filter>Scripts\EasternKingdoms\BlackrockSpire</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\scripts\EasternKingdoms\BlackrockSpire\boss_warmaster_voone.cpp">
-      <Filter>Scripts\EasternKingdoms\BlackrockSpire</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\scripts\EasternKingdoms\BlackwingLair\boss_broodlord_lashlayer.cpp">
       <Filter>Scripts\EasternKingdoms\BlackwingLair</Filter>
     </ClCompile>
@@ -2656,6 +2620,45 @@
       <Filter>Scripts\Commands</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\main\PCH\PCH.cpp" />
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\BlackrockSpire\boss_pyroguard_emberseer.cpp">
+      <Filter>Scripts\EasternKingdoms\BlackrockSpire</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\BlackrockSpire\boss_quartermaster_zigris.cpp">
+      <Filter>Scripts\EasternKingdoms\BlackrockSpire</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\BlackrockSpire\boss_rend_blackhand.cpp">
+      <Filter>Scripts\EasternKingdoms\BlackrockSpire</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\BlackrockSpire\boss_shadow_hunter_voshgajin.cpp">
+      <Filter>Scripts\EasternKingdoms\BlackrockSpire</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\BlackrockSpire\boss_the_beast.cpp">
+      <Filter>Scripts\EasternKingdoms\BlackrockSpire</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\BlackrockSpire\boss_warmaster_voone.cpp">
+      <Filter>Scripts\EasternKingdoms\BlackrockSpire</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\BlackrockSpire\instance_blackrock_spire.cpp">
+      <Filter>Scripts\EasternKingdoms\BlackrockSpire</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\BlackrockSpire\boss_drakkisath.cpp">
+      <Filter>Scripts\EasternKingdoms\BlackrockSpire</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\BlackrockSpire\boss_gyth.cpp">
+      <Filter>Scripts\EasternKingdoms\BlackrockSpire</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\BlackrockSpire\boss_halycon.cpp">
+      <Filter>Scripts\EasternKingdoms\BlackrockSpire</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\BlackrockSpire\boss_highlord_omokk.cpp">
+      <Filter>Scripts\EasternKingdoms\BlackrockSpire</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\BlackrockSpire\boss_mother_smolderweb.cpp">
+      <Filter>Scripts\EasternKingdoms\BlackrockSpire</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\scripts\EasternKingdoms\BlackrockSpire\boss_overlord_wyrmthalak.cpp">
+      <Filter>Scripts\EasternKingdoms\BlackrockSpire</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\main\Accounts\AccountMgr.h">
