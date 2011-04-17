@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2010 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2008-2011 TrinityCore <http://www.trinitycore.org/>
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -166,7 +166,10 @@ bool OPvPCapturePoint::DelCreature(uint32 type)
     //if (Map * map = sMapMgr->FindMap(cr->GetMapId()))
     //    map->Remove(cr,false);
     // delete respawn time for this creature
-    CharDB.PExecute("DELETE FROM creature_respawn WHERE guid = '%u'", guid);
+    PreparedStatement* stmt = CharDB.GetPreparedStatement(CHAR_DEL_CREATURE_RESPAWN_BY_GUID);
+    stmt->setUInt32(0, guid);
+    CharDB.Execute(stmt);
+
     cr->AddObjectToRemoveList();
     sObjectMgr->DeleteCreatureData(guid);
     m_CreatureTypes[m_Creatures[type]] = 0;

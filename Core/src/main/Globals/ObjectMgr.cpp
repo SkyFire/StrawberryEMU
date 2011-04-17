@@ -1960,8 +1960,7 @@ void ObjectMgr::LoadCreatureRespawnTimes()
 
     uint32 count = 0;
 
-    QueryResult result = CharDB.Query("SELECT guid,respawntime,instance FROM creature_respawn");
-
+    PreparedQueryResult result = CharDB.Query(CharDB.GetPreparedStatement(CHAR_LOAD_CREATURE_RESPAWNS));
     if (!result)
     {
         sLog->outString(">> Loaded 0 creature respawn time.");
@@ -1991,13 +1990,11 @@ void ObjectMgr::LoadGameobjectRespawnTimes()
     uint32 oldMSTime = getMSTime();
 
     // Remove outdated data
-    PreparedStatement *stmt = CharDB.GetPreparedStatement(CHAR_DEL_EXPIRED_GO_RESPAWN_TIMES);
-    CharDB.DirectExecute(stmt);
+    CharDB.DirectExecute(CharDB.GetPreparedStatement(CHAR_DEL_EXPIRED_GO_RESPAWNS));
 
     uint32 count = 0;
 
-    QueryResult result = CharDB.Query("SELECT guid,respawntime,instance FROM gameobject_respawn");
-
+    PreparedQueryResult result = CharDB.Query(CharDB.GetPreparedStatement(CHAR_LOAD_GO_RESPAWNS));
     if (!result)
     {
         sLog->outString(">> Loaded 0 gameobject respawn times. DB table `gameobject_respawn` is empty!");
@@ -3420,58 +3417,58 @@ void ObjectMgr::LoadPlayerInfo()
         }
         while (result->NextRow());
 
-        sLog->outString();
-        sLog->outString(">> Loaded %u level stats definitions", count);
-    }
-
-    // Fill gaps and check integrity
-    for (int race = 0; race < MAX_RACES; ++race)
-    {
-        // skip non existed races
-        if (!sChrRacesStore.LookupEntry(race))
-            continue;
-
-        for (int class_ = 0; class_ < MAX_CLASSES; ++class_)
+        // Fill gaps and check integrity
+        for (int race = 0; race < MAX_RACES; ++race)
         {
-            // skip non existed classes
-            if (!sChrClassesStore.LookupEntry(class_))
+            // skip non existed races
+            if (!sChrRacesStore.LookupEntry(race))
                 continue;
 
-            PlayerInfo* pInfo = &playerInfo[race][class_];
-
-            // skip non loaded combinations
-            if (!pInfo->displayId_m || !pInfo->displayId_f)
-                continue;
-
-            // skip expansion races if not playing with expansion
-            if (sWorld->getIntConfig(CONFIG_EXPANSION) < 1 && (race == RACE_BLOODELF || race == RACE_DRAENEI))
-                continue;
-
-            // skip expansion classes if not playing with expansion
-            if (sWorld->getIntConfig(CONFIG_EXPANSION) < 2 && class_ == CLASS_DEATH_KNIGHT)
-                continue;
-
-            // skip expansion classes if not playing with expansion
-            if (sWorld->getIntConfig(CONFIG_EXPANSION) < 3 && (race == RACE_GOBLIN || race == RACE_WORGEN))
-                continue;
-
-            // fatal error if no level 1 data
-            if (!pInfo->levelInfo || pInfo->levelInfo[0].stats[0] == 0)
+            for (int class_ = 0; class_ < MAX_CLASSES; ++class_)
             {
-                sLog->outErrorDb("Race %i Class %i Level 1 does not have stats data!",race,class_);
-                exit(1);
-            }
+                // skip non existed classes
+                if (!sChrClassesStore.LookupEntry(class_))
+                    continue;
 
-            // fill level gaps
-            for (uint8 level = 1; level < sWorld->getIntConfig(CONFIG_MAX_PLAYER_LEVEL); ++level)
-            {
-                if (pInfo->levelInfo[level].stats[0] == 0)
+                PlayerInfo* pInfo = &playerInfo[race][class_];
+
+                // skip non loaded combinations
+                if (!pInfo->displayId_m || !pInfo->displayId_f)
+                    continue;
+
+                // skip expansion races if not playing with expansion
+                if (sWorld->getIntConfig(CONFIG_EXPANSION) < 1 && (race == RACE_BLOODELF || race == RACE_DRAENEI))
+                    continue;
+
+                // skip expansion classes if not playing with expansion
+                if (sWorld->getIntConfig(CONFIG_EXPANSION) < 2 && class_ == CLASS_DEATH_KNIGHT)
+                    continue;
+
+                // skip expansion classes if not playing with expansion
+                if (sWorld->getIntConfig(CONFIG_EXPANSION) < 3 && (race == RACE_GOBLIN || race == RACE_WORGEN))
+                    continue;
+
+                // fatal error if no level 1 data
+                if (!pInfo->levelInfo || pInfo->levelInfo[0].stats[0] == 0)
                 {
-                    sLog->outErrorDb("Race %i Class %i Level %i does not have stats data. Using stats data of level %i.",race,class_,level+1, level);
-                    pInfo->levelInfo[level] = pInfo->levelInfo[level-1];
+                    sLog->outErrorDb("Race %i Class %i Level 1 does not have stats data!",race,class_);
+                    exit(1);
+                }
+
+                // fill level gaps
+                for (uint8 level = 1; level < sWorld->getIntConfig(CONFIG_MAX_PLAYER_LEVEL); ++level)
+                {
+                    if (pInfo->levelInfo[level].stats[0] == 0)
+                    {
+                        sLog->outErrorDb("Race %i Class %i Level %i does not have stats data. Using stats data of level %i.",race,class_,level+1, level);
+                        pInfo->levelInfo[level] = pInfo->levelInfo[level-1];
+                    }
                 }
             }
         }
+
+        sLog->outString(">> Loaded %u level stats definitions in %u ms", count, GetMSTimeDiffToNow(oldMSTime));
+        sLog->outString();
     }
 
     // Loading xp per level data
@@ -3684,7 +3681,7 @@ void ObjectMgr::LoadGuilds()
         uint32 oldMSTime = getMSTime();
 
         // Delete orphaned guild rank entries before loading the valid ones
-        PreparedStatement* stmt = CharDB.GetPreparedStatement(CHAR_CLEAN_GUILD_RANKS);
+        PreparedStatement* stmt = CharDB.GetPreparedStatement(CHAR_DEL_NONEXISTENT_GUILD_RANKS);
         CharDB.Execute(stmt);
 
         stmt = CharDB.GetPreparedStatement(CHAR_LOAD_GUILD_RANKS);
@@ -3721,7 +3718,7 @@ void ObjectMgr::LoadGuilds()
         uint32 oldMSTime = getMSTime();
 
         // Delete orphaned guild member entries before loading the valid ones
-        PreparedStatement* stmt = CharDB.GetPreparedStatement(CHAR_CLEAN_GUILD_MEMBERS);
+        PreparedStatement* stmt = CharDB.GetPreparedStatement(CHAR_DEL_NONEXISTENT_GUILD_MEMBERS);
         CharDB.Execute(stmt);
 
         stmt = CharDB.GetPreparedStatement(CHAR_LOAD_GUILD_MEMBERS);
@@ -3759,7 +3756,7 @@ void ObjectMgr::LoadGuilds()
         uint32 oldMSTime = getMSTime();
 
         // Delete orphaned guild bank right entries before loading the valid ones
-        PreparedStatement* stmt = CharDB.GetPreparedStatement(CHAR_CLEAN_GUILD_BANK_RIGHTS);
+        PreparedStatement* stmt = CharDB.GetPreparedStatement(CHAR_DEL_NONEXISTENT_GUILD_BANK_RIGHTS);
         CharDB.Execute(stmt);
 
         stmt = CharDB.GetPreparedStatement(CHAR_LOAD_GUILD_BANK_RIGHTS);
@@ -3874,7 +3871,7 @@ void ObjectMgr::LoadGuilds()
         uint32 oldMSTime = getMSTime();
 
         // Delete orphaned guild bank tab entries before loading the valid ones
-        PreparedStatement* stmt = CharDB.GetPreparedStatement(CHAR_CLEAN_GUILD_BANK_TABS);
+        PreparedStatement* stmt = CharDB.GetPreparedStatement(CHAR_DEL_NONEXISTENT_GUILD_BANK_TABS);
         CharDB.Execute(stmt);
 
         stmt = CharDB.GetPreparedStatement(CHAR_LOAD_GUILD_BANK_TABS);
@@ -3911,7 +3908,7 @@ void ObjectMgr::LoadGuilds()
         uint32 oldMSTime = getMSTime();
 
         // Delete orphan guild bank items
-        PreparedStatement* stmt = CharDB.GetPreparedStatement(CHAR_CLEAN_GUILD_BANK_ITEMS);
+        PreparedStatement* stmt = CharDB.GetPreparedStatement(CHAR_DEL_NONEXISTENT_GUILD_BANK_ITEMS);
         CharDB.Execute(stmt);
 
         stmt = CharDB.GetPreparedStatement(CHAR_LOAD_GUILD_BANK_ITEMS);
@@ -3969,12 +3966,13 @@ void ObjectMgr::LoadArenaTeams()
 {
     uint32 oldMSTime = getMSTime();
 
-    //                                                     0                      1    2           3    4               5
-    QueryResult result = CharDB.Query("SELECT arena_team.arenateamid,name,captainguid,type,BackgroundColor,EmblemStyle,"
-    //   6           7           8            9      10    11   12     13    14
-        "EmblemColor,BorderStyle,BorderColor, rating,games,wins,played,wins2,rank "
-        "FROM arena_team LEFT JOIN arena_team_stats ON arena_team.arenateamid = arena_team_stats.arenateamid ORDER BY arena_team.arenateamid ASC");
+    // Clean out the trash before loading anything
+    CharDB.Execute("DELETE FROM arena_team_member WHERE arenaTeamId NOT IN (SELECT arenaTeamId FROM arena_team)");
 
+    //                                                                   0        1         2         3          4              5            6            7           8
+    QueryResult result = CharDB.Query("SELECT arena_team.arenaTeamId, name, captainGuid, type, backgroundColor, emblemStyle, emblemColor, borderStyle, borderColor,"
+    //                                               9        10        11         12           13       14
+                                                 "rating, weekGames, weekWins, seasonGames, seasonWins, rank FROM arena_team ORDER BY arena_team.arenaTeamId ASC");
     if (!result)
     {
         sLog->outString(">> Loaded 0 arena team definitions. DB table `arena_team` is empty!");
@@ -3982,30 +3980,29 @@ void ObjectMgr::LoadArenaTeams()
         return;
     }
 
-    // load arena_team members
-    QueryResult arenaTeamMembersResult = CharDB.Query(
-    //          0           1           2           3         4             5           6               7    8
-        "SELECT arenateamid,member.guid,played_week,wons_week,played_season,wons_season,name,class "
-        "FROM arena_team_member member LEFT JOIN characters chars on member.guid = chars.guid ORDER BY member.arenateamid ASC");
+    QueryResult result2 = CharDB.Query(
+    //              0              1           2             3              4                 5          6     7          8                  9
+        "SELECT arenaTeamId, atm.guid, atm.weekGames, atm.weekWins, atm.seasonGames, atm.seasonWins, c.name, class, personalRating, matchMakerRating FROM arena_team_member atm"
+        " INNER JOIN arena_team ate USING (arenaTeamId)"
+        " LEFT JOIN characters AS c ON atm.guid = c.guid"
+        " LEFT JOIN character_arena_stats AS cas ON c.guid = cas.guid AND (cas.slot = 0 AND ate.type = 2 OR cas.slot = 1 AND ate.type = 3 OR cas.slot = 2 AND ate.type = 5)"
+        " ORDER BY atm.arenateamid ASC");
 
     uint32 count = 0;
-
     do
     {
-        //Field *fields = result->Fetch();
+        ArenaTeam* newArenaTeam = new ArenaTeam;
 
-        ++count;
-
-        ArenaTeam *newArenaTeam = new ArenaTeam;
-        if (!newArenaTeam->LoadArenaTeamFromDB(result) ||
-            !newArenaTeam->LoadMembersFromDB(arenaTeamMembersResult))
+        if (!newArenaTeam->LoadArenaTeamFromDB(result) || !newArenaTeam->LoadMembersFromDB(result2))
         {
             newArenaTeam->Disband(NULL);
             delete newArenaTeam;
             continue;
         }
         AddArenaTeam(newArenaTeam);
-    }while (result->NextRow());
+
+        ++count;
+    } while (result->NextRow());
 
     sLog->outString();
     sLog->outString(">> Loaded %u arena team definitions in %u ms", count, GetMSTimeDiffToNow(oldMSTime));
@@ -4932,7 +4929,7 @@ void ObjectMgr::LoadScripts(ScriptsType type)
     if (tableName.empty())
         return;
 
-    if (sWorld->IsScriptScheduled())                          // function don't must be called in time scripts use.
+    if (sScriptMgr->IsScriptScheduled())                          // function don't must be called in time scripts use.
         return;
 
     sLog->outString("Loading %s...", tableName.c_str());
@@ -5835,13 +5832,22 @@ void ObjectMgr::LoadNpcTextLocales()
 void ObjectMgr::ReturnOrDeleteOldMails(bool serverUp)
 {
     uint32 oldMSTime = getMSTime();
-    time_t basetime = time(NULL);
-    sLog->outDebug(LOG_FILTER_NONE, "Returning mails current time: hour: %d, minute: %d, second: %d ", localtime(&basetime)->tm_hour, localtime(&basetime)->tm_min, localtime(&basetime)->tm_sec);
-    //delete all old mails without item and without body immediately, if starting server
+
+    time_t curTime = time(NULL);
+    tm* lt = localtime(&curTime);
+    uint64 basetime(curTime);
+    sLog->outDetail("Returning mails current time: hour: %d, minute: %d, second: %d ", lt->tm_hour, lt->tm_min, lt->tm_sec);
+
+    // Delete all old mails without item and without body immediately, if starting server
     if (!serverUp)
-        CharDB.PExecute("DELETE FROM mail WHERE expire_time < '" UI64FMTD "' AND has_items = '0' AND body = ''", (uint64)basetime);
-    //                                                     0  1           2      3        4          5         6           7   8       9
-    QueryResult result = CharDB.PQuery("SELECT id,messageType,sender,receiver,has_items,expire_time,cod,checked,mailTemplateId FROM mail WHERE expire_time < '" UI64FMTD "'", (uint64)basetime);
+    {
+        PreparedStatement* stmt = CharDB.GetPreparedStatement(CHAR_DEL_EMPTY_EXPIRED_MAIL);
+        stmt->setUInt64(0, basetime);
+        CharDB.Execute(stmt);
+    }
+    PreparedStatement* stmt = CharDB.GetPreparedStatement(CHAR_GET_EXPIRED_MAIL);
+    stmt->setUInt64(0, basetime);
+    PreparedQueryResult result = CharDB.Query(stmt);
     if (!result)
     {
         sLog->outString(">> No expired mails found or DB table `mail` is empty.");
@@ -5872,16 +5878,17 @@ void ObjectMgr::ReturnOrDeleteOldMails(bool serverUp)
 
         if (pl && pl->m_mailsLoaded)
         {                                                   //this code will run very improbably (the time is between 4 and 5 am, in game is online a player, who has old mail
-            //his in mailbox and he has already listed his mails)
+            // his in mailbox and he has already listed his mails)
             delete m;
             continue;
         }
 
-        //delete or return mail:
+        // Delete or return mail:
         if (has_items)
         {
-            QueryResult resultItems = CharDB.PQuery("SELECT item_guid,item_template FROM mail_items WHERE mail_id='%u'", m->messageID);
-            if (resultItems)
+            stmt = CharDB.GetPreparedStatement(CHAR_GET_MAIL_ITEM_LITE);
+            stmt->setUInt32(0, m->messageID);
+            if (PreparedQueryResult resultItems = CharDB.Query(stmt))
             {
                 do
                 {
@@ -5894,11 +5901,11 @@ void ObjectMgr::ReturnOrDeleteOldMails(bool serverUp)
                 }
                 while (resultItems->NextRow());
             }
-            //if it is mail from AH, it shouldn't be returned, but deleted
-            if (m->messageType != MAIL_NORMAL || m->messageType == MAIL_AUCTION || (m->checked & (MAIL_CHECK_MASK_COD_PAYMENT | MAIL_CHECK_MASK_RETURNED)))
+            // if it is mail from non-player, or if it's already return mail, it shouldn't be returned, but deleted
+            if (m->messageType != MAIL_NORMAL || (m->checked & (MAIL_CHECK_MASK_COD_PAYMENT | MAIL_CHECK_MASK_RETURNED)))
             {
                 // mail open and then not returned
-                for (std::vector<MailItemInfo>::iterator itr2 = m->items.begin(); itr2 != m->items.end(); ++itr2)
+                for (MailItemInfoVec::iterator itr2 = m->items.begin(); itr2 != m->items.end(); ++itr2)
                 {
                     PreparedStatement* stmt = CharDB.GetPreparedStatement(CHAR_DEL_ITEM_INSTANCE);
                     stmt->setUInt32(0, itr2->item_guid);
@@ -5907,14 +5914,36 @@ void ObjectMgr::ReturnOrDeleteOldMails(bool serverUp)
             }
             else
             {
-                //mail will be returned:
-                CharDB.PExecute("UPDATE mail SET sender = '%u', receiver = '%u', expire_time = '" UI64FMTD "', deliver_time = '" UI64FMTD "',cod = '0', checked = '%u' WHERE id = '%u'", m->receiver, m->sender, (uint64)(basetime + 30*DAY), (uint64)basetime, MAIL_CHECK_MASK_RETURNED, m->messageID);
+                // Mail will be returned
+                stmt = CharDB.GetPreparedStatement(CHAR_SET_MAIL_RETURNED);
+                stmt->setUInt32(0, m->receiver);
+                stmt->setUInt32(1, m->sender);
+                stmt->setUInt64(2, basetime + 30 * DAY);
+                stmt->setUInt64(3, basetime);
+                stmt->setUInt8 (4, uint8(MAIL_CHECK_MASK_RETURNED));
+                stmt->setUInt32(5, m->messageID);
+                CharDB.Execute(stmt);
+                for (MailItemInfoVec::iterator itr2 = m->items.begin(); itr2 != m->items.end(); ++itr2)
+                {
+                    // Update receiver in mail items for its proper delivery, and in instance_item for avoid lost item at sender delete
+                    stmt = CharDB.GetPreparedStatement(CHAR_SET_MAIL_ITEM_RECEIVER);
+                    stmt->setUInt32(0, m->sender);
+                    stmt->setUInt32(1, itr2->item_guid);
+                    CharDB.Execute(stmt);
+
+                    stmt = CharDB.GetPreparedStatement(CHAR_SET_ITEM_OWNER);
+                    stmt->setUInt32(0, m->sender);
+                    stmt->setUInt32(1, itr2->item_guid);
+                    CharDB.Execute(stmt);
+                }
                 delete m;
                 continue;
             }
         }
 
-        CharDB.PExecute("DELETE FROM mail WHERE id = '%u'", m->messageID);
+        stmt = CharDB.GetPreparedStatement(CHAR_DEL_MAIL);
+        stmt->setUInt32(0, m->messageID);
+        CharDB.Execute(stmt);
         delete m;
         ++count;
     }
@@ -7736,7 +7765,7 @@ void ObjectMgr::SaveCreatureRespawnTime(uint32 loguid, uint32 instance, time_t t
         m_CreatureRespawnTimesMtx.release();
     }
 
-    PreparedStatement *stmt = CharDB.GetPreparedStatement(CHAR_ADD_CREATURE_RESPAWN_TIME);
+    PreparedStatement *stmt = CharDB.GetPreparedStatement(CHAR_ADD_CREATURE_RESPAWN);
     stmt->setUInt32(0, loguid);
     stmt->setUInt64(1, uint64(t));
     stmt->setUInt32(2, instance);
@@ -7752,7 +7781,7 @@ void ObjectMgr::RemoveCreatureRespawnTime(uint32 loguid, uint32 instance)
         m_CreatureRespawnTimesMtx.release();
     }
 
-    PreparedStatement *stmt = CharDB.GetPreparedStatement(CHAR_DEL_CREATURE_RESPAWN_TIME);
+    PreparedStatement *stmt = CharDB.GetPreparedStatement(CHAR_DEL_CREATURE_RESPAWN);
     stmt->setUInt32(0, loguid);
     stmt->setUInt32(1, instance);
     CharDB.Execute(stmt);
@@ -7784,7 +7813,7 @@ void ObjectMgr::SaveGORespawnTime(uint32 loguid, uint32 instance, time_t t)
         m_GORespawnTimesMtx.release();
     }
 
-    PreparedStatement *stmt = CharDB.GetPreparedStatement(CHAR_ADD_GO_RESPAWN_TIME);
+    PreparedStatement *stmt = CharDB.GetPreparedStatement(CHAR_ADD_GO_RESPAWN);
     stmt->setUInt32(0, loguid);
     stmt->setUInt64(1, uint64(t));
     stmt->setUInt32(2, instance);
@@ -7800,7 +7829,7 @@ void ObjectMgr::RemoveGORespawnTime(uint32 loguid, uint32 instance)
         m_GORespawnTimesMtx.release();
     }
 
-    PreparedStatement *stmt = CharDB.GetPreparedStatement(CHAR_DEL_GO_RESPAWN_TIME);
+    PreparedStatement *stmt = CharDB.GetPreparedStatement(CHAR_DEL_GO_RESPAWN);
     stmt->setUInt32(0, loguid);
     stmt->setUInt32(1, instance);
     CharDB.Execute(stmt);
@@ -7835,8 +7864,12 @@ void ObjectMgr::DeleteRespawnTimeForInstance(uint32 instance)
         }
         m_CreatureRespawnTimesMtx.release();
     }
-    CharDB.PExecute("DELETE FROM creature_respawn WHERE instance = '%u'", instance);
-    CharDB.PExecute("DELETE FROM gameobject_respawn WHERE instance = '%u'", instance);
+    PreparedStatement* stmt = CharDB.GetPreparedStatement(CHAR_DEL_CREATURE_RESPAWN_BY_INSTANCE);
+    stmt->setUInt32(0, instance);
+    CharDB.Execute(stmt);
+    stmt = CharDB.GetPreparedStatement(CHAR_DEL_GO_RESPAWN_BY_INSTANCE);
+    stmt->setUInt32(0, instance);
+    CharDB.Execute(stmt);
 }
 
 void ObjectMgr::DeleteGOData(uint32 guid)

@@ -30,7 +30,7 @@
 #include "CreatureAI.h"
 #include "ZoneScript.h"
 
-Vehicle::Vehicle(Unit *unit, VehicleEntry const *vehInfo, uint32 creatureEntry) 
+Vehicle::Vehicle(Unit *unit, VehicleEntry const *vehInfo, uint32 creatureEntry)
 : me(unit), m_vehicleInfo(vehInfo), m_usableSeatNum(0), m_bonusHP(0), m_creatureEntry(creatureEntry)
 {
     for (uint32 i = 0; i < MAX_VEHICLE_SEATS; ++i)
@@ -142,15 +142,6 @@ void Vehicle::Uninstall()
         sScriptMgr->OnUninstall(this);
 }
 
-void Vehicle::Die()
-{
-    sLog->outDebug(LOG_FILTER_VEHICLES, "Vehicle::Die Entry: %u, GuidLow: %u", m_creatureEntry, me->GetGUIDLow());
-    RemoveAllPassengers();
-
-    if (GetBase()->GetTypeId() == TYPEID_UNIT)
-        sScriptMgr->OnDie(this);
-}
-
 void Vehicle::Reset()
 {
     sLog->outDebug(LOG_FILTER_VEHICLES, "Vehicle::Reset");
@@ -256,11 +247,8 @@ void Vehicle::InstallAccessory(uint32 entry, int8 seatId, bool minion, uint8 typ
         if (minion)
             accessory->AddUnitTypeMask(UNIT_MASK_ACCESSORY);
 
-        
         if (!me->HandleSpellClick(accessory, seatId))
         {
-            sLog->outErrorDb("Vehicle entry %u in vehicle_accessory does not have a valid record in npc_spellclick_spells! Cannot join vehicle.",
-                m_creatureEntry); 
             accessory->AddObjectToRemoveList();
             return;
         }
@@ -364,14 +352,6 @@ bool Vehicle::AddPassenger(Unit *unit, int8 seatId)
 
     if (me->IsInWorld())
     {
-        if (me->HasFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_DISABLE_MOVE))
-        {
-            WorldPacket data(SMSG_FORCE_MOVE_ROOT, 8+4);
-            data.append(me->GetPackGUID());
-            data << uint32(2);              // Counter
-            me->SendMessageToSet(&data, false);
-        }
-
         unit->SendClearTarget();                                // SMSG_BREAK_TARGET
         unit->SetControlled(true, UNIT_STAT_ROOT);              // SMSG_FORCE_ROOT - In some cases we send SMSG_SPLINE_MOVE_ROOT here (for creatures)
                                                                 // also adds MOVEMENTFLAG_ROOT
@@ -434,20 +414,10 @@ void Vehicle::RemovePassenger(Unit *unit)
 
     if (me->IsInWorld())
     {
-        if (me->HasFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_DISABLE_MOVE))
-        {
-            WorldPacket data(SMSG_FORCE_MOVE_UNROOT, 8+4);
-            data.append(me->GetPackGUID());
-            data << uint32(2);              // Counter
-            me->SendMessageToSet(&data, false);
-        }
-
         unit->RemoveUnitMovementFlag(MOVEMENTFLAG_ONTRANSPORT);
         unit->m_movementInfo.t_pos.Relocate(0, 0, 0, 0);
         unit->m_movementInfo.t_time = 0;
         unit->m_movementInfo.t_seat = 0;
-
-        unit->Relocate(GetBase());
     }
 
     if (me->GetTypeId() == TYPEID_UNIT && me->ToCreature()->IsAIEnabled)

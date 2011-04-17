@@ -24,6 +24,7 @@
 
 #include "Common.h"
 #include <ace/Singleton.h>
+#include <ace/Atomic_Op.h>
 
 #include "DBCStores.h"
 #include "Player.h"
@@ -467,7 +468,9 @@ class GameObjectScript : public ScriptObject, public UpdatableScript<GameObject>
         virtual uint32 GetDialogStatus(Player* /*player*/, GameObject* /*go*/) { return 100; }
 
         // Called when the gameobject is destroyed (destructible buildings only).
-        virtual void OnDestroyed(Player* /*player*/, GameObject* /*go*/, uint32 /*eventId*/) { }
+        virtual void OnDestroyed(GameObject* /*go*/, Player* /*player*/, uint32 /*eventId*/) { }
+        // Called when the gameobject is damaged (destructible buildings only).
+        virtual void OnDamaged(GameObject* /*go*/, Player* /*player*/,  uint32 /*eventId*/) { }
 };
 
 class AreaTriggerScript : public ScriptObject
@@ -586,9 +589,6 @@ class VehicleScript : public ScriptObject
 
         // Called after a vehicle is uninstalled.
         virtual void OnUninstall(Vehicle* /*veh*/) { }
-
-        // Called after a vehicle dies.
-        virtual void OnDie(Vehicle* /*veh*/) { }
 
         // Called when a vehicle resets.
         virtual void OnReset(Vehicle* /*veh*/) { }
@@ -770,13 +770,16 @@ class ScriptMgr
 
     uint32 _scriptCount;
 
+    //atomic op counter for active scripts amount
+    ACE_Atomic_Op<ACE_Thread_Mutex, long> _scheduledScripts;
+
     public: /* Initialization */
 
         void Initialize();
         void LoadDatabase();
         void FillSpellSummary();
 
-        const char* ScriptsVersion() const { return "Integrated Strawberry Scripts"; }
+        const char* ScriptsVersion() const { return "Integrated Trinity Scripts"; }
 
         void IncrementScriptCount() { ++_scriptCount; }
         uint32 GetScriptCount() const { return _scriptCount; }
@@ -865,7 +868,8 @@ class ScriptMgr
         bool OnQuestAccept(Player* player, GameObject* go, Quest const* quest);
         bool OnQuestReward(Player* player, GameObject* go, Quest const* quest, uint32 opt);
         uint32 GetDialogStatus(Player* player, GameObject* go);
-        void OnGameObjectDestroyed(Player* player, GameObject* go, uint32 eventId);
+        void OnGameObjectDestroyed(GameObject* go, Player* player, uint32 eventId);
+        void OnGameObjectDamaged(GameObject* go, Player* player, uint32 eventId);
         void OnGameObjectUpdate(GameObject* go, uint32 diff);
 
     public: /* AreaTriggerScript */
@@ -904,7 +908,6 @@ class ScriptMgr
 
         void OnInstall(Vehicle* veh);
         void OnUninstall(Vehicle* veh);
-        void OnDie(Vehicle* veh);
         void OnReset(Vehicle* veh);
         void OnInstallAccessory(Vehicle* veh, Creature* accessory);
         void OnAddPassenger(Vehicle* veh, Unit* passenger, int8 seatId);
@@ -974,6 +977,12 @@ class ScriptMgr
         void OnGroupRemoveMember(Group* group, uint64 guid, RemoveMethod method, uint64 kicker, const char* reason);
         void OnGroupChangeLeader(Group* group, uint64 newLeaderGuid, uint64 oldLeaderGuid);
         void OnGroupDisband(Group* group);
+
+    public: /* Scheduled scripts */
+        uint32 IncreaseScheduledScriptsCount() { return uint32(++_scheduledScripts); }
+        uint32 DecreaseScheduledScriptCount() { return uint32(--_scheduledScripts); }
+        uint32 DecreaseScheduledScriptCount(size_t count) { return uint32(_scheduledScripts -= count); }
+        bool IsScriptScheduled() const { return _scheduledScripts > 0; }
 
     public: /* ScriptRegistry */
 
@@ -1049,10 +1058,8 @@ class ScriptMgr
                         {
                             // The script uses a script name from database, but isn't assigned to anything.
                             if (script->GetName().find("example") == std::string::npos && script->GetName().find("Smart") == std::string::npos)
-                                if (!(sWorld->getBoolConfig(CONFIG_SHOW_SCRIPTNAME_ERROR)))
-                                    sLog->outDebug(LOG_FILTER_SSCR, "Script named '%s' does not have a script name assigned in database.", script->GetName().c_str());
-                                else
-                                    sLog->outErrorDb("Script named '%s' does not have a script name assigned in database.", script->GetName().c_str());
+                                sLog->outErrorDb("Script named '%s' does not have a script name assigned in database.",
+                                    script->GetName().c_str());
                         }
                     }
                     else

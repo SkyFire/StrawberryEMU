@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2010 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2008-2011 TrinityCore <http://www.trinitycore.org/>
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -97,6 +97,7 @@ void AddSC_boss_quatermasterzigris();
 void AddSC_boss_pyroguard_emberseer();
 void AddSC_boss_gyth();
 void AddSC_boss_rend_blackhand();
+void AddSC_instance_blackrock_spire();
 void AddSC_boss_razorgore();                 //Blackwing lair
 void AddSC_boss_vael();
 void AddSC_boss_broodlord();
@@ -391,6 +392,8 @@ void AddSC_boss_varos();
 void AddSC_boss_eregos();
 void AddSC_instance_oculus();
 void AddSC_oculus();
+void AddSC_boss_malygos();              // The Nexus: Eye of Eternity
+void AddSC_instance_eye_of_eternity();
 void AddSC_boss_sartharion();            //Obsidian Sanctum
 void AddSC_instance_obsidian_sanctum();
 void AddSC_boss_bjarngrim();             //Ulduar Halls of Lightning
@@ -412,6 +415,7 @@ void AddSC_boss_kologarn();
 void AddSC_boss_assembly_of_iron();
 void AddSC_boss_general_vezax();
 void AddSC_ulduar_teleporter();
+void AddSC_boss_mimiron();
 void AddSC_instance_ulduar();
 void AddSC_boss_keleseth();              //Utgarde Keep
 void AddSC_boss_skarvald_dalronn();
@@ -577,6 +581,7 @@ void AddSC_chat_log();
 
 void AddScripts()
 {
+    AddExampleScripts();
     AddSpellScripts();
     AddSC_SmartSCripts();
     AddCommandScripts();
@@ -588,6 +593,11 @@ void AddScripts()
     AddBattlegroundScripts();
     AddOutdoorPvPScripts();
     AddCustomScripts();
+
+}
+
+void AddExampleScripts()
+{
 }
 
 void AddSpellScripts()
@@ -676,6 +686,7 @@ void AddEasternKingdomsScripts()
     AddSC_boss_pyroguard_emberseer();
     AddSC_boss_gyth();
     AddSC_boss_rend_blackhand();
+    AddSC_instance_blackrock_spire();
     AddSC_boss_razorgore();                 //Blackwing lair
     AddSC_boss_vael();
     AddSC_boss_broodlord();
@@ -1058,6 +1069,8 @@ void AddNorthrendScripts()
     AddSC_boss_eregos();
     AddSC_instance_oculus();
     AddSC_oculus();
+    AddSC_boss_malygos();              // The Nexus: Eye of Eternity
+    AddSC_instance_eye_of_eternity();
     AddSC_boss_sartharion();            //Obsidian Sanctum
     AddSC_instance_obsidian_sanctum();
     AddSC_boss_bjarngrim();             //Ulduar Halls of Lightning
@@ -1079,6 +1092,7 @@ void AddNorthrendScripts()
     AddSC_boss_assembly_of_iron();
     AddSC_boss_kologarn();
     AddSC_ulduar_teleporter();
+    AddSC_boss_mimiron();
     AddSC_instance_ulduar();
     AddSC_boss_keleseth();              //Utgarde Keep
     AddSC_boss_skarvald_dalronn();
@@ -1160,8 +1174,13 @@ void AddOutdoorPvPScripts()
 
 void AddBattlegroundScripts()
 {
+
 }
+
+
+/* This is where custom scripts' loading functions should be declared. */
 
 void AddCustomScripts()
 {
+    /* This is where custom scripts should be added. */
 }

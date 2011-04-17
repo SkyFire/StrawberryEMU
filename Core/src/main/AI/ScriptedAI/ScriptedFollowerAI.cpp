@@ -49,9 +49,9 @@ void FollowerAI::AttackStart(Unit* pWho)
 //This part provides assistance to a player that are attacked by pWho, even if out of normal aggro range
 //It will cause me to attack pWho that are attacking _any_ player (which has been confirmed may happen also on offi)
 //The flag (type_flag) is unconfirmed, but used here for further research and is a good candidate.
-bool FollowerAI::AssistPlayerInCombat(Unit* pWho)
+bool FollowerAI::AssistPlayerInCombat(Unit* who)
 {
-    if (!pWho || !pWho->getVictim())
+    if (!who || !who->getVictim())
         return false;
 
     //experimental (unknown) flag not present
@@ -59,26 +59,26 @@ bool FollowerAI::AssistPlayerInCombat(Unit* pWho)
         return false;
 
     //not a player
-    if (!pWho->getVictim()->GetCharmerOrOwnerPlayerOrPlayerItself())
+    if (!who->getVictim()->GetCharmerOrOwnerPlayerOrPlayerItself())
         return false;
 
     //never attack friendly
-    if (me->IsFriendlyTo(pWho))
+    if (me->IsFriendlyTo(who))
         return false;
 
     //too far away and no free sight?
-    if (me->IsWithinDistInMap(pWho, MAX_PLAYER_DISTANCE) && me->IsWithinLOSInMap(pWho))
+    if (me->IsWithinDistInMap(who, MAX_PLAYER_DISTANCE) && me->IsWithinLOSInMap(who))
     {
         //already fighting someone?
         if (!me->getVictim())
         {
-            AttackStart(pWho);
+            AttackStart(who);
             return true;
         }
         else
         {
-            pWho->SetInCombatWith(me);
-            me->AddThreat(pWho, 0.0f);
+            who->SetInCombatWith(me);
+            me->AddThreat(who, 0.0f);
             return true;
         }
     }
@@ -165,7 +165,7 @@ void FollowerAI::EnterEvadeMode()
 
     if (HasFollowState(STATE_FOLLOW_INPROGRESS))
     {
-        sLog->outDebug(LOG_FILTER_SSCR, "SCR: FollowerAI left combat, returning to CombatStartPosition.");
+        sLog->outDebug(LOG_FILTER_SSCR, "TSCR: FollowerAI left combat, returning to CombatStartPosition.");
 
         if (me->GetMotionMaster()->GetCurrentMovementGeneratorType() == TARGETED_MOTION_TYPE)
         {
@@ -191,7 +191,7 @@ void FollowerAI::UpdateAI(const uint32 uiDiff)
         {
             if (HasFollowState(STATE_FOLLOW_COMPLETE) && !HasFollowState(STATE_FOLLOW_POSTEVENT))
             {
-                sLog->outDebug(LOG_FILTER_SSCR, "SCR: FollowerAI is set completed, despawns.");
+                sLog->outDebug(LOG_FILTER_SSCR, "TSCR: FollowerAI is set completed, despawns.");
                 me->DespawnOrUnsummon();
                 return;
             }
@@ -202,7 +202,7 @@ void FollowerAI::UpdateAI(const uint32 uiDiff)
             {
                 if (HasFollowState(STATE_FOLLOW_RETURNING))
                 {
-                    sLog->outDebug(LOG_FILTER_SSCR, "SCR: FollowerAI is returning to leader.");
+                    sLog->outDebug(LOG_FILTER_SSCR, "TSCR: FollowerAI is returning to leader.");
 
                     RemoveFollowState(STATE_FOLLOW_RETURNING);
                     me->GetMotionMaster()->MoveFollow(pPlayer, PET_FOLLOW_DIST, PET_FOLLOW_ANGLE);
@@ -231,7 +231,7 @@ void FollowerAI::UpdateAI(const uint32 uiDiff)
 
             if (bIsMaxRangeExceeded)
             {
-                sLog->outDebug(LOG_FILTER_SSCR, "SCR: FollowerAI failed because player/group was to far away or not found");
+                sLog->outDebug(LOG_FILTER_SSCR, "TSCR: FollowerAI failed because player/group was to far away or not found");
                 me->DespawnOrUnsummon();
                 return;
             }
@@ -274,13 +274,13 @@ void FollowerAI::StartFollow(Player* pLeader, uint32 uiFactionForFollower, const
 {
     if (me->getVictim())
     {
-        sLog->outDebug(LOG_FILTER_SSCR, "SCR: FollowerAI attempt to StartFollow while in combat.");
+        sLog->outDebug(LOG_FILTER_SSCR, "TSCR: FollowerAI attempt to StartFollow while in combat.");
         return;
     }
 
     if (HasFollowState(STATE_FOLLOW_INPROGRESS))
     {
-        sLog->outError("SCR: FollowerAI attempt to StartFollow while already following.");
+        sLog->outError("TSCR: FollowerAI attempt to StartFollow while already following.");
         return;
     }
 
@@ -296,7 +296,7 @@ void FollowerAI::StartFollow(Player* pLeader, uint32 uiFactionForFollower, const
     {
         me->GetMotionMaster()->Clear();
         me->GetMotionMaster()->MoveIdle();
-        sLog->outDebug(LOG_FILTER_SSCR, "SCR: FollowerAI start with WAYPOINT_MOTION_TYPE, set to MoveIdle.");
+        sLog->outDebug(LOG_FILTER_SSCR, "TSCR: FollowerAI start with WAYPOINT_MOTION_TYPE, set to MoveIdle.");
     }
 
     me->SetUInt32Value(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_NONE);
@@ -305,7 +305,7 @@ void FollowerAI::StartFollow(Player* pLeader, uint32 uiFactionForFollower, const
 
     me->GetMotionMaster()->MoveFollow(pLeader, PET_FOLLOW_DIST, PET_FOLLOW_ANGLE);
 
-    sLog->outDebug(LOG_FILTER_SSCR, "SCR: FollowerAI start follow %s (GUID " UI64FMTD ")", pLeader->GetName(), m_uiLeaderGUID);
+    sLog->outDebug(LOG_FILTER_SSCR, "TSCR: FollowerAI start follow %s (GUID " UI64FMTD ")", pLeader->GetName(), m_uiLeaderGUID);
 }
 
 Player* FollowerAI::GetLeaderForFollower()
@@ -324,7 +324,7 @@ Player* FollowerAI::GetLeaderForFollower()
 
                     if (pMember && pMember->isAlive() && me->IsWithinDistInMap(pMember, MAX_PLAYER_DISTANCE))
                     {
-                        sLog->outDebug(LOG_FILTER_SSCR, "SCR: FollowerAI GetLeader changed and returned new leader.");
+                        sLog->outDebug(LOG_FILTER_SSCR, "TSCR: FollowerAI GetLeader changed and returned new leader.");
                         m_uiLeaderGUID = pMember->GetGUID();
                         return pMember;
                         break;
@@ -334,7 +334,7 @@ Player* FollowerAI::GetLeaderForFollower()
         }
     }
 
-    sLog->outDebug(LOG_FILTER_SSCR, "SCR: FollowerAI GetLeader can not find suitable leader.");
+    sLog->outDebug(LOG_FILTER_SSCR, "TSCR: FollowerAI GetLeader can not find suitable leader.");
     return NULL;
 }
 

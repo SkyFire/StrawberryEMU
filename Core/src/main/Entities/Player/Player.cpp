@@ -4904,12 +4904,16 @@ void Player::DeleteFromDB(uint64 playerguid, uint32 accountId, bool updateRealmC
             }
 
             trans->PAppend("DELETE FROM characters WHERE guid = '%u'",guid);
-            trans->PAppend("DELETE FROM character_account_data WHERE guid = '%u'",guid);
+            PreparedStatement* stmt = CharDB.GetPreparedStatement(CHAR_DEL_PLAYER_ACCOUNT_DATA);
+            stmt->setUInt32(0, guid);
+            trans->Append(stmt);
             trans->PAppend("DELETE FROM character_declinedname WHERE guid = '%u'",guid);
             trans->PAppend("DELETE FROM character_action WHERE guid = '%u'",guid);
             trans->PAppend("DELETE FROM character_aura WHERE guid = '%u'",guid);
             trans->PAppend("DELETE FROM character_gifts WHERE guid = '%u'",guid);
-            trans->PAppend("DELETE FROM character_homebind WHERE guid = '%u'",guid);
+            stmt = CharDB.GetPreparedStatement(CHAR_DEL_PLAYER_HOMEBIND);
+            stmt->setUInt32(0, guid);
+            trans->Append(stmt);
             trans->PAppend("DELETE FROM character_instance WHERE guid = '%u'",guid);
             trans->PAppend("DELETE FROM character_inventory WHERE guid = '%u'",guid);
             trans->PAppend("DELETE FROM character_queststatus WHERE guid = '%u'",guid);
@@ -4932,7 +4936,9 @@ void Player::DeleteFromDB(uint64 playerguid, uint32 accountId, bool updateRealmC
             trans->PAppend("DELETE FROM character_equipmentsets WHERE guid = '%u'",guid);
             trans->PAppend("DELETE FROM guild_eventlog WHERE PlayerGuid1 = '%u' OR PlayerGuid2 = '%u'",guid, guid);
             trans->PAppend("DELETE FROM guild_bank_eventlog WHERE PlayerGuid = '%u'",guid);
-            trans->PAppend("DELETE FROM character_battleground_data WHERE guid = '%u'",guid);
+            stmt = CharDB.GetPreparedStatement(CHAR_DEL_PLAYER_BGDATA);
+            stmt->setUInt32(0, guid);
+            trans->Append(stmt);
             trans->PAppend("DELETE FROM character_glyphs WHERE guid = '%u'",guid);
             trans->PAppend("DELETE FROM character_queststatus_daily WHERE guid = '%u'",guid);
             trans->PAppend("DELETE FROM character_talent WHERE guid = '%u'",guid);
@@ -5574,7 +5580,7 @@ void Player::UpdateLocalChannels(uint32 newZone)
     if (!cMgr)
         return;
 
-    std::string current_zone_name = current_zone->area_name[m_session->GetSessionDbcLocale()];
+    std::string current_zone_name = current_zone->area_name[GetSession()->GetSessionDbcLocale()];
 
     for (uint32 i = 0; i < sChatChannelsStore.GetNumRows(); ++i)
     {
@@ -7338,6 +7344,17 @@ void Player::UpdateArea(uint32 newArea)
     UpdatePvPState(true);
 
     UpdateAreaDependentAuras(newArea);
+
+    // previously this was in UpdateZone (but after UpdateArea) so nothing will break
+    pvpInfo.inNoPvPArea = false;
+    if (area && area->IsSanctuary())    // in sanctuary
+    {
+        SetByteFlag(UNIT_FIELD_BYTES_2, 1, UNIT_BYTE2_FLAG_SANCTUARY);
+        pvpInfo.inNoPvPArea = true;
+        CombatStopWithPets();
+    }
+    else
+        RemoveByteFlag(UNIT_FIELD_BYTES_2, 1, UNIT_BYTE2_FLAG_SANCTUARY);
 }
 
 void Player::UpdateZone(uint32 newZone, uint32 newArea)
@@ -7392,16 +7409,6 @@ void Player::UpdateZone(uint32 newZone, uint32 newArea)
             pvpInfo.inHostileArea = false;
             break;
     }
-
-    pvpInfo.inNoPvPArea = false;
-    if (zone->IsSanctuary())       // in sanctuary
-    {
-        SetByteFlag(UNIT_FIELD_BYTES_2, 1, UNIT_BYTE2_FLAG_SANCTUARY);
-        pvpInfo.inNoPvPArea = true;
-        CombatStopWithPets();
-    }
-    else
-        RemoveByteFlag(UNIT_FIELD_BYTES_2, 1, UNIT_BYTE2_FLAG_SANCTUARY);
 
     if (zone->flags & AREA_FLAG_CAPITAL)                     // in capital city
     {
@@ -16313,70 +16320,41 @@ void Player::_LoadArenaTeamInfo(PreparedQueryResult result)
 {
     // arenateamid, played_week, played_season, personal_rating
     memset((void*)&m_uint32Values[PLAYER_FIELD_ARENA_TEAM_INFO_1_1], 0, sizeof(uint32) * MAX_ARENA_SLOT * ARENA_TEAM_END);
-    if (!result)
-        return;
+    uint16 personalRatingCache[] = {0, 0, 0};
 
-    do
+    if (result)
     {
-        Field* fields = result->Fetch();
-
-        uint32 arenateamid       = fields[0].GetUInt32();
-        uint32 played_week       = fields[1].GetUInt32();
-        uint32 played_season     = fields[2].GetUInt32();
-        uint32 wons_season       = fields[3].GetUInt32();
-
-        ArenaTeam* aTeam = sObjectMgr->GetArenaTeamById(arenateamid);
-        if (!aTeam)
+        do
         {
-            sLog->outError("Player::_LoadArenaTeamInfo: couldn't load arenateam %u", arenateamid);
-            continue;
+            Field* fields = result->Fetch();
+
+            uint32 arenaTeamId = fields[0].GetUInt32();
+
+            ArenaTeam* arenaTeam = sObjectMgr->GetArenaTeamById(arenaTeamId);
+            if (!arenaTeam)
+            {
+                sLog->outError("Player::_LoadArenaTeamInfo: couldn't load arenateam %u", arenaTeamId);
+                continue;
+            }
+
+            uint8 arenaSlot = arenaTeam->GetSlot();
+
+            personalRatingCache[arenaSlot] = fields[4].GetUInt16();
+
+            SetArenaTeamInfoField(arenaSlot, ARENA_TEAM_ID, arenaTeamId);
+            SetArenaTeamInfoField(arenaSlot, ARENA_TEAM_TYPE, arenaTeam->GetType());
+            SetArenaTeamInfoField(arenaSlot, ARENA_TEAM_MEMBER, (arenaTeam->GetCaptain() == GetGUID()) ? 0 : 1);
+            SetArenaTeamInfoField(arenaSlot, ARENA_TEAM_GAMES_WEEK, uint32(fields[1].GetUInt16()));
+            SetArenaTeamInfoField(arenaSlot, ARENA_TEAM_GAMES_SEASON, uint32(fields[2].GetUInt16()));
+            SetArenaTeamInfoField(arenaSlot, ARENA_TEAM_WINS_SEASON, uint32(fields[3].GetUInt16()));
         }
-
-        uint8  arenaSlot = aTeam->GetSlot();
-
-        SetArenaTeamInfoField(arenaSlot, ARENA_TEAM_ID, arenateamid);
-        SetArenaTeamInfoField(arenaSlot, ARENA_TEAM_TYPE, aTeam->GetType());
-        SetArenaTeamInfoField(arenaSlot, ARENA_TEAM_MEMBER, (aTeam->GetCaptain() == GetGUID()) ? 0 : 1);
-        SetArenaTeamInfoField(arenaSlot, ARENA_TEAM_GAMES_WEEK, played_week);
-        SetArenaTeamInfoField(arenaSlot, ARENA_TEAM_GAMES_SEASON, played_season);
-        SetArenaTeamInfoField(arenaSlot, ARENA_TEAM_WINS_SEASON, wons_season);
-    }
-    while (result->NextRow());
-}
-
-void Player::_LoadArenaStatsInfo(PreparedQueryResult result)
-{
-    uint8 slot = 0;
-    if (!result)
-    {
-        for (; slot <= 2; ++slot)
-        {
-            CharDB.PExecute("INSERT INTO character_arena_stats (guid, slot, personal_rating, matchmaker_rating) VALUES (%u, %u, 0, 1500)", GetGUIDLow(), slot);
-            SetArenaTeamInfoField(slot, ARENA_TEAM_PERSONAL_RATING, 0);
-        }
-        return;
+        while (result->NextRow());
     }
 
-    do
+    for (uint8 slot = 0; slot <= 2; ++slot)
     {
-        Field* fields = result->Fetch();
-
-        uint32 personalrating = 0;
-        uint32 matchmakerrating = 1500;
-        if (fields[0].GetUInt8() > slot)
-        {
-            CharDB.PExecute("INSERT INTO character_arena_stats (guid, slot, personal_rating, matchmaker_rating) VALUES (%u, %u, %u, %u)", GetGUIDLow(), slot, personalrating, matchmakerrating);
-            SetArenaTeamInfoField(slot, ARENA_TEAM_PERSONAL_RATING, personalrating);
-            slot++;
-            continue;
-        }
-
-        personalrating = fields[1].GetUInt32();
-        matchmakerrating = fields[2].GetUInt32();
-        SetArenaTeamInfoField(slot, ARENA_TEAM_PERSONAL_RATING, personalrating);
-        slot++;
+        SetArenaTeamInfoField(slot, ARENA_TEAM_PERSONAL_RATING, uint32(personalRatingCache[slot]));
     }
-    while (result->NextRow());
 }
 
 void Player::_LoadEquipmentSets(PreparedQueryResult result)
@@ -16417,8 +16395,8 @@ void Player::_LoadBGData(PreparedQueryResult result)
 
     Field* fields = result->Fetch();
     // Expecting only one row
-    //             0         1      2       3       4       5       6          7           8          9
-    // SELECT instance_id, team, join_x, join_y, join_z, join_o, join_map, taxi_start, taxi_end, mount_spell FROM character_battleground_data WHERE guid = ?
+    //        0           1     2      3      4      5      6          7          8        9
+    // SELECT instanceId, team, joinX, joinY, joinZ, joinO, joinMapId, taxiStart, taxiEnd, mountSpell FROM character_battleground_data WHERE guid = ?
 
     m_bgData.bgInstanceID = fields[0].GetUInt32();
     m_bgData.bgTeam       = fields[1].GetUInt16();
@@ -16459,8 +16437,14 @@ void Player::SetHomebind(WorldLocation const& /*loc*/, uint32 /*area_id*/)
     m_homebindZ = GetPositionZ();
 
     // update sql homebind
-    CharDB.PExecute("UPDATE character_homebind SET map = '%u', zone = '%u', position_x = '%f', position_y = '%f', position_z = '%f' WHERE guid = '%u'",
-        m_homebindMapId, m_homebindAreaId, m_homebindX, m_homebindY, m_homebindZ, GetGUIDLow());
+    PreparedStatement* stmt = CharDB.GetPreparedStatement(CHAR_SET_PLAYER_HOMEBIND);
+    stmt->setUInt16(0, m_homebindMapId);
+    stmt->setUInt16(1, m_homebindAreaId);
+    stmt->setFloat (2, m_homebindX);
+    stmt->setFloat (3, m_homebindY);
+    stmt->setFloat (4, m_homebindZ);
+    stmt->setUInt32(5, GetGUIDLow());
+    CharDB.Execute(stmt);
 }
 
 uint32 Player::GetUInt32ValueFromArray(Tokens const& data, uint16 index)
@@ -16625,7 +16609,6 @@ bool Player::LoadFromDB(uint32 guid, SQLQueryHolder *holder)
     _LoadGroup(holder->GetPreparedResult(PLAYER_LOGIN_QUERY_LOADGROUP));
 
     _LoadArenaTeamInfo(holder->GetPreparedResult(PLAYER_LOGIN_QUERY_LOADARENAINFO));
-    _LoadArenaStatsInfo(holder->GetPreparedResult(PLAYER_LOGIN_QUERY_LOADARENASTATS));
 
     SetArenaPoints(fields[39].GetUInt32());
 
@@ -16637,7 +16620,7 @@ bool Player::LoadFromDB(uint32 guid, SQLQueryHolder *holder)
             continue;
 
         if (ArenaTeam * at = sObjectMgr->GetArenaTeamById(arena_team_id))
-            if (at->HaveMember(GetGUID()))
+            if (at->IsMember(GetGUID()))
                 continue;
 
         // arena team not exist or not member, cleanup fields
@@ -17426,7 +17409,6 @@ void Player::_LoadInventory(PreparedQueryResult result, uint32 timeDiff)
     //if (isAlive())
     _ApplyAllItemMods();
 }
-
 
 Item* Player::_LoadItem(SQLTransaction& trans, uint32 zoneId, uint32 timeDiff, Field* fields)
 {
@@ -18257,7 +18239,7 @@ bool Player::_LoadHomeBind(PreparedQueryResult result)
     }
 
     bool ok = false;
-    //QueryResult *result = CharDB.PQuery("SELECT map,zone,position_x,position_y,position_z FROM character_homebind WHERE guid = '%u'", GUID_LOPART(playerGuid));
+    // SELECT mapId, zoneId, posX, posY, posZ FROM character_homebind WHERE guid = ?
     if (result)
     {
         Field* fields = result->Fetch();
@@ -18275,7 +18257,11 @@ bool Player::_LoadHomeBind(PreparedQueryResult result)
             !bindMapEntry->Instanceable() && GetSession()->Expansion() >= bindMapEntry->Expansion())
             ok = true;
         else
-            CharDB.PExecute("DELETE FROM character_homebind WHERE guid = '%u'", GetGUIDLow());
+        {
+            PreparedStatement* stmt = CharDB.GetPreparedStatement(CHAR_DEL_PLAYER_HOMEBIND);
+            stmt->setUInt32(0, GetGUIDLow());
+            CharDB.Execute(stmt);
+        }
     }
 
     if (!ok)
@@ -18286,8 +18272,14 @@ bool Player::_LoadHomeBind(PreparedQueryResult result)
         m_homebindY = info->positionY;
         m_homebindZ = info->positionZ;
 
-        CharDB.PExecute("INSERT INTO character_homebind (guid,map,zone,position_x,position_y,position_z) VALUES ('%u', '%u', '%u', '%f', '%f', '%f')",
-            GetGUIDLow(), m_homebindMapId, m_homebindAreaId, m_homebindX, m_homebindY, m_homebindZ);
+        PreparedStatement* stmt = CharDB.GetPreparedStatement(CHAR_ADD_PLAYER_HOMEBIND);
+        stmt->setUInt32(0, GetGUIDLow());
+        stmt->setUInt16(1, m_homebindMapId);
+        stmt->setUInt16(2, m_homebindAreaId);
+        stmt->setFloat (3, m_homebindX);
+        stmt->setFloat (4, m_homebindY);
+        stmt->setFloat (5, m_homebindZ);
+        CharDB.Execute(stmt);
     }
 
     sLog->outStaticDebug("Setting player home position - mapid: %u, areaid: %u, X: %f, Y: %f, Z: %f",
@@ -18542,7 +18534,9 @@ void Player::_SaveActions(SQLTransaction& trans)
 
 void Player::_SaveAuras(SQLTransaction& trans)
 {
-    trans->PAppend("DELETE FROM character_aura WHERE guid = '%u'",GetGUIDLow());
+    PreparedStatement* stmt = CharDB.GetPreparedStatement(CHAR_DEL_AURA);
+    stmt->setUInt32(0, GetGUIDLow());
+    trans->Append(stmt);
 
     for (AuraMap::const_iterator itr = m_ownedAuras.begin(); itr != m_ownedAuras.end() ; ++itr)
     {
@@ -18553,7 +18547,7 @@ void Player::_SaveAuras(SQLTransaction& trans)
 
         int32 damage[MAX_SPELL_EFFECTS];
         int32 baseDamage[MAX_SPELL_EFFECTS];
-        uint16 effMask = 0;
+        uint8 effMask = 0;
         uint8 recalculateMask = 0;
         for (uint8 i = 0; i < MAX_SPELL_EFFECTS; ++i)
         {
@@ -18572,11 +18566,25 @@ void Player::_SaveAuras(SQLTransaction& trans)
             }
         }
 
-        trans->PAppend("REPLACE INTO character_aura (guid,caster_guid,item_guid,spell,effect_mask,recalculate_mask,stackcount,amount0,amount1,amount2,base_amount0,base_amount1,base_amount2,maxduration,remaintime,remaincharges) "
-            "VALUES ('%u', '" UI64FMTD "', '%u', '%u', '%u', '%u', '%u', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%u')",
-            GetGUIDLow(), itr->second->GetCasterGUID(), itr->second->GetCastItemGUID(), itr->second->GetId(), effMask, recalculateMask,
-            itr->second->GetStackAmount(), damage[0], damage[1], damage[2], baseDamage[0], baseDamage[1], baseDamage[2],
-            itr->second->GetMaxDuration(), itr->second->GetDuration(),itr->second->GetCharges());
+        uint8 index = 0;
+        stmt = CharDB.GetPreparedStatement(CHAR_ADD_AURA);
+        stmt->setUInt32(index++, GetGUIDLow());
+        stmt->setUInt64(index++, itr->second->GetCasterGUID());
+        stmt->setUInt64(index++, itr->second->GetCastItemGUID());
+        stmt->setUInt32(index++, itr->second->GetId());
+        stmt->setUInt8(index++, effMask);
+        stmt->setUInt8(index++, recalculateMask);
+        stmt->setUInt8(index++, itr->second->GetStackAmount());
+        stmt->setInt32(index++, damage[0]);
+        stmt->setInt32(index++, damage[1]);
+        stmt->setInt32(index++, damage[2]);
+        stmt->setInt32(index++, baseDamage[0]);
+        stmt->setInt32(index++, baseDamage[1]);
+        stmt->setInt32(index++, baseDamage[2]);
+        stmt->setInt32(index++, itr->second->GetMaxDuration());
+        stmt->setInt32(index++, itr->second->GetDuration());
+        stmt->setUInt8(index, itr->second->GetCharges());
+        trans->Append(stmt);
     }
 }
 
@@ -18666,19 +18674,22 @@ void Player::_SaveInventory(SQLTransaction& trans)
             }
         }
 
+        PreparedStatement* stmt = NULL;
         switch (item->GetState())
         {
             case ITEM_NEW:
-                trans->PAppend("DELETE FROM character_inventory WHERE item = '%u'", item->GetGUIDLow());
-                trans->PAppend("INSERT INTO character_inventory (guid,bag,slot,item,item_template) VALUES ('%u', '%u', '%u', '%u', '%u')", lowGuid, bag_guid, item->GetSlot(), item->GetGUIDLow(), item->GetEntry());
-                break;
             case ITEM_CHANGED:
-                trans->PAppend("DELETE FROM character_inventory WHERE item = '%u'", item->GetGUIDLow());
-                trans->PAppend("REPLACE INTO character_inventory (guid,bag,slot,item,item_template) VALUES ('%u', '%u', '%u', '%u', '%u')", lowGuid, bag_guid, item->GetSlot(), item->GetGUIDLow(), item->GetEntry());
+                stmt = CharDB.GetPreparedStatement(CHAR_REP_INVENTORY_ITEM);
+                stmt->setUInt32(0, lowGuid);
+                stmt->setUInt32(1, bag_guid);
+                stmt->setUInt8 (2, item->GetSlot());
+                stmt->setUInt32(3, item->GetGUIDLow());
+                trans->Append(stmt);
                 break;
             case ITEM_REMOVED:
-                trans->PAppend("DELETE FROM character_inventory WHERE item = '%u'", item->GetGUIDLow());
-                break;
+                stmt = CharDB.GetPreparedStatement(CHAR_DEL_INVENTORY_ITEM);
+                stmt->setUInt32(0, item->GetGUIDLow());
+                trans->Append(stmt);
             case ITEM_UNCHANGED:
                 break;
         }
@@ -18713,7 +18724,7 @@ void Player::_SaveMail(SQLTransaction& trans)
             if (m->HasItems())
             {
                 PreparedStatement* stmt = NULL;
-                for (std::vector<MailItemInfo>::iterator itr2 = m->items.begin(); itr2 != m->items.end(); ++itr2)
+                for (MailItemInfoVec::iterator itr2 = m->items.begin(); itr2 != m->items.end(); ++itr2)
                 {
                     stmt = CharDB.GetPreparedStatement(CHAR_DEL_ITEM_INSTANCE);
                     stmt->setUInt32(0, itr2->item_guid);
@@ -19879,21 +19890,25 @@ void Player::RemovePetitionsAndSigns(uint64 guid, uint32 type)
 
 void Player::LeaveAllArenaTeams(uint64 guid)
 {
-    QueryResult result = CharDB.PQuery("SELECT arena_team_member.arenateamid FROM arena_team_member JOIN arena_team ON arena_team_member.arenateamid = arena_team.arenateamid WHERE guid='%u'", GUID_LOPART(guid));
+    PreparedStatement* stmt = CharDB.GetPreparedStatement(CHAR_LOAD_PLAYER_ARENA_TEAMS);
+    stmt->setUInt32(0, GUID_LOPART(guid));
+    PreparedQueryResult result = CharDB.Query(stmt);
+
     if (!result)
         return;
 
     do
     {
-        Field *fields = result->Fetch();
-        uint32 at_id = fields[0].GetUInt32();
-        if (at_id != 0)
+        Field* fields = result->Fetch();
+        uint32 arenaTeamId = fields[0].GetUInt32();
+        if (arenaTeamId != 0)
         {
-            ArenaTeam * at = sObjectMgr->GetArenaTeamById(at_id);
-            if (at)
-                at->DelMember(guid);
+            ArenaTeam* arenaTeam = sObjectMgr->GetArenaTeamById(arenaTeamId);
+            if (arenaTeam)
+                arenaTeam->DelMember(guid, true);
         }
-    } while (result->NextRow());
+    }
+    while (result->NextRow());
 }
 
 void Player::SetRestBonus (float rest_bonus_new)
@@ -21484,8 +21499,7 @@ void Player::SendInitialPacketsAfterAddToMap()
     // update zone
     uint32 newzone, newarea;
     GetZoneAndAreaId(newzone,newarea);
-    SendInitWorldStates(newzone, newarea);
-    UpdateZone(newzone,newarea);
+    UpdateZone(newzone, newarea);
 
     ResetTimeSync();
     SendTimeSync();
@@ -21893,7 +21907,6 @@ void Player::SetDailyQuestStatus(uint32 quest_id)
         }
     }
 }
-
 
 void Player::SetWeeklyQuestStatus(uint32 quest_id)
 {
@@ -23088,7 +23101,7 @@ void Player::RemoveGlobalCooldown(SpellEntry const *spellInfo)
 uint32 Player::GetRuneBaseCooldown(uint8 index)
 {
     uint8 rune = GetBaseRune(index);
-    uint32 cooldown = RUNE_COOLDOWN;
+    uint32 cooldown = RUNE_BASE_COOLDOWN;
 
     AuraEffectList const& regenAura = GetAuraEffectsByType(SPELL_AURA_MOD_POWER_REGEN_PERCENT);
     for (AuraEffectList::const_iterator i = regenAura.begin();i != regenAura.end(); ++i)
@@ -24189,31 +24202,43 @@ void Player::_SaveEquipmentSets(SQLTransaction& trans)
     {
         uint32 index = itr->first;
         EquipmentSet& eqset = itr->second;
-        switch(eqset.state)
+        PreparedStatement* stmt = NULL;
+        uint8 j = 0;
+        switch (eqset.state)
         {
             case EQUIPMENT_SET_UNCHANGED:
                 ++itr;
                 break;                                      // nothing do
             case EQUIPMENT_SET_CHANGED:
-                CharDB.escape_string(eqset.Name);
-                CharDB.escape_string(eqset.IconName);
-                trans->PAppend("UPDATE character_equipmentsets SET name='%s', iconname='%s', item0='%u', item1='%u', item2='%u', item3='%u', item4='%u', item5='%u', item6='%u', item7='%u', item8='%u', item9='%u', item10='%u', item11='%u', item12='%u', item13='%u', item14='%u', item15='%u', item16='%u', item17='%u', item18='%u' WHERE guid='%u' AND setguid='"UI64FMTD"' AND setindex='%u'",
-                    eqset.Name.c_str(), eqset.IconName.c_str(), eqset.Items[0], eqset.Items[1], eqset.Items[2], eqset.Items[3], eqset.Items[4], eqset.Items[5], eqset.Items[6], eqset.Items[7],
-                    eqset.Items[8], eqset.Items[9], eqset.Items[10], eqset.Items[11], eqset.Items[12], eqset.Items[13], eqset.Items[14], eqset.Items[15], eqset.Items[16], eqset.Items[17], eqset.Items[18], GetGUIDLow(), eqset.Guid, index);
+                stmt = CharDB.GetPreparedStatement(CHAR_SET_EQUIP_SET);
+                stmt->setString(j++, eqset.Name.c_str());
+                stmt->setString(j++, eqset.IconName.c_str());
+                for (uint8 i=0; i<EQUIPMENT_SLOT_END; ++i)
+                    stmt->setUInt32(j++, eqset.Items[i]);
+                stmt->setUInt32(j++, GetGUIDLow());
+                stmt->setUInt64(j++, eqset.Guid);
+                stmt->setUInt32(j, index);
+                trans->Append(stmt);
                 eqset.state = EQUIPMENT_SET_UNCHANGED;
                 ++itr;
                 break;
             case EQUIPMENT_SET_NEW:
-                CharDB.escape_string(eqset.Name);
-                CharDB.escape_string(eqset.IconName);
-                trans->PAppend("INSERT INTO character_equipmentsets VALUES ('%u', '"UI64FMTD"', '%u', '%s', '%s', '%u', '%u', '%u', '%u', '%u', '%u', '%u', '%u', '%u', '%u', '%u', '%u', '%u', '%u', '%u', '%u', '%u', '%u', '%u')",
-                    GetGUIDLow(), eqset.Guid, index, eqset.Name.c_str(), eqset.IconName.c_str(), eqset.Items[0], eqset.Items[1], eqset.Items[2], eqset.Items[3], eqset.Items[4], eqset.Items[5], eqset.Items[6], eqset.Items[7],
-                    eqset.Items[8], eqset.Items[9], eqset.Items[10], eqset.Items[11], eqset.Items[12], eqset.Items[13], eqset.Items[14], eqset.Items[15], eqset.Items[16], eqset.Items[17], eqset.Items[18]);
+                stmt = CharDB.GetPreparedStatement(CHAR_ADD_EQUIP_SET);
+                stmt->setUInt32(j++, GetGUIDLow());
+                stmt->setUInt64(j++, eqset.Guid);
+                stmt->setUInt32(j++, index);
+                stmt->setString(j++, eqset.Name.c_str());
+                stmt->setString(j++, eqset.IconName.c_str());
+                for (uint8 i=0; i<EQUIPMENT_SLOT_END; ++i)
+                    stmt->setUInt32(j++, eqset.Items[i]);
+                trans->Append(stmt);
                 eqset.state = EQUIPMENT_SET_UNCHANGED;
                 ++itr;
                 break;
             case EQUIPMENT_SET_DELETED:
-                trans->PAppend("DELETE FROM character_equipmentsets WHERE setguid="UI64FMTD, eqset.Guid);
+                stmt = CharDB.GetPreparedStatement(CHAR_DEL_EQUIP_SET);
+                stmt->setUInt64(0, eqset.Guid);
+                trans->Append(stmt);
                 m_EquipmentSets.erase(itr++);
                 break;
         }
@@ -24222,13 +24247,25 @@ void Player::_SaveEquipmentSets(SQLTransaction& trans)
 
 void Player::_SaveBGData(SQLTransaction& trans)
 {
-    trans->PAppend("DELETE FROM character_battleground_data WHERE guid='%u'", GetGUIDLow());
+    PreparedStatement* stmt = CharDB.GetPreparedStatement(CHAR_DEL_PLAYER_BGDATA);
+    stmt->setUInt32(0, GetGUIDLow());
+    trans->Append(stmt);
     if (m_bgData.bgInstanceID)
     {
         /* guid, bgInstanceID, bgTeam, x, y, z, o, map, taxi[0], taxi[1], mountSpell */
-        trans->PAppend("INSERT INTO character_battleground_data VALUES ('%u', '%u', '%u', '%f', '%f', '%f', '%f', '%u', '%u', '%u', '%u')",
-            GetGUIDLow(), m_bgData.bgInstanceID, m_bgData.bgTeam, m_bgData.joinPos.GetPositionX(), m_bgData.joinPos.GetPositionY(), m_bgData.joinPos.GetPositionZ(),
-            m_bgData.joinPos.GetOrientation(), m_bgData.joinPos.GetMapId(), m_bgData.taxiPath[0], m_bgData.taxiPath[1], m_bgData.mountSpell);
+        stmt = CharDB.GetPreparedStatement(CHAR_ADD_PLAYER_BGDATA);
+        stmt->setUInt32(0, GetGUIDLow());
+        stmt->setUInt32(1, m_bgData.bgInstanceID);
+        stmt->setUInt16(2, m_bgData.bgTeam);
+        stmt->setFloat (3, m_bgData.joinPos.GetPositionX());
+        stmt->setFloat (4, m_bgData.joinPos.GetPositionY());
+        stmt->setFloat (5, m_bgData.joinPos.GetPositionZ());
+        stmt->setFloat (6, m_bgData.joinPos.GetOrientation());
+        stmt->setUInt16(7, m_bgData.joinPos.GetMapId());
+        stmt->setUInt16(8, m_bgData.taxiPath[0]);
+        stmt->setUInt16(9, m_bgData.taxiPath[1]);
+        stmt->setUInt16(10,m_bgData.mountSpell);
+        trans->Append(stmt);
     }
 }
 

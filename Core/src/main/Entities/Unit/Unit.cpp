@@ -173,7 +173,6 @@ m_vehicleKit(NULL), m_unitTypeMask(UNIT_MASK_NONE), m_HostileRefManager(this)
     m_CombatTimer = 0;
     m_lastManaUse = 0;
 
-    //m_victimThreat = 0.0f;
     for (uint8 i = 0; i < MAX_SPELL_SCHOOL; ++i)
         m_threatModifier[i] = 1.0f;
     m_isSorted = true;
@@ -181,7 +180,6 @@ m_vehicleKit(NULL), m_unitTypeMask(UNIT_MASK_NONE), m_HostileRefManager(this)
         m_speed_rate[i] = 1.0f;
 
     m_charmInfo = NULL;
-    //m_unit_movement_flags = 0;
     m_reducedThreatPercent = 0;
     m_misdirectionTargetGUID = 0;
 
@@ -314,7 +312,6 @@ void Unit::SendMonsterMoveWithSpeedToCurrentDestination(Player* player)
     if (GetMotionMaster()->GetDestination(x, y, z))
         SendMonsterMoveWithSpeed(x, y, z, 0, player);
 }
-
 
 void Unit::SendMonsterMoveWithSpeed(float x, float y, float z, uint32 transitTime, Player* player)
 {
@@ -2765,10 +2762,13 @@ float Unit::GetUnitCriticalChance(WeaponAttackType attackType, const Unit *pVict
     // reduce crit chance from Rating for players
     if (attackType != RANGED_ATTACK)
     {
+        ApplyResilience(pVictim, false);
         // Glyph of barkskin
         if (pVictim->HasAura(63057) && pVictim->HasAura(22812))
             crit -= 25.0f;
     }
+    else
+        ApplyResilience(pVictim, false);
 
     // Apply crit chance from defence skill
     crit += (int32(GetMaxSkillValueForLevel(pVictim)) - int32(pVictim->GetDefenseSkillValue(this))) * 0.04f;
@@ -3006,17 +3006,15 @@ void Unit::InterruptSpell(CurrentSpellTypes spellType, bool withDelayed, bool wi
         if (!spell->IsInterruptable())
             return;
 
-        m_currentSpells[spellType] = NULL;
-
         // send autorepeat cancel message for autorepeat spells
         if (spellType == CURRENT_AUTOREPEAT_SPELL)
-        {
             if (GetTypeId() == TYPEID_PLAYER)
-                this->ToPlayer()->SendAutoRepeatCancel(this);
-        }
+                ToPlayer()->SendAutoRepeatCancel(this);
 
         if (spell->getState() != SPELL_STATE_FINISHED)
             spell->cancel();
+
+        m_currentSpells[spellType] = NULL;
         spell->SetReferencedFromCurrent(false);
     }
 }
@@ -3490,7 +3488,7 @@ bool Unit::_IsNoStackAuraDueToAura(Aura * appliedAura, Aura * existingAura) cons
     return true;
 }
 
-void Unit::_HandleAuraEffect(AuraEffect * aurEff, bool apply)
+void Unit::_RegisterAuraEffect(AuraEffect * aurEff, bool apply)
 {
     if (apply)
         m_modAuras[aurEff->GetAuraType()].push_back(aurEff);
@@ -8577,6 +8575,11 @@ bool Unit::HandleProcTriggerSpell(Unit *pVictim, uint32 damage, AuraEffect* trig
             target = pVictim;
             break;
         }
+        // Professor Putricide - Ooze Spell Tank Protection
+        case 71770:
+            if (pVictim)
+                pVictim->CastSpell(pVictim, trigger_spell_id, true);    // EffectImplicitTarget is self
+            return true;
         default:
             break;
     }
@@ -8783,10 +8786,6 @@ bool Unit::HandleProcTriggerSpell(Unit *pVictim, uint32 damage, AuraEffect* trig
                 return false;
             break;
         }
-        // Deathbringer Saurfang - Blood Link
-        case 72202:
-            target = FindNearestCreature(37813, 75.0f); // NPC_DEATHBRINGER_SAURFANG = 37813
-            break;
         // Shadow's Fate (Shadowmourne questline)
         case 71169:
         {
@@ -10674,6 +10673,7 @@ bool Unit::isSpellCrit(Unit *pVictim, SpellEntry const *spellProto, SpellSchoolM
         return false;
 
     float crit_chance = 0.0f;
+    int32 damage = crit_chance;
     switch(spellProto->GetDmgClass())
     {
         case SPELL_DAMAGE_CLASS_NONE:  // Exception for Earth Shield and Lifebloom Final Bloom
@@ -10700,7 +10700,7 @@ bool Unit::isSpellCrit(Unit *pVictim, SpellEntry const *spellProto, SpellSchoolM
                     crit_chance += pVictim->GetTotalAuraModifierByMiscMask(SPELL_AURA_MOD_ATTACKER_SPELL_CRIT_CHANCE, schoolMask);
                     // Modify critical chance by victim SPELL_AURA_MOD_ATTACKER_SPELL_AND_WEAPON_CRIT_CHANCE
                     crit_chance += pVictim->GetTotalAuraModifier(SPELL_AURA_MOD_ATTACKER_SPELL_AND_WEAPON_CRIT_CHANCE);
-                    //ApplyResilience(pVictim, &crit_chance);
+                    ApplyResilience(pVictim, &damage);
                 }
                 // scripted (increase crit chance ... against ... target by x%
                 AuraEffectList const& mOverrideClassScript = GetAuraEffectsByType(SPELL_AURA_OVERRIDE_CLASS_SCRIPTS);
@@ -12088,9 +12088,15 @@ bool Unit::canAttack(Unit const* target, bool force) const
     return true;
 }
 
-bool Unit::isAttackableByAOE(bool requireDeadTarget) const
+bool Unit::isAttackableByAOE(SpellEntry const * spellProto) const
 {
-    if (isAlive() == requireDeadTarget)
+    bool targetMustBeDead = spellProto ? bool(spellProto->AttributesEx3 & SPELL_ATTR_EX3_REQUIRE_DEAD_TARGET) : false;
+    bool targetCanBeDead = spellProto ? bool(spellProto->AttributesEx2 & SPELL_ATTR_EX2_ALLOW_DEAD_TARGET) : false;
+
+    if (targetMustBeDead && isAlive())
+        return false;
+
+    if (!targetMustBeDead && !targetCanBeDead && !isAlive())
         return false;
 
     if (HasFlag(UNIT_FIELD_FLAGS,
@@ -12510,8 +12516,6 @@ void Unit::setDeathState(DeathState s)
         ClearDiminishings();
         GetMotionMaster()->Clear(false);
         GetMotionMaster()->MoveIdle();
-        if (m_vehicleKit)
-            m_vehicleKit->Die();
         SendMonsterStop(true);
         //without this when removing IncreaseMaxHealth aura player may stuck with 1 hp
         //do not why since in IncreaseMaxHealth currenthealth is checked

@@ -413,7 +413,7 @@ pAuraEffectHandler AuraEffectHandler[TOTAL_AURAS]=
 
 AuraEffect::AuraEffect(Aura* base, uint8 effIndex, int32* baseAmount, Unit * caster):
 m_base(base), m_spellProto(base->GetSpellProto()), m_effIndex(effIndex),
-m_baseAmount(baseAmount ? *baseAmount : m_spellProto->CalculateSimpleValue(SpellEffIndex(effIndex))),
+m_baseAmount(baseAmount ? *baseAmount : m_spellProto->CalculateSimpleValue(SpellEffIndex(m_effIndex))),
 m_canBeRecalculated(true), m_spellmod(NULL), m_isPeriodic(false),
 m_periodicTimer(0), m_tickNumber(0)
 {
@@ -815,7 +815,11 @@ int32 AuraEffect::CalculateAmount(Unit * caster)
 
 void AuraEffect::CalculatePeriodic(Unit * caster, bool create)
 {
-    m_amplitude = (int32)m_effIndex;
+    SpellEffectEntry const* spellEffect = m_spellProto->GetSpellEffect(SpellEffIndex(m_effIndex));
+    if (!spellEffect)
+        return;
+
+    m_amplitude = spellEffect->EffectAmplitude;
 
     // prepare periodics
     switch (GetAuraType())
@@ -974,7 +978,7 @@ void AuraEffect::CalculateSpellMod()
 
                 m_spellmod->type = SpellModType(GetAuraType());    // SpellModType value == spell aura types
                 m_spellmod->spellId = GetId();
-                //m_spellmod->mask = spellEffect->EffectSpellClassMaskA[GetEffIndex()];
+                /*m_spellmod->mask = spellEffect->EffectSpellClassMaskA[GetEffIndex()];*/
                 m_spellmod->charges = GetBase()->GetCharges();
             }
             m_spellmod->value = GetAmount();
@@ -1101,19 +1105,19 @@ void AuraEffect::ApplySpellMod(Unit * target, bool apply)
     }
 }
 
-void AuraEffect::Update(uint32 diff, Unit * caster)
+void AuraEffect::Update(uint32 diff, Unit* caster)
 {
-    //if (m_isPeriodic && (GetBase()->GetDuration() >=0 || GetBase()->IsPassive() || GetBase()->IsPermanent()))
-    //{
-        //if (m_periodicTimer > int32(diff))
-            //m_periodicTimer -= diff;
-        //else // tick also at m_periodicTimer == 0 to prevent lost last tick in case max m_duration == (max m_periodicTimer)*N
-        //{
-            //++m_tickNumber;
+    if (m_isPeriodic && (GetBase()->GetDuration() >=0 || GetBase()->IsPassive() || GetBase()->IsPermanent()))
+    {
+        if (m_periodicTimer > int32(diff))
+            m_periodicTimer -= diff;
+        else // tick also at m_periodicTimer == 0 to prevent lost last tick in case max m_duration == (max m_periodicTimer)*N
+        {
+            ++m_tickNumber;
 
             // update before tick (aura can be removed in TriggerSpell or PeriodicTick calls)
-            //m_periodicTimer += m_amplitude - diff;
-            /*UpdatePeriodic(caster);
+            m_periodicTimer += m_amplitude - diff;
+            UpdatePeriodic(caster);
 
             std::list<AuraApplication*> effectApplications;
             GetApplicationList(effectApplications);
@@ -1122,9 +1126,9 @@ void AuraEffect::Update(uint32 diff, Unit * caster)
             {
                 for (std::list<AuraApplication*>::iterator apptItr = effectApplications.begin(); apptItr != effectApplications.end(); ++apptItr)
                     PeriodicTick(*apptItr, caster);
-            }*/
-        //}
-    //}
+            }
+        }
+    }
 }
 
 void AuraEffect::UpdatePeriodic(Unit * caster)
@@ -3508,14 +3512,17 @@ void AuraEffect::HandleAuraCloneCaster(AuraApplication const * aurApp, uint8 mod
     if (apply)
     {
         Unit * caster = GetCaster();
-        if (!caster)
+        if (!caster || caster == target)
             return;
-        // Set display id (probably for portrait?)
+        // What must be cloned? at least display and scale
         target->SetDisplayId(caster->GetDisplayId());
+        target->SetCreatorGUID(caster->GetGUID());
+        //target->SetFloatValue(OBJECT_FIELD_SCALE_X, caster->GetFloatValue(OBJECT_FIELD_SCALE_X)); // we need retail info about how scaling is handled (aura maybe?)
         target->SetFlag(UNIT_FIELD_FLAGS_2, UNIT_FLAG2_MIRROR_IMAGE);
     }
     else
     {
+        target->SetCreatorGUID(0);
         target->SetDisplayId(target->GetNativeDisplayId());
         target->RemoveFlag(UNIT_FIELD_FLAGS_2, UNIT_FLAG2_MIRROR_IMAGE);
     }
@@ -5634,69 +5641,9 @@ void AuraEffect::HandleModDamagePercentDone(AuraApplication const * aurApp, uint
     Player* target = aurApp->GetTarget()->ToPlayer();
     if (!target)
         return;
-    
+
     if (target->HasItemFitToSpellRequirements(GetSpellProto()))
-        aurApp->GetTarget()->ApplyModSignedFloatValue(PLAYER_FIELD_MOD_DAMAGE_DONE_PCT, GetAmount() / 100.0f, apply);
-
-    sLog->outDebug(LOG_FILTER_SPELLS_AURAS, "AURA MOD DAMAGE type:%u negative:%u", GetMiscValue(), GetAmount() > 0);
-
-    // apply item specific bonuses for already equipped weapon
-    if (target->GetTypeId() == TYPEID_PLAYER)
-    {
-        for (int i = 0; i < MAX_ATTACK; ++i)
-            if (Item* pItem = target->ToPlayer()->GetWeaponForAttack(WeaponAttackType(i), true))
-                target->ToPlayer()->_ApplyWeaponDependentAuraDamageMod(pItem,WeaponAttackType(i),this,apply);
-    }
-
-    // GetMiscValue() is bitmask of spell schools
-    // 1 (0-bit) - normal school damage (SPELL_SCHOOL_MASK_NORMAL)
-    // 126 - full bitmask all magic damages (SPELL_SCHOOL_MASK_MAGIC) including wand
-    // 127 - full bitmask any damages
-    //
-    // mods must be applied base at equipped weapon class and subclass comparison
-    // with spell->GetEquippedItemClass() and  EquippedItemSubClassMask and EquippedItemInventoryTypeMask
-    // GetMiscValue() comparison with item generated damage types
-
-    if ((GetMiscValue() & SPELL_SCHOOL_MASK_NORMAL) != 0)
-    {
-        // apply generic physical damage bonuses including wand case
-        if (GetSpellProto()->GetEquippedItemClass() == -1 || target->GetTypeId() != TYPEID_PLAYER)
-        {
-            target->HandleStatModifier(UNIT_MOD_DAMAGE_MAINHAND, TOTAL_PCT, float(GetAmount()), apply);
-            target->HandleStatModifier(UNIT_MOD_DAMAGE_OFFHAND, TOTAL_PCT, float(GetAmount()), apply);
-            target->HandleStatModifier(UNIT_MOD_DAMAGE_RANGED, TOTAL_PCT, float(GetAmount()), apply);
-            // For show in client
-            if (target->GetTypeId() == TYPEID_PLAYER)
-                target->ApplyModSignedFloatValue(PLAYER_FIELD_MOD_DAMAGE_DONE_PCT,GetAmount()/100.0f,apply);
-        }
-        else
-        {
-            // done in Player::_ApplyWeaponDependentAuraMods
-        }
-    }
-
-    // Skip non magic case for speedup
-    if ((GetMiscValue() & SPELL_SCHOOL_MASK_MAGIC) == 0)
-        return;
-
-    SpellEquippedItemsEntry const* equippedItems = GetSpellProto()->GetSpellEquippedItems();
-    if (!equippedItems)
-        return;
-
-    if (equippedItems && equippedItems->EquippedItemClass != -1 || equippedItems->EquippedItemInventoryTypeMask != 0)
-    {
-        // wand magic case (skip generic to all item spell bonuses)
-        // done in Player::_ApplyWeaponDependentAuraMods
-
-        // Skip item specific requirements for not wand magic damage
-        return;
-    }
-
-    // Magic damage percent modifiers implemented in Unit::SpellDamageBonus
-    // Send info to client
-    if (target->GetTypeId() == TYPEID_PLAYER)
-        for (int i = SPELL_SCHOOL_HOLY; i < MAX_SPELL_SCHOOL; ++i)
-            target->ApplyModSignedFloatValue(PLAYER_FIELD_MOD_DAMAGE_DONE_PCT+i,GetAmount()/100.0f,apply);
+        aurApp->GetTarget()->ApplyModSignedFloatValue(PLAYER_FIELD_MOD_DAMAGE_DONE_PCT, GetAmount()/100.0f, apply);
 }
 
 void AuraEffect::HandleModOffhandDamagePercent(AuraApplication const * aurApp, uint8 mode, bool apply) const
@@ -5781,10 +5728,11 @@ void AuraEffect::HandleNoReagentUseAura(AuraApplication const * aurApp, uint8 mo
     if (target->GetTypeId() != TYPEID_PLAYER)
         return;
 
+
     flag96 mask;
     Unit::AuraEffectList const& noReagent = target->GetAuraEffectsByType(SPELL_AURA_NO_REAGENT_USE);
-        //for (Unit::AuraEffectList::const_iterator i = noReagent.begin(); i !=  noReagent.end(); ++i)
-            //mask |= (*i)->m_spellProto->GetEffectSpellClassMask(SpellEffIndex(m_effIndex));
+        //for (Unit::AuraEffectList::const_iterator i = noReagent.begin(); i != noReagent.end(); ++i)
+        //    mask |= (*i)->m_spellProto->GetEffectSpellClassMask(SpellEffIndex(m_effIndex));
 
     target->SetUInt32Value(PLAYER_NO_REAGENT_COST_1  , mask[0]);
     target->SetUInt32Value(PLAYER_NO_REAGENT_COST_1+1, mask[1]);

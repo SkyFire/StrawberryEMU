@@ -473,7 +473,7 @@ void SpellScript::SetCustomCastResultMessage(SpellCustomErrors result)
 {
     if (!IsInCheckCastHook())
     {
-        sLog->outError("TSCR: Script: `%s` Spell: `%u`: function SpellScript::SetCustomCastResultMessage was called while spell not in check cast phase!", m_scriptName->c_str(), m_scriptSpellId);
+        sLog->outError("SCR: Script: `%s` Spell: `%u`: function SpellScript::SetCustomCastResultMessage was called while spell not in check cast phase!", m_scriptName->c_str(), m_scriptSpellId);
         return;
     }
 

@@ -779,6 +779,8 @@ void Spell::SelectSpellTargets()
                             AddUnitTarget(m_caster, i);
                             break;
                         default:                            // apply to target in other case
+                            if (m_targets.getUnitTarget())
+                                AddUnitTarget(m_targets.getUnitTarget(), i);
                             break;
                     }
                     break;
@@ -1893,8 +1895,7 @@ void Spell::SearchAreaTarget(std::list<Unit*> &TagUnitMap, float radius, SpellNo
             break;
     }
 
-    bool requireDeadTarget = bool(m_spellInfo->AttributesEx3 & SPELL_ATTR_EX3_REQUIRE_DEAD_TARGET);
-    Strawberry::SpellNotifierCreatureAndPlayer notifier(m_caster, TagUnitMap, radius, type, TargetType, pos, entry, requireDeadTarget);
+    Strawberry::SpellNotifierCreatureAndPlayer notifier(m_caster, TagUnitMap, radius, type, TargetType, pos, entry, m_spellInfo);
     if ((m_spellInfo->AttributesEx3 & SPELL_ATTR_EX3_PLAYERS_ONLY)
         || (TargetType == SPELL_TARGETS_ENTRY && !entry))
         m_caster->GetMap()->VisitWorld(pos->m_positionX, pos->m_positionY, radius, notifier);
@@ -3078,10 +3079,6 @@ void Spell::cancel()
     if (m_spellState == SPELL_STATE_FINISHED)
         return;
 
-    SetReferencedFromCurrent(false);
-    if (m_selfContainer && *m_selfContainer == this)
-        *m_selfContainer = NULL;
-
     uint32 oldState = m_spellState;
     m_spellState = SPELL_STATE_FINISHED;
 
@@ -3115,6 +3112,10 @@ void Spell::cancel()
         default:
             break;
     }
+
+    SetReferencedFromCurrent(false);
+    if (m_selfContainer && *m_selfContainer == this)
+        *m_selfContainer = NULL;
 
     if (m_caster->GetTypeId() == TYPEID_PLAYER)
         m_caster->ToPlayer()->RemoveGlobalCooldown(m_spellInfo);
@@ -4034,16 +4035,20 @@ void Spell::SendSpellGo()
 
     if (castFlags & CAST_FLAG_RUNE_LIST)                   // rune cooldowns list
     {
-        uint8 v1 = m_runesState;
-        uint8 v2 = m_caster->ToPlayer()->GetRunesState();
-        data << uint8(v1);                                  // runes state before
-        data << uint8(v2);                                  // runes state after
+        Player* player = m_caster->ToPlayer();
+        uint8 runeMaskInitial = m_runesState;
+        uint8 runeMaskAfterCast = player->GetRunesState();
+        data << uint8(runeMaskInitial);                     // runes state before
+        data << uint8(runeMaskAfterCast);                   // runes state after
         for (uint8 i = 0; i < MAX_RUNES; ++i)
         {
-            uint8 m = (1 << i);
-            if (m & v1)                                      // usable before...
-                if (!(m & v2))                               // ...but on cooldown now...
-                    data << uint8(0);                       // some unknown byte (time?)
+            uint8 mask = (1 << i);
+            if (mask & runeMaskInitial && !(mask & runeMaskAfterCast))  // usable before andon cooldown now...
+            {
+                // float casts ensure the division is performed on floats as we need float result
+                float baseCd = float(player->GetRuneBaseCooldown(i));
+                data << uint8((baseCd - float(player->GetRuneCooldown(i))) / baseCd * 255); // rune cooldown passed
+            }
         }
     }
 
@@ -4472,7 +4477,7 @@ void Spell::TakePower()
     bool hit = true;
     if (m_caster->GetTypeId() == TYPEID_PLAYER)
     {
-        if (m_spellInfo->powerType == POWER_RAGE || m_spellInfo->powerType == POWER_ENERGY)
+        if (m_spellInfo->powerType == POWER_RAGE || m_spellInfo->powerType == POWER_ENERGY || m_spellInfo->powerType == POWER_RUNE)
             if (uint64 targetGUID = m_targets.getUnitTargetGUID())
                 for (std::list<TargetInfo>::iterator ihit= m_UniqueTargetInfo.begin(); ihit != m_UniqueTargetInfo.end(); ++ihit)
                     if (ihit->targetGUID == targetGUID)
@@ -4491,9 +4496,9 @@ void Spell::TakePower()
 
     Powers powerType = Powers(m_spellInfo->powerType);
 
-    if (hit && powerType == POWER_RUNE)
+    if (powerType == POWER_RUNE)
     {
-        TakeRunePower();
+        TakeRunePower(hit);
         return;
     }
 
@@ -4572,28 +4577,28 @@ SpellCastResult Spell::CheckRuneCost(uint32 runeCostID)
     return SPELL_CAST_OK;
 }
 
-void Spell::TakeRunePower()
+void Spell::TakeRunePower(bool didHit)
 {
     if (m_caster->GetTypeId() != TYPEID_PLAYER)
         return;
 
-    Player *plr = (Player*)m_caster;
+    Player* player = m_caster->ToPlayer();
 
-    if (plr->getClass() != CLASS_DEATH_KNIGHT)
+    if (player->getClass() != CLASS_DEATH_KNIGHT)
         return;
 
-    SpellRuneCostEntry const *src = sSpellRuneCostStore.LookupEntry(m_spellInfo->runeCostID);
+    SpellRuneCostEntry const *runeCostData = sSpellRuneCostStore.LookupEntry(m_spellInfo->runeCostID);
 
-    if (!src || (src->NoRuneCost() && src->NoRunicPowerGain()))
+    if (!runeCostData || (runeCostData->NoRuneCost() && runeCostData->NoRunicPowerGain()))
         return;
 
-    m_runesState = plr->GetRunesState();                    // store previous state
+    m_runesState = player->GetRunesState();                    // store previous state
 
     int32 runeCost[NUM_RUNE_TYPES];                         // blood, frost, unholy, death
 
     for (uint32 i = 0; i < RUNE_DEATH; ++i)
     {
-        runeCost[i] = src->RuneCost[i];
+        runeCost[i] = runeCostData->RuneCost[i];
         if (Player* modOwner = m_caster->GetSpellModOwner())
             modOwner->ApplySpellMod(m_spellInfo->Id, SPELLMOD_COST, runeCost[i], this);
     }
@@ -4602,11 +4607,11 @@ void Spell::TakeRunePower()
 
     for (uint32 i = 0; i < MAX_RUNES; ++i)
     {
-        RuneType rune = plr->GetCurrentRune(i);
-        if ((plr->GetRuneCooldown(i) == 0) && (runeCost[rune] > 0))
+        RuneType rune = player->GetCurrentRune(i);
+        if (!player->GetRuneCooldown(i) && runeCost[rune] > 0)
         {
-            plr->SetRuneCooldown(i, plr->GetRuneBaseCooldown(i));
-            plr->SetLastUsedRune(RuneType(rune));
+            player->SetRuneCooldown(i, didHit ? player->GetRuneBaseCooldown(i) : RUNE_MISS_COOLDOWN);
+            player->SetLastUsedRune(rune);
             runeCost[rune]--;
         }
     }
@@ -4617,14 +4622,16 @@ void Spell::TakeRunePower()
     {
         for (uint32 i = 0; i < MAX_RUNES; ++i)
         {
-            RuneType rune = plr->GetCurrentRune(i);
-            if ((plr->GetRuneCooldown(i) == 0) && (rune == RUNE_DEATH))
+            RuneType rune = player->GetCurrentRune(i);
+            if (!player->GetRuneCooldown(i) && rune == RUNE_DEATH)
             {
-                plr->SetRuneCooldown(i, plr->GetRuneBaseCooldown(i));
-                plr->SetLastUsedRune(RuneType(rune));
+                player->SetRuneCooldown(i, didHit ? player->GetRuneBaseCooldown(i) : RUNE_MISS_COOLDOWN);
+                player->SetLastUsedRune(rune);
                 runeCost[rune]--;
 
-                plr->RestoreBaseRune(i);
+                // keep Death Rune type if missed
+                if (didHit)
+                    player->RestoreBaseRune(i);
 
                 if (runeCost[RUNE_DEATH] == 0)
                     break;
@@ -4633,9 +4640,9 @@ void Spell::TakeRunePower()
     }
 
     // you can gain some runic power when use runes
-    float rp = (float)src->runePowerGain;
-    rp *= sWorld->getRate(RATE_POWER_RUNICPOWER_INCOME);
-    plr->ModifyPower(POWER_RUNIC_POWER, (int32)rp);
+    if (didHit)
+        if (int32 rp = int32(runeCostData->runePowerGain * sWorld->getRate(RATE_POWER_RUNICPOWER_INCOME)))
+            player->ModifyPower(POWER_RUNIC_POWER, int32(rp));
 }
 
 void Spell::TakeReagents()
@@ -4877,8 +4884,16 @@ SpellCastResult Spell::CheckCast(bool strict)
 
     if (target)
     {
+        SpellAuraRestrictionsEntry const* auraRestrictions = m_spellInfo->GetSpellAuraRestrictions();
+
         // target state requirements (not allowed state), apply to self also
-        if (!m_IsTriggeredSpell && (auraRestriction && auraRestriction->TargetAuraStateNot) && target->HasAuraState(AuraState(auraRestriction->TargetAuraStateNot), m_spellInfo, m_caster))
+        if (!m_IsTriggeredSpell && auraRestrictions->TargetAuraStateNot && target->HasAuraState(AuraState(auraRestrictions->TargetAuraStateNot), m_spellInfo, m_caster))
+            return SPELL_FAILED_TARGET_AURASTATE;
+
+        if (auraRestrictions->targetAuraSpell && !target->HasAura(auraRestrictions->targetAuraSpell))
+            return SPELL_FAILED_TARGET_AURASTATE;
+
+        if (auraRestrictions->excludeTargetAuraSpell && target->HasAura(auraRestrictions->excludeTargetAuraSpell))
             return SPELL_FAILED_TARGET_AURASTATE;
 
         if (!m_IsTriggeredSpell && target == m_caster && m_spellInfo->AttributesEx & SPELL_ATTR_EX_CANT_TARGET_SELF)
@@ -4929,8 +4944,7 @@ SpellCastResult Spell::CheckCast(bool strict)
                 }
             }
 
-            // recheck LoS every channel tick
-            if ((!m_IsTriggeredSpell || (m_triggeredByAuraSpell && IsChanneledSpell(m_triggeredByAuraSpell))) && VMAP::VMapFactory::checkSpellForLoS(m_spellInfo->Id) && !m_caster->IsWithinLOSInMap(target))
+            if (!m_IsTriggeredSpell && VMAP::VMapFactory::checkSpellForLoS(m_spellInfo->Id) && !m_caster->IsWithinLOSInMap(target))
                 return SPELL_FAILED_LINE_OF_SIGHT;
 
         }

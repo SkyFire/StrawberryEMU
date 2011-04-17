@@ -272,8 +272,8 @@ void InstanceSaveManager::LoadInstances()
     CharDB.DirectExecute("DELETE i.* FROM instance AS i LEFT JOIN character_instance AS ci ON i.id = ci.instance LEFT JOIN group_instance AS gi ON i.id = gi.instance WHERE ci.guid IS NULL AND gi.guid IS NULL");
 
     // Delete invalid references to instance
-    CharDB.DirectExecute("DELETE tmp.* FROM creature_respawn   AS tmp LEFT JOIN instance ON tmp.instance = instance.id WHERE tmp.instance > 0 AND instance.id IS NULL");
-    CharDB.DirectExecute("DELETE tmp.* FROM gameobject_respawn AS tmp LEFT JOIN instance ON tmp.instance = instance.id WHERE tmp.instance > 0 AND instance.id IS NULL");
+    CharDB.DirectExecute(CharDB.GetPreparedStatement(CHAR_DEL_NONEXISTENT_INSTANCE_CREATURE_RESPAWNS));
+    CharDB.DirectExecute(CharDB.GetPreparedStatement(CHAR_DEL_NONEXISTENT_INSTANCE_GO_RESPAWNS));
     CharDB.DirectExecute("DELETE tmp.* FROM character_instance AS tmp LEFT JOIN instance ON tmp.instance = instance.id WHERE tmp.instance > 0 AND instance.id IS NULL");
     CharDB.DirectExecute("DELETE tmp.* FROM group_instance     AS tmp LEFT JOIN instance ON tmp.instance = instance.id WHERE tmp.instance > 0 AND instance.id IS NULL");
 
@@ -283,10 +283,10 @@ void InstanceSaveManager::LoadInstances()
 
     // Initialize instance id storage (Needs to be done after the trash has been clean out)
     sMapMgr->InitInstanceIds();
-    
+
     // Load reset times and clean expired instances
     sInstanceSaveMgr->LoadResetTimes();
-    
+
     sLog->outString(">> Loaded instances in %u ms", GetMSTimeDiffToNow(oldMSTime));
     sLog->outString();
 }
@@ -338,8 +338,7 @@ void InstanceSaveManager::LoadResetTimes()
         while (result->NextRow());
 
         // update reset time for normal instances with the max creature respawn time + X hours
-        result = CharDB.Query("SELECT MAX(respawntime), instance FROM creature_respawn WHERE instance > 0 GROUP BY instance");
-        if (result)
+        if (PreparedQueryResult result = CharDB.Query(CharDB.GetPreparedStatement(CHAR_GET_MAX_CREATURE_RESPAWNS)))
         {
             do
             {
@@ -629,7 +628,7 @@ void InstanceSaveManager::_ResetOrWarnAll(uint32 mapid, Difficulty difficulty, b
             continue;
 
         if (warn)
-        {            
+        {
             if (now <= resetTime)
                 timeLeft = 0;
             else

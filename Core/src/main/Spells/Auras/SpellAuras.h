@@ -52,12 +52,11 @@ class AuraApplication
         uint8 m_effectsToApply;                         // Used only at spell hit to determine which effect should be applied
         AuraRemoveMode m_removeMode:8;                  // Store info for know remove aura reason
         bool m_needClientUpdate:1;
-        bool m_isNeedManyNegativeEffects:1;
 
         explicit AuraApplication(Unit * target, Unit * caster, Aura * base, uint8 effMask);
         void _Remove();
     private:
-        bool _CheckPositive(Unit * caster) const;
+        void _InitFlags(Unit * caster, uint8 effMask);
         void _HandleEffect(uint8 effIndex, bool apply);
     public:
 
@@ -69,6 +68,7 @@ class AuraApplication
         uint8 GetEffectMask() const { return m_flags & (AFLAG_EFF_INDEX_0 | AFLAG_EFF_INDEX_1 | AFLAG_EFF_INDEX_2); }
         bool HasEffect(uint8 effect) const { ASSERT(effect < MAX_SPELL_EFFECTS);  return m_flags & (1<<effect); }
         bool IsPositive() const { return m_flags & AFLAG_POSITIVE; }
+        bool IsSelfcasted() const { return m_flags & AFLAG_CASTER; }
         uint8 GetEffectsToApply() const { return m_effectsToApply; }
 
         void SetRemoveMode(AuraRemoveMode mode) { m_removeMode = mode; }
@@ -154,7 +154,7 @@ class Aura
         bool HasEffect(uint8 effIndex) const { return bool(GetEffect(effIndex)); }
         bool HasEffectType(AuraType type) const;
         AuraEffect * GetEffect(uint8 effIndex) const { ASSERT (effIndex < MAX_SPELL_EFFECTS); return m_effects[effIndex]; }
-        uint8 GetEffectMask() const { uint8 effMask = 0; for (uint8 i = 0; i < MAX_SPELL_EFFECTS; ++i) if (m_effects[i]) effMask |= 1 << i; return effMask; }
+        uint8 GetEffectMask() const { uint8 effMask = 0; for (uint8 i = 0; i < MAX_SPELL_EFFECTS; ++i) if (m_effects[i]) effMask |= 1<<i; return effMask; }
         void RecalculateAmountOfEffects();
         void HandleAllEffects(AuraApplication const * aurApp, uint8 mode, bool apply);
 
@@ -201,7 +201,7 @@ class Aura
         uint8 m_procCharges;                                // Aura charges (0 for infinite)
         uint8 m_stackAmount;                                // Aura stack amount
 
-        AuraEffect * m_effects[MAX_SPELL_EFFECTS];
+        AuraEffect * m_effects[3];
         ApplicationMap m_applications;
 
         bool m_isRemoved:1;

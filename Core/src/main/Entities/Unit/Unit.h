@@ -1470,7 +1470,7 @@ class Unit : public WorldObject
         bool isFrozen() const;
 
         bool isTargetableForAttack() const;
-        bool isAttackableByAOE(bool requireDeadTarget = false) const;
+        bool isAttackableByAOE(SpellEntry const * spellProto = NULL) const;
         bool canAttack(Unit const* target, bool force = true) const;
         virtual bool IsInWater() const;
         virtual bool IsUnderWater() const;
@@ -1634,7 +1634,7 @@ class Unit : public WorldObject
         void _RemoveNoStackAuraApplicationsDueToAura(Aura * aura);
         void _RemoveNoStackAurasDueToAura(Aura * aura);
         bool _IsNoStackAuraDueToAura(Aura * appliedAura, Aura * existingAura) const;
-        void _HandleAuraEffect(AuraEffect * aurEff, bool apply);
+        void _RegisterAuraEffect(AuraEffect * aurEff, bool apply);
 
         // m_ownedAuras container management
         AuraMap      & GetOwnedAuras()       { return m_ownedAuras; }

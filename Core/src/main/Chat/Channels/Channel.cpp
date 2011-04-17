@@ -136,7 +136,7 @@ void Channel::CleanOldChannelsInDB()
 {
     if (sWorld->getIntConfig(CONFIG_PRESERVE_CUSTOM_CHANNEL_DURATION) > 0)
     {
-        PreparedStatement* stmt = CharDB.GetPreparedStatement(CHAR_CLEAN_CHANNEL);
+        PreparedStatement* stmt = CharDB.GetPreparedStatement(CHAR_DEL_OLD_CHANNELS);
         stmt->setUInt32(0, sWorld->getIntConfig(CONFIG_PRESERVE_CUSTOM_CHANNEL_DURATION)*DAY);
         CharDB.Execute(stmt);
 

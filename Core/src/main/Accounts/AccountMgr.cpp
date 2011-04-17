@@ -77,8 +77,12 @@ AccountOpResult AccountMgr::DeleteAccount(uint32 accid)
     }
 
     // table realm specific but common for all characters of account for realm
-    CharDB.PExecute("DELETE FROM character_tutorial WHERE account = '%u'",accid);
-    CharDB.PExecute("DELETE FROM account_data WHERE account = '%u'",accid);
+    PreparedStatement* stmt = CharDB.GetPreparedStatement(CHAR_DEL_TUTORIALS);
+    stmt->setUInt32(0, accid);
+    CharDB.Execute(stmt);
+    stmt = CharDB.GetPreparedStatement(CHAR_DEL_ACCOUNT_DATA);
+    stmt->setUInt32(0, accid);
+    CharDB.Execute(stmt);
 
     SQLTransaction trans = RealmDB.BeginTransaction();
 

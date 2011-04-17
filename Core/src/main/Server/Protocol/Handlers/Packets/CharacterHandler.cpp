@@ -172,7 +172,7 @@ bool LoginQueryHolder::Initialize()
     stmt->setUInt32(0, lowGuid);
     res &= SetPreparedQuery(PLAYER_LOGIN_QUERY_LOADTALENTS, stmt);
 
-    stmt = CharDB.GetPreparedStatement(CHAR_LOAD_PLAYER_ACCOUNTDATA);
+    stmt = CharDB.GetPreparedStatement(CHAR_LOAD_PLAYER_ACCOUNT_DATA);
     stmt->setUInt32(0, lowGuid);
     res &= SetPreparedQuery(PLAYER_LOGIN_QUERY_LOADACCOUNTDATA, stmt);
 
@@ -183,10 +183,6 @@ bool LoginQueryHolder::Initialize()
     stmt = CharDB.GetPreparedStatement(CHAR_LOAD_PLAYER_RANDOMBG);
     stmt->setUInt32(0, lowGuid);
     res &= SetPreparedQuery(PLAYER_LOGIN_QUERY_LOADRANDOMBG, stmt);
-
-    stmt = CharDB.GetPreparedStatement(CHAR_LOAD_PLAYER_ARENASTATS);
-    stmt->setUInt32(0, lowGuid);
-    res &= SetPreparedQuery(PLAYER_LOGIN_QUERY_LOADARENASTATS, stmt);
 
     stmt = CharDB.GetPreparedStatement(CHAR_LOAD_PLAYER_BANNED);
     stmt->setUInt32(0, lowGuid);
@@ -976,33 +972,29 @@ void WorldSession::HandleMeetingStoneInfo(WorldPacket & /*recv_data*/)
 
 void WorldSession::HandleTutorialFlag(WorldPacket & recv_data)
 {
-    uint32 iFlag;
-    recv_data >> iFlag;
+    uint32 data;
+    recv_data >> data;
 
-    uint32 wInt = (iFlag / 32);
-    if (wInt >= 8)
-    {
-        //sLog->outError("CHEATER? Account:[%d] Guid[%u] tried to send wrong CMSG_TUTORIAL_FLAG", GetAccountId(),GetGUID());
+    uint8 index = uint8(data / 32);
+    if (index >= MAX_ACCOUNT_TUTORIAL_VALUES)
         return;
-    }
-    uint32 rInt = (iFlag % 32);
 
-    uint32 tutflag = GetTutorialInt(wInt);
-    tutflag |= (1 << rInt);
-    SetTutorialInt(wInt, tutflag);
+    uint32 value = (data % 32);
 
-    //sLog->outDebug("Received Tutorial Flag Set {%u}.", iFlag);
+    uint32 flag = GetTutorialInt(index);
+    flag |= (1 << value);
+    SetTutorialInt(index, flag);
 }
 
 void WorldSession::HandleTutorialClear(WorldPacket & /*recv_data*/)
 {
-    for (int i = 0; i < MAX_CHARACTER_TUTORIAL_VALUES; ++i)
+    for (uint8 i = 0; i < MAX_ACCOUNT_TUTORIAL_VALUES; ++i)
         SetTutorialInt(i, 0xFFFFFFFF);
 }
 
 void WorldSession::HandleTutorialReset(WorldPacket & /*recv_data*/)
 {
-    for (int i = 0; i < MAX_CHARACTER_TUTORIAL_VALUES; ++i)
+    for (uint8 i = 0; i < MAX_ACCOUNT_TUTORIAL_VALUES; ++i)
         SetTutorialInt(i, 0x00000000);
 }
 
@@ -1759,7 +1751,7 @@ void WorldSession::HandleCharFactionOrRaceChange(WorldPacket& recv_data)
         {
             uint32 item_alliance = it->first;
             uint32 item_horde = it->second;
-            trans->PAppend("UPDATE `character_inventory` SET item_template = '%u' where item_template = '%u' AND guid = '%u'",
+            trans->PAppend("UPDATE `item_instance` ii, `character_inventory` ci SET ii.itemEntry = '%u' WHERE ii.itemEntry = '%u' AND ci.guid = '%u' AND ci.item = ii.guid",
                 team == BG_TEAM_ALLIANCE ? item_alliance : item_horde, team == BG_TEAM_ALLIANCE ? item_horde : item_alliance, guid);
         }
 

@@ -30,8 +30,8 @@
 #include "GossipDef.h"
 #include "Player.h"
 #include "PoolMgr.h"
-#include "Log.h"
 #include "OpcodeHandler.h"
+#include "Log.h"
 #include "LootMgr.h"
 #include "MapManager.h"
 #include "CreatureAI.h"
@@ -51,7 +51,6 @@
 #include "SpellAuraEffects.h"
 #include "Group.h"
 // apply implementation of the singletons
-
 
 TrainerSpell const* TrainerSpellData::Find(uint32 spell_id) const
 {
@@ -158,7 +157,6 @@ m_formation(NULL)
     m_CreatureSpellCooldowns.clear();
     m_CreatureCategoryCooldowns.clear();
     DisableReputationGain = false;
-    //m_unit_movement_flags = MONSTER_MOVE_WALK;
 
     m_SightDistance = sWorld->getFloatConfig(CONFIG_SIGHT_MONSTER);
     m_CombatDistance = 0;//MELEE_RANGE;
@@ -1173,7 +1171,6 @@ void Creature::SelectLevel(const CreatureInfo *cinfo)
 
     SetModifierValue(UNIT_MOD_ATTACK_POWER_POS, BASE_VALUE, cinfo->attackpower * damagemod);
     SetModifierValue(UNIT_MOD_ATTACK_POWER_NEG, BASE_VALUE, cinfo->attackpower * damagemod);
-
 }
 
 float Creature::_GetHealthMod(int32 Rank)
@@ -1678,11 +1675,7 @@ bool Creature::IsImmunedToSpell(SpellEntry const* spellInfo)
     if (!spellInfo)
         return false;
 
-    SpellEffectEntry const* spellEffect = spellInfo->GetSpellEffect(EFFECT_0);
-    if (!spellEffect)
-        return false;
-
-    if (spellEffect && GetCreatureInfo()->MechanicImmuneMask & (1 << (spellEffect->EffectMechanic - 1)))
+    if (GetCreatureInfo()->MechanicImmuneMask & (1 << (spellInfo->GetMechanic() - 1)))
         return true;
 
     return Unit::IsImmunedToSpell(spellInfo);
@@ -1690,14 +1683,14 @@ bool Creature::IsImmunedToSpell(SpellEntry const* spellInfo)
 
 bool Creature::IsImmunedToSpellEffect(SpellEntry const* spellInfo, uint32 index) const
 {
-    SpellEffectEntry const* spellEffect = spellInfo->GetSpellEffect(EFFECT_0);
+    SpellEffectEntry const* spellEffect = spellInfo->GetSpellEffect(SpellEffIndex(index));
     if (!spellEffect)
         return false;
 
     if (GetCreatureInfo()->MechanicImmuneMask & (1 << (spellEffect->EffectMechanic - 1)))
         return true;
 
-    if (GetCreatureInfo()->type == CREATURE_TYPE_MECHANICAL && spellEffect->Effect== SPELL_EFFECT_HEAL)
+    if (GetCreatureInfo()->type == CREATURE_TYPE_MECHANICAL && spellEffect->Effect == SPELL_EFFECT_HEAL)
         return true;
 
     return Unit::IsImmunedToSpellEffect(spellInfo, index);
@@ -1726,11 +1719,11 @@ SpellEntry const *Creature::reachWithSpellAttack(Unit *pVictim)
             if(!spellEffect)
                 continue;
 
-            if( (spellEffect->Effect == SPELL_EFFECT_SCHOOL_DAMAGE )       ||
+            if ((spellEffect->Effect == SPELL_EFFECT_SCHOOL_DAMAGE)       ||
                 (spellEffect->Effect == SPELL_EFFECT_INSTAKILL)            ||
                 (spellEffect->Effect == SPELL_EFFECT_ENVIRONMENTAL_DAMAGE) ||
-                (spellEffect->Effect == SPELL_EFFECT_HEALTH_LEECH )
-                 )
+                (spellEffect->Effect == SPELL_EFFECT_HEALTH_LEECH)
+)
             {
                 bcontinue = false;
                 break;
@@ -1780,7 +1773,7 @@ SpellEntry const *Creature::reachWithSpellCure(Unit *pVictim)
             if (!spellEffect)
                 continue;
 
-            if( spellEffect && (spellEffect->Effect == SPELL_EFFECT_HEAL) )
+            if ((spellEffect->Effect == SPELL_EFFECT_HEAL))
             {
                 bcontinue = false;
                 break;
@@ -2203,8 +2196,8 @@ void Creature::AddCreatureSpellCooldown(uint32 spellid)
     if (cooldown)
         _AddCreatureSpellCooldown(spellid, time(NULL) + cooldown/IN_MILLISECONDS);
 
-    if(uint32 category = spellInfo->GetCategory())
-        _AddCreatureCategoryCooldown(category, time(NULL));
+    if (spellInfo->GetCategory())
+        _AddCreatureCategoryCooldown(spellInfo->GetCategory(), time(NULL));
 }
 
 bool Creature::HasCategoryCooldown(uint32 spell_id) const
@@ -2214,7 +2207,7 @@ bool Creature::HasCategoryCooldown(uint32 spell_id) const
         return false;
 
     CreatureSpellCooldowns::const_iterator itr = m_CreatureCategoryCooldowns.find(spellInfo->GetCategory());
-    return (itr != m_CreatureCategoryCooldowns.end() && time_t(itr->second + (spellInfo->GetCategoryRecoveryTime() / IN_MILLISECONDS)) > time(NULL));
+    return(itr != m_CreatureCategoryCooldowns.end() && time_t(itr->second + (spellInfo->GetCategoryRecoveryTime() / IN_MILLISECONDS)) > time(NULL));
 }
 
 bool Creature::HasSpellCooldown(uint32 spell_id) const
