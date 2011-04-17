@@ -75,7 +75,6 @@ public:
     {
         instance_dark_portal_InstanceMapScript(Map* pMap) : InstanceScript(pMap)
         {
-            Initialize();
         }
 
         uint32 m_auiEncounter[MAX_ENCOUNTER];
@@ -346,7 +345,6 @@ public:
     };
 
 };
-
 
 void AddSC_instance_dark_portal()
 {

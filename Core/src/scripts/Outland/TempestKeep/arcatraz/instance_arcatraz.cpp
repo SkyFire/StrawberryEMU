@@ -43,7 +43,6 @@ enum eUnits
     MELLICHAR                             = 20904,//skyriss will kill this unit
 };
 
-
 /* Arcatraz encounters:
 1 - Zereketh the Unbound event
 2 - Dalliah the Doomsayer event
@@ -60,7 +59,7 @@ class instance_arcatraz : public InstanceMapScript
         }
         struct instance_arcatraz_InstanceMapScript : public InstanceScript
         {
-            instance_arcatraz_InstanceMapScript(Map* pMap) : InstanceScript(pMap) { Initialize(); };
+            instance_arcatraz_InstanceMapScript(Map* pMap) : InstanceScript(pMap) {}
 
             uint32 m_auiEncounter[MAX_ENCOUNTER];
 
@@ -98,7 +97,6 @@ class instance_arcatraz : public InstanceMapScript
 
                 return false;
             }
-
 
             void OnGameObjectCreate(GameObject* go)
             {

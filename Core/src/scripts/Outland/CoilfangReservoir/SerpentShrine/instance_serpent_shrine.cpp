@@ -75,7 +75,6 @@ class instance_serpent_shrine : public InstanceMapScript
         {
             instance_serpentshrine_cavern_InstanceMapScript(Map* pMap) : InstanceScript(pMap)
             {
-                Initialize();
             }
 
             void Initialize()
@@ -440,7 +439,6 @@ class instance_serpent_shrine : public InstanceMapScript
             return new instance_serpentshrine_cavern_InstanceMapScript(pMap);
         }
 };
-
 
 void AddSC_instance_serpentshrine_cavern()
 {

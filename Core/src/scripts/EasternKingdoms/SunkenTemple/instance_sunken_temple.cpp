@@ -53,8 +53,7 @@ public:
     {
         instance_sunken_temple_InstanceMapScript(Map* pMap) : InstanceScript(pMap)
         {
-            Initialize();
-        };
+        }
 
         uint64 GOAtalaiStatue1;
         uint64 GOAtalaiStatue2;
@@ -202,7 +201,6 @@ public:
     };
 
 };
-
 
 void AddSC_instance_sunken_temple()
 {

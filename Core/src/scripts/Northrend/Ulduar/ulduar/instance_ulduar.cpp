@@ -36,7 +36,7 @@ public:
 
     struct instance_ulduar_InstanceMapScript : public InstanceScript
     {
-        instance_ulduar_InstanceMapScript(InstanceMap* map) : InstanceScript(map) { Initialize(); };
+        instance_ulduar_InstanceMapScript(InstanceMap* map) : InstanceScript(map) {}
 
         uint32 uiEncounter[MAX_ENCOUNTER];
         std::string m_strInstData;
@@ -48,7 +48,7 @@ public:
         uint64 uiRazorHarpoonGUIDs[4];
         uint64 uiExpCommanderGUID;
         uint64 uiXT002GUID;
-        uint64 uiAssemblyGUIDs[4];
+        uint64 uiAssemblyGUIDs[3];
         uint64 uiKologarnGUID;
         uint64 uiLeftArmGUID;
         uint64 uiRightArmGUID;

@@ -450,15 +450,16 @@ public:
 
 void AddSC_item_scripts()
 {
-    new item_draenei_fishing_net;
-    new item_nether_wraith_beacon;
-    new item_gor_dreks_ointment;
-    new item_incendiary_explosives;
-    new item_mysterious_egg;
-    new item_disgusting_jar;
-    new item_pile_fake_furs;
-    new item_petrov_cluster_bombs;
-    new item_dehta_trap_smasher;
-    new item_trident_of_nazjan;
+    new item_only_for_flight();
+    new item_draenei_fishing_net();
+    new item_nether_wraith_beacon();
+    new item_gor_dreks_ointment();
+    new item_incendiary_explosives();
+    new item_mysterious_egg();
+    new item_disgusting_jar();
+    new item_pile_fake_furs();
+    new item_petrov_cluster_bombs();
+    new item_dehta_trap_smasher();
+    new item_trident_of_nazjan();
     new item_captured_frog();
 }

@@ -23,7 +23,6 @@ SDComment: Need some cosmetics updates when archeadas door are closing (Guardian
 SDCategory: Uldaman
 EndScriptData */
 
-
 #include "ScriptPCH.h"
 #include "uldaman.h"
 
@@ -45,8 +44,7 @@ class instance_uldaman : public InstanceMapScript
         {
             instance_uldaman_InstanceMapScript(Map* pMap) : InstanceScript(pMap)
             {
-                Initialize();
-            };
+            }
 
             void Initialize()
             {

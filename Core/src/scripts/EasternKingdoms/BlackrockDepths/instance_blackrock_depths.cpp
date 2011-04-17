@@ -79,7 +79,7 @@ public:
 
     struct instance_blackrock_depths_InstanceMapScript : public InstanceScript
     {
-        instance_blackrock_depths_InstanceMapScript(Map* pMap) : InstanceScript(pMap) {Initialize();};
+        instance_blackrock_depths_InstanceMapScript(Map* pMap) : InstanceScript(pMap) {}
 
         uint32 m_auiEncounter[MAX_ENCOUNTER];
         std::string str_data;
@@ -456,8 +456,7 @@ public:
 
 };
 
-
-   void AddSC_instance_blackrock_depths()
+void AddSC_instance_blackrock_depths()
 {
     new instance_blackrock_depths();
 }

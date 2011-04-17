@@ -55,7 +55,7 @@ public:
 
     struct instance_karazhan_InstanceMapScript : public InstanceScript
     {
-        instance_karazhan_InstanceMapScript(Map* pMap) : InstanceScript(pMap) {Initialize();}
+        instance_karazhan_InstanceMapScript(Map* pMap) : InstanceScript(pMap) {}
 
         uint32 m_auiEncounter[MAX_ENCOUNTER];
         std::string strSaveData;
@@ -309,7 +309,6 @@ public:
     };
 
 };
-
 
 void AddSC_instance_karazhan()
 {

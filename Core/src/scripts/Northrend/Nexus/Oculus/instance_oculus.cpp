@@ -38,7 +38,7 @@ public:
 
     struct instance_oculus_InstanceMapScript : public InstanceScript
     {
-        instance_oculus_InstanceMapScript(Map* pMap) : InstanceScript(pMap) {Initialize();};
+        instance_oculus_InstanceMapScript(Map* pMap) : InstanceScript(pMap) {}
 
         void Initialize()
         {
@@ -231,7 +231,6 @@ public:
 
             char dataHead1, dataHead2;
 
-
             std::istringstream loadStream(in);
             loadStream >> dataHead1 >> dataHead2;
 
@@ -265,7 +264,6 @@ public:
     };
 
 };
-
 
 void AddSC_instance_oculus()
 {
