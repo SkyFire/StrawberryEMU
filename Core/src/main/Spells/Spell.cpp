@@ -4887,13 +4887,13 @@ SpellCastResult Spell::CheckCast(bool strict)
         SpellAuraRestrictionsEntry const* auraRestrictions = m_spellInfo->GetSpellAuraRestrictions();
 
         // target state requirements (not allowed state), apply to self also
-        if (!m_IsTriggeredSpell && auraRestrictions->TargetAuraStateNot && target->HasAuraState(AuraState(auraRestrictions->TargetAuraStateNot), m_spellInfo, m_caster))
+        if (!m_IsTriggeredSpell && auraRestriction && auraRestriction->TargetAuraStateNot && target->HasAuraState(AuraState(auraRestrictions->TargetAuraStateNot), m_spellInfo, m_caster))
             return SPELL_FAILED_TARGET_AURASTATE;
 
-        if (auraRestrictions->targetAuraSpell && !target->HasAura(auraRestrictions->targetAuraSpell))
+        if (auraRestriction && auraRestriction->targetAuraSpell && !target->HasAura(auraRestriction && auraRestriction->targetAuraSpell))
             return SPELL_FAILED_TARGET_AURASTATE;
 
-        if (auraRestrictions->excludeTargetAuraSpell && target->HasAura(auraRestrictions->excludeTargetAuraSpell))
+        if (auraRestriction && auraRestriction->excludeTargetAuraSpell && target->HasAura(auraRestriction && auraRestriction->excludeTargetAuraSpell))
             return SPELL_FAILED_TARGET_AURASTATE;
 
         if (!m_IsTriggeredSpell && target == m_caster && m_spellInfo->AttributesEx & SPELL_ATTR_EX_CANT_TARGET_SELF)
