@@ -493,6 +493,7 @@ World/World.h
 ../scripts/EasternKingdoms/BlackrockSpire/boss_shadow_hunter_voshgajin.cpp
 ../scripts/EasternKingdoms/BlackrockSpire/boss_the_beast.cpp
 ../scripts/EasternKingdoms/BlackrockSpire/boss_warmaster_voone.cpp
+../scripts/EasternKingdoms/BlackrockSpre/instance_blackrock_spire.cpp
 ../scripts/EasternKingdoms/BlackwingLair/boss_broodlord_lashlayer.cpp
 ../scripts/EasternKingdoms/BlackwingLair/boss_chromaggus.cpp
 ../scripts/EasternKingdoms/BlackwingLair/boss_ebonroc.cpp
