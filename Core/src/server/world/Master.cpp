@@ -168,6 +168,9 @@ int Master::Run()
     if (!_StartDB())
         return 1;
 
+	// Show realm as offline if server start not finished.
+	RealmDB.DirectPExecute("UPDATE realmlist SET color = (color & ~%u) | %u WHERE id = '%d'", REALM_FLAG_OFFLINE, REALM_FLAG_INVALID, realmID);
+
     ///- Initialize the World
     sWorld->SetInitialWorldSettings();
 
@@ -277,9 +280,8 @@ int Master::Run()
         // go down and shutdown the server
     }
 
-    // set server online (allow connecting now)
-    RealmDB.DirectPExecute("UPDATE realmlist SET color = color & ~%u, population = 0 WHERE id = '%u'", REALM_FLAG_INVALID, realmID);
-
+	// Set realm as online if server started successfully.
+	RealmDB.DirectPExecute("UPDATE realmlist SET color = color & ~%u, population = 0 WHERE id = '%u'", REALM_FLAG_INVALID, realmID);
     sWorldSocketMgr->Wait();
 
     if (soap_thread)
@@ -290,7 +292,7 @@ int Master::Run()
     }
 
     // set server offline
-    RealmDB.DirectPExecute("UPDATE realmlist SET color = color | %u WHERE id = '%d'", REALM_FLAG_OFFLINE, realmID);
+    RealmDB.PExecute("UPDATE realmlist SET color = color | %u WHERE id = '%d'", REALM_FLAG_OFFLINE, realmID);
 
     // when the main thread closes the singletons get unloaded
     // since worldrunnable uses them, it will crash if unloaded after master
