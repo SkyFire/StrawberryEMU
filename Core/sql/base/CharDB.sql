@@ -1560,3 +1560,7 @@ CREATE TABLE `worldstates` (
 -- ----------------------------
 -- Records of worldstates
 -- ----------------------------
+INSERT INTO `worldstates` VALUES ('20001', '0', 'NextArenaPointDistributionTime');
+INSERT INTO `worldstates` VALUES ('20002', '0', 'NextWeeklyQuestResetTime');
+INSERT INTO `worldstates` VALUES ('20003', '0', 'NextBGRandomDailyResetTime');
+INSERT INTO `worldstates` VALUES ('20004', '0', 'cleaning_flags');
