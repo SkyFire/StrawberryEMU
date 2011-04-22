@@ -2353,7 +2353,7 @@ void SpellMgr::LoadSpellPetAuras()
                 continue;
             }
 
-            PetAura pa(pet, aura, spellEffect->EffectImplicitTargetA == TARGET_UNIT_PET, spellInfo->CalculateSimpleValue(eff));
+            PetAura pa(pet, aura, spellEffect->EffectImplicitTargetA == TARGET_UNIT_PET, SpellMgr::CalculateSpellEffectAmount(spellInfo, eff));
             mSpellPetAuraMap[(spell<<8) + eff] = pa;
         }
 
