@@ -198,9 +198,10 @@ int32 GetSpellDuration(SpellEntry const *spellInfo);
 int32 GetSpellMaxDuration(SpellEntry const *spellInfo);
 inline float GetSpellRadius(SpellEntry const *spellInfo, uint32 effectIdx, bool positive)
 {
-    return 0.0f;/*positive
-        ? GetSpellRadiusForFriend(sSpellRadiusStore.LookupEntry(spellInfo->EffectRadiusIndex[effectIdx]))
-        : GetSpellRadiusForHostile(sSpellRadiusStore.LookupEntry(spellInfo->EffectRadiusIndex[effectIdx]));*/
+    SpellEffectEntry const* spellEffect = spellInfo->GetSpellEffect(SpellEffIndex(effectIdx));
+    return positive
+        ? GetSpellRadiusForFriend(sSpellRadiusStore.LookupEntry(spellEffect->EffectRadiusIndex))
+        : GetSpellRadiusForHostile(sSpellRadiusStore.LookupEntry(spellEffect->EffectRadiusIndex));
 }
 
 inline float GetSpellMaxRange(SpellEntry const *spellInfo, bool positive)
