@@ -7056,54 +7056,50 @@ void Spell::CalculateDamageDoneForAllTargets()
 
         if (target.missCondition == SPELL_MISS_NONE)                          // In case spell hit target, do all effect on that target
         {
-            target.damage += CalculateDamageDone(unit, mask, multiplier);
+            target.damage += CalculateDamageDone(unit, mask, multiplier, 0);
             target.crit = m_caster->isSpellCrit(unit, m_spellInfo, m_spellSchoolMask, m_attackType);
         }
         else if (target.missCondition == SPELL_MISS_REFLECT)                // In case spell reflect from target, do all effect on caster (if hit)
         {
             if (target.reflectResult == SPELL_MISS_NONE)       // If reflected spell hit caster -> do all effect on him
             {
-                target.damage += CalculateDamageDone(m_caster, mask, multiplier);
+                target.damage += CalculateDamageDone(m_caster, mask, multiplier, 0);
                 target.crit = m_caster->isSpellCrit(m_caster, m_spellInfo, m_spellSchoolMask, m_attackType);
             }
         }
     }
 }
 
-int32 Spell::CalculateDamageDone(Unit *unit, const uint32 effectMask, float * multiplier)
+int32 Spell::CalculateDamageDone(Unit *unit, const uint32 effectMask, float * multiplier, SpellEffectEntry const* effect)
 {
     int32 damageDone = 0;
     unitTarget = unit;
     for (uint32 i = 0; i < MAX_SPELL_EFFECTS; ++i)
     {
-        SpellEffectEntry const* spellEffect = m_spellInfo->GetSpellEffect(SpellEffIndex(i));
-        if (!spellEffect)
-            continue;
-
         if (effectMask & (1 << i))
         {
             m_damage = 0;
             damage = CalculateDamage(i, NULL);
 
-            switch(spellEffect->Effect)
+            switch(effect->Effect)
             {
                 case SPELL_EFFECT_SCHOOL_DAMAGE:
-                    SpellDamageSchoolDmg(spellEffect);
+                    SpellDamageSchoolDmg(effect);
                     break;
                 case SPELL_EFFECT_WEAPON_DAMAGE:
                 case SPELL_EFFECT_WEAPON_DAMAGE_NOSCHOOL:
                 case SPELL_EFFECT_NORMALIZED_WEAPON_DMG:
                 case SPELL_EFFECT_WEAPON_PERCENT_DAMAGE:
-                    SpellDamageWeaponDmg(spellEffect);
+                    SpellDamageWeaponDmg(effect);
                     break;
                 case SPELL_EFFECT_HEAL:
-                    SpellDamageHeal(spellEffect);
+                    SpellDamageHeal(effect);
                     break;
             }
 
             if (m_damage > 0)
             {
-                if (IsAreaEffectTarget[spellEffect->EffectImplicitTargetA] || IsAreaEffectTarget[spellEffect->EffectImplicitTargetB])
+                if (IsAreaEffectTarget[effect->EffectImplicitTargetA] || IsAreaEffectTarget[effect->EffectImplicitTargetB])
                 {
                     m_damage = int32(float(m_damage) * unit->GetTotalAuraMultiplierByMiscMask(SPELL_AURA_MOD_AOE_DAMAGE_AVOIDANCE, m_spellInfo->SchoolMask));
                     if (m_caster->GetTypeId() == TYPEID_UNIT)

@@ -1973,22 +1973,18 @@ bool SpellMgr::IsSkillTypeSpell(uint32 spellId, SkillType type) const
 int32 SpellMgr::CalculateSpellEffectAmount(SpellEntry const * spellEntry, uint8 effIndex, Unit const * caster, int32 const * effBasePoints, Unit const * /*target*/)
 {
     SpellEffectEntry const* spellEffect = spellEntry->GetSpellEffect(SpellEffIndex(effIndex));
-    if (!spellEffect)
-        return 0;
-
     float basePointsPerLevel = spellEffect->EffectRealPointsPerLevel;
     int32 basePoints = effBasePoints ? *effBasePoints : spellEffect->EffectBasePoints;
     int32 randomPoints = int32(spellEffect->EffectDieSides);
 
     float maxPoints = 0.00f;
     float comboPointScaling = 0.00f;
-    
     if (caster)
     {
         SpellScaling values(caster->getLevel(), spellEntry);
         if (values.canScale && (int32)values.min[effIndex] != 0)
         {
-            float(basePoints) = values.min[effIndex];
+            basePoints = (int32)values.min[effIndex];
             maxPoints = values.max[effIndex];
             comboPointScaling = values.pts[effIndex];
         }
@@ -2000,27 +1996,25 @@ int32 SpellMgr::CalculateSpellEffectAmount(SpellEntry const * spellEntry, uint8 
             else if (level < int32(spellEntry->GetBaseLevel()))
                 level = int32(spellEntry->GetBaseLevel());
             level -= int32(spellEntry->GetSpellLevel());
-                basePoints += int32(level * basePointsPerLevel);
+            basePoints += int32(level * basePointsPerLevel);
         }
-        maxPoints = values.max[effIndex];
     }
 
     if (maxPoints != 0.00f)
-        basePoints = irand(basePoints, int32(maxPoints));
+        basePoints = irand(basePoints, (int32)maxPoints);
     else
     {
         // not sure for Cataclysm.
         // roll in a range <1;EffectDieSides> as of patch 3.3.3
         switch(randomPoints)
         {
-            case 0:
-                break;
-            case 1:
-                basePoints += 1;
-                break;                     // range 1..1
+            case 0: break;
+            case 1: basePoints += 1; break;                     // range 1..1
             default:
                 // range can have positive (1..rand) and negative (rand..1) values, so order its for irand
-                int32 randvalue = (randomPoints >= 1) ? irand(1, randomPoints) : irand(randomPoints, 1);
+                int32 randvalue = (randomPoints >= 1)
+                    ? irand(1, randomPoints)
+                    : irand(randomPoints, 1);
 
                 basePoints += randvalue;
                 break;
@@ -2038,14 +2032,15 @@ int32 SpellMgr::CalculateSpellEffectAmount(SpellEntry const * spellEntry, uint8 
             {
                 if (float comboDamage = spellEffect->EffectPointsPerComboPoint)
                 {
-                    if(comboPointScaling != 0.00f)
+                    if (comboPointScaling != 0.00f)
                         comboDamage = comboPointScaling;
+                    
                     value += int32(comboDamage * comboPoints);
                 }
             }
         }
 
-        value = caster->ApplyEffectModifiers(spellEntry, effIndex, float(value));
+        value = caster->ApplyEffectModifiers(spellEntry, effIndex, value);
 
         // amount multiplication based on caster's level
         if (!basePointsPerLevel && (spellEntry->Attributes & SPELL_ATTR_LEVEL_DAMAGE_CALCULATION && spellEntry->GetSpellLevel()) &&
@@ -2056,11 +2051,11 @@ int32 SpellMgr::CalculateSpellEffectAmount(SpellEntry const * spellEntry, uint8 
                 spellEffect->EffectApplyAuraName != SPELL_AURA_MOD_INCREASE_SPEED &&
                 spellEffect->EffectApplyAuraName != SPELL_AURA_MOD_DECREASE_SPEED)
                 //there are many more: slow speed, -healing pct
-            value = (value * 0.25f * exp(caster->getLevel() * (70 - spellEntry->GetSpellLevel()) / 1000.0f));
+            value = int32(value*0.25f*exp(caster->getLevel()*(70-spellEntry->GetSpellLevel())/1000.0f));
             //value = int32(value * (int32)getLevel() / (int32)(spellProto->spellLevel ? spellProto->spellLevel : 1));
     }
 
-    return int32(value);
+    return value;
 }
 
 int32 SpellMgr::CalculateSpellEffectBaseAmount(int32 value, SpellEntry const * spellEntry, uint8 effIndex)
@@ -2095,7 +2090,7 @@ float SpellMgr::CalculateSpellEffectDamageMultiplier(SpellEntry const * spellEnt
     if (!spellEffect)
         return 1.0f;
 
-    float multiplier = spellEffect->DmgMultiplier;
+    float multiplier = spellEffect->EffectDamageMultiplier;
 
     if (caster)
         if (Player * modOwner = caster->GetSpellModOwner())

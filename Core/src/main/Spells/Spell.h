@@ -684,7 +684,7 @@ class Spell
         bool IsValidSingleTargetSpell(Unit const* target) const;
         bool IsValidDeadOrAliveTarget(Unit const* target) const;
         void CalculateDamageDoneForAllTargets();
-        int32 CalculateDamageDone(Unit *unit, const uint32 effectMask, float *multiplier);
+        int32 CalculateDamageDone(Unit *unit, const uint32 effectMask, float *multiplier, SpellEffectEntry const* effect);
         void SpellDamageWeaponDmg(SpellEffectEntry const* effect);
         void SpellDamageHeal(SpellEffectEntry const* effect);
 

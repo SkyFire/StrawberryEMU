@@ -6043,11 +6043,11 @@ bool Unit::HandleDummyAuraProc(Unit *pVictim, uint32 damage, AuraEffect* trigger
                     if (!GoPoH)
                         return false;
 
-                    SpellEffectEntry const* spellEff = GoPoH->GetSpellEffect(SpellEffIndex(EFFECT_0));
+                    int EffIndex = 0;
+                    SpellEffectEntry const* spellEff = GoPoH->GetSpellEffect(SpellEffIndex(EffIndex));
                     if (!spellEff)
                         return false;
 
-                    int EffIndex = 0;
                     for (uint8 i = 0; i < MAX_SPELL_EFFECTS; i++)
                     {
                         SpellEffectEntry const* spellEffect = GoPoH->GetSpellEffect(SpellEffIndex(i));
@@ -15029,7 +15029,6 @@ bool Unit::HandleAuraRaidProcFromChargeWithValue(AuraEffect *triggeredByAura)
 {
     // aura can be deleted at casts
     SpellEntry const *spellProto = triggeredByAura->GetSpellProto();
-    SpellEffectEntry const* spellEffect = spellProto->GetSpellEffect(EFFECT_0);
     SpellClassOptionsEntry const* classOpt = spellProto->GetSpellClassOptions();
     uint32 effIdx = triggeredByAura->GetEffIndex();
     int32 heal = triggeredByAura->GetAmount();
@@ -15042,6 +15041,7 @@ bool Unit::HandleAuraRaidProcFromChargeWithValue(AuraEffect *triggeredByAura)
         return false;
     }
 
+    SpellEffectEntry const* spellEffect = spellProto->GetSpellEffect(SpellEffIndex(effIdx));
     if (!spellEffect)
         return false;
 
