@@ -5728,7 +5728,6 @@ void AuraEffect::HandleNoReagentUseAura(AuraApplication const * aurApp, uint8 mo
     if (target->GetTypeId() != TYPEID_PLAYER)
         return;
 
-
     flag96 mask;
     Unit::AuraEffectList const& noReagent = target->GetAuraEffectsByType(SPELL_AURA_NO_REAGENT_USE);
         //for (Unit::AuraEffectList::const_iterator i = noReagent.begin(); i != noReagent.end(); ++i)
