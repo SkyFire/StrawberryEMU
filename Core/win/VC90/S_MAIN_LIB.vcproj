@@ -102,6 +102,87 @@
 			/>
 		</Configuration>
 		<Configuration
+			Name="Release|Win32"
+			OutputDirectory=".\main_$(PlatformName)_$(ConfigurationName)"
+			IntermediateDirectory=".\main_$(PlatformName)_$(ConfigurationName)"
+			ConfigurationType="4"
+			UseOfMFC="0"
+			ATLMinimizesCRunTimeLibraryUsage="false"
+			CharacterSet="2"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+			/>
+			<Tool
+				Name="VCCLCompilerTool"
+				AdditionalOptions="/MP /Zm200"
+				InlineFunctionExpansion="1"
+				AdditionalIncludeDirectories="..\..\src;..\..\src\main\Achievements;..\..\src\main\Battlegrounds\Zones;..\..\src\main\AI\SmartScripts;..\..\src\main\AI\ScriptedAI;..\..\src\main\AI\EventAI;..\..\src\main\AI\CoreAI;..\..\src\main\World;..\..\src\main\Weather;..\..\src\main\Tools;..\..\src\main\Tickets;..\..\src\main\Texts;..\..\src\main\Spells;..\..\src\main\Skills;..\..\src\main\Server;..\..\src\main\Scripting;..\..\src\main\Reputation;..\..\src\main\Quests;..\..\src\main\Pools;..\..\src\main\PCH;..\..\src\main\OutdoorPvP;..\..\src\main\Movement;..\..\src\main\Miscellaneous;..\..\src\main\Maps;..\..\src\main\Mails;..\..\src\main\Loot;..\..\src\main\Instances;..\..\src\main\Guilds;..\..\src\main\Groups;..\..\src\main\Grids;..\..\src\main\Globals;..\..\src\main\Spells\Auras;..\..\src\main\Server\Protocol\Handlers\Packets;..\..\src\main\Server\Protocol\Handlers\Opcodes;..\..\src\main\Server\Protocol\Handlers;..\..\src\main\Server\Sockets;..\..\src\main\Server\Sessions;..\..\src\main\Server\Logs;..\..\src\main\Server\Protocol;..\..\src\main\Movement\Waypoints;..\..\src\main\Movement\MovementGenerators;..\..\src\main\Grids\Notifiers;..\..\src\main\Grids\Cells;..\..\src\main\Entities\Object\Updates;..\..\src\main\Entities\Item\Container;..\..\src\main\Entities\Vehicle;..\..\src\main\Entities\Unit;..\..\src\main\Entities\Transport;..\..\src\main\Entities\Totem;..\..\src\main\Entities\Player;..\..\src\main\Entities\Pet;..\..\src\main\Entities\Object;..\..\src\main\Entities\Item;..\..\src\main\Entities\GameObject;..\..\src\main\Entities\DynamicObject;..\..\src\main\Entities\Creature;..\..\src\main\Entities\Corpse;..\..\src\main\Events;..\..\src\main\Entities;..\..\src\main\DungeonFinding;..\..\src\main\DataStores;..\..\src\main\Conditions;..\..\src\main\Combat;..\..\src\main\Chat\Commands;..\..\src\main\Chat\Channels;..\..\src\main\Chat;..\..\src\main\Calendar;..\..\src\main\Battlegrounds;..\..\src\main\AuctionHouse\AuctionHouseBot;..\..\src\main\AuctionHouse;..\..\src\main\AI;..\..\src\main\Addons;..\..\src\main\Accounts;..\..\dep;..\..\dep\mysql;..\..\dep\mysql\include;..\..\dep\zlib;..\..\dep\mysql\extra\yassl\include;..\..\src\shared;..\..\src\shared\Collision;..\..\src\shared\Collision\Management;..\..\src\shared\Collision\Maps;..\..\src\shared\Collision\Models;..\..\src\shared\Collision\PCH;..\..\src\shared\Configuration;..\..\src\shared\Cryptography;..\..\src\shared\Cryptography\Authentication;..\..\src\shared\DataStores;..\..\src\shared\Database;..\..\src\shared\Dynamic;..\..\src\shared\Dynamic\LinkedReference;..\..\src\shared\Logging;..\..\src\shared\Packets;..\..\src\shared\Threading;..\..\src\shared\Utilities;..\..\src\scripts;..\..\src\scripts\PCH;..\..\src\server;..\..\dep\acelite;..\..\dep\mysqllite\include;..\..\dep\mysqllite\extra\yassl\include"
+				PreprocessorDefinitions="WIN32;NDEBUG;_LIB;_CRT_NONSTDC_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_SECURE_SCL=0"
+				StringPooling="true"
+				RuntimeLibrary="2"
+				EnableFunctionLevelLinking="true"
+				EnableEnhancedInstructionSet="1"
+				RuntimeTypeInfo="true"
+				UsePrecompiledHeader="2"
+				PrecompiledHeaderThrough="..\..\src\main\PCH\PCH.h"
+				PrecompiledHeaderFile=".\main_$(PlatformName)_$(ConfigurationName)\main.pch"
+				AssemblerListingLocation=".\main_$(PlatformName)_$(ConfigurationName)\"
+				ObjectFile=".\main_$(PlatformName)_$(ConfigurationName)\"
+				ProgramDataBaseFileName=".\main_$(PlatformName)_$(ConfigurationName)\"
+				WarningLevel="3"
+				SuppressStartupBanner="true"
+				Detect64BitPortabilityProblems="false"
+				DebugInformationFormat="3"
+				CallingConvention="0"
+				CompileAs="2"
+				ForcedIncludeFiles="..\..\src\main\PCH\PCH.h"
+			/>
+			<Tool
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="NDEBUG"
+				Culture="1033"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
+			<Tool
+				Name="VCLibrarianTool"
+				OutputFile=".\main_$(PlatformName)_$(ConfigurationName)\main.lib"
+				SuppressStartupBanner="true"
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+			/>
+		</Configuration>
+		<Configuration
 			Name="Debug|x64"
 			OutputDirectory=".\main_$(PlatformName)_$(ConfigurationName)"
 			IntermediateDirectory=".\main_$(PlatformName)_$(ConfigurationName)"
@@ -166,87 +247,6 @@
 			<Tool
 				Name="VCLibrarianTool"
 				AdditionalDependencies=".\shared__$(PlatformName)_$(ConfigurationName)\shared.lib"
-				OutputFile=".\main_$(PlatformName)_$(ConfigurationName)\main.lib"
-				SuppressStartupBanner="true"
-			/>
-			<Tool
-				Name="VCALinkTool"
-			/>
-			<Tool
-				Name="VCXDCMakeTool"
-			/>
-			<Tool
-				Name="VCBscMakeTool"
-			/>
-			<Tool
-				Name="VCFxCopTool"
-			/>
-			<Tool
-				Name="VCPostBuildEventTool"
-			/>
-		</Configuration>
-		<Configuration
-			Name="Release|Win32"
-			OutputDirectory=".\main_$(PlatformName)_$(ConfigurationName)"
-			IntermediateDirectory=".\main_$(PlatformName)_$(ConfigurationName)"
-			ConfigurationType="4"
-			UseOfMFC="0"
-			ATLMinimizesCRunTimeLibraryUsage="false"
-			CharacterSet="2"
-			>
-			<Tool
-				Name="VCPreBuildEventTool"
-			/>
-			<Tool
-				Name="VCCustomBuildTool"
-			/>
-			<Tool
-				Name="VCXMLDataGeneratorTool"
-			/>
-			<Tool
-				Name="VCWebServiceProxyGeneratorTool"
-			/>
-			<Tool
-				Name="VCMIDLTool"
-			/>
-			<Tool
-				Name="VCCLCompilerTool"
-				AdditionalOptions="/MP /Zm200"
-				InlineFunctionExpansion="1"
-				AdditionalIncludeDirectories="..\..\src;..\..\src\main\Achievements;..\..\src\main\Battlegrounds\Zones;..\..\src\main\AI\SmartScripts;..\..\src\main\AI\ScriptedAI;..\..\src\main\AI\EventAI;..\..\src\main\AI\CoreAI;..\..\src\main\World;..\..\src\main\Weather;..\..\src\main\Tools;..\..\src\main\Tickets;..\..\src\main\Texts;..\..\src\main\Spells;..\..\src\main\Skills;..\..\src\main\Server;..\..\src\main\Scripting;..\..\src\main\Reputation;..\..\src\main\Quests;..\..\src\main\Pools;..\..\src\main\PCH;..\..\src\main\OutdoorPvP;..\..\src\main\Movement;..\..\src\main\Miscellaneous;..\..\src\main\Maps;..\..\src\main\Mails;..\..\src\main\Loot;..\..\src\main\Instances;..\..\src\main\Guilds;..\..\src\main\Groups;..\..\src\main\Grids;..\..\src\main\Globals;..\..\src\main\Spells\Auras;..\..\src\main\Server\Protocol\Handlers\Packets;..\..\src\main\Server\Protocol\Handlers\Opcodes;..\..\src\main\Server\Protocol\Handlers;..\..\src\main\Server\Sockets;..\..\src\main\Server\Sessions;..\..\src\main\Server\Logs;..\..\src\main\Server\Protocol;..\..\src\main\Movement\Waypoints;..\..\src\main\Movement\MovementGenerators;..\..\src\main\Grids\Notifiers;..\..\src\main\Grids\Cells;..\..\src\main\Entities\Object\Updates;..\..\src\main\Entities\Item\Container;..\..\src\main\Entities\Vehicle;..\..\src\main\Entities\Unit;..\..\src\main\Entities\Transport;..\..\src\main\Entities\Totem;..\..\src\main\Entities\Player;..\..\src\main\Entities\Pet;..\..\src\main\Entities\Object;..\..\src\main\Entities\Item;..\..\src\main\Entities\GameObject;..\..\src\main\Entities\DynamicObject;..\..\src\main\Entities\Creature;..\..\src\main\Entities\Corpse;..\..\src\main\Events;..\..\src\main\Entities;..\..\src\main\DungeonFinding;..\..\src\main\DataStores;..\..\src\main\Conditions;..\..\src\main\Combat;..\..\src\main\Chat\Commands;..\..\src\main\Chat\Channels;..\..\src\main\Chat;..\..\src\main\Calendar;..\..\src\main\Battlegrounds;..\..\src\main\AuctionHouse\AuctionHouseBot;..\..\src\main\AuctionHouse;..\..\src\main\AI;..\..\src\main\Addons;..\..\src\main\Accounts;..\..\dep;..\..\dep\mysql;..\..\dep\mysql\include;..\..\dep\zlib;..\..\dep\mysql\extra\yassl\include;..\..\src\shared;..\..\src\shared\Collision;..\..\src\shared\Collision\Management;..\..\src\shared\Collision\Maps;..\..\src\shared\Collision\Models;..\..\src\shared\Collision\PCH;..\..\src\shared\Configuration;..\..\src\shared\Cryptography;..\..\src\shared\Cryptography\Authentication;..\..\src\shared\DataStores;..\..\src\shared\Database;..\..\src\shared\Dynamic;..\..\src\shared\Dynamic\LinkedReference;..\..\src\shared\Logging;..\..\src\shared\Packets;..\..\src\shared\Threading;..\..\src\shared\Utilities;..\..\src\scripts;..\..\src\scripts\PCH;..\..\src\server;..\..\dep\acelite;..\..\dep\mysqllite\include;..\..\dep\mysqllite\extra\yassl\include"
-				PreprocessorDefinitions="WIN32;NDEBUG;_LIB;_CRT_NONSTDC_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_SECURE_SCL=0"
-				StringPooling="true"
-				RuntimeLibrary="2"
-				EnableFunctionLevelLinking="true"
-				EnableEnhancedInstructionSet="1"
-				RuntimeTypeInfo="true"
-				UsePrecompiledHeader="2"
-				PrecompiledHeaderThrough="..\..\src\main\PCH\PCH.h"
-				PrecompiledHeaderFile=".\main_$(PlatformName)_$(ConfigurationName)\main.pch"
-				AssemblerListingLocation=".\main_$(PlatformName)_$(ConfigurationName)\"
-				ObjectFile=".\main_$(PlatformName)_$(ConfigurationName)\"
-				ProgramDataBaseFileName=".\main_$(PlatformName)_$(ConfigurationName)\"
-				WarningLevel="3"
-				SuppressStartupBanner="true"
-				Detect64BitPortabilityProblems="false"
-				DebugInformationFormat="3"
-				CallingConvention="0"
-				CompileAs="2"
-				ForcedIncludeFiles="..\..\src\main\PCH\PCH.h"
-			/>
-			<Tool
-				Name="VCManagedResourceCompilerTool"
-			/>
-			<Tool
-				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="NDEBUG"
-				Culture="1033"
-			/>
-			<Tool
-				Name="VCPreLinkEventTool"
-			/>
-			<Tool
-				Name="VCLibrarianTool"
 				OutputFile=".\main_$(PlatformName)_$(ConfigurationName)\main.lib"
 				SuppressStartupBanner="true"
 			/>
@@ -2210,6 +2210,10 @@
 					Name="BlackrockSpire"
 					>
 					<File
+						RelativePath="..\..\src\scripts\EasternKingdoms\BlackrockSpire\blackrock_spire.h"
+						>
+					</File>
+					<File
 						RelativePath="..\..\src\scripts\EasternKingdoms\BlackrockSpire\boss_drakkisath.cpp"
 						>
 					</File>
@@ -2255,6 +2259,10 @@
 					</File>
 					<File
 						RelativePath="..\..\src\scripts\EasternKingdoms\BlackrockSpire\boss_warmaster_voone.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\scripts\EasternKingdoms\BlackrockSpire\instance_blackrock_spire.cpp"
 						>
 					</File>
 				</Filter>
@@ -4865,7 +4873,7 @@
 				/>
 			</FileConfiguration>
 			<FileConfiguration
-				Name="Debug|x64"
+				Name="Release|Win32"
 				>
 				<Tool
 					Name="VCCLCompilerTool"
@@ -4874,7 +4882,7 @@
 				/>
 			</FileConfiguration>
 			<FileConfiguration
-				Name="Release|Win32"
+				Name="Debug|x64"
 				>
 				<Tool
 					Name="VCCLCompilerTool"
